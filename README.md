@@ -4,7 +4,7 @@ This lightweight package delivers ultimate performance for complex dropdown/sele
 
 While raw performance and minimal package size were the primary objectives, it is built with an advanced API that should cover the vast majority of use-cases. The API's functionality was largely inspired by [react-select](https://github.com/JedWatson/react-select), which is one of the best examples you will find of a flexible and complete API designed to handle a very specific, and usually painful, problem that web developers encounter. Essentially, my aim was to narrow the API's focus down to critical/common/performance pieces of functionality - using a functional approach that allowed for low-code, high-performance solutions to these use-cases.
 
-## Installation (Including Peer Dependencies)
+## Installation (Including peer dependencies)
 
 ```bash
 # npm
@@ -14,7 +14,7 @@ npm i react-window react-styled-components polished react-functional-select
 yarn add react-window react-styled-components polished react-functional-select
 ```
 
-## Live Examples (With Source Code)
+## Usage
 
 - [Demo](https://based-ghost.github.io/react-functional-select/index.html?path=/story/react-functional-select--basic)
 - [Source code](./src/__stories__)
@@ -41,11 +41,11 @@ const SelectedCode = styled(Code)`
 `;
 
 const _options: CityOption[] = [
-  { id: 1,  city: 'Austin', state: 'TX' },
-  { id: 2,  city: 'Denver', state: 'CO' },
-  { id: 3,  city: 'Chicago', state: 'IL' },
-  { id: 4,  city: 'Phoenix', state: 'AZ' },
-  { id: 5,  city: 'Houston', state: 'TX' },
+  { id: 1, city: 'Austin', state: 'TX' },
+  { id: 2, city: 'Denver', state: 'CO' },
+  { id: 3, city: 'Chicago', state: 'IL' },
+  { id: 4, city: 'Phoenix', state: 'AZ' },
+  { id: 5, city: 'Houston', state: 'TX' },
 ];
 
 const BasicProps: React.FC = () => {

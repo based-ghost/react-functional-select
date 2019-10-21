@@ -23,9 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # .vscode directory
-.vs
-.vscode
-
+.vs/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
