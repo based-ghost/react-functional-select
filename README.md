@@ -4,11 +4,6 @@ This lightweight package delivers ultimate performance for complex dropdown/sele
 
 While raw performance and minimal package size were the primary objectives, it is built with an advanced API that should cover the vast majority of use-cases. The API's functionality was largely inspired by [react-select](https://github.com/JedWatson/react-select), which is one of the best examples you will find of a flexible and complete API designed to handle a very specific, and usually painful, problem that web developers encounter. Essentially, my aim was to narrow the API's focus down to critical/common/performance pieces of functionality - using a functional approach that allowed for low-code, high-performance solutions to these use-cases.
 
-## Live Examples (With Source Code)
-
-- [Storybook demos](https://based-ghost.github.io/react-functional-select/index.html?path=/story/react-functional-select--basic)
-- [Source code for stories](./src/__stories__)
-
 ## Installation (Including Peer Dependencies)
 
 ```bash
@@ -19,8 +14,130 @@ npm i react-window react-styled-components polished react-functional-select
 yarn add react-window react-styled-components polished react-functional-select
 ```
 
-## TODO: hook up test-runner and scripts; finish writing unit tests leveraging `@testing-library/react` framework
+## Live Examples (With Source Code)
 
-## TODO: complete documentation for props/api
+- [Demo](https://based-ghost.github.io/react-functional-select/index.html?path=/story/react-functional-select--basic)
+- [Source code](./src/__stories__)
 
-## TODO: decide on a linting configuration - have not found a viable option when it comes to formatting FunctionComponents and hooks..
+#### Example (BasicProps.story.tsx)
+
+```JSX
+/*** ...IMPORTS... ***/
+
+type CityOption = {
+  readonly id: number;
+  readonly city: string;
+  readonly state: string;
+};
+
+const SelectedLabelText = styled.span`
+  margin-left: 0px;
+  font-weight: 600;
+`;
+
+const SelectedCode = styled(Code)`
+  font-weight: 400;
+  font-size: 0.875em;
+`;
+
+const _options: CityOption[] = [
+  { id: 1,  city: 'Austin', state: 'TX' },
+  { id: 2,  city: 'Denver', state: 'CO' },
+  { id: 3,  city: 'Chicago', state: 'IL' },
+  { id: 4,  city: 'Phoenix', state: 'AZ' },
+  { id: 5,  city: 'Houston', state: 'TX' },
+];
+
+const BasicProps: React.FC = () => {
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isClearable, setIsClearable] = useState(true);
+  const [isSearchable, setIsSearchable] = useState(true);
+  const [selectedOption, setSelectedOption] = useState<CityOption | null>(null);
+
+  const getOptionValue = useCallback((option: CityOption): number => {
+    return option.id;
+  }, []);
+
+  const getOptionLabel = useCallback((option: CityOption): string => {
+    return `${option.city}, ${option.state}`;
+  }, []);
+  
+  const onOptionChange = useCallback((option: CityOption | null): void => {
+    setSelectedOption(option);
+  }, []);
+
+  useEffect(() => {
+    isDisabled && setIsInvalid(false);
+  }, [isDisabled]);
+
+  return (
+    <Container>
+      <Title>Basic Properties</Title>
+      <Hr />
+      <Paragraph>Description of story...</Paragraph>
+      <Paragraph>Description of story continued...</Paragraph>
+      <SubTitle>Demo</SubTitle>
+      <Hr />
+      <Card>
+        <CardHeader>
+          <CheckboxGroup>
+            <Checkbox
+              label='Searchable'
+              checked={isSearchable}
+              onCheck={setIsSearchable}
+            />
+            <Checkbox
+              label='Clearable'
+              checked={isClearable}
+              onCheck={setIsClearable}
+            />
+            <Checkbox
+              label='Disabled'
+              checked={isDisabled}
+              onCheck={setIsDisabled}
+            />
+            <Checkbox
+              label='Invalid'
+              checked={isInvalid}
+              readOnly={isDisabled}
+              onCheck={setIsInvalid}
+            />
+            <Checkbox
+              label='Loading'
+              checked={isLoading}
+              onCheck={setIsLoading}
+            />
+            <Label>
+              <SelectedLabelText>Selected Option: </SelectedLabelText>
+              <SelectedCode>{selectedOption ? JSON.stringify(selectedOption) : 'NULL'}</SelectedCode>
+            </Label>
+          </CheckboxGroup>
+        </CardHeader>
+        <CardBody>
+          <SelectContainer>
+            <Select
+              options={_options}
+              isLoading={isLoading}
+              isInvalid={isInvalid}
+              isDisabled={isDisabled}
+              isClearable={isClearable}
+              isSearchable={isSearchable}
+              onOptionChange={onOptionChange}
+              getOptionValue={getOptionValue}
+              getOptionLabel={getOptionLabel}
+            />
+          </SelectContainer>
+        </CardBody>
+      </Card>
+    </Container>
+  );
+};
+```
+
+#### TODO: hook up test-runner and scripts; finish writing unit tests leveraging `@testing-library/react` framework
+
+#### TODO: complete documentation for props/api
+
+#### TODO: decide on a linting configuration - have not found a viable option when it comes to formatting FunctionComponents and hooks..
