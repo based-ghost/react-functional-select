@@ -21,7 +21,7 @@ yarn add react-window react-styled-components react-functional-select
 ## Usage
 
 - [Demo](https://based-ghost.github.io/react-functional-select/index.html?path=/story/react-functional-select--basic)
-- [Source code](./src/__stories__)
+- [Source code](./__stories__)
 
 #### Example (BasicProps.story.tsx)
 
