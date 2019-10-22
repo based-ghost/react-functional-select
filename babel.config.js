@@ -5,21 +5,8 @@ module.exports = {
     'babel-plugin-styled-components',
   ],
   presets: [
-    [
-      '@babel/env',
-      {
-        loose: true,
-        targets: {
-          browsers: [
-            'last 2 versions',
-            'IE 11',
-            'maintained node versions',
-            'not dead',
-          ],
-        },
-      },
-    ],
+    ['@babel/preset-env', { loose: true }],
     '@babel/preset-react',
-    '@babel/typescript',
+    '@babel/preset-typescript',
   ],
 };

@@ -81,7 +81,7 @@ export default [
     plugins: [
       typescript2Plugin,
       replace({
-        'process.env.NODE_ENV': JSON.stringify('development'),
+        'process.env.NODE_ENV': JSON.stringify('production'),
       }),
       terser(),
     ],
