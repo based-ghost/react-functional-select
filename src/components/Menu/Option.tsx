@@ -1,6 +1,6 @@
 import React from 'react';
 import { areEqual } from 'react-window';
-import { OptionProps, MenuOption } from '../../types';
+import { OptionProps, MenuOption } from '../../types/index.';
 import { createID, createClassName } from '../../utils';
 import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../../constants/attributes';
 

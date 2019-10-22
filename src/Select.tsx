@@ -17,7 +17,7 @@ import {
   MouseOrTouchEvent,
   IndexPositionEnum,
   ControlWrapperProps,
-} from './types';
+} from './types/index.';
 import {
   OPTIONS_DEFAULT,
   NO_SELECTED_OPTION,
@@ -98,6 +98,9 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
       theme.color.accent,
       theme.color.border,
       theme.color.invalid,
+      theme.color.invalidFocus,
+      theme.control.boxShadowColor,
+      theme.control.focusedBorderColor,
       isFocused,
       isInvalid
     )}

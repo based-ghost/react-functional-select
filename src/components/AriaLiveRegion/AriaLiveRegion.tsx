@@ -1,10 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { hideVisually } from 'polished';
-import { AriaLiveRegionProps } from '../../types';
+import { AriaLiveRegionProps } from '../../types/index.';
 
 const A11yText = styled.span`
-  ${hideVisually()}
+  border: 0;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
 `;
 
 const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({

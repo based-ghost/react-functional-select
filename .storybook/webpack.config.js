@@ -1,6 +1,4 @@
 module.exports = async ({ config }) => {
-  config.devtool = 'eval';
-
   config.module.rules.push({
     test: /\.story\.tsx$/,
     loaders: [

@@ -1,4 +1,3 @@
-import { lighten, darken } from 'polished';
 import { DefaultTheme } from 'styled-components';
 import { mergeDeep, isPlainObject } from './utils';
 
@@ -21,6 +20,7 @@ export const defaultTheme: DefaultTheme = {
     invalid: '#dc3545',
     disabled: '#e9ecef',
     placeholder: '#6E7276',
+    invalidFocus: 'rgba(220, 53, 69, 0.25)',
   },
   select: {
   },
@@ -33,7 +33,7 @@ export const defaultTheme: DefaultTheme = {
   icon: {
     color: '#cccccc',
     padding: '0.5rem 0.9375rem',
-    hoverColor: darken(0.15, '#cccccc'),
+    hoverColor: '#A6A6A6',
     clear: {
       fontWeight: 900,
       fontSize: '0.85em',
@@ -52,6 +52,8 @@ export const defaultTheme: DefaultTheme = {
     boxShadow: '0 0 0 0.2rem',
     padding: '0.375rem 0.75rem',
     height: 'calc(1.5em + 0.75rem + 2px)',
+    boxShadowColor: 'rgba(0, 123, 255, 0.25)',
+    focusedBorderColor: 'rgba(0, 123, 255, 0.75)',
     transition: 'box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out',
   },
   menu: {
@@ -66,7 +68,7 @@ export const defaultTheme: DefaultTheme = {
       selectedColor: '#fff',
       selectedBgColor: '#007bff',
       padding: '0.375rem 0.75rem',
-      focusedBgColor: lighten(0.4, '#007bff'),
+      focusedBgColor: 'rgba(0, 123, 255, 0.20)',
     },
   },
   noOptions: {

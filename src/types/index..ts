@@ -1,4 +1,3 @@
-import { Align } from 'react-window';
 import { DefaultTheme } from 'styled-components';
 import {
   ReactNode,
@@ -7,7 +6,6 @@ import {
   TouchEvent,
   EventHandler,
   CSSProperties,
-  MutableRefObject,
   FormEventHandler,
   FocusEventHandler,
   InputHTMLAttributes,

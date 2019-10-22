@@ -1,6 +1,6 @@
 import React from 'react';
+import { ValueProps } from '../../types/index.';
 import styled, { css } from 'styled-components';
-import { ValueProps } from '../../types';
 
 const _valueDivCss = css`
   top: 50%;

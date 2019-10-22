@@ -3,7 +3,7 @@ import Option from './Option';
 import styled from 'styled-components';
 import { FixedSizeList } from 'react-window';
 import { isArrayWithLength } from '../../utils';
-import { MenuProps, ItemData } from '../../types';
+import { MenuProps, ItemData } from '../../types/index.';
 
 const NoOptionsMsg = styled.div`
   text-align: center;

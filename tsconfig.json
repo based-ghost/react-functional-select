@@ -1,26 +1,20 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "target": "es2015",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "lib": [
-      "dom",
-      "es2017"
-    ],
     "jsx": "react",
-    "sourceRoot": "./src",
+    "outDir": "./dist",
+    "target": "es2015",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "declarationDir": "./dist",
     "strict": true,
-    "allowJs": false,
     "sourceMap": true,
-    "declaration": false,
-    "skipLibCheck": true,
+    "declaration": true,
     "noUnusedLocals": true,
+    "removeComments": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "src"
+    "src/**/*",
   ],
   "exclude": [
     "node_modules"

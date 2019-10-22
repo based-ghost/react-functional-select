@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, AriaAttributes, CSSProperties } from 'react';
 import styled from 'styled-components';
 import { mediaQueryIsIE } from '../../constants/styled';
-import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../../types';
+import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../../types/index.';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../../constants/attributes';
 
 const _inputMinWidthPx = 2;

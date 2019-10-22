@@ -7,8 +7,9 @@ declare module 'styled-components' {
       border: string;
       invalid: string;
       disabled: string;
-      textColor?: string;
+      textColor?: string;  
       placeholder: string;
+      invalidFocus: string;
       caretActive?: string;
       iconSeparator?: string;
     };
@@ -44,7 +45,9 @@ declare module 'styled-components' {
       borderWidth: string;
       borderStyle: string;
       borderRadius: string;
+      boxShadowColor: string;
       backgroundColor?: string;
+      focusedBorderColor: string;
     },
     menu: {
       margin: string;
@@ -67,5 +70,5 @@ declare module 'styled-components' {
       padding: string;
       fontSize: string;
     };
-  };
+  }
 }

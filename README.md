@@ -8,10 +8,10 @@ While raw performance and minimal package size were the primary objectives, it i
 
 ```bash
 # npm
-npm i react-window react-styled-components polished react-functional-select
+npm i react-window react-styled-components react-functional-select
 
 # Yarn
-yarn add react-window react-styled-components polished react-functional-select
+yarn add react-window react-styled-components react-functional-select
 ```
 
 ## Usage
@@ -136,8 +136,4 @@ const BasicProps: React.FC = () => {
 };
 ```
 
-#### TODO: hook up test-runner and scripts; finish writing unit tests leveraging `@testing-library/react` framework
-
-#### TODO: complete documentation for props/api
-
-#### TODO: decide on a linting configuration - have not found a viable option when it comes to formatting FunctionComponents and hooks..
+#### TODO: hook up test-runner and scripts; finish writing unit tests leveraging `@testing-library/react` framework; complete documentation for props/api

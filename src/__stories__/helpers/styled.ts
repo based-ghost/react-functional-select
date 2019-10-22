@@ -1,4 +1,3 @@
-import { darken } from 'polished';
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
@@ -123,7 +122,7 @@ export const Button = styled.button<{ isActive?: boolean }>`
   }
 
   :hover {
-    background-color: ${darken(0.05, '#eeeff0')};
+    background-color: #E1E2E3;
   }
 
   ${({ isActive }) => isActive && css`
@@ -131,7 +130,7 @@ export const Button = styled.button<{ isActive?: boolean }>`
     background-color: #007bff;
 
     :hover {
-      background-color: ${darken(0.08, '#007bff')};
+      background-color: #0067EB;
     }
   `}
 `;

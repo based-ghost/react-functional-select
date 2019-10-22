@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { Select } from '..';
-import { SelectProps } from '../types';
+import { SelectProps } from '../types/index.';
 import { defaultTheme } from '../theme';
 import { render, fireEvent, wait } from '@testing-library/react';
 import {

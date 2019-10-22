@@ -4,7 +4,7 @@ import { Value } from '../components';
 import { defaultTheme } from '../theme';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { ValueProps, OptionData } from '../types';
+import { ValueProps, OptionData } from '../types/index.';
 import { PLACEHOLDER_DEFAULT } from '../constants/defaults';
 
 // ============================================

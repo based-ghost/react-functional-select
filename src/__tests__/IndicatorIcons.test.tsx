@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { defaultTheme } from '../theme';
 import { IndicatorIcons } from '../components';
-import { IndicatorIconsProps } from '../types';
+import { IndicatorIconsProps } from '../types/index.';
 import { ThemeProvider } from 'styled-components';
 import { render, fireEvent } from '@testing-library/react';
 import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID } from '../constants/attributes';

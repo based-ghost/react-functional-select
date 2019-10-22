@@ -1,6 +1,5 @@
 import { ReactText } from 'react';
-import { rgba, lighten } from 'polished';
-import { MenuOption, OptionData, SelectedOption } from './types';
+import { MenuOption, OptionData, SelectedOption } from './types/index.';
 import { css, FlattenSimpleInterpolation } from 'styled-components';
 
 // ============================================
@@ -215,13 +214,16 @@ export const renderControlEmphasis = (
   themeColor: string,
   borderColor: string,
   invalidColor: string,
+  invalidFocus: string,
+  boxShadowColor: string,
+  focusedBorderColor: string,
   isFocused: boolean,
   isInvalid?: boolean
 ): FlattenSimpleInterpolation => {
   if (isFocused) {
     return css`
-      border-color: ${isInvalid ? invalidColor : lighten(0.25, themeColor)};
-      box-shadow: ${boxShadow} ${rgba(isInvalid ? invalidColor : themeColor, 0.25)};
+      border-color: ${isInvalid ? invalidColor : focusedBorderColor};
+      box-shadow: ${boxShadow} ${isInvalid ? invalidFocus : boxShadowColor};
     `;
   } else {
     return css`

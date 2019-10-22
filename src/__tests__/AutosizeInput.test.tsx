@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { defaultTheme } from '../theme';
 import { AutosizeInput } from '../components';
-import { AutosizeInputProps } from '../types';
+import { AutosizeInputProps } from '../types/index.';
 import { ThemeProvider } from 'styled-components';
 import { render, fireEvent } from '@testing-library/react';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/attributes';

@@ -2,7 +2,7 @@ import React from 'react';
 import LoadingDots from './LoadingDots';
 import styled, { css } from 'styled-components';
 import { fadeInAnimationCss } from '../../constants/styled';
-import { CaretProps, IndicatorIconsProps } from '../../types';
+import { CaretProps, IndicatorIconsProps } from '../../types/index.';
 import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID } from '../../constants/attributes';
 
 const IndicatorIconsWrapper = styled.div`

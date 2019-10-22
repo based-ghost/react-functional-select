@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { Select, Theme } from '..';
-import { lighten } from 'polished';
 import { defaultTheme } from '../theme';
 import { Option } from './helpers/utils';
 import { storiesOf } from '@storybook/react';
@@ -24,9 +23,13 @@ const _themeConfigMap: { [key: string]: any } = {
   [_themeEnum.DEFAULT]: undefined,
   [_themeEnum.DARK_COLORS]: {
     color: {
-      accent: '#555',
+      accent: '#555555',
       border: '#A8AEB4',
       textColor: '#000',
+    },
+    control: {
+      boxShadowColor: 'rgba(85, 85, 85, 0.25)',
+      focusedBorderColor: 'rgba(85, 85, 85, 0.75)',
     },
     icon: {
       color: '#A6A6A6',
@@ -34,8 +37,8 @@ const _themeConfigMap: { [key: string]: any } = {
     menu: {
       option: {
         selectedColor: '#fff',
-        selectedBgColor: '#555',
-        focusedBgColor: lighten(0.5, '#555'),
+        selectedBgColor: '#555555',
+        focusedBgColor: 'rgba(85, 85, 85, 0.225)',
       }
     }
   },
