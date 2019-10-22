@@ -32,7 +32,7 @@ export const useMenuOptions = (
         };
 
         if (cleanSearchInputValue && !optionSatisfiesFilter(menuOption)) {
-          return;
+          return undefined;
         } 
 
         return {

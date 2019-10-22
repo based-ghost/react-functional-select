@@ -11,6 +11,7 @@ const PrintJsonRoot = styled.div`
   color: #fff;
   font-size: 1rem;
   margin-top: 25px;
+  overflow: visible;
   border-radius: 10px;
   background-color: #282c34;
 `;
@@ -41,8 +42,8 @@ const PrintJsonPre = styled.pre`
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${_mediaQueryIsMobileXS} {
-    font-size: 0.7em;
-    padding: 10px 10px;
+    font-size: 0.75em;
+    padding: 10px 20px;
     letter-spacing: normal;
   }
 `;

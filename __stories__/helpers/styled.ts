@@ -58,6 +58,10 @@ export const List = styled.ul`
   li + li {
     margin-top: .25em;
   }
+  
+  ${_mediaQueryIsMobile} {
+    padding-inline-start: 20px;
+  }
 `;
 
 export const ListItem = styled.li`

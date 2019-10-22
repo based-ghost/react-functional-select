@@ -77,21 +77,13 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
           onMouseDown={onClearMouseDown}
           data-testid={CLEAR_ICON_TESTID}
         >
-          {clearIcon ? clearIcon : <Clear className={clearClassName}>X</Clear>}
+          {clearIcon || <Clear className={clearClassName}>X</Clear>}
         </IndicatorIcon>
       )}
       {isLoading && <LoadingDots />}
       <Separator />
       <IndicatorIcon aria-hidden='true'>
-        {caretIcon ? (
-          caretIcon
-        ) : (
-          <Caret
-            menuOpen={menuOpen}
-            isInvalid={isInvalid}
-            className={caretClassName}
-          />
-        )}
+        {caretIcon || <Caret menuOpen={menuOpen} isInvalid={isInvalid} className={caretClassName} />}
       </IndicatorIcon>
     </IndicatorIconsWrapper>
   );

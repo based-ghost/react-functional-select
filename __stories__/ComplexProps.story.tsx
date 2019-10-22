@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Select } from '..';
 import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
-const ReactLogo = require('./assets/react_logo.svg') as string;
+const reactLogo = require('./assets/react_logo.svg') as string;
 import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, Label, LabelText, Code, Card, CardHeader, CardBody } from './helpers/styled';
 
 type StyledImageProps = {
@@ -80,7 +80,7 @@ storiesOf('React Functional Select', module).add('Complex', () => {
     const isDisabled = getIsOptionDisabled(option);
     return (
       <StyledDiv>
-        <StyledImg src={ReactLogo} isDisabled={isDisabled} />
+        <StyledImg src={reactLogo} isDisabled={isDisabled} />
         <StyledSpan>{option.packageName}</StyledSpan>
       </StyledDiv>
     );
@@ -113,7 +113,7 @@ storiesOf('React Functional Select', module).add('Complex', () => {
       <Card>
         <CardHeader>
           <Label>
-            <LabelText>Both callback properties used in conjunction:</LabelText>
+            <LabelText>JSX labels &amp; disabled option</LabelText>
           </Label>
         </CardHeader>
         <CardBody>

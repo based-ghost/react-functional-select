@@ -26,8 +26,9 @@ function getScrollParent(el: HTMLElement): HTMLElement {
   let style = getComputedStyle(el);
   const excludeStaticParent = (style.position === 'absolute');
 
-  if (style.position === 'fixed')
+  if (style.position === 'fixed') {
     return document.documentElement;
+  }
 
   for (let parent = el; (parent = (parent.parentElement as HTMLElement));) {
     style = getComputedStyle(parent);
@@ -55,7 +56,7 @@ function smoothScrollTo(
     return c * ((t = t / d - 1) * t * t + 1) + s;
   }
 
-  function smoothScroller() {
+  function smoothScroller(): void {
     currentTime += 5;
     scrollTo(element, easeOutCubic(currentTime, start, change, duration));
     if (currentTime < duration) {
@@ -115,8 +116,12 @@ export function isPlainObject(test: any): boolean {
  * If the prefix is null or underfined or '', then undefined is returned.
  */
 export function createID(idPrefix?: string, idSuffix?: string): string | undefined {
-  if (!idPrefix) return undefined;
-  if (!idSuffix) return idPrefix;
+  if (!idPrefix) { 
+    return undefined; 
+  }
+  if (!idSuffix) { 
+    return idPrefix; 
+  }
   return `${idPrefix}-${idSuffix}`;
 }
 
@@ -136,11 +141,9 @@ export function mergeDeep(target: any, source: any): any {
 
   Object.keys(source).forEach((key: string) => {
     if (isPlainObject(source[key])) {
-      if (!(key in target)) {
-        output[key] = source[key];
-      } else {
-        output[key] = mergeDeep(target[key], source[key]);
-      }
+      output[key] = (!(key in target))
+        ? source[key]
+        : mergeDeep(target[key], source[key]);
     } else {
       output[key] = source[key];
     }
@@ -199,11 +202,11 @@ export function validateSetValueOption(
   menuOptions: MenuOption[],
   getOptionValue_CB: (data: OptionData) => ReactText
 ): SelectedOption | undefined {
-  if (option === null || option === undefined || Array.isArray(option))
+  if (option === null || option === undefined || Array.isArray(option)) {
     return undefined;
-
+  }
   const optionValue = (option && isPrimitive(option)) ? option : getOptionValue_CB(option);
-  return menuOptions.find((option) => option.value === optionValue) || undefined;
+  return menuOptions.find((mOption) => mOption.value === optionValue) || undefined;
 }
 
 /**
@@ -211,7 +214,6 @@ export function validateSetValueOption(
  */
 export const renderControlEmphasis = (
   boxShadow: string,
-  themeColor: string,
   borderColor: string,
   invalidColor: string,
   invalidFocus: string,
@@ -225,9 +227,8 @@ export const renderControlEmphasis = (
       border-color: ${isInvalid ? invalidColor : focusedBorderColor};
       box-shadow: ${boxShadow} ${isInvalid ? invalidFocus : boxShadowColor};
     `;
-  } else {
-    return css`
-      border-color: ${isInvalid ? invalidColor : borderColor};
-    `;
   }
+  return css`
+    border-color: ${isInvalid ? invalidColor : borderColor};
+  `;
 };

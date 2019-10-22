@@ -51,7 +51,7 @@ storiesOf('React Functional Select', module).add('Methods', () => {
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>
-        <CardHeader supportMobile={true}>
+        <CardHeader supportMobile>
           <Label>
             <LabelText>Simulate Methods:</LabelText>
           </Label>

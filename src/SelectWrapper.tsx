@@ -18,7 +18,10 @@ const SelectWrapper = React.forwardRef<SelectHandle, SelectWrapperProps>((
 ) => {
   const theme: DefaultTheme = useTheme(themeConfig);
   const menuWidth: ReactText = props.menuWidth || theme.menu.width;
-  const blurInputOnSelect: boolean = (typeof props.blurInputOnSelect === 'boolean') ? props.blurInputOnSelect : isTouchDevice();
+
+  const blurInputOnSelect: boolean = (typeof props.blurInputOnSelect === 'boolean')
+    ? props.blurInputOnSelect
+    : isTouchDevice();
 
   const selectProps: SelectProps = {
     ...props,

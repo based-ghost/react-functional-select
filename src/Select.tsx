@@ -95,7 +95,6 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
   ${({ isFocused, isInvalid, theme }) => 
     renderControlEmphasis(
       theme.control.boxShadow,
-      theme.color.accent,
       theme.color.border,
       theme.color.invalid,
       theme.color.invalidFocus,
@@ -323,7 +322,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   }, [isFocused, openMenuOnFocus, openMenuAndFocusOption]);
 
   useEffect(() => {
-    if (!!canAttemptInitValSet && isPlainObject(initialValue)) {
+    if (canAttemptInitValSet && isPlainObject(initialValue)) {
       selectOption({
         data: initialValue,
         value: getOptionValue_CB(initialValue),
@@ -363,8 +362,9 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   }, [options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
-    if (!focusedOptionData || isFocusedOptionDisabled)
+    if (!focusedOptionData || isFocusedOptionDisabled) {
       return;
+    }
     
     if (closeMenuOnSelect && (selectedOptionValue === focusedOptionValue)) {
       setMenuOpen(false);
@@ -378,8 +378,9 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   };
 
   const focusOptionOnArrowKey = (position: IndexPosition): void => {
-    if (!isArrayWithLength(menuOptions))
+    if (!isArrayWithLength(menuOptions)) {
       return;
+    }
 
     const index = (position === _indexPositionEnum.DOWN)
       ? (focusedOptionIndex + 1) % menuOptions.length

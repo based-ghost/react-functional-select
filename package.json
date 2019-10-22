@@ -1,6 +1,6 @@
 {
   "name": "react-functional-select",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost)",
   "description": "A low-code, high-performance select control for React",
   "main": "dist/index.cjs.js",
@@ -40,6 +40,7 @@
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
@@ -61,6 +62,7 @@
     "@typescript-eslint/parser": "^2.0.0",
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-annotate-pure-calls": "^0.4.0",
     "babel-plugin-styled-components": "^1.10.6",
     "concurrently": "^4.1.1",
     "cross-env": "^5.2.0",

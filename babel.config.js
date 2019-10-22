@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
 module.exports = {
   plugins: [
+    ['@babel/proposal-class-properties', { loose: true }],
     '@babel/proposal-object-rest-spread',
-    'babel-plugin-styled-components',
+    'annotate-pure-calls',
+    // 'babel-plugin-styled-components',
   ],
   presets: [
     ['@babel/preset-env', { loose: true }],

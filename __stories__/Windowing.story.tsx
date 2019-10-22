@@ -70,7 +70,7 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>
-        <CardHeader supportMobile={true}>
+        <CardHeader supportMobile>
           <Label>
             <LabelText>Load Testing Tiers:</LabelText>
           </Label>

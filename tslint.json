@@ -13,6 +13,9 @@
     "trailing-comma": true,
     "space-within-parens": false,
     "semicolon": true,
-    "variable-name": false
+    "variable-name": false,
+    "newline-before-return": false,
+    "arrow-return-shorthand": true,
+    "ordered-imports": false
   }
 }
