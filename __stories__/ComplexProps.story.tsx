@@ -48,7 +48,7 @@ const StyledSpan = styled.span`
   font-size: 1em;
   font-weight: 600;
   margin-left: 2px;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
   letter-spacing: .01em;
 `;
 
@@ -113,7 +113,7 @@ storiesOf('React Functional Select', module).add('Complex', () => {
       <Card>
         <CardHeader>
           <Label>
-            <LabelText>JSX labels &amp; disabled option</LabelText>
+            <LabelText>JSX labels &amp; disabled option:</LabelText>
           </Label>
         </CardHeader>
         <CardBody>

@@ -4,10 +4,17 @@ module.exports = {
     ['@babel/proposal-class-properties', { loose: true }],
     '@babel/proposal-object-rest-spread',
     'annotate-pure-calls',
-    // 'babel-plugin-styled-components',
   ],
   presets: [
-    ['@babel/preset-env', { loose: true }],
+    [
+      '@babel/preset-env',
+      {
+        loose: true,
+        targets: {
+          node: 'current',
+        },
+      },
+    ],
     '@babel/preset-react',
     '@babel/preset-typescript',
   ],

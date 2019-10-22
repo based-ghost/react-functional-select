@@ -8,24 +8,26 @@ type PrintJsonProps = {
 };
 
 const PrintJsonRoot = styled.div`
-  color: #fff;
   font-size: 1rem;
   margin-top: 25px;
-  overflow: visible;
-  border-radius: 10px;
+  overflow: hidden;
+  border-radius: 9px;
+  position: relative;
   background-color: #282c34;
+  box-shadow: rgba(20, 20, 20, 0.27) 0.0555556rem 0.0555556rem 1.11111rem;
 `;
 
 const PrintJsonHeader = styled.div`
-  color: #FAC863;
+  color: #f5b83d;
   line-height: 3;
   font-weight: 700;
   padding: 0px 15px;
   font-size: 1.15rem;
-  border-radius: 10px;
+  border-radius: 9px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background-color: #1D2027;
+  box-shadow: rgba(20, 20, 20, 0.1) 0.0555556rem 0.0555556rem 1.11111rem;
 
   ${_mediaQueryIsMobileXS} {
     font-size: 1.05rem;
@@ -35,15 +37,17 @@ const PrintJsonHeader = styled.div`
 
 const PrintJsonPre = styled.pre`
   margin: 0;
-  overflow: auto;
+  resize: none;
   padding: 10px 30px;
   display: inline-block;
   letter-spacing: 0.03em;
+  touch-action: manipulation;
+  color: rgba(255, 255, 255, 0.95);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${_mediaQueryIsMobileXS} {
     font-size: 0.75em;
-    padding: 10px 20px;
+    padding: 10px 18px;
     letter-spacing: normal;
   }
 `;

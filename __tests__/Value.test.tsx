@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
 import React, { ReactNode } from 'react';
 import { Value } from '../src/components';
 import { defaultTheme } from '../src/theme';

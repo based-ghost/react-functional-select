@@ -187,7 +187,7 @@ export function scrollMenuIntoViewOnOpen(
   }
 
   // Do scroll and upon scroll animation completion, execute the callback if defined
-  const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom || '0');
+  const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom || '0', 10);
   const scrollDown = (menuRect.bottom - viewHeight + scrollTop + marginBottom);
   smoothScrollTo(scrollParent, scrollDown, 300, onMenuOpen);
 }
