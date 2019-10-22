@@ -26,7 +26,8 @@ yarn add react-window react-styled-components react-functional-select
 #### Example Usage
 
 ```JSX
-/*** ...IMPORTS... ***/
+import { Select } from 'react-functional-select';
+import { Card, CardHeader, CardBody, Container, SelectContainer } from './helpers/styled';
 
 type CityOption = {
   readonly id: number;
@@ -44,10 +45,8 @@ const _options: CityOption[] = [
 
 const BasicProps: React.FC = () => {
   const [isInvalid, setIsInvalid] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isClearable, setIsClearable] = useState(true);
-  const [isSearchable, setIsSearchable] = useState(true);
   const [selectedOption, setSelectedOption] = useState<CityOption | null>(null);
   
   const onOptionChange = useCallback((option: CityOption | null): void => {
@@ -71,11 +70,9 @@ const BasicProps: React.FC = () => {
           <SelectContainer>
             <Select
               options={_options}
-              isLoading={isLoading}
               isInvalid={isInvalid}
               isDisabled={isDisabled}
               isClearable={isClearable}
-              isSearchable={isSearchable}
               onOptionChange={onOptionChange}
               getOptionValue={getOptionValue}
               getOptionLabel={getOptionLabel}
