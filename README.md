@@ -23,7 +23,7 @@ yarn add react-window react-styled-components react-functional-select
 - [Demo](https://based-ghost.github.io/react-functional-select/index.html?path=/story/react-functional-select--basic)
 - [Source code](./__stories__)
 
-#### Example (BasicProps.story.tsx)
+#### Example Usage
 
 ```JSX
 /*** ...IMPORTS... ***/
@@ -33,16 +33,6 @@ type CityOption = {
   readonly city: string;
   readonly state: string;
 };
-
-const SelectedLabelText = styled.span`
-  margin-left: 0px;
-  font-weight: 600;
-`;
-
-const SelectedCode = styled(Code)`
-  font-weight: 400;
-  font-size: 0.875em;
-`;
 
 const _options: CityOption[] = [
   { id: 1, city: 'Austin', state: 'TX' },
@@ -59,18 +49,13 @@ const BasicProps: React.FC = () => {
   const [isClearable, setIsClearable] = useState(true);
   const [isSearchable, setIsSearchable] = useState(true);
   const [selectedOption, setSelectedOption] = useState<CityOption | null>(null);
-
-  const getOptionValue = useCallback((option: CityOption): number => {
-    return option.id;
-  }, []);
-
-  const getOptionLabel = useCallback((option: CityOption): string => {
-    return `${option.city}, ${option.state}`;
-  }, []);
   
   const onOptionChange = useCallback((option: CityOption | null): void => {
     setSelectedOption(option);
   }, []);
+  
+  const getOptionValue = useCallback((option: CityOption): number => (option.id), []);
+  const getOptionLabel = useCallback((option: CityOption): string => (`${option.city}, ${option.state}`), []);
 
   useEffect(() => {
     isDisabled && setIsInvalid(false);
@@ -78,46 +63,9 @@ const BasicProps: React.FC = () => {
 
   return (
     <Container>
-      <Title>Basic Properties</Title>
-      <Hr />
-      <Paragraph>Description of story...</Paragraph>
-      <Paragraph>Description of story continued...</Paragraph>
-      <SubTitle>Demo</SubTitle>
-      <Hr />
       <Card>
         <CardHeader>
-          <CheckboxGroup>
-            <Checkbox
-              label='Searchable'
-              checked={isSearchable}
-              onCheck={setIsSearchable}
-            />
-            <Checkbox
-              label='Clearable'
-              checked={isClearable}
-              onCheck={setIsClearable}
-            />
-            <Checkbox
-              label='Disabled'
-              checked={isDisabled}
-              onCheck={setIsDisabled}
-            />
-            <Checkbox
-              label='Invalid'
-              checked={isInvalid}
-              readOnly={isDisabled}
-              onCheck={setIsInvalid}
-            />
-            <Checkbox
-              label='Loading'
-              checked={isLoading}
-              onCheck={setIsLoading}
-            />
-            <Label>
-              <SelectedLabelText>Selected Option: </SelectedLabelText>
-              <SelectedCode>{selectedOption ? JSON.stringify(selectedOption) : 'NULL'}</SelectedCode>
-            </Label>
-          </CheckboxGroup>
+          {JSON.stringify(selectedOption || {})}
         </CardHeader>
         <CardBody>
           <SelectContainer>
