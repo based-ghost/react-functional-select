@@ -1,10 +1,10 @@
-import pkg from "./package.json";
-import replace from "rollup-plugin-replace";
-import { terser } from "rollup-plugin-terser";
-import typescript from "rollup-plugin-typescript2";
+/* eslint-disable prettier/prettier */
+import pkg from './package.json';
+import replace from 'rollup-plugin-replace';
+import { terser } from 'rollup-plugin-terser';
+import typescript from 'rollup-plugin-typescript2';
 
-// helper function used to convert package names to an alias for globals
-// Example: react-functional-select => ReactFunctionalSelect
+// Function used to create package aliases for globals (e.g. react-functional-select => ReactFunctionalSelect)
 const getExternalPkgAlias = (external) => {
   const capFirstChar = (external.charAt(0).toUpperCase() + external.slice(1));
   return (capFirstChar.indexOf('-') > -1)
@@ -12,88 +12,78 @@ const getExternalPkgAlias = (external) => {
     : capFirstChar;
 };
 
-const _input = "./src/index.ts";
+const _input = './src/index.ts';
 const _name = getExternalPkgAlias(pkg.name);
 const _externals = Object.keys(pkg.peerDependencies || {});
 
 const _umdGlobals = (() => {
   const globals = {};
-  _externals.forEach((key) => {
-     globals[key] = getExternalPkgAlias(key);
-  });
+  _externals.forEach((key) => { globals[key] = getExternalPkgAlias(key); });
   return globals;
 })();
 
+const typescript2Plugin = typescript({
+  typescript: require('typescript'),
+});
+
 export default [
-  // commonjs build
+  /** * COMMONJS ****/
   {
-    input: _input,
     external: _externals,
+    input: _input,
     output: {
       file: pkg.main,
-      format: "cjs"
+      format: 'cjs',
     },
-    plugins: [
-      typescript({
-        typescript: require("typescript")
-      }),
-    ]
+    plugins: [typescript2Plugin],
   },
 
-  // module build
+  /** * MODULE ****/
   {
-    input: _input,
     external: _externals,
+    input: _input,
     output: {
       file: pkg.module,
-      format: "esm"
+      format: 'esm',
     },
-    plugins: [
-      typescript({
-        typescript: require("typescript")
-      }),
-    ]
+    plugins: [typescript2Plugin],
   },
 
-  // browser umd (development build)
+  /** * BROWSER (DEVELOPMENT) ****/
   {
-    input: _input,
     external: _externals,
+    input: _input,
     output: {
-      file: "dist/index-dev.umd.js",
-      format: "umd",
+      file: 'dist/index-dev.umd.js',
+      format: 'umd',
+      globals: _umdGlobals,
       name: _name,
-      globals: _umdGlobals
     },
     plugins: [
-      typescript({
-        typescript: require("typescript")
-      }),
+      typescript2Plugin,
       replace({
-        "process.env.NODE_ENV": JSON.stringify("development")
+        'process.env.NODE_ENV': JSON.stringify('development'),
       }),
-      terser()
-    ]
+      terser(),
+    ],
   },
 
-  // browser umd (production build)
+  /** * BROWSER (PRODUCTION) ****/
   {
-    input: _input,
     external: _externals,
+    input: _input,
     output: {
-      file: "dist/index-prod.umd.js",
-      format: "umd",
+      file: 'dist/index-prod.umd.js',
+      format: 'umd',
+      globals: _umdGlobals,
       name: _name,
-      globals: _umdGlobals
     },
     plugins: [
-      typescript({
-        typescript: require("typescript")
-      }),
+      typescript2Plugin,
       replace({
-        "process.env.NODE_ENV": JSON.stringify("development")
+        'process.env.NODE_ENV': JSON.stringify('development'),
       }),
-      terser()
-    ]
-  }
+      terser(),
+    ],
+  },
 ];

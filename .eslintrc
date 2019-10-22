@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "eslint-config-poetez",
+    "plugin:prettier/recommended"
+  ],
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "global-require": "off",
+    "semi": "off",
+    "padding-line-between-statements": "off"
+  }
+}

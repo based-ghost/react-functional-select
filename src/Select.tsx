@@ -17,7 +17,7 @@ import {
   MouseOrTouchEvent,
   IndexPositionEnum,
   ControlWrapperProps,
-} from './types/index.';
+} from './types';
 import {
   OPTIONS_DEFAULT,
   NO_SELECTED_OPTION,

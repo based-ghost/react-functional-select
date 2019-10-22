@@ -1,32 +1,9 @@
-# react-functional-select
-
-[![Latest Stable Version](https://img.shields.io/npm/v/react-functional-select.svg)](https://www.npmjs.com/package/react-functional-select)
-[![License](https://img.shields.io/npm/l/react-functional-select.svg)](./LICENSE)
-[![Build Status](https://img.shields.io/travis/based-ghost/react-functional-select/master.svg)](https://travis-ci.org/based-ghost/react-functional-select)
-
-This lightweight package delivers ultimate performance for complex dropdown/select web component scenarios - it effortlessy handles searching, scrolling and keying even when working with data sets numbering in the tens of thousandes. It is powered by [react-window](https://github.com/bvaughn/react-window) and [styled-components](https://www.styled-components.com/). In addition, it is built entirely using `React Hooks` and `FunctionComponents`.
-
-While raw performance and minimal package size were the primary objectives, it is built with an advanced API that should cover the vast majority of use-cases. The API's functionality was largely inspired by [react-select](https://github.com/JedWatson/react-select), which is one of the most flexible and complete React component API's I have seen. Essentially, my aim was to narrow the API's focus down to critical/common/performance-centric areas - and then deliver an optimized solution with as few lines of code as I deemed reasonable.
-
-## Installation (Including peer dependencies)
-
-```bash
-# npm
-npm i react-window react-styled-components react-functional-select
-
-# Yarn
-yarn add react-window react-styled-components react-functional-select
-```
-
-## Usage
-
-- [Demo](https://based-ghost.github.io/react-functional-select/index.html?path=/story/react-functional-select--basic)
-- [Source code](./src/__stories__)
-
-#### Example (BasicProps.story.tsx)
-
-```JSX
-/*** ...IMPORTS... ***/
+import React, { useState, useEffect, useCallback } from 'react';
+import { Select } from '..';
+import styled from 'styled-components';
+import Checkbox from './helpers/Checkbox';
+import { storiesOf } from '@storybook/react';
+import { Hr, Title, Label, SubTitle, Container, SelectContainer, Paragraph, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 type CityOption = {
   readonly id: number;
@@ -34,25 +11,30 @@ type CityOption = {
   readonly state: string;
 };
 
-const SelectedLabelText = styled.span`
-  margin-left: 0px;
-  font-weight: 600;
-`;
-
 const SelectedCode = styled(Code)`
   font-weight: 400;
   font-size: 0.875em;
 `;
 
+const SelectedLabelText = styled.span`
+  margin-left: 0px;
+  font-weight: 600;
+`;
+
 const _options: CityOption[] = [
-  { id: 1, city: 'Austin', state: 'TX' },
-  { id: 2, city: 'Denver', state: 'CO' },
-  { id: 3, city: 'Chicago', state: 'IL' },
-  { id: 4, city: 'Phoenix', state: 'AZ' },
-  { id: 5, city: 'Houston', state: 'TX' },
+  { id: 1,  city: 'Austin',      state: 'TX' },
+  { id: 2,  city: 'Denver',      state: 'CO' },
+  { id: 3,  city: 'Chicago',     state: 'IL' },
+  { id: 4,  city: 'Phoenix',     state: 'AZ' },
+  { id: 5,  city: 'Houston',     state: 'TX' },
+  { id: 6,  city: 'Las Vegas',   state: 'NV' },
+  { id: 7,  city: 'Milwaukee',   state: 'WI' },
+  { id: 8,  city: 'Louisville',  state: 'KY' },
+  { id: 9,  city: 'Los Angeles', state: 'CA' },
+  { id: 10, city: 'Minneapolis', state: 'MN' },
 ];
 
-const BasicProps: React.FC = () => {
+storiesOf('React Functional Select', module).add('Basic', () => {
   const [isInvalid, setIsInvalid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -80,8 +62,22 @@ const BasicProps: React.FC = () => {
     <Container>
       <Title>Basic Properties</Title>
       <Hr />
-      <Paragraph>Description of story...</Paragraph>
-      <Paragraph>Description of story continued...</Paragraph>
+      <Paragraph>
+        In this story's source code, notice that the <Code>onOptionChange</Code>
+        , <Code>getOptionValue</Code> and <Code>getOptionLabel</Code> callback
+        props are wrapped in a <Code>useCallback</Code>. While not required,{' '}
+        <em>strongly prefer </em> memoization of any callback function props 
+        whenever possible. This will greatly boost performance and limit re-renders 
+        as these props are referenced in the dependency arrays 
+        of <Code>useCallbacks</Code> and <Code>useEffects</Code>. When defined in a 
+        functional component, wrap in a <Code>useCallback</Code>; when defined in a 
+        legacy class component, ensure proper binding to <Code>this</Code>.
+      </Paragraph>
+      <Paragraph>
+        The <Code>options</Code> prop should also be memoized. Either consume it
+        directly from a state management store, or make sure it is stable by
+        avoiding inline or render-based mutations.
+      </Paragraph>
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>
@@ -137,7 +133,4 @@ const BasicProps: React.FC = () => {
       </Card>
     </Container>
   );
-};
-```
-
-#### TODO: complete unit tests & documentation write-ups..
+});

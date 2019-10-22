@@ -1,5 +1,5 @@
 import { trimAndFormatFilterStr } from '../utils';
-import { OptionData, MenuOption } from '../types/index.';
+import { OptionData, MenuOption } from '../types';
 import { useEffect, useState, ReactText } from 'react';
 import { OPTIONS_DEFAULT } from '../constants/defaults';
 

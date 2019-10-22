@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DarkTheme from './darkTheme';
-import GlobalStyle from "./globalStyle";
+import GlobalStyle from './globalStyle';
 import { configure, addParameters } from '@storybook/react';
 
 // Define storybook global configuration
-const _globalStyleId = "gen3-global-style";
-const req = require.context("../src/__stories__", true, /\.story\.tsx$/);
+const _globalStyleId = 'gen3-global-style';
+const req = require.context('../__stories__', true, /\.story\.tsx$/);
 
 addParameters({
   options: {
@@ -40,7 +40,7 @@ const loadStories = () => {
   const { globalStyleEl, cleanup } = setupGlobalStyle();
   ReactDOM.render(<GlobalStyle />, globalStyleEl, cleanup);
 
-  // Automatically import all files ending in *.story.tsx found at path '../src/__stories__'
+  // Automatically import all files ending in *.story.tsx found at path '../__stories__'
   req.keys().forEach(file => req(file));
 };
 

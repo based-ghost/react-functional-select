@@ -1,24 +1,25 @@
+/* eslint-disable prettier/prettier */
 module.exports = {
+  plugins: [
+    '@babel/proposal-object-rest-spread',
+    'babel-plugin-styled-components',
+  ],
   presets: [
     [
-      "@babel/env",
+      '@babel/env',
       {
         loose: true,
         targets: {
           browsers: [
-            "last 2 versions",
-            "IE 11",
-            "maintained node versions",
-            "not dead"
-          ]
-        }
-      }
+            'last 2 versions',
+            'IE 11',
+            'maintained node versions',
+            'not dead',
+          ],
+        },
+      },
     ],
-    "@babel/preset-react",
-    "@babel/typescript"
+    '@babel/preset-react',
+    '@babel/typescript',
   ],
-  plugins: [
-    "@babel/proposal-object-rest-spread",
-    "babel-plugin-styled-components"
-  ]
 };

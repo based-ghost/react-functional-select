@@ -1,5 +1,5 @@
 import { ReactText } from 'react';
-import { MenuOption, OptionData, SelectedOption } from './types/index.';
+import { MenuOption, OptionData, SelectedOption } from './types';
 import { css, FlattenSimpleInterpolation } from 'styled-components';
 
 // ============================================

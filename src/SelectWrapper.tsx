@@ -3,7 +3,7 @@ import Select from './Select';
 import { useTheme } from './hooks';
 import { createID, isTouchDevice } from './utils';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
-import { SelectProps, SelectHandle, SelectWrapperProps } from './types/index.';
+import { SelectProps, SelectHandle, SelectWrapperProps } from './types';
 
 /**
  * This is the parent component for the react-functional-select tree.

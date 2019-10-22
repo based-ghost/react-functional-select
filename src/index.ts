@@ -1,4 +1,4 @@
-import * as Types from './types/index.';
+import * as Types from './types';
 
 // Export types & interfaces
 export type Theme = Types.Theme;

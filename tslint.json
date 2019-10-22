@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "tslint-config-poetez",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "interface-over-type-literal": false,
+    "object-literal-sort-keys": [
+      false,
+      "ignore-case"
+    ],
+    "prettier": true,
+    "trailing-comma": true,
+    "space-within-parens": false,
+    "semicolon": true,
+    "variable-name": false
+  }
+}

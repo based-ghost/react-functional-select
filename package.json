@@ -1,6 +1,6 @@
 {
   "name": "react-functional-select",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost)",
   "description": "A low-code, high-performance select control for React",
   "main": "dist/index.cjs.js",
@@ -37,9 +37,6 @@
     "input",
     "ui"
   ],
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
@@ -68,6 +65,9 @@
     "concurrently": "^4.1.1",
     "cross-env": "^5.2.0",
     "eslint": "^6.2.0",
+    "eslint-config-poetez": "^0.1.4",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.14.3",
     "husky": "^3.0.3",
     "npm-run-all": "^4.1.5",
@@ -84,6 +84,10 @@
     "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript2": "^0.24.3",
     "styled-components": "^5.0.0-beta.8-groupsizefix",
+    "tslint": "^5.20.0",
+    "tslint-config-poetez": "^2.0.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.5.3",
     "webpack": "^4.41.0"
   },
@@ -103,6 +107,9 @@
     "test": "cross-env NODE_ENV=test jest",
     "start": "run-s storybook",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -c .storybook -o docs"
+    "build-storybook": "build-storybook -c .storybook -o docs",
+    "lint": "run-p lint:*",
+    "lint:ts": "tslint \"+(__stories__|__tests__|src)/**/*.+(ts|tsx)\" -c tslint.json -p tsconfig.json -t verbose",
+    "lint:js": "eslint \"+(.storybook|config)/**/*.js\""
   }
 }
