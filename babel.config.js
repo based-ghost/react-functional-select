@@ -10,9 +10,7 @@ module.exports = {
       '@babel/preset-env',
       {
         loose: true,
-        targets: {
-          node: 'current',
-        },
+        targets: { node: 'current' },
       },
     ],
     '@babel/preset-react',

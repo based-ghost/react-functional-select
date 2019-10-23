@@ -120,7 +120,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <Card>
         <CardHeader>
           <Label>
-            <LabelText>Select themes below:</LabelText>
+            <LabelText>Select themes below..</LabelText>
           </Label>
         </CardHeader>
         <CardBody>

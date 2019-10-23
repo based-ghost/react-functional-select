@@ -117,7 +117,8 @@ export const ButtonGroup = styled.div`
   }
 `;
 
-export const Button = styled.button<{ isActive?: boolean }>`
+export const Button = styled.button`
+  border: 0;
   color: #212529;
   cursor: pointer;
   font-size: 1rem;
@@ -130,27 +131,17 @@ export const Button = styled.button<{ isActive?: boolean }>`
   vertical-align: middle;
   border-radius: 0.25rem;
   padding: .375rem .75rem;
-  background-color: #eeeff0;
+  background-color: #EBECED;
   -webkit-appearance: button;
-  border: 1px solid transparent;
-  transition: color 0.15s ease-out, background-color 0.15s ease-out;
+  transition: color 0.2s ease-out, background-color 0.2s ease-out;
 
   :focus {
     outline: 0;
   }
 
   :hover {
-    background-color: #E1E2E3;
+    background-color: #DEDFE0;
   }
-
-  ${({ isActive }) => isActive && css`
-    color: #fff;
-    background-color: #007bff;
-
-    :hover {
-      background-color: #0067EB;
-    }
-  `}
 
   ${_mediaQueryIsMobile} {
     display: block;
@@ -216,7 +207,7 @@ export const Card = styled.div`
   flex-direction: column;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.085);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
 `;
 
 export const CardHeader = styled.div<{ supportMobile?: boolean }>`

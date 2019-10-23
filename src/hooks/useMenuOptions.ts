@@ -6,10 +6,10 @@ import { OPTIONS_DEFAULT } from '../constants/defaults';
 export const useMenuOptions = (
   options: OptionData[],
   debouncedInputValue: string,
-  getOptionValue_CB: (data: OptionData) => ReactText,
-  getOptionLabel_CB: (data: OptionData) => ReactText,
-  getIsOptionDisabled_CB: (data: OptionData) => boolean,
-  getFilterOptionString_CB: (option: MenuOption) => string,
+  getOptionValueCB: (data: OptionData) => ReactText,
+  getOptionLabelCB: (data: OptionData) => ReactText,
+  getIsOptionDisabledCB: (data: OptionData) => boolean,
+  getFilterOptionStringCB: (option: MenuOption) => string,
   filterIsCaseSensitive?: boolean
 ): MenuOption[] => {
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(OPTIONS_DEFAULT);
@@ -20,15 +20,15 @@ export const useMenuOptions = (
       const cleanSearchInputValue = trimAndFormatFilterStr(debouncedInputValue, filterIsCaseSensitive);
 
       const optionSatisfiesFilter = (menuOption: MenuOption): boolean => {
-        const cleanStringifiedOption = trimAndFormatFilterStr(getFilterOptionString_CB(menuOption), filterIsCaseSensitive);
+        const cleanStringifiedOption = trimAndFormatFilterStr(getFilterOptionStringCB(menuOption), filterIsCaseSensitive);
         return cleanStringifiedOption.indexOf(cleanSearchInputValue) > -1;
       };
 
       const parseMenuOption = (data: OptionData): MenuOption | undefined => {
         const menuOption = {
           data,
-          label: getOptionLabel_CB(data),
-          value: getOptionValue_CB(data),
+          label: getOptionLabelCB(data),
+          value: getOptionValueCB(data),
         };
 
         if (cleanSearchInputValue && !optionSatisfiesFilter(menuOption)) {
@@ -37,7 +37,7 @@ export const useMenuOptions = (
 
         return {
           ...menuOption,
-          ...(getIsOptionDisabled_CB(data) && { isDisabled: true }),
+          ...(getIsOptionDisabledCB(data) && { isDisabled: true }),
         };
       };
 
@@ -50,7 +50,7 @@ export const useMenuOptions = (
 
     // Set menuOptions state (ensure array returned)
     setMenuOptions(createMenuOptions() || OPTIONS_DEFAULT);
-  }, [options, filterIsCaseSensitive, debouncedInputValue, getFilterOptionString_CB, getOptionValue_CB, getOptionLabel_CB, getIsOptionDisabled_CB]);
+  }, [options, filterIsCaseSensitive, debouncedInputValue, getFilterOptionStringCB, getOptionValueCB, getOptionLabelCB, getIsOptionDisabledCB]);
 
   return menuOptions;
 };

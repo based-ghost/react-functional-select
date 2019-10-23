@@ -53,7 +53,7 @@ storiesOf('React Functional Select', module).add('Methods', () => {
       <Card>
         <CardHeader supportMobile>
           <Label>
-            <LabelText>Simulate Methods:</LabelText>
+            <LabelText>Simulate Methods</LabelText>
           </Label>
           <ButtonGroup>
             <Button onClick={focusSelect}>Focus</Button>

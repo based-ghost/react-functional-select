@@ -222,23 +222,23 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     isDisabled: isFocusedOptionDisabled,
   } = focusedOption;
 
-  const getOptionLabel_CB = useCallback((data: OptionData): ReactText => {
+  const getOptionLabelCB = useCallback((data: OptionData): ReactText => {
     return getOptionLabel ? getOptionLabel(data) : data.label;
   }, [getOptionLabel]);
 
-  const getOptionValue_CB = useCallback((data: OptionData): ReactText => {
+  const getOptionValueCB = useCallback((data: OptionData): ReactText => {
     return getOptionValue ? getOptionValue(data) : data.value;
   }, [getOptionValue]);
 
-  const getIsOptionDisabled_CB = useCallback((data: OptionData): boolean => {
+  const getIsOptionDisabledCB = useCallback((data: OptionData): boolean => {
     return getIsOptionDisabled ? getIsOptionDisabled(data) : !!data.isDisabled;
   }, [getIsOptionDisabled]);
 
-  const renderOptionLabel_CB = useCallback((data: OptionData): ReactNode => {
-    return renderOptionLabel ? renderOptionLabel(data) : getOptionLabel_CB(data);
-  }, [renderOptionLabel, getOptionLabel_CB]);
+  const renderOptionLabelCB = useCallback((data: OptionData): ReactNode => {
+    return renderOptionLabel ? renderOptionLabel(data) : getOptionLabelCB(data);
+  }, [renderOptionLabel, getOptionLabelCB]);
 
-  const getFilterOptionString_CB = useCallback((option: MenuOption): string => {
+  const getFilterOptionStringCB = useCallback((option: MenuOption): string => {
     return getFilterOptionString ? getFilterOptionString(option) : String(option.label);
   }, [getFilterOptionString]);
 
@@ -246,10 +246,10 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   const menuOptions: MenuOption[] = useMenuOptions(
     options,
     debouncedInputValue,
-    getOptionValue_CB,
-    getOptionLabel_CB,
-    getIsOptionDisabled_CB,
-    getFilterOptionString_CB,
+    getOptionValueCB,
+    getOptionLabelCB,
+    getIsOptionDisabledCB,
+    getFilterOptionStringCB,
     filterIsCaseSensitive,
   );
 
@@ -303,7 +303,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
     },
     setValue: (option?: OptionData) => {
-      const validOptionOrUndefined = validateSetValueOption(option, menuOptions, getOptionValue_CB);
+      const validOptionOrUndefined = validateSetValueOption(option, menuOptions, getOptionValueCB);
       selectOption(validOptionOrUndefined);
     },
   }));
@@ -325,11 +325,11 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     if (canAttemptInitValSet && isPlainObject(initialValue)) {
       selectOption({
         data: initialValue,
-        value: getOptionValue_CB(initialValue),
-        label: getOptionLabel_CB(initialValue),
+        value: getOptionValueCB(initialValue),
+        label: getOptionLabelCB(initialValue),
       });
     }
-  }, [selectOption, initialValue, canAttemptInitValSet, getOptionValue_CB, getOptionLabel_CB]);
+  }, [selectOption, initialValue, canAttemptInitValSet, getOptionValueCB, getOptionLabelCB]);
 
   useEffect(() => {
     onOptionChange && onOptionChange(selectedOptionData || null);
@@ -531,7 +531,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
             inputValue={inputValue}
             placeholder={placeholder}
             selectedOptionData={selectedOptionData}
-            renderOptionLabel={renderOptionLabel_CB}
+            renderOptionLabel={renderOptionLabelCB}
           />
           <AutosizeInput
             id={inputId}
@@ -576,7 +576,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
           selectOption={selectOption}
           overscanCount={menuOverscanCount}
           focusedOptionIndex={focusedOptionIndex}
-          renderOptionLabel={renderOptionLabel_CB}
+          renderOptionLabel={renderOptionLabelCB}
           selectedOptionValue={selectedOptionValue}
         />
       </MenuWrapper>

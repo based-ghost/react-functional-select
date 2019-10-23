@@ -18,8 +18,8 @@ const _themeConfig: any = {
   menu: {
     option: {
       selectedColor: '#515151',
-      focusedBgColor: '#f5f5f5',
-      selectedBgColor: '#f5f5f5',
+      focusedBgColor: '#F2F2F2',
+      selectedBgColor: '#F2F2F2',
     }
   }
 };
@@ -48,7 +48,7 @@ const StyledSpan = styled.span`
   font-size: 1em;
   font-weight: 600;
   margin-left: 2px;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   letter-spacing: .01em;
 `;
 
@@ -113,7 +113,7 @@ storiesOf('React Functional Select', module).add('Complex', () => {
       <Card>
         <CardHeader>
           <Label>
-            <LabelText>JSX labels &amp; disabled option:</LabelText>
+            <LabelText>JSX labels &amp; disabled option..</LabelText>
           </Label>
         </CardHeader>
         <CardBody>

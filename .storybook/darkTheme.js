@@ -7,7 +7,7 @@ const _colorSecondary = '#f5b83d'; // golden-yellow (PrettyPrintJson.tsx header)
 const _colorPrimaryOpacity = 'rgba(252, 146, 158, 0.675)';
 
 export default create({
-  base: "dark",
+  base: 'dark',
 
   // Base theme colors
   colorPrimary: _colorSecondary,
@@ -16,11 +16,11 @@ export default create({
   // UI
   appBorderRadius: 4,
   appBg: _colorDarkest,
-  appBorderColor: "#535353",
+  appBorderColor: '#535353',
   appContentBg: _colorDarker,
 
   // Text colors
-  textColor: "#fff",
+  textColor: '#fff',
   textInverseColor: 'rgba(255, 255, 255, 0.9)',
 
   // Toolbar default and active colors
@@ -34,5 +34,5 @@ export default create({
   inputBorder: themes.light.inputBorder,
   inputTextColor: themes.light.inputTextColor,
 
-  brandUrl: "https://example.com"
+  brandUrl: 'https://based-ghost.github.io/react-functional-select/',
 });

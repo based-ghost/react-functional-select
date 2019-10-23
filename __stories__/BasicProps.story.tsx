@@ -111,7 +111,7 @@ storiesOf('React Functional Select', module).add('Basic', () => {
             />
             <Label>
               <SelectedLabelText>Selected Option: </SelectedLabelText>
-              <SelectedCode>{selectedOption ? JSON.stringify(selectedOption) : 'NULL'}</SelectedCode>
+              <SelectedCode>{JSON.stringify(selectedOption || {})}</SelectedCode>
             </Label>
           </CheckboxGroup>
         </CardHeader>

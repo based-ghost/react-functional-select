@@ -27,7 +27,7 @@ const PrintJsonHeader = styled.div`
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background-color: #1D2027;
-  box-shadow: rgba(20, 20, 20, 0.1) 0.0555556rem 0.0555556rem 1.11111rem;
+  box-shadow: rgba(20, 20, 20, 0.09) 0.0555556rem 0.0555556rem 1.11111rem;
 
   ${_mediaQueryIsMobileXS} {
     font-size: 1.05rem;
@@ -53,15 +53,16 @@ const PrintJsonPre = styled.pre`
 `;
 
 const PrettyPrintJson = React.memo<PrintJsonProps>(({ data, header }) => {
-  const jsonWithNoQuotes = (): string => {
-    const json = JSON.stringify(data || {}, null, 2);
-    return json.toString().replace(/"/g, '').replace(/\\/g, '');
-  };
+  const jsonWithNoQuotes = JSON
+    .stringify(data || {}, null, 2)
+    .toString()
+    .replace(/"/g, '')
+    .replace(/\\/g, '');
 
   return (
     <PrintJsonRoot>
       <PrintJsonHeader>{header}</PrintJsonHeader>
-      <PrintJsonPre>{jsonWithNoQuotes()}</PrintJsonPre>
+      <PrintJsonPre>{jsonWithNoQuotes}</PrintJsonPre>
     </PrintJsonRoot>
   );
 });

@@ -200,12 +200,12 @@ export function scrollMenuIntoViewOnOpen(
 export function validateSetValueOption(
   option: any,
   menuOptions: MenuOption[],
-  getOptionValue_CB: (data: OptionData) => ReactText
+  getOptionValueCB: (data: OptionData) => ReactText
 ): SelectedOption | undefined {
   if (option === null || option === undefined || Array.isArray(option)) {
     return undefined;
   }
-  const optionValue = (option && isPrimitive(option)) ? option : getOptionValue_CB(option);
+  const optionValue = (option && isPrimitive(option)) ? option : getOptionValueCB(option);
   return menuOptions.find((mOption) => mOption.value === optionValue) || undefined;
 }
 
