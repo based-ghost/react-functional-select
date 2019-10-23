@@ -12,8 +12,8 @@ Essentially this is a subset of `react-select`'s API, engineered for ultimate pe
 - [styled-components](https://github.com/styled-components/styled-components) to handle a dynamic and configurable styling system (while also aiding in the primary goal of performance).
 
 This is still a work in progress, but in its current state, should be suitable for the majority of use-cases. Please feel free to contribute and/or make suggestions - specificaly, in the following areas would be great:
-- The styling system needs some work in order to make it more flexible and extensible. Right now it is good enough to handle straight-forward configurations via `styled-component`'s overrideable `ThemeProvider`. Also, there is an opt-in to generate static `className` attributes on container nodes as a fall-back otpion if CSS-in-JS is not feasible.
-- The ability to handle complex, multi-select scenarios. While that requirement is not difficult to achieve on its own, implementing it in a way that does not bloat bundle size or bog down performance may take some consideration. Those are the core principals behind this project (and future ones that will stem from this one).
+- Additional flexibility to the styling system. Currently handles simple-to-mid complexity scenarios via `styled-component`'s overrideable `ThemeProvider`. As a fallback, you generate static `className` attributes on container nodes.
+- The ability to handle complex, multi-select scenarios (while keeping with the theme of optimal performance in as few lines of code as possible).
 
 ## Installation (Including peer dependencies)
 
