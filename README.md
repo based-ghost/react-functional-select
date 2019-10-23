@@ -19,10 +19,10 @@ This is still a work in progress, but in its current state, should be suitable f
 
 ```bash
 # npm
-npm i react-window react-styled-components react-functional-select
+npm i react-window styled-components react-functional-select
 
 # Yarn
-yarn add react-window react-styled-components react-functional-select
+yarn add react-window styled-components react-functional-select
 ```
 
 ## Usage
