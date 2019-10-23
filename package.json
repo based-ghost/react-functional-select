@@ -2,7 +2,7 @@
   "name": "react-functional-select",
   "version": "1.0.0-beta.6",
   "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost)",
-  "description": "A low-code, high-performance select control for React",
+  "description": "Micro-optimized, micro-sized ReactJS select component",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
