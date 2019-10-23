@@ -1,31 +1,42 @@
 # react-functional-select
 
-[![Latest Stable Version](https://img.shields.io/npm/v/react-functional-select.svg)](https://www.npmjs.com/package/react-functional-select)
-[![License](https://img.shields.io/npm/l/react-functional-select.svg)](./LICENSE)
-[![Build Status](https://img.shields.io/travis/based-ghost/react-functional-select/master.svg)](https://travis-ci.org/based-ghost/react-functional-select)
+> Micro-sized & micro-optimized select component for ReactJS
 
-This lightweight package delivers ultimate performance for complex dropdown/select web component scenarios - it effortlessy handles searching, scrolling and keying even when working with data sets numbering in the tens of thousandes. It is powered by [react-window](https://github.com/bvaughn/react-window) and [styled-components](https://www.styled-components.com/). In addition, it is built entirely using `React Hooks` and `FunctionComponents`.
+[![Latest Stable Version](https://img.shields.io/npm/v/react-functional-select.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
+[![Travis](https://img.shields.io/badge/ci-travis-green.svg?style=for-the-badge)](https://travis-ci.org/based-ghost/react-functional-select)
+[![NPM license](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](LICENSE.md)
 
-While raw performance and minimal package size were the primary objectives, it is built with an advanced API that should cover the vast majority of use-cases. The API's functionality was largely inspired by [react-select](https://github.com/JedWatson/react-select), which is one of the most flexible and complete React component API's I have seen. Essentially, my aim was to narrow the API's focus down to critical/common/performance-centric areas - and then deliver an optimized solution with as few lines of code as I deemed reasonable.
+## Inspiration
+This project was inspired by [`react-select`](https://github.com/JedWatson/react-select). If you need some features not provided, I suggest checking that package out.
 
-## Installation (Including peer dependencies)
+## Install
 
 ```bash
 # npm
-npm i react-window react-styled-components react-functional-select
+npm i react-window styled-components react-functional-select
 
 # Yarn
-yarn add react-window react-styled-components react-functional-select
+yarn add react-window styled-components react-functional-select
 ```
+
+## Overview
+Essentially, this is a subset of `react-select`'s API, engineered for ultimate performance and minimal footprint. It is built entirely using `React Hooks` and `FunctionComponents`. In addition, most of the code I was able to roll myself, so there are minimal peer dependencies to worry about:
+
+- [``react-window``](https://github.com/bvaughn/react-window) leveraged for integrated data virtualization/windowing (easily handles data-sets numbering in the tens of thousands with minimal-to-no impact on normally resource-intensive actions like keying and searching).
+- [`styled-components`](https://github.com/styled-components/styled-components) to handle dynamic, extensible styling via CSS-in-JS (there is also the option to generate `className` attributes for legacy stylesheets as a fall-back option).
+
+While still a work in progress, its current state should be suitable for many use-cases. Please feel free to contribute and/or make suggestions - specificaly, in the following areas:
+- Additional flexibility to the styling system. Currently handles simple-to-mid level complexity scenarios via `styled-component`'s overrideable `ThemeProvider`. As a fallback, you generate static `className` attributes on container nodes.
+- The ability to handle complex, multi-select scenarios (while keeping with the theme of optimal performance in as few lines of code as possible).
 
 ## Usage
 
 - [Demo](https://based-ghost.github.io/react-functional-select/index.html?path=/story/react-functional-select--basic)
 - [Source code](./__stories__)
 
-#### Example Usage
+#### Condensed BasicProps.story.tsx
 
-```JSX
+```TSX
 import { Select } from 'react-functional-select';
 import { Card, CardHeader, CardBody, Container, SelectContainer } from './helpers/styled';
 
@@ -44,9 +55,9 @@ const _options: CityOption[] = [
 ];
 
 const BasicProps: React.FC = () => {
-  const [isInvalid, setIsInvalid] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [isClearable, setIsClearable] = useState(true);
+  const [isInvalid, setIsInvalid] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [isClearable, setIsClearable] = useState<boolean>(true);
   const [selectedOption, setSelectedOption] = useState<CityOption | null>(null);
   
   const onOptionChange = useCallback((option: CityOption | null): void => {
