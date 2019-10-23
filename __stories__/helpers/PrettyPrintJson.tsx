@@ -27,7 +27,6 @@ const PrintJsonHeader = styled.div`
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background-color: #1D2027;
-  box-shadow: rgba(20, 20, 20, 0.09) 0.0555556rem 0.0555556rem 1.11111rem;
 
   ${_mediaQueryIsMobileXS} {
     font-size: 1.05rem;

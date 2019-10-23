@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import pkg from './package.json';
+import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
@@ -26,6 +27,12 @@ const typescript2Plugin = typescript({
   typescript: require('typescript'),
 });
 
+const babelConfigESModules = babel({
+  plugins: [['@babel/transform-runtime', { useESModules: true }]],
+  runtimeHelpers: true,
+  sourceMaps: true,
+});
+
 export default [
   /** * COMMONJS ****/
   {
@@ -35,7 +42,14 @@ export default [
       file: pkg.main,
       format: 'cjs',
     },
-    plugins: [typescript2Plugin],
+    plugins: [
+      typescript2Plugin,
+      babel({
+        plugins: ['@babel/transform-runtime'],
+        runtimeHelpers: true,
+        sourceMaps: true,
+      }),
+    ],
   },
 
   /** * MODULE ****/
@@ -46,7 +60,10 @@ export default [
       file: pkg.module,
       format: 'esm',
     },
-    plugins: [typescript2Plugin],
+    plugins: [
+      typescript2Plugin,
+      babelConfigESModules,
+    ],
   },
 
   /** * BROWSER (DEVELOPMENT) ****/
@@ -61,6 +78,7 @@ export default [
     },
     plugins: [
       typescript2Plugin,
+      babelConfigESModules,
       replace({
         'process.env.NODE_ENV': JSON.stringify('development'),
       }),
@@ -80,6 +98,7 @@ export default [
     },
     plugins: [
       typescript2Plugin,
+      babelConfigESModules,
       replace({
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),

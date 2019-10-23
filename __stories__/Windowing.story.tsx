@@ -21,7 +21,13 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
   }, []);
 
   useEffect(() => {
-    setOptions(createSelectOptions(optionsCount));
+    const handler = setTimeout(() => {
+      setOptions(createSelectOptions(optionsCount));
+    }, 120);
+
+    return () => {
+      clearTimeout(handler);
+    };
   }, [optionsCount]);
 
   useEffect(() => {

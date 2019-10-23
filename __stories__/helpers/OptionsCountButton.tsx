@@ -3,7 +3,17 @@ import { Button } from './styled';
 import { numberWithCommas } from './utils';
 import styled, { css } from 'styled-components';
 
-const OptionButton = styled(Button)<{ isActive?: boolean }>`
+type StyledButtonProps = {
+  readonly isActive?: boolean;
+};
+
+type OptionsCountButtonProps = {
+  readonly count: number;
+  readonly optionsCount: number;
+  readonly handleSetOptionsCount: (count: number) => void;
+};
+
+const StyledButton = styled(Button)<StyledButtonProps>`
   transition: color 0.115s ease, background-color 0.115s ease;
 
   ${({ isActive }) => isActive && css`
@@ -20,23 +30,17 @@ const OptionButton = styled(Button)<{ isActive?: boolean }>`
   }
 `;
 
-type OptionsCountButtonProps = {
-  readonly count: number;
-  readonly optionsCount: number;
-  readonly handleSetOptionsCount: (count: number) => void;
-};
-
 const OptionsCountButton: React.FC<OptionsCountButtonProps> = ({
   count,
   optionsCount,
   handleSetOptionsCount,
 }) => (
-  <OptionButton
+  <StyledButton
     isActive={Boolean(count === optionsCount)}
     onClick={() => handleSetOptionsCount(count)}
   >
     {`${numberWithCommas(count)} Options`}
-  </OptionButton>
+  </StyledButton>
 );
 
 export default OptionsCountButton;
