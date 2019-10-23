@@ -2,9 +2,9 @@
 
 > Micro-sized & micro-optimized select component for ReactJS
 
-[![Latest Stable Version](https://img.shields.io/npm/v/react-functional-select.svg)](https://www.npmjs.com/package/react-functional-select)
-[![License](https://img.shields.io/npm/l/react-functional-select.svg)](./LICENSE)
-[![Build Status](https://img.shields.io/travis/based-ghost/react-functional-select/master.svg)](https://travis-ci.org/based-ghost/react-functional-select)
+[![Latest Stable Version](https://img.shields.io/npm/v/react-functional-select.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
+[![License](https://img.shields.io/npm/l/react-functional-select.svg?style=for-the-badge)](./LICENSE)
+[![Travis](https://img.shields.io/badge/ci-travis-green.svg?style=for-the-badge)](https://travis-ci.org/based-ghost/react-functional-select)
 
 ## Inspiration
 This project was inspired by [react-select](https://github.com/JedWatson/react-select).
