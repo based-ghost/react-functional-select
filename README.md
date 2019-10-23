@@ -4,9 +4,16 @@
 [![License](https://img.shields.io/npm/l/react-functional-select.svg)](./LICENSE)
 [![Build Status](https://img.shields.io/travis/based-ghost/react-functional-select/master.svg)](https://travis-ci.org/based-ghost/react-functional-select)
 
-This lightweight package delivers ultimate performance for complex dropdown/select web component scenarios - it effortlessy handles searching, scrolling and keying even when working with data sets numbering in the tens of thousandes. It is powered by [react-window](https://github.com/bvaughn/react-window) and [styled-components](https://www.styled-components.com/). In addition, it is built entirely using `React Hooks` and `FunctionComponents`.
+This package takes heavy inspiration from [react-select](https://github.com/JedWatson/react-select), so if you need a fully-featured and proven component go and check that out.
 
-While raw performance and minimal package size were the primary objectives, it is built with an advanced API that should cover the vast majority of use-cases. The API's functionality was largely inspired by [react-select](https://github.com/JedWatson/react-select), which is one of the most flexible and complete React component API's I have seen. Essentially, my aim was to narrow the API's focus down to critical/common/performance-centric areas - and then deliver an optimized solution with as few lines of code as I deemed reasonable.
+Essentially this is a subset of `react-select`'s API, engineered for ultimate performance and minimal footprint. It is built entirely using `React Hooks` and `FunctionComponents`. In addition, most of the code I was able to roll myself, so there are minimal peer dependencies to worry about:
+
+- [react-window](https://github.com/bvaughn/react-window) leveraged for integrated data virtualization/windowing (easily handles data-sets numbering in the tens of thousands with minimal-to-no impact on normally resource-intensive actions like keying and searching).
+- [styled-components](https://www.styled-components.com/) to handle a dynamic and configurable styling system (while also aiding in the primary goal of performance).
+
+This is still a work in progress, but in its current state, should be suitable for the majority of use-cases. Please feel free to contribute and/or make suggestions - specificaly, in the following areas would be great:
+- The styling system needs some work in order to make it more flexible and extensible. Right now it is good enough to handle straight-forward configurations via `styled-component`'s overrideable `ThemeProvider`. Also, there is an opt-in to generate static `className` attributes on container nodes as a fall-back otpion if CSS-in-JS is not feasible.
+- The ability to handle complex, multi-select scenarios. While that requirement is not difficult to achieve on its own, implementing it in a way that does not bloat bundle size or bog down performance may take some consideration. Those are the core principals behind this project (and future ones that will stem from this one).
 
 ## Installation (Including peer dependencies)
 
