@@ -7,7 +7,7 @@
 [![NPM license](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](LICENSE.md)
 
 ## Inspiration
-This project was inspired by [react-select](https://github.com/JedWatson/react-select).
+This project was inspired by [`react-select`](https://github.com/JedWatson/react-select). If you need some features not provided, I suggest checking that package out.
 
 ## Install
 
