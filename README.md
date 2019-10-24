@@ -4,7 +4,7 @@
 
 [![Latest Stable Version](https://img.shields.io/npm/v/react-functional-select.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
 [![Travis](https://img.shields.io/badge/ci-travis-green.svg?style=for-the-badge)](https://travis-ci.org/based-ghost/react-functional-select)
-[![NPM license](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](LICENSE.md)
+[![NPM license](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](./LICENSE)
 
 ## Inspiration
 This project was inspired by [`react-select`](https://github.com/JedWatson/react-select). If you need some features not provided, I suggest checking that package out.
