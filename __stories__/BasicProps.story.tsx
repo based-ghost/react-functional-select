@@ -35,11 +35,11 @@ const _options: CityOption[] = [
 ];
 
 storiesOf('React Functional Select', module).add('Basic', () => {
-  const [isInvalid, setIsInvalid] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [isClearable, setIsClearable] = useState(true);
-  const [isSearchable, setIsSearchable] = useState(true);
+  const [isInvalid, setIsInvalid] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [isClearable, setIsClearable] = useState<boolean>(true);
+  const [isSearchable, setIsSearchable] = useState<boolean>(true);
   const [selectedOption, setSelectedOption] = useState<CityOption | null>(null);
 
   const getOptionValue = useCallback((option: CityOption): number => {

@@ -399,11 +399,15 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   };
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
-    if (isDisabled) return;
+    if (isDisabled) {
+       return;
+    }
 
     if (onKeyDown) {
       onKeyDown(e);
-      if (e.defaultPrevented) return;
+      if (e.defaultPrevented) {
+         return;
+      }
     }
 
     switch (e.key) {
@@ -464,8 +468,8 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   };
 
   const handleOnControlMouseDown = (e: MouseOrTouchEvent<HTMLDivElement>): void => {
-    if (isDisabled) return;
-    if (!isFocused) focusInput();
+    if (isDisabled) { return; }
+    if (!isFocused) { focusInput(); }
 
     const targetIsNotInput = (e.currentTarget.tagName !== 'INPUT');
     if (!menuOpen) {
