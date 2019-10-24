@@ -1,7 +1,7 @@
 {
   "name": "react-functional-select",
   "version": "1.0.0-beta.8",
-  "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost)",
+  "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)",
   "description": "Miro-sized and micro-optimized select component for ReactJS",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -10,6 +10,9 @@
     "dist"
   ],
   "license": "MIT",
+  "contributors": [
+    "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)"
+  ],
   "bugs": {
     "url": "https://github.com/based-ghost/react-functional-select/issues"
   },
@@ -17,7 +20,7 @@
     "url": "https://github.com/based-ghost/react-functional-select.git",
     "type": "git"
   },
-  "homepage": "https://github.com/based-ghost/react-functional-select#readme",
+  "homepage": "https://based-ghost.github.io/react-functional-select/",
   "keywords": [
     "react",
     "reactjs",
