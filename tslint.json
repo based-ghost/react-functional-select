@@ -4,18 +4,21 @@
     "tslint-config-prettier"
   ],
   "rules": {
-    "interface-over-type-literal": false,
+    "naming-convention": [
+      false
+    ],
     "object-literal-sort-keys": [
       false,
       "ignore-case"
     ],
     "prettier": true,
-    "trailing-comma": true,
-    "space-within-parens": false,
     "semicolon": true,
+    "trailing-comma": true,
     "variable-name": false,
+    "ordered-imports": false,
+    "space-within-parens": false,
     "newline-before-return": false,
     "arrow-return-shorthand": true,
-    "ordered-imports": false
+    "interface-over-type-literal": false
   }
 }

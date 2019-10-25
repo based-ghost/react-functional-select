@@ -1,7 +1,7 @@
 {
   "name": "react-functional-select",
   "version": "1.0.0-beta.8",
-  "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost)",
+  "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)",
   "description": "Miro-sized and micro-optimized select component for ReactJS",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -10,6 +10,9 @@
     "dist"
   ],
   "license": "MIT",
+  "contributors": [
+    "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)"
+  ],
   "bugs": {
     "url": "https://github.com/based-ghost/react-functional-select/issues"
   },
@@ -17,7 +20,7 @@
     "url": "https://github.com/based-ghost/react-functional-select.git",
     "type": "git"
   },
-  "homepage": "https://github.com/based-ghost/react-functional-select#readme",
+  "homepage": "https://based-ghost.github.io/react-functional-select/",
   "keywords": [
     "react",
     "reactjs",
@@ -49,12 +52,12 @@
     "@storybook/addon-storysource": "^5.2.5",
     "@storybook/addons": "^5.2.5",
     "@storybook/react": "^5.2.5",
-    "@testing-library/jest-dom": "^4.1.2",
+    "@testing-library/jest-dom": "^4.2.0",
     "@testing-library/react": "^9.3.0",
-    "@types/jest": "^24.0.19",
+    "@types/jest": "^24.0.20",
     "@types/node": "^12.11.7",
-    "@types/react": "^16.9.10",
-    "@types/react-dom": "^16.9.2",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.3",
     "@types/react-window": "^1.8.1",
     "@types/storybook__react": "^4.0.2",
     "@types/styled-components": "^4.1.19",
@@ -67,7 +70,7 @@
     "concurrently": "^4.1.1",
     "cross-env": "^5.2.0",
     "enzyme": "^3.10.0",
-    "eslint": "^6.2.0",
+    "eslint": "^6.6.0",
     "eslint-config-poetez": "^0.1.4",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-prettier": "^3.1.1",

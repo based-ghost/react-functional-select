@@ -73,7 +73,7 @@ export const Hr = styled.hr`
   border: 0;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
 `;
 
 export const Code = styled.code`
@@ -206,7 +206,7 @@ export const Card = styled.div`
   background-color: #fff;
   flex-direction: column;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.125);
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
 `;
 
@@ -219,7 +219,7 @@ export const CardHeader = styled.div<{ supportMobile?: boolean }>`
   padding: 0.75rem 1.25rem;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
   ${_mediaQueryIsMobile} {
     text-align: center;
@@ -242,7 +242,7 @@ export const CardHeader = styled.div<{ supportMobile?: boolean }>`
 
 export const CardBody = styled.div`
   flex: 1 1 auto;
-  min-height: 35rem;
+  min-height: 32rem;
   padding: 0.75rem 1.25rem;
 `;
 

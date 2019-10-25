@@ -25,11 +25,8 @@ export default createGlobalStyle`
     line-height: 1.5;
     min-height: 120vh;
     flex-direction: column;
+    background-color: #fff;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-
-    > #root {
-      background-color: #fff;
-    }
   }
 
   em {
