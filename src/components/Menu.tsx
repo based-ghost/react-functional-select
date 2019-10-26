@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Fragment } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
 import { FixedSizeList } from 'react-window';
@@ -37,25 +37,22 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     focusedOptionIndex,
     selectedOptionValue,
   }), [idSuffix, menuOptions, focusedOptionIndex, selectedOptionValue, selectOption, renderOptionLabel]);
-  
-  if (!isArrayWithLength(menuOptions)) {
-    return (
-      <NoOptionsMsg>{noOptionsMsg}</NoOptionsMsg>
-    );
-  }
 
   return (
-    <FixedSizeList
-      ref={ref}
-      width={width!}
-      itemSize={itemSize}
-      itemData={itemData}
-      overscanCount={overscanCount}
-      itemCount={menuOptions.length}
-      height={Math.min(maxHeight, menuOptions.length * itemSize)}
-    >
-      {Option}
-    </FixedSizeList>
+    <Fragment>
+      <FixedSizeList
+        ref={ref}
+        width={width!}
+        itemSize={itemSize}
+        itemData={itemData}
+        overscanCount={overscanCount}
+        itemCount={menuOptions.length}
+        height={Math.min(maxHeight, menuOptions.length * itemSize)}
+      >
+        {Option}
+      </FixedSizeList>
+      {!isArrayWithLength(menuOptions) && <NoOptionsMsg>{noOptionsMsg}</NoOptionsMsg>}
+    </Fragment>
   );
 });
 

@@ -193,6 +193,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   ref: React.Ref<SelectHandle>,
 ) => {
   // DOM / instance ref attributes
+  const prevMenuOptionsLen = useRef<number>();
   const listRef = useRef<FixedSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -313,7 +314,8 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   // 2: assign the initialValue (if passed) - initDefault prop exists to help us execute this just once
   // 3: handle changes to selected option value
   // 4: handle changes to menu open state - run callbacks if defined, scroll menu into view, etc.
-  // 5: handle menuOptions changes - conditionally focus first option and do scroll to first option
+  // 5: handle menuOptions changes - conditionally focus first option and do scroll to first option;
+  //    ...also, handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
 
   useEffect(() => {
     if (isFocused && openMenuOnFocus) {
@@ -352,13 +354,15 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   }, [menuOpen, onMenuClose, onMenuOpen, scrollMenuIntoView]);
 
   useEffect(() => {
-    if (menuOptions.length === 1 || (!!menuOptions.length && menuOptions.length !== options.length)) {
+    const curLen = menuOptions.length;
+    if (curLen === 1 || (curLen > 0 && (curLen !== options.length || prevMenuOptionsLen.current === 0))) {
       setFocusedOption({
         index: 0,
         ...menuOptions[0],
       });
       scrollToItemIndex(0);
     }
+    prevMenuOptionsLen.current = curLen; // Track the previous value of menuOptions.length (used above)
   }, [options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {

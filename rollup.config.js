@@ -5,12 +5,12 @@ import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
 
-const _input = './src/index.ts';
-const _name = 'ReactFunctionalSelect';
-const _externals = Object.keys(pkg.peerDependencies || {});
+const input = './src/index.ts';
+const name = 'ReactFunctionalSelect';
+const external = Object.keys(pkg.peerDependencies || {});
 
-const _umdGlobals = {
-  'react': 'React',
+const umdGlobals = {
+  react: 'React',
   'react-window': 'ReactWindow',
   'styled-components': 'StyledComponents',
 };
@@ -19,58 +19,56 @@ const typescript2Plugin = typescript({
   typescript: require('typescript'),
 });
 
-const babelConfigESModules = babel({
-  plugins: [['@babel/transform-runtime', { useESModules: true }]],
-  runtimeHelpers: true,
-  sourceMaps: true,
-});
+const getBabelConfigESModules = (useESModules = false) => {
+  return babel({
+    plugins: [['@babel/transform-runtime', { useESModules }]],
+    runtimeHelpers: true,
+    sourceMaps: true,
+  });
+};
 
 export default [
   /** * COMMONJS ****/
   {
-    external: _externals,
-    input: _input,
+    external,
+    input,
     output: {
       file: pkg.main,
       format: 'cjs',
     },
     plugins: [
       typescript2Plugin,
-      babel({
-        plugins: ['@babel/transform-runtime'],
-        runtimeHelpers: true,
-        sourceMaps: true,
-      }),
+      getBabelConfigESModules(),
     ],
   },
 
   /** * MODULE ****/
   {
-    external: _externals,
-    input: _input,
+    external,
+    input,
     output: {
       file: pkg.module,
       format: 'esm',
     },
     plugins: [
-      typescript2Plugin,
-      babelConfigESModules,
+      typescript2Plugin, 
+      getBabelConfigESModules(true),
     ],
   },
 
   /** * BROWSER (DEVELOPMENT) ****/
   {
-    external: _externals,
-    input: _input,
+    external,
+    input,
     output: {
       file: 'dist/index-dev.umd.js',
       format: 'umd',
-      globals: _umdGlobals,
-      name: _name,
+      globals: umdGlobals,
+      name,
     },
     plugins: [
       typescript2Plugin,
-      babelConfigESModules,
+      getBabelConfigESModules(true),
       replace({
         'process.env.NODE_ENV': JSON.stringify('development'),
       }),
@@ -80,17 +78,17 @@ export default [
 
   /** * BROWSER (PRODUCTION) ****/
   {
-    external: _externals,
-    input: _input,
+    external,
+    input,
     output: {
       file: 'dist/index-prod.umd.js',
       format: 'umd',
-      globals: _umdGlobals,
-      name: _name,
+      globals: umdGlobals,
+      name,
     },
     plugins: [
       typescript2Plugin,
-      babelConfigESModules,
+      getBabelConfigESModules(true),
       replace({
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),

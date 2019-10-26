@@ -11,24 +11,27 @@ import { SelectProps, SelectHandle, SelectWrapperProps } from './types';
  */
 const SelectWrapper = React.forwardRef<SelectHandle, SelectWrapperProps>((
   { 
-    themeConfig, 
-    ...props 
+    inputId,
+    selectId,
+    idSuffix,
+    menuWidth,
+    themeConfig,
+    blurInputOnSelect,
+    ...rest 
   },
   ref: React.Ref<SelectHandle>,
 ) => {
   const theme: DefaultTheme = useTheme(themeConfig);
-  const menuWidth: ReactText = props.menuWidth || theme.menu.width;
-
-  const blurInputOnSelect: boolean = (typeof props.blurInputOnSelect === 'boolean')
-    ? props.blurInputOnSelect
-    : isTouchDevice();
+  const menuWidth2: ReactText = menuWidth || theme.menu.width;
+  const blurInputOnSelect2: boolean = (typeof blurInputOnSelect === 'boolean') ? blurInputOnSelect : isTouchDevice();
 
   const selectProps: SelectProps = {
-    ...props,
-    menuWidth,
-    blurInputOnSelect,
-    inputId: createID(props.inputId, props.idSuffix),
-    selectId: createID(props.selectId, props.idSuffix),
+    ...rest,
+    idSuffix,
+    menuWidth: menuWidth2,
+    blurInputOnSelect: blurInputOnSelect2,
+    inputId: createID(inputId, idSuffix),
+    selectId: createID(selectId, idSuffix),
   };
 
   return (

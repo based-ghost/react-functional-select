@@ -28,6 +28,7 @@ const Option = React.memo<OptionProps>(({
 
   return (
     <div
+      role='button'
       style={style}
       className={className}
       id={idSuffix ? createID(`${OPTION_CLS}-${index}`, idSuffix) : undefined}
