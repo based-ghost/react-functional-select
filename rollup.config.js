@@ -5,23 +5,15 @@ import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
 
-// Function used to create package aliases for globals (e.g. react-functional-select => ReactFunctionalSelect)
-const getExternalPkgAlias = (external) => {
-  const capFirstChar = (external.charAt(0).toUpperCase() + external.slice(1));
-  return (capFirstChar.indexOf('-') > -1)
-    ? capFirstChar.split('-').reduce((a, b) =>  (a + b.charAt(0).toUpperCase() + b.slice(1)))
-    : capFirstChar;
-};
-
 const _input = './src/index.ts';
-const _name = getExternalPkgAlias(pkg.name);
+const _name = 'ReactFunctionalSelect';
 const _externals = Object.keys(pkg.peerDependencies || {});
 
-const _umdGlobals = (() => {
-  const globals = {};
-  _externals.forEach((key) => { globals[key] = getExternalPkgAlias(key); });
-  return globals;
-})();
+const _umdGlobals = {
+  'react': 'React',
+  'react-window': 'ReactWindow',
+  'styled-components': 'StyledComponents',
+};
 
 const typescript2Plugin = typescript({
   typescript: require('typescript'),

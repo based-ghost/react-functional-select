@@ -96,4 +96,51 @@ const BasicProps: React.FC = () => {
 };
 ```
 
-#### TODO: complete unit tests & documentation write-ups..
+## Properties
+
+All properties are technically optional (with a few having default values). Very similar with `react-select` API.
+
+| Property | Type | Default | Description
+:---|:---|:---|:---
+| `inputId` | string | `undefined` | The id of the autosize search input
+|`selectId` | string | `undefined` | The id of the parent div
+|`idSuffix` | string | `undefined` | GUID that gets appended to `inputId` and `selectId` - when specified, generates ids for each individual option
+|`ariaLabel` | string | `undefined` | Aria label (for assistive tech)
+|`isLoading`| bool | `false` | Is the select in a state of loading - shows loading dots animation
+|`isInvalid`| bool | `false` | Is the current value invalid - control recieves invalid styling
+|`inputDelay`| number | `undefined` | The debounce delay in for the input search (milliseconds)
+|`isDisabled`| bool | `false` | Is the select control disabled - recieves disabled styling
+|`placeholder`| string | `Select option..` | Placeholder text for the select value
+| `menuWidth` | React.ReactText | `100%` | Width of the menu
+| `menuItemSize` | number | `35` | The height of each option in the menu (px)
+| `isClearable` | bool | `false` | Is the select value clearable
+| `noOptionsMsg` | string | `No options` | The text displayed in the menu when there are no options available
+|`clearIcon`| React.ReactNode | `undefined` | Custom clear icon
+|`caretIcon`| React.ReactNode | `undefined` | Custom caret icon
+|`options`| array | `[]` | The menu options
+|`isSearchable`| bool | `true` | Whether to enable search functionality or not
+|`menuMaxHeight`| number | `300` | Max height of the menu element - this effects how many options `react-window` will render.
+|`addClassNames`| bool | `false` | Should static classNames be generated for container elements (enable if styling using CSS stylesheets)
+|`ariaLabelledBy`| string | `undefined` | HTML ID of an element that should be used as the label (for assistive tech)
+|`openMenuOnFocus`| bool | `false` | Open the menu when the select control recieves focus
+|`initialValue`| any | `undefined` | Initial select value
+|`menuOverscanCount`| number | `1` | correlates to `react-window` property `overscanCount`: The number of items (options) to render outside of the visible area. Increasing the number can impact performance, but is useful if the option label is complex and the `renderOptionLabel` prop is defined
+|`tabSelectsOption`| bool | `true` | Select the currently focused option when the user presses tab
+|`blurInputOnSelect`| bool | `true IF device is touch-enabled ELSE false` | Remove focus from the input when the user selects an option (useful for dismissing the keyboard on touch devices)
+|`closeMenuOnSelect`| bool | `true` | Close the select menu when the user selects an option
+|`isAriaLiveEnabled`| bool | `false` | Enables visually hidden div that reports stateful information (for assistive tech)
+|`scrollMenuIntoView`| bool | `true` | Performs animated scroll to show menu in view when menu is opened (if there is room to do so)
+|`backspaceClearsValue`| bool | `true` | Remove the currently focused option when the user presses backspace
+|`filterIsCaseSensitive`| bool | `false` | Search input takes case of option labels into account
+|`onMenuOpen`| (...args: any[]) => void | `undefined` | Callback function executed after the menu is opened
+|`onMenuClose`| (...args: any[]) => void | `undefined` | Callback function executed after the menu is closed
+|`onOptionChange`| (data: any) => void | `undefined` | Callback function executed after a new option is selected
+|`onKeyDown`| React.KeyboardEventHandler\<HTMLDivElement\> | `undefined` | Callback function executed `onKeyDown` event
+|`getOptionLabel`| (data: any) => React.ReactText | `undefined` | Resolves option data to React.ReactText to be displayed as the label by components (by default will use option.label)
+|`getOptionValue`| (data: any) => React.ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
+|`onInputBlur`| React.FocusEventHandler\<HTMLInputElement\> | `undefined` | Handle blur events on the search input
+|`onInputFocus`| React.FocusEventHandler\<HTMLInputElement\> | `undefined` | Handle focus events on the search input
+|`renderOptionLabel`| (data: any) => React.ReactNode | `undefined` | Formats option labels in the menu and control as JSX.Elements or React Components (by default will use `getOptionLabel`)
+|`getIsOptionDisabled`| (data: any) => boolean | `undefined` | When defined will evaluate each option to determine whether it is disabled or not (if not specified, each option will be evaluated as to whether or not it contains a property of `isDisabled` with a value of `true`)
+|`getFilterOptionString`| (option: any) => string | `undefined` | When defined will take each option and generate a string used in the filtering process (by default, will use option.label)
+|`themeConfig`| Partial\<DefaultTheme\> | `undefined` | Object that takes specified property key-value pairs and merges them into the theme object
