@@ -7,7 +7,7 @@ import typescript from 'rollup-plugin-typescript2';
 
 const input = './src/index.ts';
 const name = 'ReactFunctionalSelect';
-const external = Object.keys(pkg.peerDependencies || {});
+const external = Object.keys({ ...pkg.dependencies, ...pkg.peerDependencies });
 
 const umdGlobals = {
   react: 'React',
