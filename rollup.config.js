@@ -3,11 +3,12 @@ import pkg from './package.json';
 import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
+import { DEFAULT_EXTENSIONS } from '@babel/core';
 import typescript from 'rollup-plugin-typescript2';
 
 const input = './src/index.ts';
 const name = 'ReactFunctionalSelect';
-const external = Object.keys({ ...pkg.dependencies, ...pkg.peerDependencies });
+const external = Object.keys(pkg.peerDependencies || {});
 
 const umdGlobals = {
   react: 'React',
@@ -19,13 +20,9 @@ const typescript2Plugin = typescript({
   typescript: require('typescript'),
 });
 
-const getBabelConfigESModules = (useESModules = false) => {
-  return babel({
-    plugins: [['@babel/transform-runtime', { useESModules }]],
-    runtimeHelpers: true,
-    sourceMaps: true,
-  });
-};
+const babelPlugin = babel({
+  extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
+});
 
 export default [
   /** * COMMONJS ****/
@@ -36,10 +33,7 @@ export default [
       file: pkg.main,
       format: 'cjs',
     },
-    plugins: [
-      typescript2Plugin,
-      getBabelConfigESModules(),
-    ],
+    plugins: [typescript2Plugin, babelPlugin],
   },
 
   /** * MODULE ****/
@@ -50,10 +44,7 @@ export default [
       file: pkg.module,
       format: 'esm',
     },
-    plugins: [
-      typescript2Plugin, 
-      getBabelConfigESModules(true),
-    ],
+    plugins: [typescript2Plugin, babelPlugin],
   },
 
   /** * BROWSER (DEVELOPMENT) ****/
@@ -68,7 +59,7 @@ export default [
     },
     plugins: [
       typescript2Plugin,
-      getBabelConfigESModules(true),
+      babelPlugin,
       replace({
         'process.env.NODE_ENV': JSON.stringify('development'),
       }),
@@ -88,7 +79,7 @@ export default [
     },
     plugins: [
       typescript2Plugin,
-      getBabelConfigESModules(true),
+      babelPlugin,
       replace({
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),

@@ -1,6 +1,6 @@
 {
   "name": "react-functional-select",
-  "version": "1.0.0-beta.11",
+  "version": "1.0.0-beta.12",
   "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)",
   "description": "Miro-sized and micro-optimized select component for ReactJS",
   "main": "dist/index.cjs.js",
@@ -103,9 +103,6 @@
     "react-dom": "^16.8.6",
     "react-window": "^1.8.5",
     "styled-components": "^4.4.0"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.6.3"
   },
   "scripts": {
     "clean-build": "run-s clean build",
