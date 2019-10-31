@@ -65,8 +65,8 @@ storiesOf('React Functional Select', module).add('Basic', () => {
       <Paragraph>
         In this story's source code, notice that the <Code>onOptionChange</Code>
         , <Code>getOptionValue</Code> and <Code>getOptionLabel</Code> callback
-        props are wrapped in a <Code>useCallback</Code>. While not required,{' '}
-        <em>strongly prefer </em> memoization of any callback function props 
+        props are wrapped in a <Code>useCallback</Code>. While not required,
+        <em> strongly prefer </em> memoization of any callback function props 
         whenever possible. This will greatly boost performance and limit re-renders 
         as these props are referenced in the dependency arrays 
         of <Code>useCallbacks</Code> and <Code>useEffects</Code>. When defined in a 

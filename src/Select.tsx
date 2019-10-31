@@ -404,13 +404,13 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
     if (isDisabled) {
-       return;
+      return;
     }
 
     if (onKeyDown) {
       onKeyDown(e);
       if (e.defaultPrevented) {
-         return;
+        return;
       }
     }
 

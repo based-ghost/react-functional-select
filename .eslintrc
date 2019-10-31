@@ -8,8 +8,10 @@
     "node": true
   },
   "rules": {
-    "global-require": "off",
     "semi": "off",
+    "sort-keys": "off",
+    "global-require": "off",
+    "spaced-comment": "off",
     "padding-line-between-statements": "off"
   }
 }

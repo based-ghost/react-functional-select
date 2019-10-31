@@ -2,8 +2,8 @@
   "compilerOptions": {
     "jsx": "react",
     "outDir": "./dist",
-    "target": "es2015",
-    "module": "es2015",
+    "target": "esnext",
+    "module": "esnext",
     "moduleResolution": "node",
     "declarationDir": "./dist",
     "strict": true,

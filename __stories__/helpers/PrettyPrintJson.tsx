@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { _mediaQueryIsMobileXS } from './styled';
+import { mediaQueryIsMobileXS } from './styled';
 
 type PrintJsonProps = {
   readonly data: any;
@@ -28,7 +28,7 @@ const PrintJsonHeader = styled.div`
   text-transform: uppercase;
   background-color: #1D2027;
 
-  ${_mediaQueryIsMobileXS} {
+  ${mediaQueryIsMobileXS} {
     font-size: 1.05rem;
     letter-spacing: 0.05em;
   }
@@ -44,7 +44,7 @@ const PrintJsonPre = styled.pre`
   color: rgba(255, 255, 255, 0.95);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
-  ${_mediaQueryIsMobileXS} {
+  ${mediaQueryIsMobileXS} {
     font-size: 0.75em;
     padding: 10px 18px;
     letter-spacing: normal;
@@ -52,8 +52,7 @@ const PrintJsonPre = styled.pre`
 `;
 
 const PrettyPrintJson = React.memo<PrintJsonProps>(({ data, header }) => {
-  const jsonWithNoQuotes = JSON
-    .stringify(data || {}, null, 2)
+  const jsonWithoutQuotes = JSON.stringify(data || {}, null, 2)
     .toString()
     .replace(/"/g, '')
     .replace(/\\/g, '');
@@ -61,7 +60,7 @@ const PrettyPrintJson = React.memo<PrintJsonProps>(({ data, header }) => {
   return (
     <PrintJsonRoot>
       <PrintJsonHeader>{header}</PrintJsonHeader>
-      <PrintJsonPre>{jsonWithNoQuotes}</PrintJsonPre>
+      <PrintJsonPre>{jsonWithoutQuotes}</PrintJsonPre>
     </PrintJsonRoot>
   );
 });

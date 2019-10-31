@@ -6,15 +6,16 @@ import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import typescript from 'rollup-plugin-typescript2';
 
-const input = './src/index.ts';
-const name = 'ReactFunctionalSelect';
-const external = Object.keys(pkg.peerDependencies || {});
-
-const umdGlobals = {
-  react: 'React',
+const globals = {
+  'react': 'React',
+  'react-dom': 'ReactDOM',
   'react-window': 'ReactWindow',
   'styled-components': 'StyledComponents',
 };
+
+const input = './src/index.ts';
+const name = 'ReactFunctionalSelect';
+const external = Object.keys(globals);
 
 const typescript2Plugin = typescript({
   typescript: require('typescript'),
@@ -25,7 +26,7 @@ const babelPlugin = babel({
 });
 
 export default [
-  /** * COMMONJS ****/
+  /*** COMMONJS ***/
   {
     external,
     input,
@@ -36,7 +37,7 @@ export default [
     plugins: [typescript2Plugin, babelPlugin],
   },
 
-  /** * MODULE ****/
+  /*** MODULE ***/
   {
     external,
     input,
@@ -47,14 +48,14 @@ export default [
     plugins: [typescript2Plugin, babelPlugin],
   },
 
-  /** * BROWSER (DEVELOPMENT) ****/
+  /*** BROWSER (DEVELOPMENT) ***/
   {
     external,
     input,
     output: {
       file: 'dist/index-dev.umd.js',
       format: 'umd',
-      globals: umdGlobals,
+      globals,
       name,
     },
     plugins: [
@@ -67,14 +68,14 @@ export default [
     ],
   },
 
-  /** * BROWSER (PRODUCTION) ****/
+  /*** BROWSER (PRODUCTION) ***/
   {
     external,
     input,
     output: {
       file: 'dist/index-prod.umd.js',
       format: 'umd',
-      globals: umdGlobals,
+      globals,
       name,
     },
     plugins: [

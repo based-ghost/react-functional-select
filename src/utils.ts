@@ -167,28 +167,34 @@ export function scrollMenuIntoViewOnOpen(
     return;
   }
   
-  const menuRect = menuEl.getBoundingClientRect();
+  const {
+    top: menuTop,
+    bottom: menuBottom,
+    height: menuHeight,
+  } = menuEl.getBoundingClientRect();
+  
   const viewHeight = window.innerHeight;
+  const viewSpaceBelow = viewHeight - menuTop;
 
   // Menu will fit in available space - no need to do scroll (execute callback if defined)
-  if ((viewHeight - menuRect.top) >= menuRect.height) {
+  if (viewSpaceBelow >= menuHeight) {
     onMenuOpen && onMenuOpen();
     return;
   }
 
   const scrollParent = getScrollParent(menuEl);
   const scrollTop = getScrollTop(scrollParent);
-  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - scrollTop - menuRect.top);
+  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - scrollTop - menuTop);
 
   // Sufficient space does not exist to scroll menu fully into view (execute callback if defined)
-  if (scrollSpaceBelow < menuRect.height) {
+  if (scrollSpaceBelow < menuHeight) {
     onMenuOpen && onMenuOpen();
     return;
   }
 
   // Do scroll and upon scroll animation completion, execute the callback if defined
   const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom || '0', 10);
-  const scrollDown = (menuRect.bottom - viewHeight + scrollTop + marginBottom);
+  const scrollDown = (menuBottom - viewHeight + scrollTop + marginBottom);
   smoothScrollTo(scrollParent, scrollDown, 300, onMenuOpen);
 }
 

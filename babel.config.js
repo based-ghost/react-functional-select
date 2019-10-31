@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable sort-keys */
 module.exports = (api) => {
   api.cache.never();
 
@@ -23,6 +22,6 @@ module.exports = (api) => {
 
   return {
     presets,
-    plugins
+    plugins,
   };
 };

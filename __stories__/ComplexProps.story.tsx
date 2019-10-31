@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { Select } from '..';
 import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
-const reactLogo = require('./assets/react_logo.svg') as string;
 import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, Label, LabelText, Code, Card, CardHeader, CardBody } from './helpers/styled';
+const reactLogo = require('./assets/react_logo.svg') as string;
 
 type StyledImageProps = {
   readonly isDisabled: boolean;

@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components';
 
-export const _mediaQueryIsMobile = '@media only screen and (max-width: 768px)';
-export const _mediaQueryIsMobileXS = '@media only screen and (max-width: 525px)';
-export const _mediaQueryIsTabletOrDesktop = '@media only screen and (min-width: 992px)';
-export const _mediaQueryIsTablet = '@media only screen and (max-width: 991px) and (min-width: 769px)';
+export const mediaQueryIsMobile = '@media only screen and (max-width: 768px)';
+export const mediaQueryIsMobileXS = '@media only screen and (max-width: 525px)';
+export const mediaQueryIsTabletOrDesktop = '@media only screen and (min-width: 992px)';
+export const mediaQueryIsTablet = '@media only screen and (max-width: 991px) and (min-width: 769px)';
 
 export const Container = styled.div`
   width: 100%;
@@ -12,7 +12,7 @@ export const Container = styled.div`
   margin-right: auto;
   padding: 0.25rem 1.75rem;
 
-  ${_mediaQueryIsMobile} {
+  ${mediaQueryIsMobile} {
     font-size: 0.96em;
     padding: 0.25rem 1.25rem;
   }
@@ -22,11 +22,11 @@ export const SelectContainer = styled.div`
   width: 60%;
   margin-top: 1rem;
 
-  ${_mediaQueryIsTablet} {
+  ${mediaQueryIsTablet} {
     width: 75%;
   }
 
-  ${_mediaQueryIsMobile} {
+  ${mediaQueryIsMobile} {
     width: 100%;
   }
 `;
@@ -40,7 +40,7 @@ export const ListWrapper = styled.div`
   margin-block-start: 1em;
   margin-inline-start: 0px;
 
-  ${_mediaQueryIsTabletOrDesktop} {
+  ${mediaQueryIsTabletOrDesktop} {
     max-width: 85%;
   }
 `;
@@ -59,7 +59,7 @@ export const List = styled.ul`
     margin-top: .25em;
   }
   
-  ${_mediaQueryIsMobile} {
+  ${mediaQueryIsMobile} {
     padding-inline-start: 20px;
   }
 `;
@@ -85,7 +85,7 @@ export const Code = styled.code`
   background-color: rgba(255, 229, 100, 0.2);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
-  ${_mediaQueryIsMobileXS} {
+  ${mediaQueryIsMobileXS} {
     padding: .1em .25em .1em;
   }
 `;
@@ -143,12 +143,12 @@ export const Button = styled.button`
     background-color: #DEDFE0;
   }
 
-  ${_mediaQueryIsMobile} {
+  ${mediaQueryIsMobile} {
     display: block;
     width: 100%;
   }
 
-  ${_mediaQueryIsMobileXS} {
+  ${mediaQueryIsMobileXS} {
     font-size: 0.9em;
   }
 `;
@@ -190,7 +190,7 @@ export const CheckboxGroup = styled.div`
       margin-right: 1.35rem;
     }
 
-    ${_mediaQueryIsMobile} {
+    ${mediaQueryIsMobile} {
       margin-top: 0.75rem;
     }
   }
@@ -221,19 +221,19 @@ export const CardHeader = styled.div<{ supportMobile?: boolean }>`
   border-top-right-radius: 0.25rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
-  ${_mediaQueryIsMobile} {
+  ${mediaQueryIsMobile} {
     text-align: center;
   }
 
   ${({ supportMobile }) => supportMobile && css`
     > * {
-      ${_mediaQueryIsMobile} {
+      ${mediaQueryIsMobile} {
         width: 100%;
         display: block;
         margin: 0 3.25rem 0.25rem;
       }
 
-      ${_mediaQueryIsMobileXS} {
+      ${mediaQueryIsMobileXS} {
         margin: 0 1.25rem 0.25rem;
       }
     }
@@ -263,7 +263,7 @@ const _paragraphStyles = css`
   margin-block-start: 1em;
   margin-inline-start: 0px;
 
-  ${_mediaQueryIsTabletOrDesktop} {
+  ${mediaQueryIsTabletOrDesktop} {
     max-width: 85%;
   }
 `;
