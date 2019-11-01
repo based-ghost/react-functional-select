@@ -14,19 +14,6 @@ import {
 } from '../src/constants/attributes';
 
 // ============================================
-// Global definitions
-// ============================================
-
-window.matchMedia = jest.fn().mockImplementation((query: string) => ({
-  media: query,
-  onchange: null,
-  matches: false,
-  dispatchEvent: jest.fn(),
-  addEventListener: jest.fn(),
-  removeEventListener: jest.fn(),
-}));
-
-// ============================================
 // Helper functions for Select component
 // ============================================
 

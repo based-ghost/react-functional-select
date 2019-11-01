@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-export default createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   *,
   *::before,
   *::after {
@@ -33,3 +33,7 @@ export default createGlobalStyle`
     font-weight: 600;
   }
 `;
+
+export {
+  GlobalStyle,
+};

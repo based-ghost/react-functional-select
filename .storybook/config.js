@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DarkTheme from './darkTheme';
-import GlobalStyle from './globalStyle';
+import { DarkTheme } from './darkTheme';
+import { GlobalStyle } from './globalStyle';
 import { configure, addParameters } from '@storybook/react';
 
 // Define storybook global configuration
@@ -29,16 +29,16 @@ const loadStories = () => {
     })();
 
     return {
-      globalStyleEl,
-      cleanup: () => {
+      containerNode: globalStyleEl,
+      cleanupContainerNode: () => {
         globalStyleEl && document.head.removeChild(globalStyleEl);
       }
     };
   };
   
   // Mount GlobalStyle & cleanup temp node created after mounting
-  const { globalStyleEl, cleanup } = setupGlobalStyle();
-  ReactDOM.render(<GlobalStyle />, globalStyleEl, cleanup);
+  const { containerNode, cleanupContainerNode } = setupGlobalStyle();
+  ReactDOM.render(<GlobalStyle />, containerNode, cleanupContainerNode);
 
   // Automatically import all files ending in *.story.tsx found at path '../__stories__'
   req.keys().forEach(file => req(file));

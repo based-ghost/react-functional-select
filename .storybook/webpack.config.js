@@ -1,6 +1,6 @@
 module.exports = async ({ config }) => {
   config.module.rules.push({
-    test: /\.story\.tsx$/,
+    test: /\.story\.tsx?$/,
     loaders: [
       {
         loader: require.resolve("@storybook/source-loader"),

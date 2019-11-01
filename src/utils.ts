@@ -89,14 +89,6 @@ export function isArrayWithLength(test: any): boolean {
 }
 
 /**
- * Determines if the current device is touch-enabled.
- * Prefer (pointer: coarse) over (any-pointer: coarse) since we are likely only targeting the primary input
- */
-export function isTouchDevice(): boolean {
-  return window.matchMedia('(pointer: coarse)').matches;
-}
-
-/**
  * Takes array of strings or short-circuit conditions that evaluate to a string and 
  * joins them as a single string, seperated by a single space.
  */
@@ -124,6 +116,12 @@ export function createID(idPrefix?: string, idSuffix?: string): string | undefin
   }
   return `${idPrefix}-${idSuffix}`;
 }
+
+/**
+ * Determines if the current device is touch-enabled.
+ * Prefer (pointer: coarse) over (any-pointer: coarse) since we are likely only targeting the primary input
+ */
+export const isTouchDevice = (): boolean => window.matchMedia('(pointer: coarse)').matches;
 
 /**
  * Apply regex to string, and if the value is NOT case sensitive, call .toLowerCase() and return result.

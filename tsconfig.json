@@ -7,11 +7,13 @@
     "moduleResolution": "node",
     "declarationDir": "./dist",
     "strict": true,
+    "allowJs": false,
     "sourceMap": true,
     "declaration": true,
     "noUnusedLocals": true,
     "removeComments": true,
-    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src"
