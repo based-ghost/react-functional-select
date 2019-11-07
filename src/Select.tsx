@@ -354,15 +354,14 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   }, [menuOpen, onMenuClose, onMenuOpen, scrollMenuIntoView]);
 
   useEffect(() => {
-    const curLen = menuOptions.length;
-    if (curLen === 1 || (curLen > 0 && (curLen !== options.length || prevMenuOptionsLen.current === 0))) {
+    if (menuOptions.length === 1 || (!!menuOptions.length && (menuOptions.length !== options.length || prevMenuOptionsLen.current === 0))) {
       setFocusedOption({
         index: 0,
         ...menuOptions[0],
       });
       scrollToItemIndex(0);
     }
-    prevMenuOptionsLen.current = curLen; // Track the previous value of menuOptions.length (used above)
+    prevMenuOptionsLen.current = menuOptions.length; // Track the previous value of menuOptions.length (used above)
   }, [options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
@@ -475,15 +474,14 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     if (isDisabled) { return; }
     if (!isFocused) { focusInput(); }
 
-    const targetIsNotInput = (e.currentTarget.tagName !== 'INPUT');
     if (!menuOpen) {
       openMenuAndFocusOption(_indexPositionEnum.FIRST);
-    } else if (targetIsNotInput) {
+    } else if (e.currentTarget.tagName !== 'INPUT') {
       setMenuOpen(false);
       inputValue && setInputValue('');
     }
 
-    if (targetIsNotInput) {
+    if (e.currentTarget.tagName !== 'INPUT') {
       e.preventDefault();
     }
   };

@@ -139,8 +139,8 @@ export function mergeDeep(target: any, source: any): any {
 
   Object.keys(source).forEach((key: string) => {
     if (isPlainObject(source[key])) {
-      output[key] = (!(key in target))
-        ? source[key]
+      output[key] = !(key in target) 
+        ? source[key] 
         : mergeDeep(target[key], source[key]);
     } else {
       output[key] = source[key];

@@ -1,6 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
-import { bounceAnimationCss } from '../constants/styled';
+import styled, { keyframes } from 'styled-components';
+
+const bounce = keyframes`
+  0%, 80%, 100% {
+    transform: scale(0);
+  } 40% {
+    transform: scale(1.0);
+  }
+`;
 
 const StyledLoadingDots = styled.div`
   display: flex;
@@ -12,12 +19,11 @@ const StyledLoadingDots = styled.div`
   > div {
     border-radius: 100%;
     display: inline-block;
-
-    ${bounceAnimationCss}
     width: ${({ theme }) => theme.loader.size};
     height: ${({ theme }) => theme.loader.size};
     opacity: ${({ theme }) => theme.loader.opacity};
     background-color: ${({ theme }) => theme.loader.color};
+    animation: ${bounce} 1.19s ease-in-out infinite;
 
     :nth-of-type(1) {
       animation-delay: -0.272s;

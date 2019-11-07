@@ -43,10 +43,10 @@ export type FocusedOption = {
 };
 
 export type MenuOption = {
-  readonly label: ReactText;
-  readonly value: ReactText;
-  readonly data: OptionData;
-  readonly isDisabled?: boolean;
+  label: ReactText;
+  value: ReactText;
+  data: OptionData;
+  isDisabled?: boolean;
 };
 
 export type ItemData = {

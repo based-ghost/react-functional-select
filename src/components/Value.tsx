@@ -2,7 +2,7 @@ import React from 'react';
 import { ValueProps } from '../types';
 import styled, { css } from 'styled-components';
 
-const _valueDivCss = css`
+const _valueDivCSS = css`
   top: 50%;
   overflow: hidden;
   position: absolute;
@@ -13,12 +13,12 @@ const _valueDivCss = css`
 `;
 
 const StyledValue = styled.div`
-  ${_valueDivCss}
+  ${_valueDivCSS}
   max-width: calc(100% - 0.5rem);
 `;
 
 const Placeholder = styled.div`
-  ${_valueDivCss}
+  ${_valueDivCSS}
   color: ${({ theme }) => theme.color.placeholder};
 `;
 

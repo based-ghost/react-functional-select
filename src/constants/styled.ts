@@ -8,18 +8,6 @@ const fadeIn = keyframes`
   }
 `;
 
-const bounce = keyframes`
-  0%, 80%, 100% {
-    transform: scale(0);
-  } 40% {
-    transform: scale(1.0);
-  }
-`;
-
-export const bounceAnimationCss = css`
-  animation: ${bounce} 1.19s ease-in-out infinite;
-`;
-
 export const fadeInAnimationCss = css`
   animation: ${fadeIn} 0.225s ease-in-out forwards;
 `;
