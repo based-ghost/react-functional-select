@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Select } from '..';
+import { Select } from '../src';
 import styled from 'styled-components';
 import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
@@ -22,14 +22,14 @@ const SelectedLabelText = styled.span`
 `;
 
 const _options: CityOption[] = [
-  { id: 1,  city: 'Austin',      state: 'TX' },
-  { id: 2,  city: 'Denver',      state: 'CO' },
-  { id: 3,  city: 'Chicago',     state: 'IL' },
-  { id: 4,  city: 'Phoenix',     state: 'AZ' },
-  { id: 5,  city: 'Houston',     state: 'TX' },
-  { id: 6,  city: 'Las Vegas',   state: 'NV' },
-  { id: 7,  city: 'Milwaukee',   state: 'WI' },
-  { id: 8,  city: 'Louisville',  state: 'KY' },
+  { id: 1,  city: 'Austin', state: 'TX' },
+  { id: 2,  city: 'Denver', state: 'CO' },
+  { id: 3,  city: 'Chicago', state: 'IL' },
+  { id: 4,  city: 'Phoenix', state: 'AZ' },
+  { id: 5,  city: 'Houston', state: 'TX' },
+  { id: 6,  city: 'Las Vegas', state: 'NV' },
+  { id: 7,  city: 'Milwaukee', state: 'WI' },
+  { id: 8,  city: 'Louisville', state: 'KY' },
   { id: 9,  city: 'Los Angeles', state: 'CA' },
   { id: 10, city: 'Minneapolis', state: 'MN' },
 ];

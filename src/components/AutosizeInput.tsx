@@ -6,18 +6,18 @@ import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/attribut
 
 const _inputMinWidthPx = 2;
 
-const _wrapperDivStyle: CSSProperties = {
+const _wrapperDivStyle = Object.freeze<CSSProperties>({
   display: 'inline-block'
-};
+});
 
-const _inputStaticAttributes: AutosizeInputHTMLAttributes = {
+const _inputStaticAttributes = Object.freeze<AutosizeInputHTMLAttributes>({
   type: 'text',
   spellCheck: false,
   autoCorrect: 'off',
   autoComplete: 'off',
   autoCapitalize: 'none',
   'data-testid': AUTOSIZE_INPUT_TESTID,
-};
+});
 
 const StyledSizer = styled.div`
   top: 0;

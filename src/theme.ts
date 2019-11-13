@@ -13,7 +13,7 @@ export const mergeThemeStyles = (themeConfig?: Partial<DefaultTheme>): DefaultTh
 /**
  * A contextual DefaultTheme object with default key-values.
  */
-export const defaultTheme: DefaultTheme = {
+export const defaultTheme = Object.freeze<DefaultTheme>({
   color: {
     accent: '#007bff',
     border: '#ced4da',
@@ -77,4 +77,4 @@ export const defaultTheme: DefaultTheme = {
     color: 'hsl(0, 0%, 60%)',
     padding: '0.375rem 0.75rem',
   },
-};
+});

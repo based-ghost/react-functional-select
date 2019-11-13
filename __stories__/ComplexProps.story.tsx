@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Select } from '..';
+import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
 import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, Label, LabelText, Code, Card, CardHeader, CardBody } from './helpers/styled';
@@ -103,8 +103,8 @@ storiesOf('React Functional Select', module).add('Complex', () => {
             <Code>getIsOptionDisabled(option)</Code><em> => Boolean</em> - Callback function 
             with a return type of <em>Boolean</em>. When it evaluates to a value of <em>true</em>, 
             that option iteration will be rendered <em>disabled</em>. As an alternative, you can 
-            also pass a property of <em>isDisabled</em> with each option. Use of these two options - 
-            they cannot both be specified.
+            also pass a property of <em>isDisabled</em> with each option. Use of these two options 
+            - they cannot both be specified.
           </ListItem>
         </List>
       </ListWrapper>

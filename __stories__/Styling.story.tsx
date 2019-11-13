@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { Select, Theme } from '..';
+import { Select, Theme } from '../src';
 import { Option } from './helpers/utils';
 import { defaultTheme } from '../src/theme';
 import { storiesOf } from '@storybook/react';
@@ -7,19 +7,19 @@ import PrettyPrintJson from './helpers/PrettyPrintJson';
 import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
 import { Hr, Code, Title, SubTitle, Spacer, Paragraph, JsonContainer, LabelText, Label, Container, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
-const _themeEnum: { [key: string]: string } = {
+const _themeEnum = Object.freeze<{ [key: string]: string }>({
   DEFAULT: 'Default',
   LARGE_TEXT: 'Large Text',
   DARK_COLORS: 'Dark Colors',
   ZERO_BORDER_RADIUS: 'No Border-Radius',
-};
+});
 
-const _styledComponentsLink: PackageLinkProps = {
+const _styledComponentsLink = Object.freeze<PackageLinkProps>({
   name: 'styled-components',
   href: 'https://www.styled-components.com',
-};
+});
 
-const _themeConfigMap: { [key: string]: any } = {
+const _themeConfigMap = Object.freeze<{ [key: string]: any }>({
   [_themeEnum.DEFAULT]: undefined,
   [_themeEnum.DARK_COLORS]: {
     color: {
@@ -55,7 +55,7 @@ const _themeConfigMap: { [key: string]: any } = {
       borderRadius: '0',
     },
   },
-};
+});
 
 storiesOf('React Functional Select', module).add('Styling', () => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
@@ -64,7 +64,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
   // Create theme options based upon key-value pairs in _themeEnum object defined above
   const [options] = useState<Option[]>(() => {
     const _options: Option[] = [];
-    Object.keys(_themeEnum).forEach((key: string) => {
+    Object.keys(_themeEnum).forEach((key: string): void => {
       _options.push({
         value: _themeEnum[key],
         label: _themeEnum[key],

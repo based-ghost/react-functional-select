@@ -1,15 +1,15 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
-import { Select, SelectRef } from '..';
+import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { Option, createSelectOptions } from './helpers/utils';
 import OptionsCountButton from './helpers/OptionsCountButton';
 import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
 import { Hr, Title, SubTitle, List, ListWrapper, ListItem, LabelText, Label, Container, Code, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
-const _reactWindowLink: PackageLinkProps = {
+const _reactWindowLink = Object.freeze<PackageLinkProps>({
   name: 'react-window',
   href: 'https://github.com/bvaughn/react-window',
-};
+});
 
 storiesOf('React Functional Select', module).add('Windowing', () => {
   const selectRef = useRef<SelectRef | null>(null);
@@ -51,8 +51,8 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
             this data upfront for each object in your list). This way you can
             perform this work just when you absolutely need to and then can
             immediately release it for the GC to cleanup. As an example I am
-            generating the <Code>onClick</Code>, <Code>id</Code> and{' '}
-            <Code>className</Code> attributes for each <Code>menuOption</Code> as 
+            generating the <Code>onClick</Code>, <Code>id</Code>, 
+            and <Code>className</Code> attributes for each <Code>menuOption</Code> as 
             they get passed to the <Code>&lt;Option /&gt;</Code> renderer component.
           </ListItem>
           <ListItem>
@@ -67,11 +67,10 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
           </ListItem>
         </List>
         <em>Note: </em>The only time any noticeable performance degradation will
-        be observed is during search input updates when the <Code>options</Code>{' '}
-        count reaches the high tens of thousands. To work around this, the{' '}
-        <Code>inputDelay</Code> (type number in milliseconds) can be set to
-        debounce the input value. That way, the <Code>menuOptions</Code> will
-        not be recalculated on every keystroke.
+        be observed is during search input updates when the <Code>options</Code> count 
+        reaches the high tens of thousands. To work around this, the <Code>inputDelay</Code> (
+        type number in milliseconds) can be set to debounce the input value. That way, 
+        the <Code>menuOptions</Code> will not be recalculated on every keystroke.
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
       <Hr />

@@ -41,12 +41,12 @@ import {
   CONTROL_CONTAINER_TESTID,
 } from './constants/attributes';
 
-const _indexPositionEnum: IndexPositionEnum = {
+const _indexPositionEnum = Object.freeze<IndexPositionEnum>({
   UP: 0,
   DOWN: 1,
   FIRST: 2,
   LAST: 3,
-};
+});
 
 const SelectWrapper = styled.div`
   position: relative;

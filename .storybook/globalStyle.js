@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   *,
   *::before,
   *::after {
@@ -33,7 +33,3 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 600;
   }
 `;
-
-export {
-  GlobalStyle,
-};

@@ -6,12 +6,12 @@ export const NO_OPTIONS_MSG_DEFAULT = 'No options';
 export const PLACEHOLDER_DEFAULT = 'Select option..';
 
 export const OPTIONS_DEFAULT: OptionData[] = [];
-export const NO_SELECTED_OPTION: SelectedOption = {};
+export const NO_SELECTED_OPTION = Object.freeze<SelectedOption>({});
 
-export const FOCUSED_OPTION_DEFAULT: FocusedOption = {
+export const FOCUSED_OPTION_DEFAULT = Object.freeze<FocusedOption>({
   index: -1,
-};
+});
 
-export const SELECTED_OPTION_DEFAULT: SelectedOption = {
+export const SELECTED_OPTION_DEFAULT = Object.freeze<SelectedOption>({
   initFlag: true,
-};
+});

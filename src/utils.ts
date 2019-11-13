@@ -108,12 +108,8 @@ export function isPlainObject(test: any): boolean {
  * If the prefix is null or underfined or '', then undefined is returned.
  */
 export function createID(idPrefix?: string, idSuffix?: string): string | undefined {
-  if (!idPrefix) { 
-    return undefined; 
-  }
-  if (!idSuffix) { 
-    return idPrefix; 
-  }
+  if (!idPrefix) { return undefined; }
+  if (!idSuffix) { return idPrefix; }
   return `${idPrefix}-${idSuffix}`;
 }
 
@@ -137,7 +133,7 @@ export function trimAndFormatFilterStr(value: string, filterIsCaseSensitive?: bo
 export function mergeDeep(target: any, source: any): any {
   const output = { ...target };
 
-  Object.keys(source).forEach((key: string) => {
+  Object.keys(source).forEach((key: string): void => {
     if (isPlainObject(source[key])) {
       output[key] = !(key in target) 
         ? source[key] 

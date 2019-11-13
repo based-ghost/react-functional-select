@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Select, SelectRef } from '..';
+import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { Option, createSelectOptions } from './helpers/utils';
 import { Hr, List, Code, Title, Button, LabelText, ListItem, SubTitle, Label, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';

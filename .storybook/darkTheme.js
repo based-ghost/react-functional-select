@@ -6,7 +6,7 @@ const _colorPrimary = '#fc929e';   //pinkish-red-salmon
 const _colorSecondary = '#f5b83d'; // golden-yellow (PrettyPrintJson.tsx header)
 const _colorPrimaryOpacity = 'rgba(252, 146, 158, 0.675)';
 
-const DarkTheme = create({
+export const DarkTheme = create({
   base: 'dark',
 
   // Base theme colors
@@ -36,7 +36,3 @@ const DarkTheme = create({
 
   brandUrl: 'https://based-ghost.github.io/react-functional-select/',
 });
-
-export {
-  DarkTheme,
-};

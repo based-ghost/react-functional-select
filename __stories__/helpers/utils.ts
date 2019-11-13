@@ -4,12 +4,14 @@ export type Option = {
 };
 
 export const numberWithCommas = (value: number): string => {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return value
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 export const createSelectOptions = (optionCount: number): Option[] => {
-  const tempOptions = [];
-  for (let i = 0; i < optionCount; i++) {
+  const tempOptions: Option[] = [];
+  for (let i = 0; i < optionCount; i += 1) {
     tempOptions.push({
       value: i + 1,
       label: `Option ${i + 1}`,

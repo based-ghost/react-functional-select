@@ -18,7 +18,12 @@ const Input = styled.input`
   margin: 0.1875rem 0.1875rem 0.1875rem 0.25rem;
 `;
 
-const Checkbox: React.FC<CheckboxProps> = ({ label, checked, onCheck, readOnly }) => (
+const Checkbox: React.FC<CheckboxProps> = ({
+  label,
+  checked,
+  onCheck,
+  readOnly,
+}) => (
   <Label $readOnly={readOnly}>
     <Input
       type='checkbox'

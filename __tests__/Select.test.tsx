@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from '..';
+import { Select } from '../src';
 import { SelectProps } from '../src/types';
 import { defaultTheme } from '../src/theme';
 import { render, fireEvent, wait } from '@testing-library/react';

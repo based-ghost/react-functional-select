@@ -1,17 +1,6 @@
-import React, { ReactText } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
-export type AriaLiveRegionProps = {
-  readonly menuOpen: boolean;
-  readonly ariaLabel?: string;
-  readonly inputValue: string;
-  readonly optionCount: number;
-  readonly isSearchable: boolean;
-  readonly focusedOptionIndex: number;
-  readonly focusedOptionLabel?: ReactText;
-  readonly selectedOptionLabel?: ReactText;
-  readonly isFocusedOptionDisabled?: boolean;
-};
+import { AriaLiveRegionProps } from '../types';
 
 const A11yText = styled.span`
   border: 0;
