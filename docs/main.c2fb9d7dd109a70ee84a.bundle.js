@@ -559,4 +559,4 @@
     background-color: #007bff !important;
   }
 `;__webpack_exports__.a=({count:count,optionsCount:optionsCount,handleSetOptionsCount:handleSetOptionsCount})=>react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledButton,{isActive:Boolean(count===optionsCount),onClick:()=>handleSetOptionsCount(count)},`${Object(_utils__WEBPACK_IMPORTED_MODULE_2__.b)(count)} Options`)}},[[293,1,2]]]);
-//# sourceMappingURL=main.dcd9d0c5e1f192f660a5.bundle.js.map
+//# sourceMappingURL=main.c2fb9d7dd109a70ee84a.bundle.js.map
