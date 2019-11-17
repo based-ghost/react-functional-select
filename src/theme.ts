@@ -1,17 +1,7 @@
 import { DefaultTheme } from 'styled-components';
-import { mergeDeep, isPlainObject } from './utils';
 
 /**
- * Utility function used to merge the DefaultTheme and matching properties from the themeConfig param.
- */
-export const mergeThemeStyles = (themeConfig?: Partial<DefaultTheme>): DefaultTheme => {
-  return !isPlainObject(themeConfig)
-    ? { ...defaultTheme }
-    : mergeDeep(defaultTheme, themeConfig);
-};
-
-/**
- * A contextual DefaultTheme object with default key-values.
+ * A contextual styled-components DefaultTheme object with default key-values.
  */
 export const defaultTheme = Object.freeze<DefaultTheme>({
   color: {

@@ -3,6 +3,7 @@ import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
 import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, Label, LabelText, Code, Card, CardHeader, CardBody } from './helpers/styled';
+
 const reactLogo = require('./assets/react_logo.svg') as string;
 
 type StyledImageProps = {
@@ -14,7 +15,7 @@ type PackageOption = {
   readonly packageName: string;
 };
 
-const _themeConfig: any = {
+const _themeConfig = Object.freeze({
   menu: {
     option: {
       selectedColor: '#515151',
@@ -22,7 +23,7 @@ const _themeConfig: any = {
       selectedBgColor: '#F2F2F2',
     }
   }
-};
+});
 
 const _spinLogo = keyframes`
   from {
@@ -68,13 +69,8 @@ const _options: PackageOption[] = [
 ];
 
 storiesOf('React Functional Select', module).add('Complex', () => {
-  const getOptionValue = useCallback((option: PackageOption): number => {
-    return option.id;
-  }, []);
-
-  const getIsOptionDisabled = useCallback((option: PackageOption): boolean => {
-    return (option.packageName === _options[3].packageName);
-  }, []);
+  const getOptionValue = useCallback((option: PackageOption): number => (option.id), []);
+  const getIsOptionDisabled = useCallback((option: PackageOption): boolean => (option.packageName === _options[3].packageName), []);
 
   const renderOptionLabel = useCallback((option: PackageOption): JSX.Element => {
     const isDisabled = getIsOptionDisabled(option);

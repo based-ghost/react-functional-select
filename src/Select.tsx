@@ -390,8 +390,8 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
       : (focusedOptionIndex > 0)
         ? (focusedOptionIndex - 1)
         : (menuOptions.length - 1);
+        
     const nextFocusedOption = menuOptions[index];
-    
     if (nextFocusedOption) {
       setFocusedOption({
         index,

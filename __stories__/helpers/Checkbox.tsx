@@ -28,7 +28,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
     <Input
       type='checkbox'
       checked={checked}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onCheck(!!e.target.checked)}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onCheck(e.target.checked)}
     />
     {label && <span>{label}</span>}
   </Label>

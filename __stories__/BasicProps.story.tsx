@@ -42,17 +42,12 @@ storiesOf('React Functional Select', module).add('Basic', () => {
   const [isSearchable, setIsSearchable] = useState<boolean>(true);
   const [selectedOption, setSelectedOption] = useState<CityOption | null>(null);
 
-  const getOptionValue = useCallback((option: CityOption): number => {
-    return option.id;
-  }, []);
-
-  const getOptionLabel = useCallback((option: CityOption): string => {
-    return `${option.city}, ${option.state}`;
-  }, []);
-  
   const onOptionChange = useCallback((option: CityOption | null): void => {
     setSelectedOption(option);
   }, []);
+  
+  const getOptionValue = useCallback((option: CityOption): number => (option.id), []);
+  const getOptionLabel = useCallback((option: CityOption): string => (`${option.city}, ${option.state}`), []);
 
   useEffect(() => {
     isDisabled && setIsInvalid(false);

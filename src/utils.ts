@@ -10,6 +10,10 @@ function isDocumentElement(el: HTMLElement | Window): boolean {
   return (el === document.documentElement || el === document.body || el === window);
 }
 
+function easeOutCubic(t: number, s: number, c: number, d: number): number {
+  return c * ((t = t / d - 1) * t * t + 1) + s;
+}
+
 function getScrollTop(el: HTMLElement): number {
   return isDocumentElement(el) ? window.pageYOffset : el.scrollTop;
 }
@@ -51,10 +55,6 @@ function smoothScrollTo(
   const start = getScrollTop(element);
   const change = to - start;
   let currentTime = 0;
-
-  function easeOutCubic(t: number, s: number, c: number, d: number): number {
-    return c * ((t = t / d - 1) * t * t + 1) + s;
-  }
 
   function smoothScroller(): void {
     currentTime += 5;

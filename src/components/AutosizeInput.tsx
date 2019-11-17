@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, AriaAttributes, CSSProperties } from 'react';
+import React, { useEffect, useState, useRef, CSSProperties } from 'react';
 import styled from 'styled-components';
 import { mediaQueryIsIE } from '../constants/styled';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
@@ -16,7 +16,8 @@ const _inputStaticAttributes = Object.freeze<AutosizeInputHTMLAttributes>({
   autoCorrect: 'off',
   autoComplete: 'off',
   autoCapitalize: 'none',
-  'data-testid': AUTOSIZE_INPUT_TESTID,
+  'aria-autocomplete': 'list',
+  'data-testid': AUTOSIZE_INPUT_TESTID
 });
 
 const StyledSizer = styled.div`
@@ -75,12 +76,12 @@ const AutosizeInput = React.memo(
     const sizerRef = useRef<HTMLDivElement | null>(null);
     const [inputWidth, setInputWidth] = useState<number>(_inputMinWidthPx);
 
-    const inputAriaAttributes: AriaAttributes = {
+    const inputAttributes: AutosizeInputHTMLAttributes = {
       'aria-label': ariaLabel,
-      'aria-autocomplete': 'list',
       'aria-labelledby': ariaLabelledBy,
+      ..._inputStaticAttributes
     };
-
+    
     useEffect(() => {
       if (sizerRef.current) {
         setInputWidth(sizerRef.current.scrollWidth + _inputMinWidthPx);
@@ -96,9 +97,8 @@ const AutosizeInput = React.memo(
           onFocus={onFocus}
           value={inputValue}
           disabled={disabled}
+          {...inputAttributes}
           readOnly={!isSearchable}
-          {...inputAriaAttributes}
-          {..._inputStaticAttributes}
           style={{ width: inputWidth }}
           onChange={isSearchable ? onChange : undefined}
           className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}

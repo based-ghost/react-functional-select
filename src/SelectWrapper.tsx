@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Select from './Select';
-import { useTheme } from './hooks';
-import { createID, isTouchDevice } from './utils';
+import { defaultTheme } from './theme';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 import { SelectProps, SelectHandle, SelectWrapperProps } from './types';
+import { createID, mergeDeep, isPlainObject, isTouchDevice } from './utils';
 
 /**
  * This is the parent component for the react-functional-select tree.
@@ -21,8 +21,15 @@ const SelectWrapper = React.forwardRef<SelectHandle, SelectWrapperProps>((
   },
   ref: React.Ref<SelectHandle>,
 ) => {
-  const theme: DefaultTheme = useTheme(themeConfig);
-  const blurInputOnSelectOrDefault: boolean = (typeof blurInputOnSelect === 'boolean') ? blurInputOnSelect : isTouchDevice();
+  const theme = useMemo<DefaultTheme>(() => {
+    return !isPlainObject(themeConfig)
+      ? { ...defaultTheme }
+      : mergeDeep(defaultTheme, themeConfig);
+  }, [themeConfig]);
+
+  const blurInputOnSelectOrDefault: boolean = (typeof blurInputOnSelect === 'boolean')
+    ? blurInputOnSelect
+    : isTouchDevice();
 
   const selectProps: SelectProps = {
     ...rest,
