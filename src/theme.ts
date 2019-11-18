@@ -3,7 +3,7 @@ import { DefaultTheme } from 'styled-components';
 /**
  * A contextual styled-components DefaultTheme object with default key-values.
  */
-export const defaultTheme = Object.freeze<DefaultTheme>({
+export default Object.freeze<DefaultTheme>({
   color: {
     accent: '#007bff',
     border: '#ced4da',

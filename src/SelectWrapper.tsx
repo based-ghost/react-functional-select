@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import Select from './Select';
-import { defaultTheme } from './theme';
+import DefaultThemeObj from './theme';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 import { SelectProps, SelectHandle, SelectWrapperProps } from './types';
 import { createID, mergeDeep, isPlainObject, isTouchDevice } from './utils';
@@ -23,8 +23,8 @@ const SelectWrapper = React.forwardRef<SelectHandle, SelectWrapperProps>((
 ) => {
   const theme = useMemo<DefaultTheme>(() => {
     return !isPlainObject(themeConfig)
-      ? { ...defaultTheme }
-      : mergeDeep(defaultTheme, themeConfig);
+      ? { ...DefaultThemeObj }
+      : mergeDeep(DefaultThemeObj, themeConfig);
   }, [themeConfig]);
 
   const blurInputOnSelectOrDefault: boolean = (typeof blurInputOnSelect === 'boolean')

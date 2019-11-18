@@ -391,14 +391,8 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
         ? (focusedOptionIndex - 1)
         : (menuOptions.length - 1);
         
-    const nextFocusedOption = menuOptions[index];
-    if (nextFocusedOption) {
-      setFocusedOption({
-        index,
-        ...nextFocusedOption,
-      });
-      scrollToItemIndex(index);
-    }
+    setFocusedOption({ index, ...menuOptions[index] });
+    scrollToItemIndex(index);  
   };
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {

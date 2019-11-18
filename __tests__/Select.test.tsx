@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select } from '../src';
 import { SelectProps } from '../src/types';
-import { defaultTheme } from '../src/theme';
+import DefaultThemeObj from '../src/theme';
 import { render, fireEvent, wait } from '@testing-library/react';
 import {
   MENU_CONTAINER_CLS,
@@ -21,7 +21,7 @@ const renderSelect = (props?: SelectProps) => {
   return render(
     <Select 
       {...props} 
-      themeConfig={defaultTheme} 
+      themeConfig={DefaultThemeObj} 
     />
   );
 };

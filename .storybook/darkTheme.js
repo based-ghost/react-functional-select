@@ -6,7 +6,7 @@ const _colorPrimary = '#fc929e';   //pinkish-red-salmon
 const _colorSecondary = '#f5b83d'; // golden-yellow (PrettyPrintJson.tsx header)
 const _colorPrimaryOpacity = 'rgba(252, 146, 158, 0.675)';
 
-export const DarkTheme = create({
+export default create({
   base: 'dark',
 
   // Base theme colors

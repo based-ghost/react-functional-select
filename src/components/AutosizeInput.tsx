@@ -75,12 +75,6 @@ const AutosizeInput = React.memo(
   ) => {
     const sizerRef = useRef<HTMLDivElement | null>(null);
     const [inputWidth, setInputWidth] = useState<number>(_inputMinWidthPx);
-
-    const inputAttributes: AutosizeInputHTMLAttributes = {
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
-      ..._inputStaticAttributes
-    };
     
     useEffect(() => {
       if (sizerRef.current) {
@@ -88,15 +82,21 @@ const AutosizeInput = React.memo(
       }
     }, [inputValue]);
 
+    const inputAttributes: AutosizeInputHTMLAttributes = {
+      id,
+      disabled,
+      ..._inputStaticAttributes,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+    };
+
     return (
       <div style={_wrapperDivStyle}>
         <StyledAutosizeInput
-          id={id}
           ref={ref}
           onBlur={onBlur}
           onFocus={onFocus}
           value={inputValue}
-          disabled={disabled}
           {...inputAttributes}
           readOnly={!isSearchable}
           style={{ width: inputWidth }}

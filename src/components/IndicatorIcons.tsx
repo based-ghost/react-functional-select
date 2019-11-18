@@ -64,30 +64,31 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
   isLoading,
   addClassNames,
   onClearMouseDown,
-}) => {
-  const clearClassName = (addClassNames && !clearIcon) ? CLEAR_ICON_CLS : undefined;
-  const caretClassName = (addClassNames && !caretIcon) ? CARET_ICON_CLS : undefined;
-
-  return (
-    <IndicatorIconsWrapper>
-      {(showClear && !isLoading) && (
-        <IndicatorIcon
-          aria-hidden='true'
-          onTouchEnd={onClearMouseDown}
-          onMouseDown={onClearMouseDown}
-          data-testid={CLEAR_ICON_TESTID}
-        >
-          {clearIcon || <Clear className={clearClassName}>X</Clear>}
-        </IndicatorIcon>
-      )}
-      {isLoading && <LoadingDots />}
-      <Separator />
-      <IndicatorIcon aria-hidden='true'>
-        {caretIcon || <Caret menuOpen={menuOpen} isInvalid={isInvalid} className={caretClassName} />}
+}) => (
+  <IndicatorIconsWrapper>
+    {(showClear && !isLoading) && (
+      <IndicatorIcon
+        aria-hidden='true'
+        onTouchEnd={onClearMouseDown}
+        onMouseDown={onClearMouseDown}
+        data-testid={CLEAR_ICON_TESTID}
+      >
+        {clearIcon || <Clear className={addClassNames ? CLEAR_ICON_CLS : undefined}>X</Clear>}
       </IndicatorIcon>
-    </IndicatorIconsWrapper>
-  );
-});
+    )}
+    {isLoading && <LoadingDots />}
+    <Separator />
+    <IndicatorIcon aria-hidden='true'>
+      {caretIcon || (
+        <Caret 
+          menuOpen={menuOpen} 
+          isInvalid={isInvalid} 
+          className={addClassNames ? CARET_ICON_CLS : undefined} 
+        />
+      )}
+    </IndicatorIcon>
+  </IndicatorIconsWrapper>
+));
 
 IndicatorIcons.displayName = 'IndicatorIcons';
 

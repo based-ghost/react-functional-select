@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { Select, Theme } from '../src';
 import { Option } from './helpers/utils';
-import { defaultTheme } from '../src/theme';
+import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
 import PrettyPrintJson from './helpers/PrettyPrintJson';
 import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
@@ -103,8 +103,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       </Paragraph>
       <JsonContainer>
         <PrettyPrintJson
-          data={defaultTheme}
           header='Default Theme'
+          data={DefaultThemeObj}
         />
       </JsonContainer>
       <SubTitle>Using classNames</SubTitle>

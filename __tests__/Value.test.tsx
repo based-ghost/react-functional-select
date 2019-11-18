@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Value } from '../src/components';
-import { defaultTheme } from '../src/theme';
+import DefaultThemeObj from '../src/theme';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { ValueProps, OptionData } from '../src/types';
@@ -12,7 +12,7 @@ import { PLACEHOLDER_DEFAULT } from '../src/constants/defaults';
 
 const renderValue = (props: ValueProps) => {
   return render(
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={DefaultThemeObj}>
       <Value {...props} />
     </ThemeProvider>
   );

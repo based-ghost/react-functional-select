@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DarkTheme } from './darkTheme';
-import { GlobalStyle } from './globalStyle';
+import DarkTheme from './darkTheme';
+import GlobalStyle from './globalStyle';
 import { configure, addParameters } from '@storybook/react';
 
 // Define storybook global configuration
