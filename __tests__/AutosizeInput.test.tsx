@@ -80,8 +80,8 @@ test('input has functional, optional ARIA attributes', async () => {
 });
 
 test('when "id" has a non-empty string value, input element should get an "id" attribute reflecting that value', async () => {
-  const { props } = createAutosizeInputProps();
   const inputId = 'test-input-id';
+  const { props } = createAutosizeInputProps();
 
   const mergedProps = {
     ...props,

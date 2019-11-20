@@ -10,6 +10,7 @@ const Link = styled.a`
   color: #007bff;
   cursor: pointer;
   font-size: 1rem;
+  box-shadow: none;
   font-weight: 600;
   line-height: 1.2;
   overflow: visible;
@@ -19,11 +20,10 @@ const Link = styled.a`
   text-decoration: none;
   display: inline-block;
   background-color: transparent;
-  box-shadow: 0 1px 0 0 currentColor;
   transition: box-shadow 0.2s ease-out;
 
   :hover {
-    box-shadow: none;
+    box-shadow: 0 1px 0 0 currentColor;
   }
 `;
 

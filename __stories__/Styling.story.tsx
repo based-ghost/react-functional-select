@@ -125,8 +125,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
         </CardHeader>
         <CardBody>
           <SelectContainer>
-            <Select 
-              options={options} 
+            <Select
+              options={options}
               isClearable={false}
               isSearchable={false}
               themeConfig={themeConfig}

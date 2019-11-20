@@ -77,12 +77,12 @@ export const Hr = styled.hr`
 `;
 
 export const Code = styled.code`
-  color: #212529;
-  font-size: 0.94em;
+  font-size: 93%;
+  border-radius: 0.3em;
   word-break: break-word;
-  border-radius: 0.25rem;
-  padding: .185em .25em .1em;
-  background-color: rgba(255, 229, 100, 0.2);
+  color: rgba(0, 0, 0, 0.9);
+  padding: 0.15em 0.45em 0.15em;
+  background-color: rgba(0, 0, 0, 0.065);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${mediaQueryIsMobileXS} {

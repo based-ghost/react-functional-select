@@ -14,7 +14,7 @@ const PrintJsonRoot = styled.div`
   border-radius: 9px;
   position: relative;
   background-color: #282c34;
-  box-shadow: rgba(20, 20, 20, 0.27) 0.0555556rem 0.0555556rem 1.11111rem;
+  box-shadow: rgba(20, 20, 20, 0.23) 0.0555556rem 0.0555556rem 1.11111rem;
 `;
 
 const PrintJsonHeader = styled.div`
@@ -36,12 +36,13 @@ const PrintJsonHeader = styled.div`
 
 const PrintJsonPre = styled.pre`
   margin: 0;
+  color: #fff;
   resize: none;
+  font-size: 90%;
   padding: 10px 30px;
   display: inline-block;
   letter-spacing: 0.03em;
   touch-action: manipulation;
-  color: rgba(255, 255, 255, 0.95);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${mediaQueryIsMobileXS} {
