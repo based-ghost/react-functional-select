@@ -82,7 +82,7 @@ export const Code = styled.code`
   word-break: break-word;
   color: rgba(0, 0, 0, 0.9);
   padding: 0.15em 0.45em 0.15em;
-  background-color: rgba(0, 0, 0, 0.065);
+  background-color: rgba(0, 0, 0, 0.06);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${mediaQueryIsMobileXS} {
