@@ -63,7 +63,7 @@
   word-break: break-word;
   color: rgba(0, 0, 0, 0.9);
   padding: 0.15em 0.45em 0.15em;
-  background-color: rgba(0, 0, 0, 0.065);
+  background-color: rgba(0, 0, 0, 0.06);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${mediaQueryIsMobileXS} {
@@ -560,4 +560,4 @@
     background-color: #007bff !important;
   }
 `;__webpack_exports__.a=({count:count,optionsCount:optionsCount,handleSetOptionsCount:handleSetOptionsCount})=>{const isActive=!(count!==optionsCount),onClick=isActive?void 0:()=>handleSetOptionsCount(count);return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledButton,{isActive:isActive,onClick:onClick},`${Object(_utils__WEBPACK_IMPORTED_MODULE_2__.b)(count)} Options`)}}},[[292,1,2]]]);
-//# sourceMappingURL=main.e2f6480e5c5a19c256e6.bundle.js.map
+//# sourceMappingURL=main.282d177078900a1a6e49.bundle.js.map
