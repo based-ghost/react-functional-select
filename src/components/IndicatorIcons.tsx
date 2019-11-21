@@ -80,10 +80,10 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
     <Separator />
     <IndicatorIcon aria-hidden='true'>
       {caretIcon || (
-        <Caret 
-          menuOpen={menuOpen} 
-          isInvalid={isInvalid} 
-          className={addClassNames ? CARET_ICON_CLS : undefined} 
+        <Caret
+          menuOpen={menuOpen}
+          isInvalid={isInvalid}
+          className={addClassNames ? CARET_ICON_CLS : undefined}
         />
       )}
     </IndicatorIcon>
