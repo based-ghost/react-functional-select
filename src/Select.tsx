@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef, useImperativeHandle, FocusEvent, FormEvent, KeyboardEvent, ReactNode, ReactText } from 'react';
 import { FixedSizeList } from 'react-window';
 import styled, { css } from 'styled-components';
-import { useMenuOptions, useDebounce } from './hooks';
 import { fadeInAnimationCss } from './constants/styled';
+import { useDebounce, useMenuHeight, useMenuOptions } from './hooks';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
-import { isPlainObject, isArrayWithLength, renderControlEmphasis, validateSetValueOption, scrollMenuIntoViewOnOpen } from './utils';
+import { isPlainObject, isArrayWithLength, renderControlEmphasis, validateSetValueOption } from './utils';
 import {
   OptionData,
   MenuOption,
@@ -202,7 +202,6 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   const [inputValue, setInputValue] = useState<string>('');
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [menuHeight, setMenuHeight] = useState<number>(menuMaxHeight);
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
   const [selectedOption, setSelectedOption] = useState<SelectedOption>(SELECTED_OPTION_DEFAULT);
 
@@ -244,12 +243,16 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     return getFilterOptionString ? getFilterOptionString(option) : String(option.label);
   }, [getFilterOptionString]);
 
-  // Callback executed after scrollMenuIntoViewOnOpen() finishes executing in useEffect
-  // ...Resizes menuHeight if there is not sufficient space to accomodate the menu using default menuMaxHeight
-  const handleOnMenuOpen = useCallback((availableSpace?: number): void => {
-    onMenuOpen && onMenuOpen();
-    availableSpace && setMenuHeight(availableSpace);
-  }, [onMenuOpen]);
+  // Custom hook abstraction that handles calculating menuHeight (defaults to menuMaxHeight)
+  // ...and handles executing callbacks/logic on menuOpen flag changes.
+  const menuHeight: number = useMenuHeight(
+    menuRef,
+    menuOpen,
+    menuMaxHeight,
+    scrollMenuIntoView,
+    onMenuOpen,
+    onMenuClose,
+  );
 
   // Custom hook abstraction that handles the creation of menuOptions
   const menuOptions: MenuOption[] = useMenuOptions(
@@ -321,8 +324,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   // 1: if control recieves focus & openMenuOnFocus = true, open menu
   // 2: assign the initialValue (if passed) - initDefault prop exists to help us execute this just once
   // 3: handle changes to selected option value
-  // 4: handle changes to menu open state - run callbacks if defined, scroll menu into view, etc.
-  // 5: handle menuOptions changes - conditionally focus first option and do scroll to first option;
+  // 4: handle menuOptions changes - conditionally focus first option and do scroll to first option;
   //    ...also, handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
 
   useEffect(() => {
@@ -352,17 +354,6 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
       setInputValue('');
     }
   }, [selectedOptionData, onOptionChange, closeMenuOnSelect, blurInputOnSelect]);
-
-  useEffect(() => {
-    if (menuOpen) {
-      scrollMenuIntoViewOnOpen(menuRef.current, scrollMenuIntoView, handleOnMenuOpen);
-    } else {
-      // Reset menuHeight to default (so menuHeight can be recalculated correctly on next open)
-      // Execute onMenuClose callback (if defined)
-      setMenuHeight(menuMaxHeight);
-      onMenuClose && onMenuClose();
-    }
-  }, [menuOpen, onMenuClose, handleOnMenuOpen, menuMaxHeight, scrollMenuIntoView]);
 
   useEffect(() => {
     if (menuOptions.length === 1 || (!!menuOptions.length && (menuOptions.length !== options.length || prevMenuOptionsLen.current === 0))) {
