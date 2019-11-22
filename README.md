@@ -75,7 +75,7 @@ const BasicProps: React.FC = () => {
     <Container>
       <Card>
         <CardHeader>
-          {JSON.stringify(selectedOption || {})}
+          {`Selected Option: ${JSON.stringify(selectedOption || {})}`}
         </CardHeader>
         <CardBody>
           <SelectContainer>
