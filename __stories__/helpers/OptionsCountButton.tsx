@@ -10,7 +10,7 @@ type StyledButtonProps = {
 type OptionsCountButtonProps = {
   readonly count: number;
   readonly optionsCount: number;
-  readonly handleSetOptionsCount: (count: number) => void;
+  readonly setOptionsCount: (count: number) => void;
 };
 
 const StyledButton = styled(Button)<StyledButtonProps>`
@@ -33,10 +33,10 @@ const StyledButton = styled(Button)<StyledButtonProps>`
 const OptionsCountButton: React.FC<OptionsCountButtonProps> = ({
   count,
   optionsCount,
-  handleSetOptionsCount,
+  setOptionsCount,
 }) => {
   const isActive = !!(count === optionsCount);
-  const onClick = !isActive ? (() => handleSetOptionsCount(count)) : undefined;
+  const onClick = !isActive ? (() => setOptionsCount(count)) : undefined;
 
   return (
     <StyledButton isActive={isActive} onClick={onClick}>

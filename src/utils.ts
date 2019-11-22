@@ -50,7 +50,7 @@ function smoothScrollTo(
   element: HTMLElement,
   to: number,
   duration: number,
-  callback?: (el: HTMLElement) => void
+  callback?: (...args: any[]) => void
 ): void {
   const start = getScrollTop(element);
   const change = to - start;
@@ -60,26 +60,18 @@ function smoothScrollTo(
     currentTime += 5;
     scrollTo(element, easeOutCubic(currentTime, start, change, duration));
     if (currentTime < duration) {
-      requestAnimationFrame(smoothScroller);
+      window.requestAnimationFrame(smoothScroller);
     } else {
-      callback && callback(element);
+      callback && callback();
     }
   }
 
-  requestAnimationFrame(smoothScroller);
+  window.requestAnimationFrame(smoothScroller);
 }
 
 // ============================================
 // Exported utility functions
 // ============================================
-
-/**
- * Tests for the six primitive types: 
- * boolean, null, undefined, string, number, symbol
- */
-export function isPrimitive(test: any): boolean {
-  return (test !== Object(test));
-}
 
 /**
  * Tests object for type of array with a length of at least 1.
@@ -152,12 +144,12 @@ export function mergeDeep(target: any, source: any): any {
  */
 export function scrollMenuIntoViewOnOpen(
   menuEl: HTMLElement | null,
-  scrollMenuIntoView?: boolean,
-  onMenuOpen?: (...args: any[]) => void
+  scrollMenuIntoView: boolean | undefined,
+  handleOnMenuOpen: (availableSpace?: number) => void
 ): void {
-  // Scroll is disabled with flag or issue retrieving dom element (execute callback if defined)
+  // Scroll is disabled with flag or issue retrieving dom element
   if (!scrollMenuIntoView || !menuEl || !menuEl.getBoundingClientRect) {
-    onMenuOpen && onMenuOpen();
+    handleOnMenuOpen();
     return;
   }
   
@@ -170,9 +162,9 @@ export function scrollMenuIntoViewOnOpen(
   const viewHeight = window.innerHeight;
   const viewSpaceBelow = viewHeight - menuTop;
 
-  // Menu will fit in available space - no need to do scroll (execute callback if defined)
+  // Menu will fit in available space - no need to do scroll
   if (viewSpaceBelow >= menuHeight) {
-    onMenuOpen && onMenuOpen();
+    handleOnMenuOpen();
     return;
   }
 
@@ -180,16 +172,17 @@ export function scrollMenuIntoViewOnOpen(
   const scrollTop = getScrollTop(scrollParent);
   const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - scrollTop - menuTop);
 
-  // Sufficient space does not exist to scroll menu fully into view (execute callback if defined)
+  // Sufficient space does not exist to scroll menu fully into view
+  // Calculate available space and use that as the the new menuHeight (use scrollSpaceBelow for now)
   if (scrollSpaceBelow < menuHeight) {
-    onMenuOpen && onMenuOpen();
+    handleOnMenuOpen(scrollSpaceBelow);
     return;
   }
 
   // Do scroll and upon scroll animation completion, execute the callback if defined
   const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom || '0', 10);
   const scrollDown = (menuBottom - viewHeight + scrollTop + marginBottom);
-  smoothScrollTo(scrollParent, scrollDown, 300, onMenuOpen);
+  smoothScrollTo(scrollParent, scrollDown, 300, handleOnMenuOpen);
 }
 
 /**
@@ -205,7 +198,7 @@ export function validateSetValueOption(
   if (option === null || option === undefined || Array.isArray(option)) {
     return undefined;
   }
-  const optionValue = (option && isPrimitive(option)) ? option : getOptionValueCB(option);
+  const optionValue = (option && (option !== Object(option))) ? option : getOptionValueCB(option);
   return menuOptions.find((mOption) => mOption.value === optionValue) || undefined;
 }
 

@@ -16,10 +16,6 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
   const [options, setOptions] = useState<Option[]>([]);
   const [optionsCount, setOptionsCount] = useState<number>(100);
 
-  const handleSetOptionsCount = useCallback((count: number): void => {
-    setOptionsCount(count); 
-  }, []);
-
   useEffect(() => {
     const handler = setTimeout(() => {
       setOptions(createSelectOptions(optionsCount));
@@ -83,22 +79,22 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
             <OptionsCountButton
               count={100}
               optionsCount={optionsCount}
-              handleSetOptionsCount={handleSetOptionsCount}
+              setOptionsCount={setOptionsCount}
             />
             <OptionsCountButton
               count={1000}
               optionsCount={optionsCount}
-              handleSetOptionsCount={handleSetOptionsCount}
+              setOptionsCount={setOptionsCount}
             />
             <OptionsCountButton
               count={5000}
               optionsCount={optionsCount}
-              handleSetOptionsCount={handleSetOptionsCount}
+              setOptionsCount={setOptionsCount}
             />
             <OptionsCountButton
               count={25000}
               optionsCount={optionsCount}
-              handleSetOptionsCount={handleSetOptionsCount}
+              setOptionsCount={setOptionsCount}
             />
           </ButtonGroup>
         </CardHeader>

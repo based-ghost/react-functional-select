@@ -126,7 +126,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     user-select: none;
     white-space: nowrap;
     text-overflow: ellipsis;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
     padding: ${({ theme }) => theme.menu.option.padding};
     text-align: ${({ theme }) => theme.menu.option.textAlign};
 
@@ -202,6 +202,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   const [inputValue, setInputValue] = useState<string>('');
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [menuHeight, setMenuHeight] = useState<number>(menuMaxHeight);
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
   const [selectedOption, setSelectedOption] = useState<SelectedOption>(SELECTED_OPTION_DEFAULT);
 
@@ -242,6 +243,13 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   const getFilterOptionStringCB = useCallback((option: MenuOption): string => {
     return getFilterOptionString ? getFilterOptionString(option) : String(option.label);
   }, [getFilterOptionString]);
+
+  // Callback executed after scrollMenuIntoViewOnOpen() finishes executing in useEffect
+  // ...Resizes menuHeight if there is not sufficient space to accomodate the menu using default menuMaxHeight
+  const handleOnMenuOpen = useCallback((availableSpace?: number): void => {
+    onMenuOpen && onMenuOpen();
+    availableSpace && setMenuHeight(availableSpace);
+  }, [onMenuOpen]);
 
   // Custom hook abstraction that handles the creation of menuOptions
   const menuOptions: MenuOption[] = useMenuOptions(
@@ -347,11 +355,14 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
 
   useEffect(() => {
     if (menuOpen) {
-      scrollMenuIntoViewOnOpen(menuRef.current, scrollMenuIntoView, onMenuOpen);
+      scrollMenuIntoViewOnOpen(menuRef.current, scrollMenuIntoView, handleOnMenuOpen);
     } else {
+      // Reset menuHeight to default (so menuHeight can be recalculated correctly on next open)
+      // Execute onMenuClose callback (if defined)
+      setMenuHeight(menuMaxHeight);
       onMenuClose && onMenuClose();
     }
-  }, [menuOpen, onMenuClose, onMenuOpen, scrollMenuIntoView]);
+  }, [menuOpen, onMenuClose, handleOnMenuOpen, menuMaxHeight, scrollMenuIntoView]);
 
   useEffect(() => {
     if (menuOptions.length === 1 || (!!menuOptions.length && (menuOptions.length !== options.length || prevMenuOptionsLen.current === 0))) {
@@ -569,8 +580,8 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
           ref={listRef}
           width={menuWidth}
           idSuffix={idSuffix}
+          maxHeight={menuHeight}
           itemSize={menuItemSize}
-          maxHeight={menuMaxHeight}
           menuOptions={menuOptions}
           noOptionsMsg={noOptionsMsg}
           selectOption={selectOption}

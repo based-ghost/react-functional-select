@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
 import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, Label, LabelText, Code, Card, CardHeader, CardBody } from './helpers/styled';
 
-const reactLogo = require('./assets/react_logo.svg') as string;
+const ReactLogo = require('./assets/react-logo.svg') as string;
 
 type StyledImageProps = {
   readonly isDisabled: boolean;
@@ -73,10 +73,9 @@ storiesOf('React Functional Select', module).add('Complex', () => {
   const getIsOptionDisabled = useCallback((option: PackageOption): boolean => (option.packageName === _options[3].packageName), []);
 
   const renderOptionLabel = useCallback((option: PackageOption): JSX.Element => {
-    const isDisabled = getIsOptionDisabled(option);
     return (
       <StyledDiv>
-        <StyledImg src={reactLogo} isDisabled={isDisabled} />
+        <StyledImg src={ReactLogo} isDisabled={getIsOptionDisabled(option)} />
         <StyledSpan>{option.packageName}</StyledSpan>
       </StyledDiv>
     );
@@ -93,7 +92,7 @@ storiesOf('React Functional Select', module).add('Complex', () => {
             <Code>renderOptionLabel(option)</Code><em> => ReactNode</em> - Callback function 
             with a return type of <em>ReactNode</em>. Use this property in cases where the 
             standard <Code>getOptionLabel</Code> property won't meet your needs (for instance, 
-            you want to render each option's label using custom <Code>JSX</Code>).
+            you want to render each option's label using custom JSX).
           </ListItem>
           <ListItem>
             <Code>getIsOptionDisabled(option)</Code><em> => Boolean</em> - Callback function 
