@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, CSSProperties } from 'react';
 import styled from 'styled-components';
-import { mediaQueryIsIE } from '../constants/styled';
+import { mediaQueryIsIE, mediaQueryIsEdge } from '../constants/styled';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/attributes';
 
@@ -51,8 +51,14 @@ const StyledAutosizeInput = styled.input`
   }
 
   ${mediaQueryIsIE} {
-    ::-ms-clear { 
-      display: none; 
+    ::-ms-clear {
+      display: none;
+    }
+  }
+
+  ${mediaQueryIsEdge} {
+    ::-ms-clear {
+      display: none;
     }
   }
 `;

@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import DarkTheme from './darkTheme';
 import GlobalStyle from './globalStyle';
 import { configure, addParameters } from '@storybook/react';
+import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
+
+// polyfill EventSource for Edge and IE browsers
+global.EventSource = NativeEventSource || EventSourcePolyfill;
 
 // Define storybook global configuration
 const _globalStyleId = 'gen3-global-style';
