@@ -193,7 +193,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   ref: React.Ref<SelectHandle>,
 ) => {
   // DOM / instance ref attributes
-  const prevMenuOptionsLen = useRef<number>();
+  const prevMenuOptionsCount = useRef<number>();
   const listRef = useRef<FixedSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -231,20 +231,12 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     return getOptionValue ? getOptionValue(data) : data.value;
   }, [getOptionValue]);
 
-  const getIsOptionDisabledCB = useCallback((data: OptionData): boolean => {
-    return getIsOptionDisabled ? getIsOptionDisabled(data) : !!data.isDisabled;
-  }, [getIsOptionDisabled]);
-
   const renderOptionLabelCB = useCallback((data: OptionData): ReactNode => {
     return renderOptionLabel ? renderOptionLabel(data) : getOptionLabelCB(data);
   }, [renderOptionLabel, getOptionLabelCB]);
 
-  const getFilterOptionStringCB = useCallback((option: MenuOption): string => {
-    return getFilterOptionString ? getFilterOptionString(option) : String(option.label);
-  }, [getFilterOptionString]);
-
   // Custom hook abstraction that handles calculating menuHeight (defaults to menuMaxHeight)
-  // ...and handles executing callbacks/logic on menuOpen flag changes.
+  // ...and handles executing callbacks/logic on menuOpen state change.
   const menuHeight: number = useMenuHeight(
     menuRef,
     menuOpen,
@@ -260,8 +252,8 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     debouncedInputValue,
     getOptionValueCB,
     getOptionLabelCB,
-    getIsOptionDisabledCB,
-    getFilterOptionStringCB,
+    getIsOptionDisabled,
+    getFilterOptionString,
     filterIsCaseSensitive,
   );
 
@@ -356,14 +348,14 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   }, [selectedOptionData, onOptionChange, closeMenuOnSelect, blurInputOnSelect]);
 
   useEffect(() => {
-    if (menuOptions.length === 1 || (!!menuOptions.length && (menuOptions.length !== options.length || prevMenuOptionsLen.current === 0))) {
+    if (menuOptions.length === 1 || (!!menuOptions.length && (menuOptions.length !== options.length || prevMenuOptionsCount.current === 0))) {
       setFocusedOption({
         index: 0,
         ...menuOptions[0],
       });
       scrollToItemIndex(0);
     }
-    prevMenuOptionsLen.current = menuOptions.length; // Track the previous value of menuOptions.length (used above)
+    prevMenuOptionsCount.current = menuOptions.length; // Track the previous value of menuOptions.length (used above)
   }, [options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {

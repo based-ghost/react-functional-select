@@ -3,24 +3,30 @@ import { OptionData, MenuOption } from '../types';
 import { useEffect, useState, ReactText } from 'react';
 import { OPTIONS_DEFAULT } from '../constants/defaults';
 
+/**
+ * Hook: useMenuOptions.
+ * Parse options to array of MenuOptions and perform filtering (if applicable).
+ * Set menuOptions state (ensure array returned).
+ */
 export const useMenuOptions = (
   options: OptionData[],
   debouncedInputValue: string,
   getOptionValueCB: (data: OptionData) => ReactText,
   getOptionLabelCB: (data: OptionData) => ReactText,
-  getIsOptionDisabledCB: (data: OptionData) => boolean,
-  getFilterOptionStringCB: (option: MenuOption) => string,
+  getIsOptionDisabled?: (data: OptionData) => boolean,
+  getFilterOptionString?: (option: MenuOption) => string,
   filterIsCaseSensitive?: boolean
 ): MenuOption[] => {
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(OPTIONS_DEFAULT);
 
   useEffect(() => {
-    // Parse options to array of MenuOptions and perform filtering (if applicable)
     const createMenuOptions = (): MenuOption[] => {
-      const cleanSearchInputValue = trimAndFormatFilterStr(debouncedInputValue, filterIsCaseSensitive);
+      const cleanSearchInputValue: string = trimAndFormatFilterStr(debouncedInputValue, filterIsCaseSensitive);
+      const isOptionDisabled = (data: OptionData): boolean => (getIsOptionDisabled ? getIsOptionDisabled(data) : !!data.isDisabled);
 
       const optionSatisfiesFilter = (menuOption: MenuOption): boolean => {
-        const cleanStringifiedOption = trimAndFormatFilterStr(getFilterOptionStringCB(menuOption), filterIsCaseSensitive);
+        const cleanOptionLabel = getFilterOptionString ? getFilterOptionString(menuOption) : String(menuOption.label);
+        const cleanStringifiedOption = trimAndFormatFilterStr(cleanOptionLabel, filterIsCaseSensitive);
         return cleanStringifiedOption.indexOf(cleanSearchInputValue) > -1;
       };
 
@@ -37,7 +43,7 @@ export const useMenuOptions = (
 
         return {
           ...menuOption,
-          ...(getIsOptionDisabledCB(data) && { isDisabled: true }),
+          ...(isOptionDisabled(data) && { isDisabled: true }),
         };
       };
 
@@ -48,9 +54,8 @@ export const useMenuOptions = (
       }, []);
     };
 
-    // Set menuOptions state (ensure array returned)
     setMenuOptions(createMenuOptions() || OPTIONS_DEFAULT);
-  }, [options, filterIsCaseSensitive, debouncedInputValue, getFilterOptionStringCB, getOptionValueCB, getOptionLabelCB, getIsOptionDisabledCB]);
+  }, [options, filterIsCaseSensitive, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
 
   return menuOptions;
 };
