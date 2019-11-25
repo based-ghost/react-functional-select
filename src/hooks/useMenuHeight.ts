@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, MutableRefObject } from 'react';
+import { useEffect, useState, MutableRefObject } from 'react';
 import { scrollMenuIntoViewOnOpen } from '../utils';
 
 /**
@@ -17,19 +17,19 @@ export const useMenuHeight = (
 ): number => {
   const [menuHeight, setMenuHeight] = useState<number>(menuHeightDefault);
 
-  const handleOnMenuOpen = useCallback((availableSpace?: number): void => {
-    availableSpace && setMenuHeight(availableSpace);
-    onMenuOpen && onMenuOpen();
-  }, [onMenuOpen]);
-
   useEffect(() => {
     if (menuOpen) {
+      const handleOnMenuOpen = (availableSpace?: number): void => {
+        availableSpace && setMenuHeight(availableSpace);
+        onMenuOpen && onMenuOpen();
+      };
+
       scrollMenuIntoViewOnOpen(menuRef.current, scrollMenuIntoView, handleOnMenuOpen);
     } else {
       setMenuHeight(menuHeightDefault);
       onMenuClose && onMenuClose();
     }
-  }, [menuRef, menuOpen, onMenuClose, handleOnMenuOpen, menuHeightDefault, scrollMenuIntoView]);
+  }, [menuRef, menuOpen, onMenuClose, onMenuOpen, menuHeightDefault, scrollMenuIntoView]);
 
   return menuHeight;
 };
