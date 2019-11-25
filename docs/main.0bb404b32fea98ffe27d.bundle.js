@@ -244,7 +244,7 @@
   :hover {
     box-shadow: 0 1px 0 0 currentColor;
   }
-`;__webpack_exports__.a=({name:name,href:href})=>react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Link,{href:href,rel:"noopener",target:"_blank","aria-label":name},name)},184:function(module,__webpack_exports__,__webpack_require__){"use strict";var react__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(0),react__WEBPACK_IMPORTED_MODULE_0___default=__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__),styled_components__WEBPACK_IMPORTED_MODULE_1__=__webpack_require__(2),_styled__WEBPACK_IMPORTED_MODULE_2__=__webpack_require__(1);const PrintJsonRoot=styled_components__WEBPACK_IMPORTED_MODULE_1__.d.div`
+`;__webpack_exports__.a=({name:name,href:href})=>react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Link,{href:href,target:"_blank","aria-label":name,rel:"noopener noreferrer"},name)},184:function(module,__webpack_exports__,__webpack_require__){"use strict";var react__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(0),react__WEBPACK_IMPORTED_MODULE_0___default=__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__),styled_components__WEBPACK_IMPORTED_MODULE_1__=__webpack_require__(2),_styled__WEBPACK_IMPORTED_MODULE_2__=__webpack_require__(1);const PrintJsonRoot=styled_components__WEBPACK_IMPORTED_MODULE_1__.d.div`
   font-size: 1rem;
   margin-top: 25px;
   overflow: hidden;
@@ -560,4 +560,4 @@
     background-color: #007bff !important;
   }
 `;__webpack_exports__.a=({count:count,optionsCount:optionsCount,setOptionsCount:setOptionsCount})=>{const isActive=!(count!==optionsCount),onClick=isActive?void 0:()=>setOptionsCount(count);return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledButton,{isActive:isActive,onClick:onClick},`${Object(_utils__WEBPACK_IMPORTED_MODULE_2__.b)(count)} Options`)}}},[[292,1,2]]]);
-//# sourceMappingURL=main.2cb31b3894f17dbb5456.bundle.js.map
+//# sourceMappingURL=main.0bb404b32fea98ffe27d.bundle.js.map

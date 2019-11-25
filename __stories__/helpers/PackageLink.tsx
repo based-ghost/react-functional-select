@@ -30,9 +30,9 @@ const Link = styled.a`
 const PackageLink: React.FC<PackageLinkProps> = ({ name, href }) => (
   <Link
     href={href}
-    rel='noopener'
     target='_blank'
     aria-label={name}
+    rel='noopener noreferrer'
   >
     {name}
   </Link>
