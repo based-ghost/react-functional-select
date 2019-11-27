@@ -87,12 +87,17 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
     }
   }, [inputValue]);
 
+  const style: CSSProperties = {
+    width: inputWidth
+  };
+
   const inputAttributes: AutosizeInputHTMLAttributes = {
     id,
+    style,
     disabled,
     ..._inputStaticAttributes,
     'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy,
+    'aria-labelledby': ariaLabelledBy
   };
 
   return (
@@ -104,7 +109,6 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
         value={inputValue}
         {...inputAttributes}
         readOnly={!isSearchable}
-        style={{ width: inputWidth }}
         onChange={isSearchable ? onChange : undefined}
         className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
       />

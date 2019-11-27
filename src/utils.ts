@@ -81,14 +81,6 @@ export function isArrayWithLength(test: any): boolean {
 }
 
 /**
- * Takes array of strings or short-circuit conditions that evaluate to a string and 
- * joins them as a single string, seperated by a single space.
- */
-export function createClassName(classNames: any[]): string {
-  return classNames.filter(x => x).join(' ');
-}
-
-/**
  * Tests for a non-array object - 'a plain object'.
  */
 export function isPlainObject(test: any): boolean {

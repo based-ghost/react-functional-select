@@ -1,7 +1,7 @@
 import React from 'react';
+import { createID } from '../utils';
 import { areEqual } from 'react-window';
 import { OptionProps, MenuOption } from '../types';
-import { createID, createClassName } from '../utils';
 import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants/attributes';
 
 const Option = React.memo<OptionProps>(({
@@ -19,12 +19,10 @@ const Option = React.memo<OptionProps>(({
   const { data, value, label, isDisabled }: MenuOption = menuOptions[index];
   const isSelected: boolean = (value === selectedOptionValue);
 
-  const className: string = createClassName([
-    OPTION_CLS,
-    isDisabled && OPTION_DISABLED_CLS,
-    isSelected && OPTION_SELECTED_CLS,
-    (index === focusedOptionIndex) && OPTION_FOCUSED_CLS
-  ]);
+  const className: string = OPTION_CLS
+    + (isDisabled ? ' ' + OPTION_DISABLED_CLS : '')
+    + (isSelected ? ' ' + OPTION_SELECTED_CLS : '')
+    + ((index === focusedOptionIndex) ? ' ' + OPTION_FOCUSED_CLS : '');
 
   return (
     <div
