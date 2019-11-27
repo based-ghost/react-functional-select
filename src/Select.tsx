@@ -298,7 +298,6 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
 
   /*** useImperativeHandle ***/
   // Public instance methods exposed to parent component - accessed via 'ref' attribute
-
   useImperativeHandle(ref, () => ({
     blur: blurInput,
     focus: focusInput,
@@ -355,7 +354,8 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
       });
       scrollToItemIndex(0);
     }
-    prevMenuOptionsCount.current = menuOptions.length; // Track the previous value of menuOptions.length (used above)
+    // Track the previous value of menuOptions.length (used above)
+    prevMenuOptionsCount.current = menuOptions.length;
   }, [options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {

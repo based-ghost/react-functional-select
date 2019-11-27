@@ -9,22 +9,22 @@ type PrintJsonProps = {
 
 const PrintJsonRoot = styled.div`
   font-size: 1rem;
-  margin-top: 25px;
   overflow: hidden;
-  border-radius: 9px;
   position: relative;
+  margin-top: 1.5625rem;
+  border-radius: 0.5625rem;
   background-color: #282c34;
-  box-shadow: rgba(20, 20, 20, 0.23) 0.0555556rem 0.0555556rem 1.11111rem;
+  box-shadow: rgba(20, 20, 20, 0.225) 1px 1px 18px;
 `;
 
 const PrintJsonHeader = styled.div`
   color: #f5b83d;
   line-height: 3;
   font-weight: 700;
-  padding: 0px 15px;
   font-size: 1.15rem;
-  border-radius: 9px;
+  padding: 0 0.9375rem;
   letter-spacing: 0.08em;
+  border-radius: 0.5625rem;
   text-transform: uppercase;
   background-color: #1D2027;
 
@@ -39,16 +39,16 @@ const PrintJsonPre = styled.pre`
   color: #fff;
   resize: none;
   font-size: 90%;
-  padding: 10px 30px;
   display: inline-block;
   letter-spacing: 0.03em;
+  padding: 0.625rem 1.875rem;
   touch-action: manipulation;
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${mediaQueryIsMobileXS} {
     font-size: 0.75em;
-    padding: 10px 18px;
     letter-spacing: normal;
+    padding: 0.625rem 1.125rem;
   }
 `;
 

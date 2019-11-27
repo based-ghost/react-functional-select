@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Label } from './styled';
 import styled from 'styled-components';
 
@@ -23,15 +23,19 @@ const Checkbox: React.FC<CheckboxProps> = ({
   checked,
   onCheck,
   readOnly,
-}) => (
-  <Label $readOnly={readOnly}>
-    <Input
-      type='checkbox'
-      checked={checked}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onCheck(e.target.checked)}
-    />
-    {label && <span>{label}</span>}
-  </Label>
-);
+}) => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => onCheck(e.target.checked);
+
+  return (
+    <Label $readOnly={readOnly}>
+      <Input
+        type='checkbox'
+        checked={checked}
+        onChange={handleOnChange}
+      />
+      {label && <span>{label}</span>}
+    </Label>
+  );
+};
 
 export default Checkbox;
