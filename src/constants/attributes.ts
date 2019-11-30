@@ -1,5 +1,4 @@
 const attrPrefix = 'rfs';
-const isNotProduction = (process.env.NODE_ENV !== 'production');
 
 // classNames (menu options)
 export const OPTION_CLS = `${attrPrefix}-option`;
@@ -17,8 +16,8 @@ export const CONTROL_CONTAINER_CLS = `${attrPrefix}-control-container`;
 
 // data-testid attributes used for DOM element querying in unit test cases
 // ...this attribute gets rendered in development and test environments (removed in production)
-export const CLEAR_ICON_TESTID = isNotProduction ? CLEAR_ICON_CLS : undefined;
-export const AUTOSIZE_INPUT_TESTID = isNotProduction ? AUTOSIZE_INPUT_CLS : undefined;
-export const MENU_CONTAINER_TESTID = isNotProduction ? MENU_CONTAINER_CLS : undefined;
-export const SELECT_CONTAINER_TESTID = isNotProduction ? SELECT_CONTAINER_CLS : undefined;
-export const CONTROL_CONTAINER_TESTID = isNotProduction ? CONTROL_CONTAINER_CLS : undefined;
+export const CLEAR_ICON_TESTID = (process.env.NODE_ENV !== 'production') ? CLEAR_ICON_CLS : undefined;
+export const AUTOSIZE_INPUT_TESTID = (process.env.NODE_ENV !== 'production') ? AUTOSIZE_INPUT_CLS : undefined;
+export const MENU_CONTAINER_TESTID = (process.env.NODE_ENV !== 'production') ? MENU_CONTAINER_CLS : undefined;
+export const SELECT_CONTAINER_TESTID = (process.env.NODE_ENV !== 'production') ? SELECT_CONTAINER_CLS : undefined;
+export const CONTROL_CONTAINER_TESTID = (process.env.NODE_ENV !== 'production') ? CONTROL_CONTAINER_CLS : undefined;

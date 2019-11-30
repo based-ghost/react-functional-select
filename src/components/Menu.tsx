@@ -23,9 +23,9 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     selectOption,
     noOptionsMsg,
     overscanCount,
+    selectedOption,
     renderOptionLabel,
     focusedOptionIndex,
-    selectedOptionValue,
   }, 
   ref: React.Ref<FixedSizeList>,
 ) => {
@@ -35,8 +35,8 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     selectOption,
     renderOptionLabel,
     focusedOptionIndex,
-    selectedOptionValue,
-  }), [idSuffix, menuOptions, focusedOptionIndex, selectedOptionValue, selectOption, renderOptionLabel]);
+    selectedOptionValue: selectedOption.value,
+  }), [idSuffix, menuOptions, focusedOptionIndex, selectedOption, selectOption, renderOptionLabel]);
 
   return (
     <Fragment>

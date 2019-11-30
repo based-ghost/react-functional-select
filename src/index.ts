@@ -6,4 +6,4 @@ export type SelectRef = Types.SelectHandle;
 export type SelectProps = Types.SelectProps;
 
 // Export the Select FunctionalComponent (default export)
-export { default as Select } from './SelectWrapper';
+export { default as Select } from './Select';

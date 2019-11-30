@@ -18,6 +18,7 @@
     "prefer-template": false,
     "ordered-imports": false,
     "no-var-requires": false,
+    "return-undefined": false,
     "no-require-imports": false,
     "space-within-parens": false,
     "cyclomatic-complexity": false,

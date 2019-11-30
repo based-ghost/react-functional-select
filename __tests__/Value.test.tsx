@@ -4,7 +4,7 @@ import DefaultThemeObj from '../src/theme';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { ValueProps, OptionData } from '../src/types';
-import { PLACEHOLDER_DEFAULT } from '../src/constants/defaults';
+import { PLACEHOLDER_DEFAULT, SELECTED_OPTION_DEFAULT } from '../src/constants/defaults';
 
 // ============================================
 // Helper functions for Value component
@@ -24,6 +24,7 @@ const createValueProps = () => {
   const props: ValueProps = {
     inputValue: '',
     placeholder: PLACEHOLDER_DEFAULT,
+    selectedOption: SELECTED_OPTION_DEFAULT,
     renderOptionLabel: renderOptionLabelSpy,
   };
 
@@ -57,11 +58,17 @@ test('"renderOptionLabel" callback should be executed when an option is selected
   const selectedOptionLabel = 'Option 1';
   const { props, renderOptionLabelSpy } = createValueProps();
 
+  const data = {
+    value: 1,
+    label: selectedOptionLabel,
+  };
+
   const propsWithSelectedOption = {
     ...props,
-    selectedOptionData: {
-      value: 1,
-      label: selectedOptionLabel,
+    selectedOption: {
+      data,
+      value: data.value,
+      label: data.label,
     },
   };
 

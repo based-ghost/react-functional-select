@@ -37,7 +37,7 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
   return (
     <A11yText aria-live='polite'>
       <p>{selectedOptionMsg}</p>
-      <p>{focusedMsg + optionsMsg + menuMsg}</p>
+      <p>{`${focusedMsg} ${optionsMsg} ${menuMsg}`}</p>
     </A11yText>
   );
 };

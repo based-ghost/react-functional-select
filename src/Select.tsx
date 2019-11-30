@@ -1,10 +1,18 @@
-import React, { useEffect, useState, useCallback, useRef, useImperativeHandle, FocusEvent, FormEvent, KeyboardEvent, ReactNode, ReactText } from 'react';
+import React, { useEffect, useMemo, useState, useCallback, useRef, useImperativeHandle, FocusEvent, FormEvent, KeyboardEvent, ReactNode, ReactText } from 'react';
+import DefaultThemeObj from './theme';
 import { FixedSizeList } from 'react-window';
-import styled, { css } from 'styled-components';
 import { fadeInAnimationCss } from './constants/styled';
 import { useDebounce, useMenuHeight, useMenuOptions } from './hooks';
+import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
-import { isPlainObject, isArrayWithLength, renderControlEmphasis, validateSetValueOption } from './utils';
+import {
+  createID,
+  mergeDeep,
+  isTouchDevice,
+  isPlainObject,
+  isArrayWithLength,
+  validateSetValueOption,
+} from './utils';
 import {
   OptionData,
   MenuOption,
@@ -20,7 +28,6 @@ import {
 } from './types';
 import {
   OPTIONS_DEFAULT,
-  NO_SELECTED_OPTION,
   PLACEHOLDER_DEFAULT,
   FOCUSED_OPTION_DEFAULT,
   NO_OPTIONS_MSG_DEFAULT,
@@ -76,33 +83,24 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
   box-sizing: border-box;
   justify-content: space-between;
 
-  ${({ theme: { control } }) => css`
+  ${({ isDisabled, isFocused, isInvalid, theme: { control, color } }) => css`
     height: ${control.height};
     transition: ${control.transition};
     border-style: ${control.borderStyle};
     border-width: ${control.borderWidth};
     border-radius: ${control.borderRadius};
-    ${control.backgroundColor && `background-color: ${control.backgroundColor};`}
+
+    border-color: ${
+      isInvalid 
+        ? color.invalid 
+        : isFocused 
+          ? control.focusedBorderColor 
+          : color.border};
+
+    ${isDisabled && `pointer-events: none;`}
+    ${(control.backgroundColor || isDisabled) && `background-color: ${isDisabled ? color.disabled : control.backgroundColor};`}
+    ${isFocused && `box-shadow: ${control.boxShadow} ${isInvalid ? color.invalidFocus : control.boxShadowColor};`}
   `}
-
-  ${({ isDisabled, theme }) => 
-    isDisabled && 
-    css`
-      pointer-events: none;
-      background-color: ${theme.color.disabled};
-    `}
-
-  ${({ isFocused, isInvalid, theme }) => 
-    renderControlEmphasis(
-      theme.control.boxShadow,
-      theme.color.border,
-      theme.color.invalid,
-      theme.color.invalidFocus,
-      theme.control.boxShadowColor,
-      theme.control.focusedBorderColor,
-      isFocused,
-      isInvalid
-    )}
 `;
 
 const MenuWrapper = styled.div<MenuWrapperProps>`
@@ -164,6 +162,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     onMenuClose,
     onInputBlur,
     isClearable,
+    themeConfig,
     onInputFocus,
     initialValue,
     addClassNames,
@@ -192,28 +191,19 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   }, 
   ref: React.Ref<SelectHandle>,
 ) => {
-  // DOM / instance ref attributes
+  // Instance prop & DOM node refs
   const prevMenuOptionsCount = useRef<number>();
+  const initValueAttempted = useRef<boolean>(false);
   const listRef = useRef<FixedSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // Simple stateful values/objects
+  // Stateful values
   const [inputValue, setInputValue] = useState<string>('');
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
   const [selectedOption, setSelectedOption] = useState<SelectedOption>(SELECTED_OPTION_DEFAULT);
-
-  // Custom hook abstraction that debounces search input value (opt-in)
-  const debouncedInputValue = useDebounce<string>(inputValue, inputDelay);
-
-  const {
-    data: selectedOptionData,
-    value: selectedOptionValue,
-    label: selectedOptionLabel,
-    initFlag: canAttemptInitValSet,
-  } = selectedOption;
 
   const {
     data: focusedOptionData,
@@ -223,6 +213,14 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     isDisabled: isFocusedOptionDisabled,
   } = focusedOption;
 
+  // Theme for styled-components ThemeProvider
+  const theme = useMemo<DefaultTheme>(() => {
+    return !isPlainObject(themeConfig)
+      ? { ...DefaultThemeObj }
+      : mergeDeep(DefaultThemeObj, themeConfig);
+  }, [themeConfig]);
+
+  // Memoized callback functions referencing optional function properties on Select.tsx
   const getOptionLabelCB = useCallback((data: OptionData): ReactText => {
     return getOptionLabel ? getOptionLabel(data) : data.label;
   }, [getOptionLabel]);
@@ -234,6 +232,9 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   const renderOptionLabelCB = useCallback((data: OptionData): ReactNode => {
     return renderOptionLabel ? renderOptionLabel(data) : getOptionLabelCB(data);
   }, [renderOptionLabel, getOptionLabelCB]);
+
+  // Custom hook abstraction that debounces search input value (opt-in)
+  const debouncedInputValue = useDebounce<string>(inputValue, inputDelay);
 
   // Custom hook abstraction that handles calculating menuHeight (defaults to menuMaxHeight)
   // ...and handles executing callbacks/logic on menuOpen state change.
@@ -273,7 +274,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     if (isSelected) {
       setMenuOpen(false);
     } else {
-      setSelectedOption(option || NO_SELECTED_OPTION);
+      setSelectedOption(option || SELECTED_OPTION_DEFAULT);
     }
   }, []);
 
@@ -288,8 +289,8 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
       : -1;
 
     const index = (selectedIndex > -1)
-      ? selectedIndex : (position === _indexPositionEnum.FIRST) ? 0
-      : menuOptions.length - 1;
+      ? selectedIndex 
+      : (position === _indexPositionEnum.FIRST) ? 0 : menuOptions.length - 1;
 
     setMenuOpen(true);
     setFocusedOption({ index, ...menuOptions[index] });
@@ -313,7 +314,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
 
   /*** useEffect ***/
   // 1: if control recieves focus & openMenuOnFocus = true, open menu
-  // 2: assign the initialValue (if passed) - initDefault prop exists to help us execute this just once
+  // 2: assign the initialValue after first render (if passed) - set initValueAttempted ref flag to true to ensure attempted just once
   // 3: handle changes to selected option value
   // 4: handle menuOptions changes - conditionally focus first option and do scroll to first option;
   //    ...also, handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
@@ -325,26 +326,32 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   }, [isFocused, openMenuOnFocus, openMenuAndFocusOption]);
 
   useEffect(() => {
-    if (canAttemptInitValSet && isPlainObject(initialValue)) {
+    if (!initValueAttempted.current && isPlainObject(initialValue)) {
+      initValueAttempted.current = true;
       selectOption({
         data: initialValue,
         value: getOptionValueCB(initialValue),
         label: getOptionLabelCB(initialValue),
       });
     }
-  }, [selectOption, initialValue, canAttemptInitValSet, getOptionValueCB, getOptionLabelCB]);
+  }, [selectOption, initialValue, getOptionValueCB, getOptionLabelCB]);
 
   useEffect(() => {
-    onOptionChange && onOptionChange(selectedOptionData || null);
-    !selectedOptionData && setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    const { data } = selectedOption;
+    onOptionChange && onOptionChange(data || null);
+    !data && setFocusedOption(FOCUSED_OPTION_DEFAULT);
+
+    const blurInputOnSelectOrDefault = (typeof blurInputOnSelect === 'boolean')
+      ? blurInputOnSelect
+      : isTouchDevice();
  
-    if (blurInputOnSelect && selectedOptionData) {
+    if (blurInputOnSelectOrDefault && data) {
       blurInput();
     } else if (closeMenuOnSelect) {
       setMenuOpen(false);
       setInputValue('');
     }
-  }, [selectedOptionData, onOptionChange, closeMenuOnSelect, blurInputOnSelect]);
+  }, [selectedOption, onOptionChange, closeMenuOnSelect, blurInputOnSelect]);
 
   useEffect(() => {
     if (menuOptions.length === 1 || (!!menuOptions.length && (menuOptions.length !== options.length || prevMenuOptionsCount.current === 0))) {
@@ -363,7 +370,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
       return;
     }
     
-    if (closeMenuOnSelect && (selectedOptionValue === focusedOptionValue)) {
+    if (closeMenuOnSelect && (selectedOption.value === focusedOptionValue)) {
       setMenuOpen(false);
     } else {
       selectOption({
@@ -500,94 +507,96 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
     e.stopPropagation();
     (e.type === 'mousedown') && e.preventDefault();
-    setSelectedOption(NO_SELECTED_OPTION);
+    setSelectedOption(SELECTED_OPTION_DEFAULT);
     focusInput();
   }, []);
 
   return (
-    <SelectWrapper
-      id={selectId}
-      onKeyDown={handleOnKeyDown}
-      data-testid={SELECT_CONTAINER_TESTID}
-      className={addClassNames ? SELECT_CONTAINER_CLS : undefined}
-    >
-      <ControlWrapper
-        isInvalid={isInvalid}
-        isFocused={isFocused}
-        isDisabled={isDisabled}
-        onTouchEnd={handleOnControlMouseDown}
-        onMouseDown={handleOnControlMouseDown}
-        data-testid={CONTROL_CONTAINER_TESTID}
-        className={addClassNames ? CONTROL_CONTAINER_CLS : undefined}
+    <ThemeProvider theme={theme}>
+      <SelectWrapper
+        onKeyDown={handleOnKeyDown}
+        id={createID(selectId, idSuffix)}
+        data-testid={SELECT_CONTAINER_TESTID}
+        className={addClassNames ? SELECT_CONTAINER_CLS : undefined}
       >
-        <ValueWrapper>
-          <Value
-            inputValue={inputValue}
-            placeholder={placeholder}
-            selectedOptionData={selectedOptionData}
+        <ControlWrapper
+          isInvalid={isInvalid}
+          isFocused={isFocused}
+          isDisabled={isDisabled}
+          onTouchEnd={handleOnControlMouseDown}
+          onMouseDown={handleOnControlMouseDown}
+          data-testid={CONTROL_CONTAINER_TESTID}
+          className={addClassNames ? CONTROL_CONTAINER_CLS : undefined}
+        >
+          <ValueWrapper>
+            <Value
+              inputValue={inputValue}
+              placeholder={placeholder}
+              selectedOption={selectedOption}
+              renderOptionLabel={renderOptionLabelCB}
+            />
+            <AutosizeInput
+              ref={inputRef}
+              disabled={isDisabled}
+              ariaLabel={ariaLabel}
+              inputValue={inputValue}
+              onBlur={handleOnInputBlur}
+              isSearchable={isSearchable}
+              onFocus={handleOnInputFocus}
+              addClassNames={addClassNames}
+              onChange={handleOnInputChange}
+              ariaLabelledBy={ariaLabelledBy}
+              id={createID(inputId, idSuffix)}
+            />
+          </ValueWrapper>
+          <IndicatorIcons
+            menuOpen={menuOpen}
+            clearIcon={clearIcon}
+            caretIcon={caretIcon}
+            isInvalid={isInvalid}
+            isLoading={isLoading}
+            addClassNames={addClassNames}
+            onClearMouseDown={handleOnClearMouseDown}
+            showClear={!!(isClearable && !isDisabled && selectedOption.data)}
+          />
+        </ControlWrapper>
+        <MenuWrapper
+          ref={menuRef}
+          hideMenu={!menuOpen}
+          onMouseDown={handleOnMenuMouseDown}
+          data-testid={MENU_CONTAINER_TESTID}
+          className={addClassNames ? MENU_CONTAINER_CLS : undefined}
+        >
+          <Menu
+            ref={listRef}
+            idSuffix={idSuffix}
+            maxHeight={menuHeight}
+            itemSize={menuItemSize}
+            menuOptions={menuOptions}
+            noOptionsMsg={noOptionsMsg}
+            selectOption={selectOption}
+            selectedOption={selectedOption}
+            overscanCount={menuOverscanCount}
+            width={menuWidth || theme.menu.width}
+            focusedOptionIndex={focusedOptionIndex}
             renderOptionLabel={renderOptionLabelCB}
           />
-          <AutosizeInput
-            id={inputId}
-            ref={inputRef}
-            disabled={isDisabled}
+        </MenuWrapper>
+        {(isAriaLiveEnabled && isFocused) && (
+          <AriaLiveRegion
+            menuOpen={menuOpen}
             ariaLabel={ariaLabel}
             inputValue={inputValue}
-            onBlur={handleOnInputBlur}
             isSearchable={isSearchable}
-            onFocus={handleOnInputFocus}
-            addClassNames={addClassNames}
-            onChange={handleOnInputChange}
-            ariaLabelledBy={ariaLabelledBy}
+            optionCount={menuOptions.length}
+            focusedOptionLabel={focusedOptionLabel}
+            focusedOptionIndex={focusedOptionIndex}
+            selectedOptionLabel={selectedOption.label}
+            isFocusedOptionDisabled={isFocusedOptionDisabled}
           />
-        </ValueWrapper>
-        <IndicatorIcons
-          menuOpen={menuOpen}
-          clearIcon={clearIcon}
-          caretIcon={caretIcon}
-          isInvalid={isInvalid}
-          isLoading={isLoading}
-          addClassNames={addClassNames}
-          onClearMouseDown={handleOnClearMouseDown}
-          showClear={!!(isClearable && !isDisabled && selectedOptionData)}
-        />
-      </ControlWrapper>
-      <MenuWrapper
-        ref={menuRef}
-        hideMenu={!menuOpen}
-        onMouseDown={handleOnMenuMouseDown}
-        data-testid={MENU_CONTAINER_TESTID}
-        className={addClassNames ? MENU_CONTAINER_CLS : undefined}
-      >
-        <Menu
-          ref={listRef}
-          width={menuWidth}
-          idSuffix={idSuffix}
-          maxHeight={menuHeight}
-          itemSize={menuItemSize}
-          menuOptions={menuOptions}
-          noOptionsMsg={noOptionsMsg}
-          selectOption={selectOption}
-          overscanCount={menuOverscanCount}
-          focusedOptionIndex={focusedOptionIndex}
-          renderOptionLabel={renderOptionLabelCB}
-          selectedOptionValue={selectedOptionValue}
-        />
-      </MenuWrapper>
-      {(isAriaLiveEnabled && isFocused) && (
-        <AriaLiveRegion
-          menuOpen={menuOpen}
-          ariaLabel={ariaLabel}
-          inputValue={inputValue}
-          isSearchable={isSearchable}
-          optionCount={menuOptions.length}
-          focusedOptionLabel={focusedOptionLabel}
-          focusedOptionIndex={focusedOptionIndex}
-          selectedOptionLabel={selectedOptionLabel}
-          isFocusedOptionDisabled={isFocusedOptionDisabled}
-        />
-      )}
-    </SelectWrapper>
+        )}
+      </SelectWrapper>
+    </ThemeProvider>
   );
 });
 

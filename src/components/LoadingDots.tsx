@@ -19,11 +19,11 @@ const StyledLoadingDots = styled.div`
   > div {
     border-radius: 100%;
     display: inline-block;
+    animation: ${bounce} 1.19s ease-in-out infinite;
     width: ${({ theme }) => theme.loader.size};
     height: ${({ theme }) => theme.loader.size};
     opacity: ${({ theme }) => theme.loader.opacity};
     background-color: ${({ theme }) => theme.loader.color};
-    animation: ${bounce} 1.19s ease-in-out infinite;
 
     :nth-of-type(1) {
       animation-delay: -0.272s;

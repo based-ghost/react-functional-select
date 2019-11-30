@@ -31,7 +31,6 @@ export type SelectedOption = {
   data?: OptionData;
   value?: ReactText;
   label?: ReactText;
-  initFlag?: boolean;
 };
 
 export type FocusedOption = {
@@ -102,7 +101,7 @@ export type OptionProps = {
 export type ValueProps = {
   readonly inputValue: string;
   readonly placeholder: string;
-  readonly selectedOptionData?: OptionData;
+  readonly selectedOption: SelectedOption;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;
 };
 
@@ -115,7 +114,7 @@ export type MenuProps = {
   readonly width?: string | number;
   readonly menuOptions: MenuOption[];
   readonly focusedOptionIndex: number;
-  readonly selectedOptionValue?: ReactText;
+  readonly selectedOption: SelectedOption;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;
   readonly selectOption: (option?: SelectedOption, isSelected?: boolean) => void;
 };
@@ -187,6 +186,7 @@ export type SelectProps = {
   readonly scrollMenuIntoView?: boolean;
   readonly backspaceClearsValue?: boolean;
   readonly filterIsCaseSensitive?: boolean;
+  readonly themeConfig?: Partial<DefaultTheme>;
   readonly onMenuOpen?: (...args: any[]) => void;
   readonly onMenuClose?: (...args: any[]) => void;
   readonly onOptionChange?: (data: OptionData) => void;
@@ -199,5 +199,3 @@ export type SelectProps = {
   readonly getIsOptionDisabled?: (data: OptionData) => boolean;
   readonly getFilterOptionString?: (option: MenuOption) => string;
 };
-
-export type SelectWrapperProps = SelectProps & { readonly themeConfig?: Partial<DefaultTheme>; };

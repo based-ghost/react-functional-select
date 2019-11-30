@@ -1,10 +1,10 @@
+import { useEffect, useState, ReactText } from 'react';
 import { trimAndFormatFilterStr } from '../utils';
 import { OptionData, MenuOption } from '../types';
-import { useEffect, useState, ReactText } from 'react';
 import { OPTIONS_DEFAULT } from '../constants/defaults';
 
 /**
- * Hook: useMenuOptions.
+ * Custom Hook.
  * Parse options to array of MenuOptions and perform filtering (if applicable).
  * Set menuOptions state (ensure array returned).
  */
@@ -20,16 +20,16 @@ export const useMenuOptions = (
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(OPTIONS_DEFAULT);
 
   useEffect(() => {
+    const normalizedSearchInputValue: string = trimAndFormatFilterStr(debouncedInputValue, filterIsCaseSensitive);
+    const isOptionDisabled = (data: OptionData): boolean => (getIsOptionDisabled ? getIsOptionDisabled(data) : !!data.isDisabled);
+
+    const isOptionSearchFilterMatch = (menuOption: MenuOption): boolean => {
+      const optionLabelString = getFilterOptionString ? getFilterOptionString(menuOption) : String(menuOption.label);
+      const normalizedOptionLabel = trimAndFormatFilterStr(optionLabelString, filterIsCaseSensitive);
+      return normalizedOptionLabel.indexOf(normalizedSearchInputValue) > -1;
+    };
+
     const createMenuOptions = (): MenuOption[] => {
-      const cleanSearchInputValue: string = trimAndFormatFilterStr(debouncedInputValue, filterIsCaseSensitive);
-      const isOptionDisabled = (data: OptionData): boolean => (getIsOptionDisabled ? getIsOptionDisabled(data) : !!data.isDisabled);
-
-      const optionSatisfiesFilter = (menuOption: MenuOption): boolean => {
-        const cleanOptionLabel = getFilterOptionString ? getFilterOptionString(menuOption) : String(menuOption.label);
-        const cleanStringifiedOption = trimAndFormatFilterStr(cleanOptionLabel, filterIsCaseSensitive);
-        return cleanStringifiedOption.indexOf(cleanSearchInputValue) > -1;
-      };
-
       const parseMenuOption = (data: OptionData): MenuOption | undefined => {
         const menuOption = {
           data,
@@ -37,8 +37,8 @@ export const useMenuOptions = (
           value: getOptionValueCB(data),
         };
 
-        if (cleanSearchInputValue && !optionSatisfiesFilter(menuOption)) {
-          return undefined;
+        if (normalizedSearchInputValue && !isOptionSearchFilterMatch(menuOption)) {
+          return;
         } 
 
         return {

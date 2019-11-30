@@ -2,7 +2,7 @@ import { useEffect, useState, MutableRefObject } from 'react';
 import { scrollMenuIntoViewOnOpen } from '../utils';
 
 /**
- * Hook: useMenuHeight.
+ * Custom Hook.
  * Handle calculating and maintaining the menuHeight used by react-window.
  * Handle scroll animation and callback execution when menuOpen = true.
  * Handle resetting menuHeight back to the menuHeightDefault and callback execution when menuOpen = false.

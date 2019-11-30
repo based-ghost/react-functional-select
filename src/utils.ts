@@ -1,6 +1,5 @@
 import { ReactText } from 'react';
 import { MenuOption, OptionData, SelectedOption } from './types';
-import { css, FlattenSimpleInterpolation } from 'styled-components';
 
 // ============================================
 // Private utility functions
@@ -27,14 +26,14 @@ function scrollTo(el: HTMLElement, top: number): void {
 }
 
 function getScrollParent(el: HTMLElement): HTMLElement {
-  let style = getComputedStyle(el);
-  const excludeStaticParent = (style.position === 'absolute');
+  let style: CSSStyleDeclaration = getComputedStyle(el);
+  const excludeStaticParent: boolean = (style.position === 'absolute');
 
   if (style.position === 'fixed') {
     return document.documentElement;
   }
 
-  for (let parent = el; (parent = (parent.parentElement as HTMLElement));) {
+  for (let parent = el as HTMLElement | null; (parent = parent ? parent.parentElement : null);) {
     style = getComputedStyle(parent);
     if (excludeStaticParent && style.position === 'static') {
       continue;
@@ -52,9 +51,9 @@ function smoothScrollTo(
   duration: number,
   callback?: (...args: any[]) => void
 ): void {
-  const start = getScrollTop(element);
-  const change = to - start;
   let currentTime = 0;
+  const start: number = getScrollTop(element);
+  const change: number = (to - start);
 
   function smoothScroller(): void {
     currentTime += 5;
@@ -92,9 +91,10 @@ export function isPlainObject(test: any): boolean {
  * If the prefix is null or underfined or '', then undefined is returned.
  */
 export function createID(idPrefix?: string, idSuffix?: string): string | undefined {
-  if (!idPrefix) { return undefined; }
-  if (!idSuffix) { return idPrefix; }
-  return `${idPrefix}-${idSuffix}`;
+  if (!idPrefix) { 
+    return undefined; 
+  }
+  return (!idSuffix) ? idPrefix : `${idPrefix}-${idSuffix}`;
 }
 
 /**
@@ -188,32 +188,8 @@ export function validateSetValueOption(
   getOptionValueCB: (data: OptionData) => ReactText
 ): SelectedOption | undefined {
   if (option === null || option === undefined || Array.isArray(option)) {
-    return undefined;
+    return;
   }
   const optionValue = (option && (option !== Object(option))) ? option : getOptionValueCB(option);
-  return menuOptions.find((mOption) => mOption.value === optionValue) || undefined;
+  return menuOptions.find((mOption) => mOption.value === optionValue);
 }
-
-/**
- * Used exclusively by the ControlWrapper styled-component.
- */
-export const renderControlEmphasis = (
-  boxShadow: string,
-  borderColor: string,
-  invalidColor: string,
-  invalidFocus: string,
-  boxShadowColor: string,
-  focusedBorderColor: string,
-  isFocused: boolean,
-  isInvalid?: boolean
-): FlattenSimpleInterpolation => {
-  if (isFocused) {
-    return css`
-      border-color: ${isInvalid ? invalidColor : focusedBorderColor};
-      box-shadow: ${boxShadow} ${isInvalid ? invalidFocus : boxShadowColor};
-    `;
-  }
-  return css`
-    border-color: ${isInvalid ? invalidColor : borderColor};
-  `;
-};

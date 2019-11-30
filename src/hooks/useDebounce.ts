@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 /**
- * Hook: useDebounce.
+ * Custom Hook.
  * Generic debouncer hook (potential hack to prevent unecessary state mutations if no delay is passed).
  * If a number is passed for the delay parameter, use to debounce/set the value.
  */
@@ -10,7 +10,7 @@ export const useDebounce = <T>(value: T, delay?: number): T => {
 
   useEffect(() => {
     if (delay === undefined) {
-      return undefined;
+      return;
     }
 
     const handler = setTimeout(() => {

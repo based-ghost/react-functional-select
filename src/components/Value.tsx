@@ -1,38 +1,36 @@
 import React from 'react';
 import { ValueProps } from '../types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-const _valueDivCSS = css`
-  top: 50%;
+const StyledValue = styled.div`
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
   box-sizing: border-box;
   text-overflow: ellipsis;
-  transform: translateY(-50%);
-`;
-
-const StyledValue = styled.div`
-  ${_valueDivCSS}
   max-width: calc(100% - 0.5rem);
 `;
 
 const Placeholder = styled.div`
-  ${_valueDivCSS}
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
   color: ${({ theme }) => theme.color.placeholder};
 `;
 
 const Value = React.memo<ValueProps>(({
   inputValue,
   placeholder,
+  selectedOption,
   renderOptionLabel,
-  selectedOptionData,
 }) => {
   if (inputValue) {
     return null;
   }
 
-  if (!selectedOptionData) {
+  if (!selectedOption.data) {
     return (
       <Placeholder>{placeholder}</Placeholder>
     );
@@ -40,7 +38,7 @@ const Value = React.memo<ValueProps>(({
     
   return (
     <StyledValue>
-      {renderOptionLabel(selectedOptionData)}
+      {renderOptionLabel(selectedOption.data)}
     </StyledValue>
   );
 });

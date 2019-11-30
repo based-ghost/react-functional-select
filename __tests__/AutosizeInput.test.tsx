@@ -94,7 +94,6 @@ test('when "id" has a non-empty string value, input element should get an "id" a
 
 test('when "isSearchable" = false, the onChange event should not be created on input element (should also get a "readonly" attribute)', async () => {
   const { props, onChangeSpy } = createAutosizeInputProps();
-  
   const mergedProps = {
     ...props,
     isSearchable: false,

@@ -52,7 +52,7 @@ const Separator = styled.div`
   margin: 0.5rem 0;
   align-self: stretch;
   box-sizing: border-box;
-  background-color: ${({ theme: { color } }) => color.iconSeparator || color.border};
+  background-color: ${({ theme }) => theme.color.iconSeparator || theme.color.border};
 `;
 
 const IndicatorIcons = React.memo<IndicatorIconsProps>(({
