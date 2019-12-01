@@ -179,6 +179,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     filterIsCaseSensitive,
     getFilterOptionString,
     isSearchable = true,
+    openMenuOnClick = true,
     tabSelectsOption = true,
     closeMenuOnSelect = true,
     scrollMenuIntoView = true,
@@ -470,7 +471,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     if (!isFocused) { focusInput(); }
 
     if (!menuOpen) {
-      openMenuAndFocusOption(_indexPositionEnum.FIRST);
+      openMenuOnClick && openMenuAndFocusOption(_indexPositionEnum.FIRST);
     } else if (e.currentTarget.tagName !== 'INPUT') {
       setMenuOpen(false);
       inputValue && setInputValue('');
@@ -510,6 +511,19 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     setSelectedOption(SELECTED_OPTION_DEFAULT);
     focusInput();
   }, []);
+
+  const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
+    if (isDisabled) { return; }
+    e.stopPropagation();
+    (e.type === 'mousedown') && e.preventDefault();
+    focusInput();
+    
+    if (menuOpen) {
+      setMenuOpen(false);
+    } else {
+      openMenuAndFocusOption(_indexPositionEnum.FIRST);
+    }
+  }, [isDisabled, menuOpen, openMenuAndFocusOption]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -558,6 +572,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
             addClassNames={addClassNames}
             onClearMouseDown={handleOnClearMouseDown}
             showClear={!!(isClearable && !isDisabled && selectedOption.data)}
+            onCaretMouseDown={!openMenuOnClick ? handleOnCaretMouseDown : undefined}
           />
         </ControlWrapper>
         <MenuWrapper

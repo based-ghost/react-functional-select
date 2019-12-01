@@ -119,6 +119,7 @@ All properties are technically optional (with a few having default values). Very
 |`caretIcon`| React.ReactNode | `undefined` | Custom caret icon
 |`options`| array | `[]` | The menu options
 |`isSearchable`| bool | `true` | Whether to enable search functionality or not
+|`openMenuOnClick`| bool | `true` | If true, the menu can be toggled by clicking anywhere on the select control; if false, the menu can only be toggled by clicking the 'caret' icon on the far right of the control
 |`menuMaxHeight`| number | `300` | Max height of the menu element - this effects how many options `react-window` will render.
 |`addClassNames`| bool | `false` | Should static classNames be generated for container elements (enable if styling using CSS stylesheets)
 |`ariaLabelledBy`| string | `undefined` | HTML ID of an element that should be used as the label (for assistive tech)

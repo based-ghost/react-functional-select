@@ -3,7 +3,7 @@ import LoadingDots from './LoadingDots';
 import styled, { css } from 'styled-components';
 import { fadeInAnimationCss } from '../constants/styled';
 import { CaretProps, IndicatorIconsProps } from '../types';
-import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID } from '../constants/attributes';
+import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/attributes';
 
 const IndicatorIconsWrapper = styled.div`
   display: flex;
@@ -63,6 +63,7 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
   showClear,
   isLoading,
   addClassNames,
+  onCaretMouseDown,
   onClearMouseDown,
 }) => (
   <IndicatorIconsWrapper>
@@ -78,7 +79,12 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
     )}
     {isLoading && <LoadingDots />}
     <Separator />
-    <IndicatorIcon aria-hidden='true'>
+    <IndicatorIcon
+      aria-hidden='true'
+      onTouchEnd={onCaretMouseDown}
+      onMouseDown={onCaretMouseDown}
+      data-testid={CARET_ICON_TESTID}
+    >
       {caretIcon || (
         <Caret
           menuOpen={menuOpen}

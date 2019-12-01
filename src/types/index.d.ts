@@ -25,7 +25,7 @@ export type IndexPositionEnum = { [key: string]: IndexPosition };
 export type OptionData = any;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
-export type AutosizeInputHTMLAttributes = InputHTMLAttributes<HTMLElement> & { 'data-testid'?: string };
+export type AutosizeInputHTMLAttributes = InputHTMLAttributes<HTMLElement> & { readonly 'data-testid'?: string };
 
 export type SelectedOption = {
   data?: OptionData;
@@ -152,6 +152,7 @@ export type IndicatorIconsProps = {
   readonly clearIcon?: ReactNode;
   readonly caretIcon?: ReactNode;
   readonly addClassNames?: boolean;
+  readonly onCaretMouseDown?: MouseOrTouchEventHandler<HTMLDivElement>;
   readonly onClearMouseDown: MouseOrTouchEventHandler<HTMLDivElement>;
 };
 
@@ -176,6 +177,7 @@ export type SelectProps = {
   readonly menuMaxHeight?: number;
   readonly addClassNames?: boolean;
   readonly ariaLabelledBy?: string;
+  readonly openMenuOnClick?: boolean;
   readonly openMenuOnFocus?: boolean;
   readonly initialValue?: OptionData;
   readonly menuOverscanCount?: number;
