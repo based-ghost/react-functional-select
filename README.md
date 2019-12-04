@@ -20,14 +20,18 @@ yarn add react-window styled-components react-functional-select
 ```
 
 ## Overview
-Essentially, this is a subset of `react-select`'s API, engineered for ultimate performance and minimal dependency footprint. It is built entirely using `React Hooks` and `FunctionComponents`. In addition, most of the code I was able to roll myself, so there are minimal peer dependencies to worry about:
+Essentially, this is a focused subset of `react-select`'s API, engineered for ultimate performance and minimal size footprint. It is built entirely using `React Hooks` and `FunctionComponents`. In addition, most of the code I was able to roll myself, so there are minimal peer dependencies to worry about. The peer dependencies for this package are:
 
 - [``react-window``](https://github.com/bvaughn/react-window) leveraged for integrated data virtualization/windowing (easily handles data-sets numbering in the tens of thousands with minimal-to-no impact on normally resource-intensive actions like keying and searching).
 - [`styled-components`](https://github.com/styled-components/styled-components) to handle dynamic, extensible styling via CSS-in-JS (there is also the option to generate `className` attributes for legacy stylesheets as a fall-back option).
 
-While still a work in progress, its current state should be suitable for many use-cases. Please feel free to contribute and/or make suggestions - specificaly, in the following areas:
-- Additional flexibility to the styling system. Currently handles simple-to-mid level complexity scenarios via `styled-component`'s overrideable `ThemeProvider`. As a fallback, you generate static `className` attributes on container nodes.
-- The ability to handle complex, multi-select scenarios (while keeping with the theme of optimal performance in as few lines of code as possible).
+While still a work in progress, its current state should be suitable for many use-cases. Please feel free to contribute and/or make suggestions (below are key areas that still need to be addressed).
+
+#### Development for future releases:
+- <strong>Make theme API more flexible/customizable.</strong> Currently handles simple-to-mid level complexity scenarios via `styled-component`'s overrideable `ThemeProvider`. As a fallback, you can generate static `className` attributes on container nodes by enabling the `addClassNames` property.
+- <strong>Allow multiple value selections.</strong> Currently this package only allows for single value scenarios, however it should be fairly trivial to allow for multiple selections based on the way it is architected.
+- <strong>Diacritics & language translations.</strong> Unsure of where to place the scope for this work.
+- <strong>Async wrapper component.</strong> This may be unecessary given the ease with which the standard component can handle large amounts of records. However, it would be nice to have the ability to easily operate on subsets of data just as needed and not have to be burdened with excessive memory allocation.
 
 ## Usage
 
