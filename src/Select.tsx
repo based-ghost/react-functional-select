@@ -329,13 +329,13 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   useEffect(() => {
     if (!initValueAttempted.current && isPlainObject(initialValue)) {
       initValueAttempted.current = true;
-      selectOption({
+      setSelectedOption({
         data: initialValue,
         value: getOptionValueCB(initialValue),
         label: getOptionLabelCB(initialValue),
       });
     }
-  }, [selectOption, initialValue, getOptionValueCB, getOptionLabelCB]);
+  }, [initialValue, getOptionValueCB, getOptionLabelCB]);
 
   useEffect(() => {
     const { data } = selectedOption;
@@ -514,6 +514,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
     if (isDisabled) { return; }
+
     e.stopPropagation();
     (e.type === 'mousedown') && e.preventDefault();
     focusInput();
