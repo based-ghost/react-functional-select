@@ -1,25 +1,27 @@
 import React from 'react';
-import { createID } from '../utils';
+import { OptionProps } from '../types';
 import { areEqual } from 'react-window';
-import { OptionProps, MenuOption } from '../types';
-import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants/attributes';
+import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants/dom';
 
 const Option = React.memo<OptionProps>(({
   index,
   style,
   data: {
-    idSuffix,
     menuOptions,
     selectOption,
     renderOptionLabel,
     focusedOptionIndex,
-    selectedOptionValue,
   },
 }) => {
-  const { data, value, label, isDisabled }: MenuOption = menuOptions[index];
-  const isSelected: boolean = (value === selectedOptionValue);
+  const {
+    data,
+    value,
+    label,
+    isDisabled,
+    isSelected
+  } = menuOptions[index];
 
-  const className: string = OPTION_CLS
+  const className = OPTION_CLS
     + (isDisabled ? ' ' + OPTION_DISABLED_CLS : '')
     + (isSelected ? ' ' + OPTION_SELECTED_CLS : '')
     + ((index === focusedOptionIndex) ? ' ' + OPTION_FOCUSED_CLS : '');
@@ -29,7 +31,6 @@ const Option = React.memo<OptionProps>(({
       role='button'
       style={style}
       className={className}
-      id={idSuffix ? createID(`${OPTION_CLS}-${index}`, idSuffix) : undefined}
       onClick={!isDisabled ? (() => selectOption({ data, value, label }, isSelected)) : undefined}
     >
       {renderOptionLabel(data)}

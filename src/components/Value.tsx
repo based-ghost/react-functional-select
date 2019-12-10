@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { ValueProps } from '../types';
+import MultiValue from './MultiValue';
 import styled from 'styled-components';
+import { isArrayWithLength } from '../utils';
 
-const StyledValue = styled.div`
+const SingleValue = styled.div`
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
@@ -21,25 +23,43 @@ const Placeholder = styled.div`
 `;
 
 const Value = React.memo<ValueProps>(({
+  isMulti,
   inputValue,
   placeholder,
   selectedOption,
   renderOptionLabel,
+  removeSelectedOption,
 }) => {
   if (inputValue) {
     return null;
   }
 
-  if (!selectedOption.data) {
+  if (!isArrayWithLength(selectedOption)) {
     return (
       <Placeholder>{placeholder}</Placeholder>
     );
   }
+
+  if (!isMulti) {
+    return (
+      <SingleValue>
+        {renderOptionLabel(selectedOption[0].data)}
+      </SingleValue>
+    );
+  }
     
   return (
-    <StyledValue>
-      {renderOptionLabel(selectedOption.data)}
-    </StyledValue>
+    <Fragment>
+      {selectedOption.map(({ data, value }) => (
+        <MultiValue
+          key={value}
+          data={data}
+          value={value}
+          renderOptionLabel={renderOptionLabel}
+          removeSelectedOption={removeSelectedOption}
+        />
+      ))}
+    </Fragment>
   );
 });
 

@@ -15,6 +15,7 @@
     "semicolon": true,
     "trailing-comma": true,
     "variable-name": false,
+    "jsx-no-lambda": false,
     "prefer-template": false,
     "ordered-imports": false,
     "no-var-requires": false,

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, ReactNode } from 'react';
 import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
@@ -68,11 +68,11 @@ const _options: PackageOption[] = [
   { id: 5, packageName: 'react-window' },
 ];
 
-storiesOf('React Functional Select', module).add('Complex', () => {
+storiesOf('React Functional Select', module).add('Advanced', () => {
   const getOptionValue = useCallback((option: PackageOption): number => (option.id), []);
   const getIsOptionDisabled = useCallback((option: PackageOption): boolean => (option.packageName === _options[3].packageName), []);
 
-  const renderOptionLabel = useCallback((option: PackageOption): JSX.Element => {
+  const renderOptionLabel = useCallback((option: PackageOption): ReactNode => {
     return (
       <StyledDiv>
         <StyledImg src={ReactLogo} isDisabled={getIsOptionDisabled(option)} />
@@ -83,7 +83,7 @@ storiesOf('React Functional Select', module).add('Complex', () => {
 
   return (
     <Container>
-      <Title>Complex Properties</Title>
+      <Title>Advanced Properties</Title>
       <Hr />
       <ListWrapper>
         Implementation using a couple of the more specialized properties.

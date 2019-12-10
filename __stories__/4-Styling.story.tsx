@@ -108,11 +108,10 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       </JsonContainer>
       <SubTitle>Using classNames</SubTitle>
       <Paragraph>
-        If you want to style the component using CSS classes, set the 
-        <Code>addClassNames</Code> prop to true and it will then generate className
-        attributes for that specific instance of the component. These are the classNames 
-        that are available for targeting: rfs-select-container, rfs-control-container, 
-        rfs-menu-container, rfs-autosize-input, rfs-caret-icon, rfs-clear-icon, rfs-option.
+        If you want to style the component using CSS classes, set the <Code>addClassNames</Code> prop 
+        to true and it will then generate <Code>className</Code> attributes for that specific instance 
+        of the component. These are the classNames that are available for targeting: rfs-select-container, 
+        rfs-control-container, rfs-menu-container, rfs-autosize-input, rfs-caret-icon, rfs-clear-icon, rfs-option.
       </Paragraph>
       <SubTitle>Demo</SubTitle>
       <Hr />

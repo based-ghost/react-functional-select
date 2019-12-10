@@ -17,26 +17,22 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
   {
     width,
     itemSize,
-    idSuffix,
     maxHeight,
     menuOptions,
     selectOption,
     noOptionsMsg,
     overscanCount,
-    selectedOption,
     renderOptionLabel,
     focusedOptionIndex,
   }, 
   ref: React.Ref<FixedSizeList>,
 ) => {
   const itemData = useMemo<ItemData>(() => ({
-    idSuffix,
     menuOptions,
     selectOption,
     renderOptionLabel,
     focusedOptionIndex,
-    selectedOptionValue: selectedOption.value,
-  }), [idSuffix, menuOptions, focusedOptionIndex, selectedOption, selectOption, renderOptionLabel]);
+  }), [menuOptions, focusedOptionIndex, selectOption, renderOptionLabel]);
 
   return (
     <Fragment>

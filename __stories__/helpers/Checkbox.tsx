@@ -18,7 +18,7 @@ const Input = styled.input`
   margin: 0.1875rem 0.1875rem 0.1875rem 0.25rem;
 `;
 
-const Checkbox: React.FC<CheckboxProps> = ({
+const Checkbox = React.memo<CheckboxProps>(({
   label,
   checked,
   onCheck,
@@ -36,6 +36,6 @@ const Checkbox: React.FC<CheckboxProps> = ({
       {label && <span>{label}</span>}
     </Label>
   );
-};
+});
 
 export default Checkbox;

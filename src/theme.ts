@@ -5,12 +5,12 @@ import { DefaultTheme } from 'styled-components';
  */
 export default Object.freeze<DefaultTheme>({
   color: {
-    accent: '#007bff',
     border: '#ced4da',
-    invalid: '#dc3545',
+    danger: '#dc3545',
+    primary: '#007bff',
     disabled: '#e9ecef',
     placeholder: '#6E7276',
-    invalidFocus: 'rgba(220, 53, 69, 0.25)',
+    dangerLight: 'rgba(220, 53, 69, 0.25)',
   },
   select: {
   },
@@ -36,12 +36,12 @@ export default Object.freeze<DefaultTheme>({
     },
   },
   control: {
+    minHeight: '38px',
     borderWidth: '1px',
     borderStyle: 'solid',
     borderRadius: '0.25rem',
     boxShadow: '0 0 0 0.2rem',
     padding: '0.375rem 0.75rem',
-    height: 'calc(1.5em + 0.75rem + 2px)',
     boxShadowColor: 'rgba(0, 123, 255, 0.25)',
     focusedBorderColor: 'rgba(0, 123, 255, 0.75)',
     transition: 'box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out',
@@ -67,4 +67,23 @@ export default Object.freeze<DefaultTheme>({
     color: 'hsl(0, 0%, 60%)',
     padding: '0.375rem 0.75rem',
   },
+  multiValue: {
+    margin: '0 2px',
+    borderRadius: '0.25rem',
+    backgroundColor: '#E5EBF1',
+    label: {
+      fontSize: '0.825em',
+      borderRadius: '0.25rem',
+      padding: '1px 3px 1px 6px',
+    },
+    clear: {
+      fontWeight: 700,
+      opacity: '0.95',
+      padding: '0 8px',
+      fontSize: '0.675em',
+      alignItems: 'center',
+      borderRadius: '0.25rem',
+      transition: 'color 0.15s ease-in-out, background-color 0.15s ease-in-out, opacity 0.15s ease-in-out',
+    },
+  }
 });

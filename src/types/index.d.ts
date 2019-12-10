@@ -20,7 +20,7 @@ export type Theme = Partial<DefaultTheme>;
 // ============================================
 
 export type IndexPosition = 0 | 1 | 2 | 3;
-export type IndexPositionEnum = { [key: string]: IndexPosition };
+export type IIndexPositionEnum = { [key: string]: IndexPosition };
 
 export type OptionData = any;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
@@ -33,12 +33,10 @@ export type SelectedOption = {
   label?: ReactText;
 };
 
-export type FocusedOption = {
+export type FocusedOption = SelectedOption & {
   index: number;
-  data?: OptionData;
-  label?: ReactText;
-  value?: ReactText;
   isDisabled?: boolean;
+  isSelected?: boolean;
 };
 
 export type MenuOption = {
@@ -46,15 +44,14 @@ export type MenuOption = {
   value: ReactText;
   data: OptionData;
   isDisabled?: boolean;
+  isSelected?: boolean;
 };
 
 export type ItemData = {
-  idSuffix?: string;
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
-  selectedOptionValue?: ReactText;
   renderOptionLabel: (data: OptionData) => ReactNode;
-  selectOption: (option?: SelectedOption, isSelected?: boolean) => void;
+  selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 };
 
 // ============================================
@@ -99,24 +96,29 @@ export type OptionProps = {
 };
 
 export type ValueProps = {
+  readonly isMulti?: boolean;
   readonly inputValue: string;
   readonly placeholder: string;
-  readonly selectedOption: SelectedOption;
+  readonly selectedOption: SelectedOption[];
   readonly renderOptionLabel: (data: OptionData) => ReactNode;
+  readonly removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
+};
+
+export type MultiValueProps = SelectedOption & {
+  readonly renderOptionLabel: (data: OptionData) => ReactNode;
+  readonly removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
 };
 
 export type MenuProps = {
   readonly itemSize: number;
   readonly maxHeight: number;
-  readonly idSuffix?: string;
   readonly noOptionsMsg: string;
   readonly overscanCount?: number;
   readonly width?: string | number;
   readonly menuOptions: MenuOption[];
   readonly focusedOptionIndex: number;
-  readonly selectedOption: SelectedOption;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;
-  readonly selectOption: (option?: SelectedOption, isSelected?: boolean) => void;
+  readonly selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 };
 
 export type AutosizeInputProps = {
@@ -138,10 +140,8 @@ export type AriaLiveRegionProps = {
   readonly inputValue: string;
   readonly optionCount: number;
   readonly isSearchable: boolean;
-  readonly focusedOptionIndex: number;
-  readonly focusedOptionLabel?: ReactText;
-  readonly selectedOptionLabel?: ReactText;
-  readonly isFocusedOptionDisabled?: boolean;
+  readonly focusedOption: FocusedOption;
+  readonly selectedOption: SelectedOption[];
 };
 
 export type IndicatorIconsProps = {
@@ -159,7 +159,7 @@ export type IndicatorIconsProps = {
 export type SelectProps = {
   readonly inputId?: string;
   readonly selectId?: string;
-  readonly idSuffix?: string;
+  readonly isMulti?: boolean;
   readonly ariaLabel?: string;
   readonly isLoading?: boolean;
   readonly isInvalid?: boolean;
@@ -179,18 +179,19 @@ export type SelectProps = {
   readonly ariaLabelledBy?: string;
   readonly openMenuOnClick?: boolean;
   readonly openMenuOnFocus?: boolean;
-  readonly initialValue?: OptionData;
   readonly menuOverscanCount?: number;
   readonly tabSelectsOption?: boolean;
   readonly blurInputOnSelect?: boolean;
   readonly closeMenuOnSelect?: boolean;
   readonly isAriaLiveEnabled?: boolean;
   readonly scrollMenuIntoView?: boolean;
+  readonly hideSelectedOptions?: boolean;
   readonly backspaceClearsValue?: boolean;
   readonly filterIsCaseSensitive?: boolean;
   readonly themeConfig?: Partial<DefaultTheme>;
   readonly onMenuOpen?: (...args: any[]) => void;
   readonly onMenuClose?: (...args: any[]) => void;
+  readonly initialValue?: OptionData | OptionData[];
   readonly onOptionChange?: (data: OptionData) => void;
   readonly onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
   readonly getOptionLabel?: (data: OptionData) => ReactText;

@@ -19,13 +19,16 @@ const renderValue = (props: ValueProps) => {
 };
 
 const createValueProps = () => {
+  const removeSelectedOptionSpy = jest.fn();
   const renderOptionLabelSpy = jest.fn((data: OptionData): ReactNode => data.label);
 
   const props: ValueProps = {
+    isMulti: false,
     inputValue: '',
     placeholder: PLACEHOLDER_DEFAULT,
     selectedOption: SELECTED_OPTION_DEFAULT,
     renderOptionLabel: renderOptionLabelSpy,
+    removeSelectedOption: removeSelectedOptionSpy,
   };
 
   return {
@@ -65,11 +68,11 @@ test('"renderOptionLabel" callback should be executed when an option is selected
 
   const propsWithSelectedOption = {
     ...props,
-    selectedOption: {
+    selectedOption: [{
       data,
       value: data.value,
       label: data.label,
-    },
+    }],
   };
 
   const { getByText } = renderValue(propsWithSelectedOption);

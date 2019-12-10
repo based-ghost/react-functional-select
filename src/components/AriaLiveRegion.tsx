@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { isArrayWithLength } from '../utils';
 import { AriaLiveRegionProps } from '../types';
 
 const A11yText = styled.span`
@@ -21,12 +22,20 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
   inputValue,
   optionCount,
   isSearchable,
-  focusedOptionLabel,
-  focusedOptionIndex,
-  selectedOptionLabel,
-  isFocusedOptionDisabled,
+  focusedOption,
+  selectedOption,
 }) => {
-  const selectedOptionMsg = `Selected option: ${selectedOptionLabel || 'N/A'}`;
+  const {
+    label: focusedOptionLabel,
+    index: focusedOptionIndex,
+    isDisabled: isFocusedOptionDisabled
+  } = focusedOption;
+
+  const selectedOptionLabel = isArrayWithLength(selectedOption)
+    ? selectedOption.map(x => x.label).join(' ')
+    : 'N/A';
+
+  const selectedOptionMsg = `Selected option: ${selectedOptionLabel}`;
   const optionsMsg = `${optionCount} result(s) available${inputValue ? (` for search input ${inputValue}`) : ''}.`;
   const focusedMsg = `Focused option: ${focusedOptionLabel || 'N/A'}${isFocusedOptionDisabled ? ' - disabled' : ''}, ${focusedOptionIndex + 1} of ${optionCount}.`;
 

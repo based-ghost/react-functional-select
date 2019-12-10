@@ -11,6 +11,3 @@ const fadeIn = keyframes`
 export const fadeInAnimationCss = css`
   animation: ${fadeIn} 0.225s ease-in-out forwards;
 `;
-
-export const mediaQueryIsEdge = '@supports (-ms-ime-align: auto)';
-export const mediaQueryIsIE = '@media all and (-ms-high-contrast: none)';

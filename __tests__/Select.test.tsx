@@ -10,7 +10,7 @@ import {
   AUTOSIZE_INPUT_TESTID,
   SELECT_CONTAINER_TESTID,
   CONTROL_CONTAINER_TESTID,
-} from '../src/constants/attributes';
+} from '../src/constants/dom';
 
 // ============================================
 // Helper functions for Select component
@@ -34,20 +34,18 @@ test('container elements have static className value (enables styling via classi
   expect(getByTestId(MENU_CONTAINER_TESTID!)).toHaveClass(MENU_CONTAINER_CLS);
 });
 
-test('id attributes are added to DOM if defined ("selectId", "inputId" props with "idSuffix" appended)', async () => {
-  const idSuffix = 'suffix-test';
+test('id attributes are added to DOM if defined ("selectId" and "inputId" props)', async () => {
   const inputId = 'test-input-id';
   const selectId = 'test-select-id';
 
   const props = {
     inputId,
-    selectId,
-    idSuffix,
+    selectId
   };
 
   const { getByTestId } = renderSelect(props);
-  expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveAttribute('id', `${selectId}-${idSuffix}`);
-  expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute('id', `${inputId}-${idSuffix}`);
+  expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveAttribute('id', selectId);
+  expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute('id', inputId);
 });
 
 test('menu is not visible by default', async () => {

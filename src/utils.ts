@@ -1,4 +1,5 @@
 import { ReactText } from 'react';
+import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
 import { MenuOption, OptionData, SelectedOption } from './types';
 
 // ============================================
@@ -52,8 +53,8 @@ function smoothScrollTo(
   callback?: (...args: any[]) => void
 ): void {
   let currentTime = 0;
-  const start: number = getScrollTop(element);
-  const change: number = (to - start);
+  const start = getScrollTop(element);
+  const change = (to - start);
 
   function smoothScroller(): void {
     currentTime += 5;
@@ -87,21 +88,15 @@ export function isPlainObject(test: any): boolean {
 }
 
 /**
- * Takes a string prefix and suffix and combines them to create a GUID.
- * If the prefix is null or underfined or '', then undefined is returned.
- */
-export function createID(idPrefix?: string, idSuffix?: string): string | undefined {
-  if (!idPrefix) { 
-    return undefined; 
-  }
-  return (!idSuffix) ? idPrefix : `${idPrefix}-${idSuffix}`;
-}
-
-/**
  * Determines if the current device is touch-enabled.
  * Prefer (pointer: coarse) over (any-pointer: coarse) since we are likely only targeting the primary input
  */
 export const isTouchDevice = (): boolean => window.matchMedia('(pointer: coarse)').matches;
+
+/**
+ * Determines if browser is Edge or IE.
+ */
+export const isEdgeOrIE = (): boolean => /MSIE |Trident\/|Edge\//.test(window.navigator.userAgent);
 
 /**
  * Apply regex to string, and if the value is NOT case sensitive, call .toLowerCase() and return result.
@@ -178,18 +173,66 @@ export function scrollMenuIntoViewOnOpen(
 }
 
 /**
- * If option is null/undefined/or an invalid type (array), return undefined
- * If option is a primitive type (excluding null or undefined) then assume it is the option value and try to use it as is
- * ...otherwise, if option is an object, extract the optionValue using method and search for first match on option value in menuOptions.
+ * Validates the 'option' parameter passed to the public instance method 'setValue' that is exposed
+ * ...to wrapping parent components.
  */
-export function validateSetValueOption(
-  option: any,
+export function validateApiValues(
+  values: any,
   menuOptions: MenuOption[],
   getOptionValueCB: (data: OptionData) => ReactText
-): SelectedOption | undefined {
-  if (option === null || option === undefined || Array.isArray(option)) {
-    return;
+): SelectedOption[] {
+  if (values === null || values === undefined) {
+    return SELECTED_OPTION_DEFAULT;
   }
-  const optionValue = (option && (option !== Object(option))) ? option : getOptionValueCB(option);
-  return menuOptions.find((mOption) => mOption.value === optionValue);
+
+  // Get unique array of MenuOption values and use to check against menuOptions
+  const validValuesArr = normalizeValue(values)
+    .filter((x) => isPlainObject(x))
+    .map((x) => getOptionValueCB(x))
+    .filter((item, index, self) => self.indexOf(item) === index);
+
+  if (!isArrayWithLength(validValuesArr)) {
+    return SELECTED_OPTION_DEFAULT;
+  }
+
+  const results = [];
+
+  for (const option of menuOptions) {
+    if (validValuesArr.includes(getOptionValueCB(option))) {
+      results.push(option);
+      if (validValuesArr.length === results.length) {
+        break;
+      }
+    }
+  }
+
+  return results;
+}
+
+/**
+ * Ensures that the value is returned as an array type (with fallback default of []).
+ */
+export function normalizeValue(
+  value: any,
+  getOptionValueCB?: (data: OptionData) => ReactText,
+  getOptionLabelCB?: (data: OptionData) => ReactText
+): SelectedOption[] {
+  // Cast to array of type SelectedOption[]
+  const initialValues = Array.isArray(value)
+    ? value.filter(Boolean)
+    : (typeof value === 'object' && value !== null)
+      ? [value]
+      : SELECTED_OPTION_DEFAULT;
+  
+  // Array has initial values - cast to typeof SelectedOption and return SelectedOption[]
+  if (getOptionValueCB && getOptionLabelCB && isArrayWithLength(initialValues)) {
+    return initialValues.map(x => ({
+      data: x,
+      value: getOptionValueCB(x),
+      label: getOptionLabelCB(x)
+    }));
+  }
+
+  // Return default of []
+  return initialValues;
 }

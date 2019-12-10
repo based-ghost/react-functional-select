@@ -4,7 +4,7 @@ import { AutosizeInput } from '../src/components';
 import { AutosizeInputProps } from '../src/types';
 import { ThemeProvider } from 'styled-components';
 import { render, fireEvent } from '@testing-library/react';
-import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants/attributes';
+import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants/dom';
 
 // ============================================
 // Helper functions for AutosizeInput component

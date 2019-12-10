@@ -3,7 +3,7 @@ import LoadingDots from './LoadingDots';
 import styled, { css } from 'styled-components';
 import { fadeInAnimationCss } from '../constants/styled';
 import { CaretProps, IndicatorIconsProps } from '../types';
-import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/attributes';
+import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/dom';
 
 const IndicatorIconsWrapper = styled.div`
   display: flex;
@@ -43,7 +43,7 @@ const Caret = styled.div<CaretProps>`
     menuOpen && 
     css`
       transform: rotate(180deg);
-      color: ${isInvalid ? color.invalid : (color.caretActive || color.accent)};
+      color: ${isInvalid ? color.danger : (color.caretActive || color.primary)};
     `}
 `;
 

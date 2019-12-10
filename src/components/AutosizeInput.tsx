@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef, CSSProperties } from 'react';
-import styled from 'styled-components';
-import { mediaQueryIsIE, mediaQueryIsEdge } from '../constants/styled';
+import { isEdgeOrIE } from '../utils';
+import styled, { css } from 'styled-components';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
-import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/attributes';
+import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
 
-const _inputMinWidthPx = 2;
+const INPUT_MIN_WIDTH_PX = 2;
 
-const _wrapperDivStyle = Object.freeze<CSSProperties>({
+const WRAPPER_DIV_STYLE = Object.freeze<CSSProperties>({
   display: 'inline-block'
 });
 
@@ -50,17 +50,13 @@ const StyledAutosizeInput = styled.input`
     cursor: default;
   }
 
-  ${mediaQueryIsIE} {
-    ::-ms-clear {
-      display: none;
-    }
-  }
-
-  ${mediaQueryIsEdge} {
-    ::-ms-clear {
-      display: none;
-    }
-  }
+  ${() =>
+    isEdgeOrIE() &&
+    css`
+      ::-ms-clear {
+        display: none;
+      }
+    `}
 `;
 
 const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInputProps>((
@@ -79,11 +75,11 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
   ref: React.Ref<HTMLInputElement>,
 ) => {
   const sizerRef = useRef<HTMLDivElement | null>(null);
-  const [inputWidth, setInputWidth] = useState<number>(_inputMinWidthPx);
-    
+  const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
+
   useEffect(() => {
     if (sizerRef.current) {
-      setInputWidth(sizerRef.current.scrollWidth + _inputMinWidthPx);
+      setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
     }
   }, [inputValue]);
 
@@ -97,7 +93,7 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
   };
 
   return (
-    <div style={_wrapperDivStyle}>
+    <div style={WRAPPER_DIV_STYLE}>
       <StyledAutosizeInput
         id={id}
         ref={ref}

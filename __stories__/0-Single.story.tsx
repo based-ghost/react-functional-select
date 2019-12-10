@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Select } from '../src';
 import styled from 'styled-components';
 import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
+import { useCallbackState } from './helpers/useCallbackState';
 import { Hr, Title, Label, SubTitle, Container, SelectContainer, Paragraph, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 type CityOption = {
@@ -12,13 +13,16 @@ type CityOption = {
 };
 
 const SelectedCode = styled(Code)`
+  color: #fff;
   font-weight: 400;
   font-size: 0.875em;
+  background-color: #282c34;
 `;
 
 const SelectedLabelText = styled.span`
-  margin-left: 0px;
   font-weight: 600;
+  margin-right: 0.275rem;
+  margin-left: 0 !important;
 `;
 
 const _options: CityOption[] = [
@@ -34,20 +38,16 @@ const _options: CityOption[] = [
   { id: 10, city: 'Minneapolis', state: 'MN' },
 ];
 
-storiesOf('React Functional Select', module).add('Basic', () => {
-  const [isInvalid, setIsInvalid] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [isClearable, setIsClearable] = useState(true);
-  const [isSearchable, setIsSearchable] = useState(true);
-  const [selectedOption, setSelectedOption] = useState<CityOption | null>(null);
-
-  const onOptionChange = useCallback((option: CityOption | null): void => {
-    setSelectedOption(option);
-  }, []);
+storiesOf('React Functional Select', module).add('Single', () => {
+  const [isInvalid, setIsInvalid] = useCallbackState(false);
+  const [isLoading, setIsLoading] = useCallbackState(false);
+  const [isDisabled, setIsDisabled] = useCallbackState(false);
+  const [isClearable, setIsClearable] = useCallbackState(true);
+  const [isSearchable, setIsSearchable] = useCallbackState(true);
+  const [selectedOption, setSelectedOption] = useCallbackState<CityOption | null>(null);
   
-  const getOptionValue = useCallback((option: CityOption): number => (option.id), []);
-  const getOptionLabel = useCallback((option: CityOption): string => (`${option.city}, ${option.state}`), []);
+  const getOptionValue = useCallback((option: CityOption): number => option.id, []);
+  const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
 
   useEffect(() => {
     isDisabled && setIsInvalid(false);
@@ -55,7 +55,7 @@ storiesOf('React Functional Select', module).add('Basic', () => {
 
   return (
     <Container>
-      <Title>Basic Properties</Title>
+      <Title>Single</Title>
       <Hr />
       <Paragraph>
         In this story's source code, notice that the <Code>onOptionChange</Code>
@@ -105,7 +105,7 @@ storiesOf('React Functional Select', module).add('Basic', () => {
               onCheck={setIsLoading}
             />
             <Label>
-              <SelectedLabelText>Selected Option: </SelectedLabelText>
+              <SelectedLabelText>Selected Option:</SelectedLabelText>
               <SelectedCode>{JSON.stringify(selectedOption || {})}</SelectedCode>
             </Label>
           </CheckboxGroup>
@@ -119,9 +119,9 @@ storiesOf('React Functional Select', module).add('Basic', () => {
               isDisabled={isDisabled}
               isClearable={isClearable}
               isSearchable={isSearchable}
-              onOptionChange={onOptionChange}
               getOptionValue={getOptionValue}
               getOptionLabel={getOptionLabel}
+              onOptionChange={setSelectedOption}
             />
           </SelectContainer>
         </CardBody>

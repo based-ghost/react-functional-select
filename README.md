@@ -20,18 +20,21 @@ yarn add react-window styled-components react-functional-select
 ```
 
 ## Overview
-Essentially, this is a subset of `react-select`'s API, engineered for ultimate performance and minimal dependency footprint. It is built entirely using `React Hooks` and `FunctionComponents`. In addition, most of the code I was able to roll myself, so there are minimal peer dependencies to worry about:
+Essentially, this is a focused subset of `react-select`'s API that is engineered for ultimate performance and minimal dependency size. It is built entirely using `React Hooks` and `FunctionComponents`. In addition, most of the code I was able to roll myself, so there are minimal peer dependencies to worry about. The peer dependencies for this package are:
 
 - [``react-window``](https://github.com/bvaughn/react-window) leveraged for integrated data virtualization/windowing (easily handles data-sets numbering in the tens of thousands with minimal-to-no impact on normally resource-intensive actions like keying and searching).
 - [`styled-components`](https://github.com/styled-components/styled-components) to handle dynamic, extensible styling via CSS-in-JS (there is also the option to generate `className` attributes for legacy stylesheets as a fall-back option).
 
-While still a work in progress, its current state should be suitable for many use-cases. Please feel free to contribute and/or make suggestions - specificaly, in the following areas:
-- Additional flexibility to the styling system. Currently handles simple-to-mid level complexity scenarios via `styled-component`'s overrideable `ThemeProvider`. As a fallback, you generate static `className` attributes on container nodes.
-- The ability to handle complex, multi-select scenarios (while keeping with the theme of optimal performance in as few lines of code as possible).
+While still a work in progress, its current state should be suitable for many use-cases. Please feel free to contribute and/or make suggestions (below are key areas that still need to be addressed).
+
+### Development for future releases:
+- <strong>Make theme API more flexible/customizable.</strong> Currently handles simple-to-mid level complexity scenarios via `styled-component`'s overrideable `ThemeProvider`. As a fallback, you can generate static `className` attributes on container nodes by enabling the `addClassNames` property.
+- <strong>Diacritics & special character handling.</strong> Unsure of where to place the scope for this work.
+- <strong>Async wrapper component.</strong> This may be unecessary given the ease with which the standard component can handle large amounts of records. However, it would be nice to have the ability to easily operate on subsets of data just as needed and not have to be burdened with excessive memory allocation.
 
 ## Usage
 
-- [Demo](https://based-ghost.github.io/react-functional-select/index.html?path=/story/react-functional-select--basic)
+- [Demo](https://based-ghost.github.io/react-functional-select/)
 - [Source code](./__stories__)
 
 #### Condensed BasicProps.story.tsx
@@ -46,7 +49,7 @@ type CityOption = {
   readonly state: string;
 };
 
-const _options: CityOption[] = [
+const OPTIONS: CityOption[] = [
   { id: 1, city: 'Austin', state: 'TX' },
   { id: 2, city: 'Denver', state: 'CO' },
   { id: 3, city: 'Chicago', state: 'IL' },
@@ -60,15 +63,14 @@ const BasicProps: React.FC = () => {
   const [isClearable, setIsClearable] = useState<boolean>(true);
   const [selectedOption, setSelectedOption] = useState<CityOption | null>(null);
   
-  const onOptionChange = useCallback((option: CityOption | null): void => {
-    setSelectedOption(option);
-  }, []);
-  
-  const getOptionValue = useCallback((option: CityOption): number => (option.id), []);
-  const getOptionLabel = useCallback((option: CityOption): string => (`${option.city}, ${option.state}`), []);
+  const getOptionValue = useCallback((option: CityOption): number => option.id, []);
+  const onOptionChange = useCallback((option: CityOption | null): void => setSelectedOption(option), []);
+  const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
 
   useEffect(() => {
-    isDisabled && setIsInvalid(false);
+    if (isDisabled) {
+      setIsInvalid(false);
+	  }
   }, [isDisabled]);
 
   return (
@@ -80,7 +82,7 @@ const BasicProps: React.FC = () => {
         <CardBody>
           <SelectContainer>
             <Select
-              options={_options}
+              options={OPTIONS}
               isInvalid={isInvalid}
               isDisabled={isDisabled}
               isClearable={isClearable}
@@ -102,23 +104,24 @@ All properties are technically optional (with a few having default values). Very
 
 | Property | Type | Default | Description
 :---|:---|:---|:---
-| `inputId` | string | `undefined` | The id of the autosize search input
-|`selectId` | string | `undefined` | The id of the parent div
-|`idSuffix` | string | `undefined` | GUID that gets appended to `inputId` and `selectId` - when specified, generates ids for each individual option
-|`ariaLabel` | string | `undefined` | Aria label (for assistive tech)
+| `inputId`| string | `undefined` | The id of the autosize search input
+|`selectId`| string | `undefined` | The id of the parent div
+|`ariaLabel`| string | `undefined` | Aria label (for assistive tech)
+|`isMulti`| bool | `false` | Does the control allow for multiple selections (defaults to single-value mode)
 |`isLoading`| bool | `false` | Is the select in a state of loading - shows loading dots animation
 |`isInvalid`| bool | `false` | Is the current value invalid - control recieves invalid styling
 |`inputDelay`| number | `undefined` | The debounce delay in for the input search (milliseconds)
 |`isDisabled`| bool | `false` | Is the select control disabled - recieves disabled styling
 |`placeholder`| string | `Select option..` | Placeholder text for the select value
-| `menuWidth` | React.ReactText | `100%` | Width of the menu
-| `menuItemSize` | number | `35` | The height of each option in the menu (px)
-| `isClearable` | bool | `false` | Is the select value clearable
-| `noOptionsMsg` | string | `No options` | The text displayed in the menu when there are no options available
+|`menuWidth`| React.ReactText | `100%` | Width of the menu
+|`menuItemSize`| number | `35` | The height of each option in the menu (px)
+|`isClearable`| bool | `false` | Is the select value clearable
+|`noOptionsMsg`| string | `No options` | The text displayed in the menu when there are no options available
 |`clearIcon`| React.ReactNode | `undefined` | Custom clear icon
 |`caretIcon`| React.ReactNode | `undefined` | Custom caret icon
 |`options`| array | `[]` | The menu options
 |`isSearchable`| bool | `true` | Whether to enable search functionality or not
+|`hideSelectedOptions`| bool | `false` | Hide the selected option from the menu (if undefined and isMulti = true, then defaults to true)
 |`openMenuOnClick`| bool | `true` | If true, the menu can be toggled by clicking anywhere on the select control; if false, the menu can only be toggled by clicking the 'caret' icon on the far right of the control
 |`menuMaxHeight`| number | `300` | Max height of the menu element - this effects how many options `react-window` will render.
 |`addClassNames`| bool | `false` | Should static classNames be generated for container elements (enable if styling using CSS stylesheets)

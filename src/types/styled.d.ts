@@ -3,13 +3,13 @@ import 'styled-components';
 declare module 'styled-components' {
   export interface DefaultTheme {
     color: {
-      accent: string;
       border: string;
-      invalid: string;
+      danger: string;
+      primary: string;
       disabled: string;
       textColor?: string;  
       placeholder: string;
-      invalidFocus: string;
+      dangerLight: string;
       caretActive?: string;
       iconSeparator?: string;
     };
@@ -38,8 +38,9 @@ declare module 'styled-components' {
       };
     };
     control: {
-      height: string;
+      height?: string;
       padding: string;
+      minHeight: string;
       boxShadow: string;
       transition: string;
       borderWidth: string;
@@ -70,5 +71,24 @@ declare module 'styled-components' {
       padding: string;
       fontSize: string;
     };
+    multiValue: {
+      margin: string;
+      borderRadius: string;
+      backgroundColor: string;
+      label: {
+        padding: string;
+        fontSize: string;
+        borderRadius: string;
+      };
+      clear: {
+        padding: string;
+        fontSize: string;
+        alignItems: string;
+        transition: string;
+        borderRadius: string;
+        opacity: string | number;
+        fontWeight: string | number;
+      }
+    }
   }
 }
