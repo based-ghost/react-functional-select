@@ -38,6 +38,7 @@ While still a work in progress, its current state should be suitable for many us
 
 ```TSX
 import { Select } from 'react-functional-select';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardHeader, CardBody, Container, SelectContainer } from './helpers/styled';
 
 type CityOption = {
