@@ -64,6 +64,7 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
     id,
     onBlur,
     onFocus,
+    isHidden,
     onChange,
     disabled,
     ariaLabel,
@@ -102,7 +103,7 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
         value={inputValue}
         disabled={disabled}
         {...inputAttributes}
-        readOnly={!isSearchable}
+        readOnly={!isSearchable || isHidden}
         onChange={isSearchable ? onChange : undefined}
         className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
       />

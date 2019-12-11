@@ -1,44 +1,12 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Select } from '../src';
-import styled from 'styled-components';
 import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
+import { CityOption, CITY_OPTIONS } from './helpers/utils';
 import { useCallbackState } from './helpers/useCallbackState';
-import { Hr, Title, Label, SubTitle, Container, SelectContainer, Paragraph, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, SubTitle, List, ListItem, ListWrapper, Container, SelectContainer, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
-type CityOption = {
-  readonly id: number;
-  readonly city: string;
-  readonly state: string;
-};
-
-const SelectedCode = styled(Code)`
-  color: #fff;
-  font-weight: 400;
-  font-size: 0.875em;
-  background-color: #282c34;
-`;
-
-const SelectedLabelText = styled.span`
-  font-weight: 600;
-  margin-right: 0.275rem;
-  margin-left: 0 !important;
-`;
-
-const _options: CityOption[] = [
-  { id: 1, city: 'Austin', state: 'TX' },
-  { id: 2, city: 'Denver', state: 'CO' },
-  { id: 3, city: 'Chicago', state: 'IL' },
-  { id: 4, city: 'Phoenix', state: 'AZ' },
-  { id: 5, city: 'Houston', state: 'TX' },
-  { id: 6, city: 'Las Vegas', state: 'NV' },
-  { id: 7, city: 'Milwaukee', state: 'WI' },
-  { id: 8, city: 'Louisville', state: 'KY' },
-  { id: 9, city: 'Los Angeles', state: 'CA' },
-  { id: 10, city: 'Minneapolis', state: 'MN' },
-];
-
-storiesOf('React Functional Select', module).add('Multi', () => {
+storiesOf('React Functional Select', module).add('Multi-select', () => {
   const [openMenuOnClick, setOpenMenuOnClick] = useCallbackState(true);
   const [closeMenuOnSelect, setCloseMenuOnSelect] = useCallbackState(true);
   const [blurInputOnSelect, setBlurInputOnSelect] = useCallbackState(false);
@@ -49,24 +17,25 @@ storiesOf('React Functional Select', module).add('Multi', () => {
 
   return (
     <Container>
-      <Title>Multi</Title>
+      <Title>Multi-select</Title>
       <Hr />
-      <Paragraph>
-        In this story's source code, notice that the <Code>onOptionChange</Code>
-        , <Code>getOptionValue</Code> and <Code>getOptionLabel</Code> callback
-        props are wrapped in a <Code>useCallback</Code>. While not required,
-        <em> strongly prefer </em> memoization of any callback function props
-        whenever possible. This will greatly boost performance and limit re-renders
-        as these props are referenced in the dependency arrays
-        of <Code>useCallbacks</Code> and <Code>useEffects</Code>. When defined in a
-        functional component, wrap in a <Code>useCallback</Code>; when defined in a
-        legacy class component, ensure proper binding to <Code>this</Code>.
-      </Paragraph>
-      <Paragraph>
-        The <Code>options</Code> prop should also be memoized. Either consume it
-        directly from a state management store, or make sure it is stable by
-        avoiding inline or render-based mutations.
-      </Paragraph>
+      <ListWrapper>
+        Add the <Code>isMulti</Code> property to allow for multiple selections. While 
+        in multi-select mode, some properties are now applicable and others become 
+        more pertinent.
+        <List>
+          <ListItem>
+            <Code>hideSelectedOptions</Code><em> (Boolean)</em> - Hide the selected 
+            option from the menu. Default value is false, however, if undefined 
+            and <em>isMulti = true</em>, then its value defaults to true.
+          </ListItem>
+          <ListItem>
+            <Code>closeMenuOnSelect</Code><em> (Boolean)</em> - Close the menu of options 
+            when the user selects an option. Default value is false, however, it may be 
+            benefical to set this property to true for convenience in multi-select scenarios.
+          </ListItem>
+        </List>
+      </ListWrapper>
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>
@@ -100,7 +69,7 @@ storiesOf('React Functional Select', module).add('Multi', () => {
               isMulti
               isClearable
               isSearchable
-              options={_options}
+              options={CITY_OPTIONS}
               getOptionValue={getOptionValue}
               getOptionLabel={getOptionLabel}
               openMenuOnClick={openMenuOnClick}

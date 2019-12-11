@@ -21,18 +21,17 @@ const Label = styled.div`
   border-radius: ${({ theme }) => theme.multiValue.label.borderRadius};
 `;
 
-const Clear = styled.div`
+const Clear = styled.div<{ isFocused: boolean }>`
   display: flex;
-  opacity: ${({ theme }) => theme.multiValue.clear.opacity};
   padding: ${({ theme }) => theme.multiValue.clear.padding};
   font-size: ${({ theme }) => theme.multiValue.clear.fontSize};
   transition: ${({ theme }) => theme.multiValue.clear.transition};
   align-items: ${({ theme }) => theme.multiValue.clear.alignItems};
   font-weight: ${({ theme }) => theme.multiValue.clear.fontWeight};
   border-radius: ${({ theme }) => theme.multiValue.clear.borderRadius};
-
+  background-color: ${({ theme, isFocused }) => isFocused ? theme.color.dangerLight : 'transparent'};
+  
   :hover {
-    opacity: 1;
     color: ${({ theme }) => theme.color.danger};
     background-color: ${({ theme }) => theme.color.dangerLight};
   }
@@ -41,6 +40,7 @@ const Clear = styled.div`
 const MultiValue = React.memo<MultiValueProps>(({
   data,
   value,
+  isFocused,
   renderOptionLabel,
   removeSelectedOption,
 }) => (
@@ -48,6 +48,7 @@ const MultiValue = React.memo<MultiValueProps>(({
     <Label>{renderOptionLabel(data)}</Label>
     <Clear
       aria-hidden='true'
+      isFocused={isFocused}
       onTouchEnd={(e) => removeSelectedOption(value, e)}
       onMouseDown={(e) => removeSelectedOption(value, e)}
     >X</Clear>

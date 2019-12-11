@@ -68,22 +68,21 @@ export default Object.freeze<DefaultTheme>({
     padding: '0.375rem 0.75rem',
   },
   multiValue: {
-    margin: '0 2px',
+    margin: '1px 2px',
     borderRadius: '0.25rem',
     backgroundColor: '#E5EBF1',
     label: {
       fontSize: '0.825em',
       borderRadius: '0.25rem',
-      padding: '1px 3px 1px 6px',
+      padding: '1px 2px 1px 6px',
     },
     clear: {
       fontWeight: 700,
-      opacity: '0.95',
-      padding: '0 8px',
+      padding: '0 7px',
       fontSize: '0.675em',
       alignItems: 'center',
       borderRadius: '0.25rem',
-      transition: 'color 0.15s ease-in-out, background-color 0.15s ease-in-out, opacity 0.15s ease-in-out',
+      transition: 'color 0.15s ease-in-out, background-color 0.15s ease-in-out',
     },
   }
 });

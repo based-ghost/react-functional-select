@@ -131,8 +131,8 @@ export const Button = styled.button`
   vertical-align: middle;
   border-radius: 0.25rem;
   padding: .375rem .75rem;
-  background-color: #EBECED;
   -webkit-appearance: button;
+  background-color: rgba(9, 30, 66, 0.075);
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
 
   :focus {
@@ -140,7 +140,7 @@ export const Button = styled.button`
   }
 
   :hover {
-    background-color: #DEDFE0;
+    background-color: rgba(9, 30, 66, 0.125);
   }
 
   ${mediaQueryIsMobile} {

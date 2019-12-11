@@ -96,10 +96,10 @@ storiesOf('React Functional Select', module).add('Advanced', () => {
           </ListItem>
           <ListItem>
             <Code>getIsOptionDisabled(option)</Code><em> => Boolean</em> - Callback function 
-            with a return type of <em>Boolean</em>. When it evaluates to a value of <em>true</em>, 
-            that option iteration will be rendered <em>disabled</em>. As an alternative, you can 
-            also pass a property of <em>isDisabled</em> with each option. Use of these two options 
-            - they cannot both be specified.
+            with a return type of <em>Boolean</em>. When it evaluates to a value of true, that 
+            option iteration will be rendered <em>disabled</em>. As an alternative, you can also 
+            pass a property of <em>isDisabled</em> with each option. Use of these two options - 
+            they cannot both be specified.
           </ListItem>
         </List>
       </ListWrapper>

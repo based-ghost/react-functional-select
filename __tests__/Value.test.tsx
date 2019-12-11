@@ -4,7 +4,7 @@ import DefaultThemeObj from '../src/theme';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { ValueProps, OptionData } from '../src/types';
-import { PLACEHOLDER_DEFAULT, SELECTED_OPTION_DEFAULT } from '../src/constants/defaults';
+import { PLACEHOLDER_DEFAULT, SELECTED_OPTION_DEFAULT, FOCUSED_MULTI_DEFAULT } from '../src/constants/defaults';
 
 // ============================================
 // Helper functions for Value component
@@ -28,6 +28,7 @@ const createValueProps = () => {
     placeholder: PLACEHOLDER_DEFAULT,
     selectedOption: SELECTED_OPTION_DEFAULT,
     renderOptionLabel: renderOptionLabelSpy,
+    focusedMultiValue: FOCUSED_MULTI_DEFAULT,
     removeSelectedOption: removeSelectedOptionSpy,
   };
 
@@ -47,7 +48,7 @@ test('"placeholder" text displays when no option is selected', async () => {
   expect(getByText(PLACEHOLDER_DEFAULT)).toBeInTheDocument();
 });
 
-test('component renders NULL if "inputValue" is a non-empty string', async () => {
+test('component renders NULL if "inputValue" is a non-empty string and "isMulti" !== true', async () => {
   const { props } = createValueProps();
   const propsWithInputValue = {
     ...props,

@@ -37,7 +37,7 @@ While still a work in progress, its current state should be suitable for many us
 - [Demo](https://based-ghost.github.io/react-functional-select/)
 - [Source code](./__stories__)
 
-#### Condensed BasicProps.story.tsx
+#### Condensed 0-Single.story.tsx
 
 ```TSX
 import { Select } from 'react-functional-select';
@@ -49,7 +49,7 @@ type CityOption = {
   readonly state: string;
 };
 
-const OPTIONS: CityOption[] = [
+const CITY_OPTIONS: CityOption[] = [
   { id: 1, city: 'Austin', state: 'TX' },
   { id: 2, city: 'Denver', state: 'CO' },
   { id: 3, city: 'Chicago', state: 'IL' },
@@ -57,7 +57,7 @@ const OPTIONS: CityOption[] = [
   { id: 5, city: 'Houston', state: 'TX' },
 ];
 
-const BasicProps: React.FC = () => {
+const SingleSelectDemo: React.FC = () => {
   const [isInvalid, setIsInvalid] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isClearable, setIsClearable] = useState<boolean>(true);
@@ -82,8 +82,8 @@ const BasicProps: React.FC = () => {
         <CardBody>
           <SelectContainer>
             <Select
-              options={OPTIONS}
               isInvalid={isInvalid}
+              options={CITY_OPTIONS}
               isDisabled={isDisabled}
               isClearable={isClearable}
               onOptionChange={onOptionChange}

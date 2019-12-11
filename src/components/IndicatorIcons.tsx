@@ -26,11 +26,11 @@ const IndicatorIcon = styled.div`
 
 const Clear = styled.div`
   overflow: hidden;
-  ${fadeInAnimationCss}
   font-size: ${({ theme }) => theme.icon.clear.fontSize};
   transition: ${({ theme }) => theme.icon.clear.transition};
   font-weight: ${({ theme }) => theme.icon.clear.fontWeight};
   font-family: ${({ theme }) => theme.icon.clear.fontFamily};
+  ${fadeInAnimationCss}
 `;
 
 const Caret = styled.div<CaretProps>`

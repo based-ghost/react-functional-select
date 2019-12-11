@@ -27,10 +27,11 @@ const Value = React.memo<ValueProps>(({
   inputValue,
   placeholder,
   selectedOption,
+  focusedMultiValue,
   renderOptionLabel,
   removeSelectedOption,
 }) => {
-  if (inputValue) {
+  if (inputValue && (!isMulti || (isMulti && !isArrayWithLength(selectedOption)))) {
     return null;
   }
 
@@ -56,6 +57,7 @@ const Value = React.memo<ValueProps>(({
           data={data}
           value={value}
           renderOptionLabel={renderOptionLabel}
+          isFocused={(value === focusedMultiValue)}
           removeSelectedOption={removeSelectedOption}
         />
       ))}

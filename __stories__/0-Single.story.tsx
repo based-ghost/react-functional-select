@@ -3,14 +3,9 @@ import { Select } from '../src';
 import styled from 'styled-components';
 import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
+import { CityOption, CITY_OPTIONS } from './helpers/utils';
 import { useCallbackState } from './helpers/useCallbackState';
 import { Hr, Title, Label, SubTitle, Container, SelectContainer, Paragraph, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
-
-type CityOption = {
-  readonly id: number;
-  readonly city: string;
-  readonly state: string;
-};
 
 const SelectedCode = styled(Code)`
   color: #fff;
@@ -25,20 +20,7 @@ const SelectedLabelText = styled.span`
   margin-left: 0 !important;
 `;
 
-const _options: CityOption[] = [
-  { id: 1,  city: 'Austin', state: 'TX' },
-  { id: 2,  city: 'Denver', state: 'CO' },
-  { id: 3,  city: 'Chicago', state: 'IL' },
-  { id: 4,  city: 'Phoenix', state: 'AZ' },
-  { id: 5,  city: 'Houston', state: 'TX' },
-  { id: 6,  city: 'Las Vegas', state: 'NV' },
-  { id: 7,  city: 'Milwaukee', state: 'WI' },
-  { id: 8,  city: 'Louisville', state: 'KY' },
-  { id: 9,  city: 'Los Angeles', state: 'CA' },
-  { id: 10, city: 'Minneapolis', state: 'MN' },
-];
-
-storiesOf('React Functional Select', module).add('Single', () => {
+storiesOf('React Functional Select', module).add('Single-select', () => {
   const [isInvalid, setIsInvalid] = useCallbackState(false);
   const [isLoading, setIsLoading] = useCallbackState(false);
   const [isDisabled, setIsDisabled] = useCallbackState(false);
@@ -55,7 +37,7 @@ storiesOf('React Functional Select', module).add('Single', () => {
 
   return (
     <Container>
-      <Title>Single</Title>
+      <Title>Single-select</Title>
       <Hr />
       <Paragraph>
         In this story's source code, notice that the <Code>onOptionChange</Code>
@@ -113,9 +95,9 @@ storiesOf('React Functional Select', module).add('Single', () => {
         <CardBody>
           <SelectContainer>
             <Select
-              options={_options}
               isLoading={isLoading}
               isInvalid={isInvalid}
+              options={CITY_OPTIONS}
               isDisabled={isDisabled}
               isClearable={isClearable}
               isSearchable={isSearchable}

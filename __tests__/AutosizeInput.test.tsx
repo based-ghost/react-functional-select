@@ -25,6 +25,7 @@ const createAutosizeInputProps = () => {
 
   const props: AutosizeInputProps = {
     inputValue: '',
+    isHidden: false,
     onBlur: onBlurSpy,
     isSearchable: true,
     onFocus: onFocusSpy,
@@ -92,7 +93,7 @@ test('when "id" has a non-empty string value, input element should get an "id" a
   expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute('id', inputId);
 });
 
-test('when "isSearchable" = false, the onChange event should not be created on input element (should also get a "readonly" attribute)', async () => {
+test('when "isSearchable" = false, the onChange event should not be created on input element and the "readonly" attribute is added', async () => {
   const { props, onChangeSpy } = createAutosizeInputProps();
   const mergedProps = {
     ...props,
@@ -105,6 +106,16 @@ test('when "isSearchable" = false, the onChange event should not be created on i
   fireEvent.change(inputElement);
   expect(onChangeSpy).not.toBeCalled();
   expect(inputElement).toHaveAttribute('readonly');
+});
+
+test('when "isHidden" = true, input element has the "readonly" attribute', async () => {
+  const { props } = createAutosizeInputProps();
+  const mergedProps = {
+    ...props,
+    isHidden: true,
+  };
+  const { getByTestId } = renderAutosizeInput(mergedProps);
+  expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute('readonly');
 });
 
 test('"blur" and "focus" events with callback handlers are attached to the input element', async () => {

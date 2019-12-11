@@ -86,7 +86,6 @@ declare module 'styled-components' {
         alignItems: string;
         transition: string;
         borderRadius: string;
-        opacity: string | number;
         fontWeight: string | number;
       }
     }

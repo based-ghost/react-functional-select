@@ -19,8 +19,8 @@ export type Theme = Partial<DefaultTheme>;
 // Shared / Object / Param / Misc types
 // ============================================
 
-export type IndexPosition = 0 | 1 | 2 | 3;
-export type IIndexPositionEnum = { [key: string]: IndexPosition };
+export type ValueIndex = 0 | 1;
+export type OptionIndex = 0 | 1 | 2 | 3;
 
 export type OptionData = any;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
@@ -100,11 +100,13 @@ export type ValueProps = {
   readonly inputValue: string;
   readonly placeholder: string;
   readonly selectedOption: SelectedOption[];
+  readonly focusedMultiValue: ReactText | null;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;
   readonly removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
 };
 
 export type MultiValueProps = SelectedOption & {
+  readonly isFocused: boolean;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;
   readonly removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
 };
@@ -123,6 +125,7 @@ export type MenuProps = {
 
 export type AutosizeInputProps = {
   readonly id?: string;
+  readonly isHidden: boolean;
   readonly disabled?: boolean;
   readonly ariaLabel?: string;
   readonly inputValue: string;

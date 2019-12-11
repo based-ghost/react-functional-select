@@ -16,19 +16,20 @@ import {
 import {
   OptionData,
   MenuOption,
+  ValueIndex,
+  OptionIndex,
   SelectProps,
   SelectHandle,
-  IndexPosition,
   FocusedOption,
   SelectedOption,
   MenuWrapperProps,
   MouseOrTouchEvent,
-  IIndexPositionEnum,
   ControlWrapperProps,
 } from './types';
 import {
   OPTIONS_DEFAULT,
   PLACEHOLDER_DEFAULT,
+  FOCUSED_MULTI_DEFAULT,
   FOCUSED_OPTION_DEFAULT,
   NO_OPTIONS_MSG_DEFAULT,
   MENU_ITEM_SIZE_DEFAULT,
@@ -51,11 +52,16 @@ import {
   CONTROL_CONTAINER_TESTID,
 } from './constants/dom';
 
-const IndexPositionEnum = Object.freeze<IIndexPositionEnum>({
+const ValueIndexEnum = Object.freeze<{ [key: string]: ValueIndex }>({
+  NEXT: 0,
+  PREVIOUS: 1
+});
+
+const OptionIndexEnum = Object.freeze<{ [key: string]: OptionIndex }>({
   UP: 0,
   DOWN: 1,
   FIRST: 2,
-  LAST: 3,
+  LAST: 3
 });
 
 const SelectWrapper = styled.div`
@@ -208,6 +214,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
+  const [focusedMultiValue, setFocusedMultiValue] = useState<ReactText | null>(FOCUSED_MULTI_DEFAULT);
 
   const {
     data: focusedOptionData,
@@ -238,11 +245,11 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     return renderOptionLabel || getOptionLabelCB;
   }, [renderOptionLabel, getOptionLabelCB]);
 
-  // SelectedOption[] - if initialValue is specified attempt to initialize, otherwise default to []
-  const [selectedOption, setSelectedOption] = useState<SelectedOption[]>(() => normalizeValue(initialValue, getOptionValueCB, getOptionLabelCB));
-
   // Custom hook abstraction that debounces search input value (opt-in)
   const debouncedInputValue = useDebounce<string>(inputValue, inputDelay);
+
+  // SelectedOption[] - if initialValue is specified attempt to initialize, otherwise default to []
+  const [selectedOption, setSelectedOption] = useState<SelectedOption[]>(() => normalizeValue(initialValue, getOptionValueCB, getOptionLabelCB));
 
   // Custom hook abstraction that handles calculating menuHeight (defaults to menuMaxHeight)
   // ...and handles executing callbacks/logic on menuOpen state change.
@@ -292,7 +299,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     setSelectedOption((prevSelectedOption) => prevSelectedOption.filter(x => x.value !== value));
   }, []);
 
-  const openMenuAndFocusOption = useCallback((position: IndexPosition): void => {
+  const openMenuAndFocusOption = useCallback((position: OptionIndex): void => {
     if (!isArrayWithLength(menuOptions)) {
       setMenuOpen(true);
       return;
@@ -304,7 +311,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
 
     const index = (selectedIndex > -1)
       ? selectedIndex
-      : (position === IndexPositionEnum.FIRST) ? 0 : menuOptions.length - 1;
+      : (position === OptionIndexEnum.FIRST) ? 0 : menuOptions.length - 1;
 
     setMenuOpen(true);
     setFocusedOption({ index, ...menuOptions[index] });
@@ -347,12 +354,13 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   /*** useEffect ***/
   // 1: if control recieves focus & openMenuOnFocus = true, open menu
   // 2: handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
-  // 3: handle menuOptions changes - conditionally focus first option and do scroll to first option;
-  //    ...also, handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
+  // 3: Handle clearing focused option if menuOptions array has 0 length;
+  //    Handle menuOptions changes - conditionally focus first option and do scroll to first option;
+  //    Handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
 
   useEffect(() => {
     if (isFocused && openMenuOnFocus) {
-      openMenuAndFocusOption(IndexPositionEnum.FIRST);
+      openMenuAndFocusOption(OptionIndexEnum.FIRST);
     }
   }, [isFocused, openMenuOnFocus, openMenuAndFocusOption]);
 
@@ -367,7 +375,9 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   }, [isMulti, selectedOption, onOptionChange]);
 
   useEffect(() => {
-    if (menuOptions.length === 1 || (!!menuOptions.length && (menuOptions.length !== options.length || prevMenuOptionsCount.current === 0))) {
+    if ((typeof prevMenuOptionsCount.current === 'number') && !isArrayWithLength(menuOptions)) {
+      setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    } else if (menuOptions.length === 1 || (!!menuOptions.length && (menuOptions.length !== options.length || prevMenuOptionsCount.current === 0))) {
       setFocusedOption({
         index: 0,
         ...menuOptions[0]
@@ -393,17 +403,48 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     selectOption(option, isFocusedOptionSelected);
   };
 
-  const focusOptionOnArrowKey = (position: IndexPosition): void => {
+  // Only Multiselect mode supports value focusing
+  const focusValueOnArrowKey = (position: ValueIndex): void => {
+    if (!isArrayWithLength(selectedOption)) {
+      return;
+    }
+
+    let nextFocusedIndex = -1;
+    const lastValuesIndex = (selectedOption.length - 1);
+    const curFocusedIndex = focusedMultiValue
+      ? selectedOption.findIndex((option) => option.value === focusedMultiValue)
+      : -1;
+
+    if (position === ValueIndexEnum.NEXT) {
+      nextFocusedIndex = (curFocusedIndex > -1 && curFocusedIndex < lastValuesIndex)
+        ? (curFocusedIndex + 1)
+        : -1;
+    } else {
+      nextFocusedIndex = (curFocusedIndex !== 0)
+        ? (curFocusedIndex === -1) ? lastValuesIndex : (curFocusedIndex - 1)
+        : 0;
+    }
+
+    const nextFocusedVal = (nextFocusedIndex === -1)
+      ? FOCUSED_MULTI_DEFAULT
+      : selectedOption[nextFocusedIndex].value!;
+ 
+    focusedOptionData && setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    setFocusedMultiValue(nextFocusedVal);
+  };
+
+  const focusOptionOnArrowKey = (position: OptionIndex): void => {
     if (!isArrayWithLength(menuOptions)) {
       return;
     }
 
-    const index = (position === IndexPositionEnum.DOWN)
+    const index = (position === OptionIndexEnum.DOWN)
       ? (focusedOptionIndex + 1) % menuOptions.length
       : (focusedOptionIndex > 0)
         ? (focusedOptionIndex - 1)
         : (menuOptions.length - 1);
         
+    focusedMultiValue && setFocusedMultiValue(FOCUSED_MULTI_DEFAULT);
     setFocusedOption({ index, ...menuOptions[index] });
     scrollToItemIndex(index);  
   };
@@ -415,34 +456,46 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
 
     if (onKeyDown) {
       onKeyDown(e);
-      if (e.defaultPrevented) {
-        return;
-      }
+      if (e.defaultPrevented) { return; }
     }
 
     switch (e.key) {
       case 'ArrowDown':
         if (menuOpen) {
-          focusOptionOnArrowKey(IndexPositionEnum.DOWN);
+          focusOptionOnArrowKey(OptionIndexEnum.DOWN);
         } else {
-          openMenuAndFocusOption(IndexPositionEnum.FIRST);
+          openMenuAndFocusOption(OptionIndexEnum.FIRST);
         }
         break;
       case 'ArrowUp':
         if (menuOpen) {
-          focusOptionOnArrowKey(IndexPositionEnum.UP);
+          focusOptionOnArrowKey(OptionIndexEnum.UP);
         } else {
-          openMenuAndFocusOption(IndexPositionEnum.LAST);
+          openMenuAndFocusOption(OptionIndexEnum.LAST);
         }
+        break;
+      case 'ArrowLeft':
+        if (!isMulti || inputValue) {
+          return;
+        }
+        focusValueOnArrowKey(ValueIndexEnum.PREVIOUS);
+        break;
+      case 'ArrowRight':
+        if (!isMulti || inputValue) {
+          return;
+        }
+        focusValueOnArrowKey(ValueIndexEnum.NEXT);
         break;
       case ' ': // Handle spacebar keydown events
         if (inputValue) {
           return;
         } else if (!menuOpen) {
-          openMenuAndFocusOption(IndexPositionEnum.FIRST);
-        } else {
-          selectOptionFromFocused();
-        }
+          openMenuAndFocusOption(OptionIndexEnum.FIRST);
+          break;
+        } else if (!focusedOptionData) {
+          return;
+        }        
+        selectOptionFromFocused();
         break;
       case 'Enter': // Ignore enter keydown event from an Input Method Editor (IME) - keyCode 229
         if (e.keyCode !== 229) {
@@ -450,30 +503,37 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
         }
         break;
       case 'Escape':
-        setMenuOpen(false);
-        setInputValue('');
-        break;
-      case 'Tab':
-        if (e.shiftKey || !menuOpen || !focusedOptionData) {
-          return;
-        } else if (tabSelectsOption) {
-          selectOptionFromFocused();
-        } else {
+        if (menuOpen) {
           setMenuOpen(false);
           setInputValue('');
         }
         break;
-      case 'Delete':
-      case 'Backspace':
-        if (inputValue || !backspaceClearsValue) {
+      case 'Tab':
+        if (e.shiftKey || !menuOpen || !tabSelectsOption || !focusedOptionData) {
           return;
         }
-        if (isArrayWithLength(selectedOption)) {
-          if (isMulti) {
-            const { value } = selectedOption[selectedOption.length - 1];
-            removeSelectedOption(value);
-          } else if (isClearable) {
-            setSelectedOption(SELECTED_OPTION_DEFAULT);
+        selectOptionFromFocused();
+        break;
+      case 'Delete':
+      case 'Backspace':
+        if (inputValue) {
+          return;
+        }
+
+        if (focusedMultiValue) {
+          removeSelectedOption(focusedMultiValue);
+          setFocusedMultiValue(FOCUSED_MULTI_DEFAULT);
+        } else {
+          if (!backspaceClearsValue) {
+            return;
+          }
+          if (isArrayWithLength(selectedOption)) {
+            if (isMulti) {
+              const { value } = selectedOption[selectedOption.length - 1];
+              removeSelectedOption(value);
+            } else if (isClearable) {
+              setSelectedOption(SELECTED_OPTION_DEFAULT);
+            }
           }
         }
         break;
@@ -490,7 +550,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
 
     const isNotInputEl = (e.currentTarget.tagName !== TagName.INPUT);
     if (!menuOpen) {
-      openMenuOnClick && openMenuAndFocusOption(IndexPositionEnum.FIRST);
+      openMenuOnClick && openMenuAndFocusOption(OptionIndexEnum.FIRST);
     } else if (isNotInputEl) {
       setMenuOpen(false);
       inputValue && setInputValue('');
@@ -539,7 +599,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     if (menuOpen) {
       setMenuOpen(false);
     } else {
-      openMenuAndFocusOption(IndexPositionEnum.FIRST);
+      openMenuAndFocusOption(OptionIndexEnum.FIRST);
     }
   }, [menuOpen, openMenuAndFocusOption]);
 
@@ -566,6 +626,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
               inputValue={inputValue}
               placeholder={placeholder}
               selectedOption={selectedOption}
+              focusedMultiValue={focusedMultiValue}
               renderOptionLabel={renderOptionLabelCB}
               removeSelectedOption={removeSelectedOption}
             />
@@ -580,6 +641,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
               onFocus={handleOnInputFocus}
               addClassNames={addClassNames}
               onChange={handleOnInputChange}
+              isHidden={!!focusedMultiValue}
               ariaLabelledBy={ariaLabelledBy}
             />
           </ValueWrapper>
