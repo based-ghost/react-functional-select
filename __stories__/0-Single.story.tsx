@@ -9,8 +9,9 @@ import { Hr, Title, Label, SubTitle, Container, SelectContainer, Paragraph, Code
 
 const SelectedCode = styled(Code)`
   color: #fff;
+  margin: 0 2px;
   font-weight: 400;
-  font-size: 0.875em;
+  font-size: 0.85em;
   background-color: #282c34;
 `;
 

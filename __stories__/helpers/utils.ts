@@ -27,12 +27,12 @@ export const numberWithCommas = (value: number): string => {
 };
 
 export const createSelectOptions = (optionCount: number): Option[] => {
-  const tempOptions: Option[] = [];
+  const results: Option[] = [];
   for (let i = 0; i < optionCount; i += 1) {
-    tempOptions.push({
+    results.push({
       value: i + 1,
       label: `Option ${i + 1}`,
     });
   }
-  return tempOptions;
+  return results;
 };

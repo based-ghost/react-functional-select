@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Value } from '../src/components';
 import DefaultThemeObj from '../src/theme';
-import { render } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { ValueProps, OptionData } from '../src/types';
 import { PLACEHOLDER_DEFAULT, SELECTED_OPTION_DEFAULT, FOCUSED_MULTI_DEFAULT } from '../src/constants/defaults';
@@ -10,8 +10,16 @@ import { PLACEHOLDER_DEFAULT, SELECTED_OPTION_DEFAULT, FOCUSED_MULTI_DEFAULT } f
 // Helper functions for Value component
 // ============================================
 
-const renderValue = (props: ValueProps) => {
+const renderValue = (props: ValueProps): RenderResult => {
   return render(
+    <ThemeProvider theme={DefaultThemeObj}>
+      <Value {...props} />
+    </ThemeProvider>
+  );
+};
+
+const rerenderValue = (props: ValueProps, rerender: (...args: any[]) => void): void => {
+  rerender(
     <ThemeProvider theme={DefaultThemeObj}>
       <Value {...props} />
     </ThemeProvider>
@@ -48,13 +56,23 @@ test('"placeholder" text displays when no option is selected', async () => {
   expect(getByText(PLACEHOLDER_DEFAULT)).toBeInTheDocument();
 });
 
-test('component renders NULL if "inputValue" is a non-empty string and "isMulti" !== true', async () => {
+test('component renders NULL if "inputValue" is truthy AND ("isMulti" != true OR ("isMulti" = true AND selectedOptions is empty))', async () => {
   const { props } = createValueProps();
-  const propsWithInputValue = {
+
+  // Render with truthy "inputValue" and "isMulti" = false
+  const singleProps = {
     ...props,
     inputValue: 'test search',
   };
-  const { container } = renderValue(propsWithInputValue);
+  const { container, rerender } = renderValue(singleProps);
+  expect(container.hasChildNodes()).toBeFalsy();
+
+  // Re-render with truthy "inputValue" and "isMulti" = true
+  const multiProps = {
+    ...singleProps,
+    isMulti: true,
+  };
+  rerenderValue(multiProps, rerender);
   expect(container.hasChildNodes()).toBeFalsy();
 });
 

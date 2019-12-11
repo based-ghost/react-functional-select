@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select } from '../src';
 import { SelectProps } from '../src/types';
-import { render, fireEvent, wait } from '@testing-library/react';
+import { render, fireEvent, wait, RenderResult } from '@testing-library/react';
 import {
   MENU_CONTAINER_CLS,
   SELECT_CONTAINER_CLS,
@@ -16,7 +16,7 @@ import {
 // Helper functions for Select component
 // ============================================
 
-const renderSelect = (props?: SelectProps) => {
+const renderSelect = (props?: SelectProps): RenderResult => {
   return render(
     <Select {...props} />
   );
@@ -97,10 +97,8 @@ test('when "isDisabled" = true, the DOM elements render as expected to prevent u
   
   const { getByTestId } = renderSelect(props);
 
-  // input has disabled attribute
   // mouseDown event should exit function when disabled (should not open the menu/focus input - which it normally would)
   // onFocus callback should not run with mouseDown on control
-  expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toBeDisabled();
   fireEvent.mouseDown(getByTestId(CONTROL_CONTAINER_TESTID!));
   expect(getByTestId(MENU_CONTAINER_TESTID!)).not.toBeVisible();
   expect(onFocusSpy).not.toBeCalled();

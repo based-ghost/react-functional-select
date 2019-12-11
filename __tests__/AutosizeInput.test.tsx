@@ -3,14 +3,14 @@ import DefaultThemeObj from '../src/theme';
 import { AutosizeInput } from '../src/components';
 import { AutosizeInputProps } from '../src/types';
 import { ThemeProvider } from 'styled-components';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants/dom';
 
 // ============================================
 // Helper functions for AutosizeInput component
 // ============================================
 
-const renderAutosizeInput = (props: AutosizeInputProps) => {
+const renderAutosizeInput = (props: AutosizeInputProps): RenderResult => {
   return render(
     <ThemeProvider theme={DefaultThemeObj}>
       <AutosizeInput {...props} />
@@ -25,9 +25,8 @@ const createAutosizeInputProps = () => {
 
   const props: AutosizeInputProps = {
     inputValue: '',
-    isHidden: false,
+    readOnly: false,
     onBlur: onBlurSpy,
-    isSearchable: true,
     onFocus: onFocusSpy,
     onChange: onChangeSpy,
   };
@@ -52,16 +51,6 @@ test('input element has a static className (enables styling via classic CSS) whe
   };
   const { getByTestId } = renderAutosizeInput(mergedProps);
   expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveClass(AUTOSIZE_INPUT_CLS);
-});
-
-test('when "disabled" = true, input element is rendered with a "disabled" attribute', async () => {
-  const { props } = createAutosizeInputProps();
-  const mergedProps = {
-    ...props,
-    disabled: true,
-  };
-  const { getByTestId } = renderAutosizeInput(mergedProps);
-  expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toBeDisabled();
 });
 
 test('input has functional, optional ARIA attributes', async () => {
@@ -93,11 +82,12 @@ test('when "id" has a non-empty string value, input element should get an "id" a
   expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute('id', inputId);
 });
 
-test('when "isSearchable" = false, the onChange event should not be created on input element and the "readonly" attribute is added', async () => {
+test('when "readOnly" = true, the onChange event handler should not be attached to input and the "readonly" attribute is added', async () => {
   const { props, onChangeSpy } = createAutosizeInputProps();
+
   const mergedProps = {
     ...props,
-    isSearchable: false,
+    readOnly: true,
   };
 
   const { getByTestId } = renderAutosizeInput(mergedProps);
@@ -106,16 +96,6 @@ test('when "isSearchable" = false, the onChange event should not be created on i
   fireEvent.change(inputElement);
   expect(onChangeSpy).not.toBeCalled();
   expect(inputElement).toHaveAttribute('readonly');
-});
-
-test('when "isHidden" = true, input element has the "readonly" attribute', async () => {
-  const { props } = createAutosizeInputProps();
-  const mergedProps = {
-    ...props,
-    isHidden: true,
-  };
-  const { getByTestId } = renderAutosizeInput(mergedProps);
-  expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute('readonly');
 });
 
 test('"blur" and "focus" events with callback handlers are attached to the input element', async () => {

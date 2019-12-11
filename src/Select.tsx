@@ -52,12 +52,12 @@ import {
   CONTROL_CONTAINER_TESTID,
 } from './constants/dom';
 
-const ValueIndexEnum = Object.freeze<{ [key: string]: ValueIndex }>({
+const ValueIndexEnum = Object.freeze<{[key: string]: ValueIndex}>({
   NEXT: 0,
   PREVIOUS: 1
 });
 
-const OptionIndexEnum = Object.freeze<{ [key: string]: OptionIndex }>({
+const OptionIndexEnum = Object.freeze<{[key: string]: OptionIndex}>({
   UP: 0,
   DOWN: 1,
   FIRST: 2,
@@ -291,6 +291,19 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     listRef.current && listRef.current.scrollToItem(index);
   };
 
+  useImperativeHandle(ref, () => ({
+    blur: blurInput,
+    focus: focusInput,
+    clearValue: () => {
+      setSelectedOption(SELECTED_OPTION_DEFAULT);
+      setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    },
+    setValue: (option?: OptionData) => {
+      const validatedSelectedOption = validateApiValues(option, menuOptions, getOptionValueCB);
+      setSelectedOption(validatedSelectedOption);
+    },
+  }));
+
   const removeSelectedOption = useCallback((value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {
     if (e) {
       e.stopPropagation();
@@ -311,7 +324,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
 
     const index = (selectedIndex > -1)
       ? selectedIndex
-      : (position === OptionIndexEnum.FIRST) ? 0 : menuOptions.length - 1;
+      : ((position === OptionIndexEnum.FIRST) ? 0 : (menuOptions.length - 1));
 
     setMenuOpen(true);
     setFocusedOption({ index, ...menuOptions[index] });
@@ -322,12 +335,16 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     if (isSelected) {
       isMulti && removeSelectedOption(option.value);
     } else {
-      setSelectedOption((prevSelectedOption) => {
-        return !isMulti ? [option] : [...prevSelectedOption, option];
-      });
+      setSelectedOption((prevSelectedOption) => !isMulti
+        ? [option]
+        : [...prevSelectedOption, option]
+      );
     }
 
-    const blurInputOnSelectOrDefault = (typeof blurInputOnSelect === 'boolean') ? blurInputOnSelect : isTouchDevice();
+    const blurInputOnSelectOrDefault = (typeof blurInputOnSelect === 'boolean')
+      ? blurInputOnSelect
+      : isTouchDevice();
+
     if (blurInputOnSelectOrDefault) {
       blurInput();
     } else if (closeMenuOnSelect) {
@@ -335,21 +352,6 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
       setInputValue('');
     }
   }, [isMulti, closeMenuOnSelect, blurInputOnSelect, removeSelectedOption]);
-
-  /*** useImperativeHandle ***/
-  // Public instance methods exposed to parent component - accessed via 'ref' attribute
-  useImperativeHandle(ref, () => ({
-    blur: blurInput,
-    focus: focusInput,
-    clearValue: () => {
-      setSelectedOption(SELECTED_OPTION_DEFAULT);
-      setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    },
-    setValue: (option?: OptionData) => {
-      const validatedSelectedOption = validateApiValues(option, menuOptions, getOptionValueCB);
-      setSelectedOption(validatedSelectedOption);
-    },
-  }));
 
   /*** useEffect ***/
   // 1: if control recieves focus & openMenuOnFocus = true, open menu
@@ -394,13 +396,13 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
       return;
     }
 
-    const option = {
+    const newSelectedOption = {
       data: focusedOptionData,
       value: focusedOptionValue,
       label: focusedOptionLabel
     };
 
-    selectOption(option, isFocusedOptionSelected);
+    selectOption(newSelectedOption, isFocusedOptionSelected);
   };
 
   // Only Multiselect mode supports value focusing
@@ -430,7 +432,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
       : selectedOption[nextFocusedIndex].value!;
  
     focusedOptionData && setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    setFocusedMultiValue(nextFocusedVal);
+    (nextFocusedVal !== focusedMultiValue) && setFocusedMultiValue(nextFocusedVal);
   };
 
   const focusOptionOnArrowKey = (position: OptionIndex): void => {
@@ -521,8 +523,13 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
         }
 
         if (focusedMultiValue) {
+          const clearFocusedIndex = selectedOption.findIndex((option) => option.value === focusedMultiValue);
+          const nexFocusedMultiValue = (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
+            ? selectedOption[clearFocusedIndex + 1].value!
+            : FOCUSED_MULTI_DEFAULT;
+
           removeSelectedOption(focusedMultiValue);
-          setFocusedMultiValue(FOCUSED_MULTI_DEFAULT);
+          setFocusedMultiValue(nexFocusedMultiValue);
         } else {
           if (!backspaceClearsValue) {
             return;
@@ -633,16 +640,14 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
             <AutosizeInput
               id={inputId}
               ref={inputRef}
-              disabled={isDisabled}
               ariaLabel={ariaLabel}
               inputValue={inputValue}
               onBlur={handleOnInputBlur}
-              isSearchable={isSearchable}
               onFocus={handleOnInputFocus}
               addClassNames={addClassNames}
               onChange={handleOnInputChange}
-              isHidden={!!focusedMultiValue}
               ariaLabelledBy={ariaLabelledBy}
+              readOnly={(isDisabled || !isSearchable || !!focusedMultiValue)}
             />
           </ValueWrapper>
           <IndicatorIcons

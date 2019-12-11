@@ -73,16 +73,18 @@ export const Hr = styled.hr`
   border: 0;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  padding-bottom: .225rem;
+  border-top: 1px solid #ddd;
 `;
 
 export const Code = styled.code`
-  font-size: 93%;
+  margin: 0 1px;
+  color: #D8205E;
+  padding: 3px 5px;
+  font-size: 0.90em;
   border-radius: 0.3em;
   word-break: break-word;
-  color: rgba(0, 0, 0, 0.9);
-  padding: 0.15em 0.45em 0.15em;
-  background-color: rgba(0, 0, 0, 0.06);
+  background-color: rgba(0,0,0,.05);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${mediaQueryIsMobileXS} {

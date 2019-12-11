@@ -3,14 +3,14 @@ import DefaultThemeObj from '../src/theme';
 import { IndicatorIcons } from '../src/components';
 import { IndicatorIconsProps } from '../src/types';
 import { ThemeProvider } from 'styled-components';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_CLS } from '../src/constants/dom';
 
 // ============================================
 // Helper functions for IndicatorIcons component
 // ============================================
 
-const renderIndicatorIcons = (props: IndicatorIconsProps) => {
+const renderIndicatorIcons = (props: IndicatorIconsProps): RenderResult => {
   return render(
     <ThemeProvider theme={DefaultThemeObj}>
       <IndicatorIcons {...props} />
@@ -39,12 +39,6 @@ const createIndicatorIconsProps = () => {
 // ============================================
 // Test cases
 // ============================================
-
-test('clear icon is rendered correctly', async () => {
-  const { props } = createIndicatorIconsProps();
-  const { getByTestId } = renderIndicatorIcons(props);
-  expect(getByTestId(CLEAR_ICON_TESTID!)).toBeInTheDocument();
-});
 
 test('clear icon has a static className (enables styling via classic CSS) when "addClassNames" = true', async () => {
   const { props } = createIndicatorIconsProps();

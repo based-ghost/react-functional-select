@@ -11,14 +11,15 @@ const PrintJsonRoot = styled.div`
   font-size: 1rem;
   overflow: hidden;
   position: relative;
-  margin-top: 1.5625rem;
+  margin-top: 1.75rem;
+  margin-bottom: 1.5rem;
   border-radius: 0.5625rem;
   background-color: #282c34;
-  box-shadow: rgba(20, 20, 20, 0.225) 1px 1px 18px;
+  box-shadow: rgba(20, 20, 20, 0.2) 1px 1px 18px;
 `;
 
 const PrintJsonHeader = styled.div`
-  color: #f5b83d;
+  color: #FF9CA8;
   line-height: 3;
   font-weight: 700;
   font-size: 1.15rem;

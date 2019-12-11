@@ -37,7 +37,7 @@ const Clear = styled.div<{ isFocused: boolean }>`
   }
 `;
 
-const MultiValue = React.memo<MultiValueProps>(({
+const MultiValue: React.FC<MultiValueProps> = ({
   data,
   value,
   isFocused,
@@ -53,8 +53,6 @@ const MultiValue = React.memo<MultiValueProps>(({
       onMouseDown={(e) => removeSelectedOption(value, e)}
     >X</Clear>
   </MultiValueWrapper>
-));
-
-MultiValue.displayName = 'MultiValue';
+);
 
 export default MultiValue;

@@ -27,8 +27,8 @@ function scrollTo(el: HTMLElement, top: number): void {
 }
 
 function getScrollParent(el: HTMLElement): HTMLElement {
-  let style: CSSStyleDeclaration = getComputedStyle(el);
-  const excludeStaticParent: boolean = (style.position === 'absolute');
+  let style = getComputedStyle(el);
+  const excludeStaticParent = (style.position === 'absolute');
 
   if (style.position === 'fixed') {
     return document.documentElement;
@@ -185,8 +185,11 @@ export function validateApiValues(
     return SELECTED_OPTION_DEFAULT;
   }
 
-  // Get unique array of MenuOption values and use to check against menuOptions
-  const validValuesArr = normalizeValue(values)
+  // Get unique array of MenuOption values (ReactText[]) and use to check against menuOptions
+  const results = [];
+  const normalizedValuesArr = normalizeValue(values);
+
+  const validValuesArr = normalizedValuesArr
     .filter((x) => isPlainObject(x))
     .map((x) => getOptionValueCB(x))
     .filter((item, index, self) => self.indexOf(item) === index);
@@ -194,8 +197,6 @@ export function validateApiValues(
   if (!isArrayWithLength(validValuesArr)) {
     return SELECTED_OPTION_DEFAULT;
   }
-
-  const results = [];
 
   for (const option of menuOptions) {
     if (validValuesArr.includes(getOptionValueCB(option))) {
@@ -224,15 +225,15 @@ export function normalizeValue(
       ? [value]
       : SELECTED_OPTION_DEFAULT;
   
-  // Array has initial values - cast to typeof SelectedOption and return SelectedOption[]
-  if (getOptionValueCB && getOptionLabelCB && isArrayWithLength(initialValues)) {
-    return initialValues.map(x => ({
-      data: x,
-      value: getOptionValueCB(x),
-      label: getOptionLabelCB(x)
-    }));
+  // Return default of []
+  if (!getOptionValueCB || !getOptionLabelCB || !isArrayWithLength(initialValues)) {
+    return initialValues;
   }
 
-  // Return default of []
-  return initialValues;
+  // Array has initial values - cast to typeof SelectedOption and return SelectedOption[]
+  return initialValues.map((val) => ({
+    data: val,
+    value: getOptionValueCB(val),
+    label: getOptionLabelCB(val)
+  }));
 }

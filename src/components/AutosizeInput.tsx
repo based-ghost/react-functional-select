@@ -10,7 +10,7 @@ const WRAPPER_DIV_STYLE = Object.freeze<CSSProperties>({
   display: 'inline-block'
 });
 
-const _inputStaticAttributes = Object.freeze<AutosizeInputHTMLAttributes>({
+const STATIC_ATTRIBUTES = Object.freeze<AutosizeInputHTMLAttributes>({
   type: 'text',
   spellCheck: false,
   autoCorrect: 'off',
@@ -64,12 +64,10 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
     id,
     onBlur,
     onFocus,
-    isHidden,
+    readOnly,
     onChange,
-    disabled,
     ariaLabel,
     inputValue,
-    isSearchable,
     addClassNames,
     ariaLabelledBy,
   },
@@ -85,7 +83,7 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
   }, [inputValue]);
 
   const inputAttributes: AutosizeInputHTMLAttributes = {
-    ..._inputStaticAttributes,
+    ...STATIC_ATTRIBUTES,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
     style: {
@@ -101,10 +99,9 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
         onBlur={onBlur}
         onFocus={onFocus}
         value={inputValue}
-        disabled={disabled}
+        readOnly={readOnly}
         {...inputAttributes}
-        readOnly={!isSearchable || isHidden}
-        onChange={isSearchable ? onChange : undefined}
+        onChange={!readOnly ? onChange : undefined}
         className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
       />
       <StyledSizer ref={sizerRef}>{inputValue}</StyledSizer>

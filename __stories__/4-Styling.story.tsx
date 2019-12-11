@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, ReactText } from 'react';
 import { Select, Theme } from '../src';
 import { Option } from './helpers/utils';
 import DefaultThemeObj from '../src/theme';
@@ -63,14 +63,15 @@ storiesOf('React Functional Select', module).add('Styling', () => {
 
   // Create theme options based upon key-value pairs in _themeEnum object defined above
   const [options] = useState<Option[]>(() => {
-    const _options: Option[] = [];
+    const results: Option[] = [];
     Object.keys(_themeEnum).forEach((key: string): void => {
-      _options.push({
-        value: _themeEnum[key],
-        label: _themeEnum[key],
+      const themeEnumKey: ReactText = _themeEnum[key];
+      results.push({
+        value: themeEnumKey,
+        label: themeEnumKey
       });
     });
-    return _options;
+    return results;
   });
 
   // Adjust the react-window itemSize (height of menu option) from default of 35 to 44 for 'Large Text'

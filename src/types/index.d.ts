@@ -125,11 +125,9 @@ export type MenuProps = {
 
 export type AutosizeInputProps = {
   readonly id?: string;
-  readonly isHidden: boolean;
-  readonly disabled?: boolean;
+  readonly readOnly: boolean;
   readonly ariaLabel?: string;
   readonly inputValue: string;
-  readonly isSearchable: boolean;
   readonly addClassNames?: boolean;
   readonly ariaLabelledBy?: string;
   readonly onBlur: FocusEventHandler<HTMLInputElement>;

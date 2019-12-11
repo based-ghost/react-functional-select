@@ -70,7 +70,7 @@ export default Object.freeze<DefaultTheme>({
   multiValue: {
     margin: '1px 2px',
     borderRadius: '0.25rem',
-    backgroundColor: '#E5EBF1',
+    backgroundColor: '#e7edf3',
     label: {
       fontSize: '0.825em',
       borderRadius: '0.25rem',
