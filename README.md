@@ -6,9 +6,6 @@
 [![Travis](https://img.shields.io/badge/ci-travis-green.svg?style=for-the-badge)](https://travis-ci.org/based-ghost/react-functional-select)
 [![NPM license](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](./LICENSE)
 
-## Inspiration
-This project was inspired by [`react-select`](https://github.com/JedWatson/react-select). If you need some features not provided, I suggest checking that package out.
-
 ## Install
 
 ```bash
@@ -20,9 +17,9 @@ yarn add react-window styled-components react-functional-select
 ```
 
 ## Overview
-Essentially, this is a focused subset of `react-select`'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely using `React Hooks` and `FunctionComponents`. In addition, most of the code I was able to roll myself, so there are minimal peer dependencies to worry about. The peer dependencies for this package are:
+Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal dependency size. It is built entirely using `React Hooks` and `FunctionComponents`. In addition, most of the code I was able to roll myself, so there are minimal peer dependencies to worry about. The peer dependencies for this package are:
 
-- [``react-window``](https://github.com/bvaughn/react-window) leveraged for integrated data virtualization/windowing (easily handles data-sets numbering in the tens of thousands with minimal-to-no impact on normally resource-intensive actions like keying and searching).
+- [`react-window`](https://github.com/bvaughn/react-window) leveraged for integrated data virtualization/windowing (easily handles data-sets numbering in the tens of thousands with minimal-to-no impact on normally resource-intensive actions like keying and searching).
 - [`styled-components`](https://github.com/styled-components/styled-components) to handle dynamic, extensible styling via CSS-in-JS (there is also the option to generate `className` attributes for legacy stylesheets as a fall-back option).
 
 While still a work in progress, its current state should be suitable for many use-cases. Please feel free to contribute and/or make suggestions (below are key areas that still need to be addressed).
@@ -41,6 +38,7 @@ While still a work in progress, its current state should be suitable for many us
 
 ```TSX
 import { Select } from 'react-functional-select';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardHeader, CardBody, Container, SelectContainer } from './helpers/styled';
 
 type CityOption = {
@@ -95,6 +93,9 @@ const SingleSelectDemo: React.FC = () => {
   );
 };
 ```
+
+## Inspiration
+This project was inspired by [`react-select`](https://github.com/JedWatson/react-select).
 
 ## Properties
 
