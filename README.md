@@ -68,9 +68,7 @@ const SingleSelectDemo: React.FC = () => {
   const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
 
   useEffect(() => {
-    if (isDisabled) {
-      setIsInvalid(false);
-	  }
+    isDisabled && setIsInvalid(false);
   }, [isDisabled]);
 
   return (
