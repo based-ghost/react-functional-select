@@ -159,6 +159,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     isMulti,
     inputId,
     selectId,
+    autoFocus,
     isLoading,
     onKeyDown,
     clearIcon,
@@ -204,6 +205,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   ref: React.Ref<SelectHandle>,
 ) => {
   // Instance prop & DOM node refs
+  const autoFocused = useRef<boolean>(false);
   const prevMenuOptionsCount = useRef<number>();
   const listRef = useRef<FixedSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -354,11 +356,19 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   }, [isMulti, closeMenuOnSelect, blurInputOnSelect, removeSelectedOption]);
 
   /*** useEffect ***/
-  // 1: if control recieves focus & openMenuOnFocus = true, open menu
-  // 2: handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
-  // 3: Handle clearing focused option if menuOptions array has 0 length;
+  // 2: If autoFocus = true, focus the control following initial mount
+  // 2: If control recieves focus & openMenuOnFocus = true, open menu
+  // 3: Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
+  // 4: Handle clearing focused option if menuOptions array has 0 length;
   //    Handle menuOptions changes - conditionally focus first option and do scroll to first option;
   //    Handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
+
+  useEffect(() => {
+    if (autoFocus && !autoFocused.current) {
+      autoFocused.current = true;
+      focusInput();
+    }
+  }, [autoFocus]);
 
   useEffect(() => {
     if (isFocused && openMenuOnFocus) {
@@ -697,7 +707,5 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     </ThemeProvider>
   );
 });
-
-Select.displayName = 'Select';
 
 export default Select;

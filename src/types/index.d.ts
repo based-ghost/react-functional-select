@@ -162,6 +162,7 @@ export type SelectProps = {
   readonly selectId?: string;
   readonly isMulti?: boolean;
   readonly ariaLabel?: string;
+  readonly autoFocus?: boolean;
   readonly isLoading?: boolean;
   readonly isInvalid?: boolean;
   readonly inputDelay?: number;
