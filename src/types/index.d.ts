@@ -116,7 +116,7 @@ export type MenuProps = {
   readonly maxHeight: number;
   readonly noOptionsMsg: string;
   readonly overscanCount?: number;
-  readonly width?: string | number;
+  readonly width: string | number;
   readonly menuOptions: MenuOption[];
   readonly focusedOptionIndex: number;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;

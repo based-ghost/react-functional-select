@@ -38,7 +38,7 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     <Fragment>
       <FixedSizeList
         ref={ref}
-        width={width!}
+        width={width}
         itemSize={itemSize}
         itemData={itemData}
         overscanCount={overscanCount}

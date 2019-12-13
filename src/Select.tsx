@@ -205,7 +205,6 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   ref: React.Ref<SelectHandle>,
 ) => {
   // Instance prop & DOM node refs
-  const autoFocused = useRef<boolean>(false);
   const prevMenuOptionsCount = useRef<number>();
   const listRef = useRef<FixedSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -364,10 +363,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   //    Handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
 
   useEffect(() => {
-    if (autoFocus && !autoFocused.current) {
-      autoFocused.current = true;
-      focusInput();
-    }
+    autoFocus && focusInput();
   }, [autoFocus]);
 
   useEffect(() => {
@@ -416,7 +412,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   };
 
   // Only Multiselect mode supports value focusing
-  const focusValueOnArrowKey = (position: ValueIndex): void => {
+  const focusValueOnArrowKey = (direction: ValueIndex): void => {
     if (!isArrayWithLength(selectedOption)) {
       return;
     }
@@ -427,7 +423,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
       ? selectedOption.findIndex((option) => option.value === focusedMultiValue)
       : -1;
 
-    if (position === ValueIndexEnum.NEXT) {
+    if (direction === ValueIndexEnum.NEXT) {
       nextFocusedIndex = (curFocusedIndex > -1 && curFocusedIndex < lastValuesIndex)
         ? (curFocusedIndex + 1)
         : -1;
@@ -445,12 +441,12 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     (nextFocusedVal !== focusedMultiValue) && setFocusedMultiValue(nextFocusedVal);
   };
 
-  const focusOptionOnArrowKey = (position: OptionIndex): void => {
+  const focusOptionOnArrowKey = (direction: OptionIndex): void => {
     if (!isArrayWithLength(menuOptions)) {
       return;
     }
 
-    const index = (position === OptionIndexEnum.DOWN)
+    const index = (direction === OptionIndexEnum.DOWN)
       ? (focusedOptionIndex + 1) % menuOptions.length
       : (focusedOptionIndex > 0)
         ? (focusedOptionIndex - 1)

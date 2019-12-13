@@ -1,6 +1,7 @@
 import { ReactText } from 'react';
 import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
 import { MenuOption, OptionData, SelectedOption } from './types';
+import { trimPattern, overflowPattern, msBrowserPattern } from './constants/regexp';
 
 // ============================================
 // Private utility functions
@@ -38,7 +39,7 @@ function getScrollParent(el: HTMLElement): HTMLElement {
     style = getComputedStyle(parent);
     if (excludeStaticParent && style.position === 'static') {
       continue;
-    } else if (/(auto|scroll)/.test(`${style.overflow}${style.overflowY}${style.overflowX}`)) {
+    } else if (overflowPattern.test(`${style.overflow}${style.overflowY}${style.overflowX}`)) {
       return parent;
     }
   }
@@ -96,13 +97,13 @@ export const isTouchDevice = (): boolean => window.matchMedia('(pointer: coarse)
 /**
  * Determines if browser is Edge or IE.
  */
-export const isEdgeOrIE = (): boolean => /MSIE |Trident\/|Edge\//.test(window.navigator.userAgent);
+export const isEdgeOrIE = (): boolean => msBrowserPattern.test(window.navigator.userAgent);
 
 /**
  * Apply regex to string, and if the value is NOT case sensitive, call .toLowerCase() and return result.
  */
 export function trimAndFormatFilterStr(value: string, filterIsCaseSensitive?: boolean): string {
-  const formatVal = value.replace(/^\s+|\s+$/g, '');
+  const formatVal = value.replace(trimPattern, '');
   return !filterIsCaseSensitive ? formatVal.toLowerCase() : formatVal;
 }
 
@@ -114,8 +115,8 @@ export function mergeDeep(target: any, source: any): any {
 
   Object.keys(source).forEach((key: string): void => {
     if (isPlainObject(source[key])) {
-      output[key] = !(key in target) 
-        ? source[key] 
+      output[key] = !(key in target)
+        ? (source[key] || '')
         : mergeDeep(target[key], source[key]);
     } else {
       output[key] = source[key];
