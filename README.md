@@ -93,9 +93,6 @@ const SingleSelectDemo: React.FC = () => {
 };
 ```
 
-## Inspiration
-This project was inspired by [`react-select`](https://github.com/JedWatson/react-select).
-
 ## Properties
 
 All properties are technically optional (with a few having default values). Very similar with `react-select` API.
@@ -148,3 +145,11 @@ All properties are technically optional (with a few having default values). Very
 |`getIsOptionDisabled`| (data: any) => boolean | `undefined` | When defined will evaluate each option to determine whether it is disabled or not (if not specified, each option will be evaluated as to whether or not it contains a property of `isDisabled` with a value of `true`)
 |`getFilterOptionString`| (option: any) => string | `undefined` | When defined will take each option and generate a string used in the filtering process (by default, will use option.label)
 |`themeConfig`| Partial\<DefaultTheme\> | `undefined` | Object that takes specified property key-value pairs and merges them into the theme object
+
+## Inspiration
+
+This project was inspired by [`react-select`](https://github.com/JedWatson/react-select).
+
+## License
+
+react-functional-select is [MIT licensed](./LICENSE).
