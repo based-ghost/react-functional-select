@@ -5,14 +5,7 @@ import { fadeInAnimationCss } from './constants/styled';
 import { useDebounce, useMenuHeight, useMenuOptions } from './hooks';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
-import {
-  mergeDeep,
-  isTouchDevice,
-  isPlainObject,
-  normalizeValue,
-  isArrayWithLength,
-  validateApiValues,
-} from './utils';
+import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateApiValues } from './utils';
 import {
   OptionData,
   MenuOption,
@@ -41,6 +34,7 @@ import {
   TagName,
   EventType,
   OPTION_CLS,
+  IME_KEY_CODE,
   OPTION_FOCUSED_CLS,
   MENU_CONTAINER_CLS,
   OPTION_DISABLED_CLS,
@@ -507,8 +501,8 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
         }        
         selectOptionFromFocused();
         break;
-      case 'Enter': // Ignore enter keydown event from an Input Method Editor (IME) - keyCode 229
-        if (e.keyCode !== 229) {
+      case 'Enter':
+        if (menuOpen && e.keyCode !== IME_KEY_CODE) {
           selectOptionFromFocused();
         }
         break;
@@ -519,7 +513,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
         }
         break;
       case 'Tab':
-        if (e.shiftKey || !menuOpen || !tabSelectsOption || !focusedOptionData) {
+        if (!menuOpen || !tabSelectsOption || !focusedOptionData || e.shiftKey) {
           return;
         }
         selectOptionFromFocused();

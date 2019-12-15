@@ -1,6 +1,6 @@
 {
   "name": "react-functional-select",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)",
   "description": "Miro-sized and micro-optimized select component for React.js",
   "main": "dist/index.cjs.js",
@@ -70,7 +70,7 @@
     "eslint": "^6.7.2",
     "eslint-config-poetez": "^0.1.4",
     "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
     "event-source-polyfill": "^1.0.11",
     "jest": "^24.9.0",

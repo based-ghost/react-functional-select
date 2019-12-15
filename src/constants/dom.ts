@@ -1,6 +1,9 @@
 const attrPrefix = 'rfs';
 const isNotProd = (process.env.NODE_ENV !== 'production');
 
+// Keydown event from an Input Method Editor (IME) - event.keyCode === 229
+export const IME_KEY_CODE = 229;
+
 // HTMLElement TagName Enum
 export const TagName = Object.freeze({
   INPUT: 'INPUT'

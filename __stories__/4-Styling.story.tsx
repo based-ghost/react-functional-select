@@ -1,9 +1,10 @@
-import React, { useEffect, useCallback, useState, ReactText } from 'react';
+import React, { useEffect, useState, ReactText } from 'react';
 import { Select, Theme } from '../src';
 import { Option } from './helpers/utils';
 import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
 import PrettyPrintJson from './helpers/PrettyPrintJson';
+import { useCallbackState } from './helpers/useCallbackState';
 import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
 import { Hr, Code, Title, SubTitle, Spacer, Paragraph, JsonContainer, LabelText, Label, Container, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
@@ -58,8 +59,8 @@ const _themeConfigMap = Object.freeze<{ [key: string]: any }>({
 });
 
 storiesOf('React Functional Select', module).add('Styling', () => {
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [themeConfig, setThemeConfig] = useState<Theme | undefined>(undefined);
+  const [selectedOption, setSelectedOption] = useCallbackState<Option | null>(null);
 
   // Create theme options based upon key-value pairs in _themeEnum object defined above
   const [options] = useState<Option[]>(() => {
@@ -76,10 +77,6 @@ storiesOf('React Functional Select', module).add('Styling', () => {
 
   // Adjust the react-window itemSize (height of menu option) from default of 35 to 44 for 'Large Text'
   const menuItemSize = (selectedOption && selectedOption.value === _themeEnum.LARGE_TEXT) ? 44 : 35;
-
-  const onOptionChange = useCallback((option: Option | null): void => {
-    setSelectedOption(option);
-  }, []);
 
   useEffect(() => {
     if (selectedOption) {
@@ -131,7 +128,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
               themeConfig={themeConfig}
               initialValue={options[0]}
               menuItemSize={menuItemSize}
-              onOptionChange={onOptionChange}
+              onOptionChange={setSelectedOption}
             />
             <Spacer />
             <PrettyPrintJson
