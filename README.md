@@ -31,7 +31,7 @@ Please feel free to contribute and/or make suggestions (below are key areas that
 ## Usage
 
 - [Demo](https://based-ghost.github.io/react-functional-select/)
-- [Source code](./__stories__)
+- [Stories source code](./__stories__)
 
 #### Condensed 0-Single.story.tsx
 
