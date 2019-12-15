@@ -706,4 +706,6 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   );
 });
 
+Select.displayName = 'Select';
+
 export default Select;
