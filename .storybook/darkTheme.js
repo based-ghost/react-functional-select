@@ -14,14 +14,14 @@ export default create({
   colorSecondary: _colorPrimaryOpacity,
 
   // UI
-  appBorderRadius: 4,
+  appBorderRadius: 0,
   appBg: _colorDarkest,
   appBorderColor: '#535353',
   appContentBg: _colorDarker,
 
   // Text colors
   textColor: '#fff',
-  textInverseColor: 'rgba(255, 255, 255, 0.9)',
+  textInverseColor: 'rgba(255, 255, 255, 0.95)',
 
   // Toolbar default and active colors
   barBg: _colorDarkest,
