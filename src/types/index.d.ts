@@ -183,13 +183,14 @@ export type SelectProps = {
   readonly openMenuOnFocus?: boolean;
   readonly menuOverscanCount?: number;
   readonly tabSelectsOption?: boolean;
+  readonly filterIgnoreCase?: boolean;
   readonly blurInputOnSelect?: boolean;
   readonly closeMenuOnSelect?: boolean;
   readonly isAriaLiveEnabled?: boolean;
   readonly scrollMenuIntoView?: boolean;
   readonly hideSelectedOptions?: boolean;
+  readonly filterIgnoreAccents?: boolean;
   readonly backspaceClearsValue?: boolean;
-  readonly filterIsCaseSensitive?: boolean;
   readonly themeConfig?: Partial<DefaultTheme>;
   readonly onMenuOpen?: (...args: any[]) => void;
   readonly onMenuClose?: (...args: any[]) => void;

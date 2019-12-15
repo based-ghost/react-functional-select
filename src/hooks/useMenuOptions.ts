@@ -17,12 +17,13 @@ export const useMenuOptions = (
   getOptionLabelCB: (data: OptionData) => ReactText,
   getIsOptionDisabled?: (data: OptionData) => boolean,
   getFilterOptionString?: (option: MenuOption) => string,
-  filterIsCaseSensitive?: boolean
+  filterIgnoreCase?: boolean,
+  filterIgnoreAccents?: boolean
 ): MenuOption[] => {
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(OPTIONS_DEFAULT);
 
   useEffect(() => {
-    const normalizedSearchValue: string = trimAndFormatFilterStr(debouncedInputValue, filterIsCaseSensitive);
+    const normalizedSearchValue: string = trimAndFormatFilterStr(debouncedInputValue, filterIgnoreCase, filterIgnoreCase);
     const getIsOptionDisabled2: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
     const getFilterOptionString2: (option: MenuOption) => string = getFilterOptionString || ((option) => String(option.label));
     
@@ -31,7 +32,7 @@ export const useMenuOptions = (
       : undefined;
 
     const isOptionSearchFilterMatch = (menuOption: MenuOption): boolean => {
-      const normalizedOptionLabel = trimAndFormatFilterStr(getFilterOptionString2(menuOption), filterIsCaseSensitive);
+      const normalizedOptionLabel = trimAndFormatFilterStr(getFilterOptionString2(menuOption), filterIgnoreCase, filterIgnoreCase);
       return normalizedOptionLabel.indexOf(normalizedSearchValue) > -1;
     };
 
@@ -66,7 +67,7 @@ export const useMenuOptions = (
     };
 
     setMenuOptions(createMenuOptions() || OPTIONS_DEFAULT);
-  }, [options, selectedOption, hideSelectedOptions, filterIsCaseSensitive, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
+  }, [options, selectedOption, hideSelectedOptions, filterIgnoreCase, filterIgnoreAccents, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
 
   return menuOptions;
 };

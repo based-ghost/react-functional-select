@@ -186,12 +186,13 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     menuOverscanCount,
     blurInputOnSelect,
     renderOptionLabel,
+    filterIgnoreAccents,
     hideSelectedOptions,
     getIsOptionDisabled,
-    filterIsCaseSensitive,
     getFilterOptionString,
     isSearchable = true,
     openMenuOnClick = true,
+    filterIgnoreCase = true,
     tabSelectsOption = true,
     closeMenuOnSelect = true,
     scrollMenuIntoView = true,
@@ -277,7 +278,8 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     getOptionLabelCB,
     getIsOptionDisabled,
     getFilterOptionString,
-    filterIsCaseSensitive
+    filterIgnoreCase,
+    filterIgnoreAccents
   );
 
   const blurInput = (): void => {

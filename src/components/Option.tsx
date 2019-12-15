@@ -28,7 +28,6 @@ const Option = React.memo<OptionProps>(({
 
   return (
     <div
-      role='button'
       style={style}
       className={className}
       onClick={!isDisabled ? (() => selectOption({ data, value, label }, isSelected)) : undefined}

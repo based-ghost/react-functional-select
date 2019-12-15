@@ -25,6 +25,7 @@
     "cyclomatic-complexity": false,
     "newline-before-return": false,
     "arrow-return-shorthand": true,
+    "react-a11y-event-has-role": false,
     "interface-over-type-literal": false
   }
 }

@@ -1,11 +1,18 @@
 import { ReactText } from 'react';
 import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
 import { MenuOption, OptionData, SelectedOption } from './types';
-import { trimPattern, overflowPattern, msBrowserPattern } from './constants/regexp';
+import { trimPattern, overflowPattern, msBrowserPattern, diacriticsPattern } from './constants/regexp';
 
 // ============================================
 // Private utility functions
 // ============================================
+
+/**
+ * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).
+ */
+function stripDiacritics(value: string): string {
+  return value.normalize('NFD').replace(diacriticsPattern, '');
+}
 
 function isDocumentElement(el: HTMLElement | Window): boolean {
   return (el === document.documentElement || el === document.body || el === window);
@@ -102,9 +109,16 @@ export const isEdgeOrIE = (): boolean => msBrowserPattern.test(window.navigator.
 /**
  * Apply regex to string, and if the value is NOT case sensitive, call .toLowerCase() and return result.
  */
-export function trimAndFormatFilterStr(value: string, filterIsCaseSensitive?: boolean): string {
-  const formatVal = value.replace(trimPattern, '');
-  return !filterIsCaseSensitive ? formatVal.toLowerCase() : formatVal;
+export function trimAndFormatFilterStr(
+  value: string,
+  filterIgnoreCase?: boolean,
+  filterIgnoreAccents?: boolean
+): string {
+  let formatVal = value.replace(trimPattern, '');
+  if (filterIgnoreCase) {
+    formatVal = formatVal.toLowerCase();
+  }
+  return !filterIgnoreAccents ? formatVal : stripDiacritics(formatVal);
 }
 
 /**

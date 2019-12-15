@@ -2,14 +2,14 @@ const attrPrefix = 'rfs';
 const isNotProd = (process.env.NODE_ENV !== 'production');
 
 // HTMLElement TagName Enum
-export const TagName = {
+export const TagName = Object.freeze({
   INPUT: 'INPUT'
-};
+});
 
 // Event Type Enum
-export const EventType = {
+export const EventType = Object.freeze({
   MOUSE_DOWN: 'mousedown'
-};
+});
 
 // classNames (menu options)
 export const OPTION_CLS = `${attrPrefix}-option`;
