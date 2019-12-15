@@ -351,7 +351,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
   }, [isMulti, closeMenuOnSelect, blurInputOnSelect, removeSelectedOption]);
 
   /*** useEffect ***/
-  // 2: If autoFocus = true, focus the control following initial mount
+  // 1: If autoFocus = true, focus the control following initial mount
   // 2: If control recieves focus & openMenuOnFocus = true, open menu
   // 3: Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
   // 4: Handle clearing focused option if menuOptions array has 0 length;

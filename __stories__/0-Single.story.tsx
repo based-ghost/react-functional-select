@@ -8,11 +8,11 @@ import { useCallbackState } from './helpers/useCallbackState';
 import { Hr, Title, Label, SubTitle, Container, SelectContainer, Paragraph, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 const SelectedCode = styled(Code)`
-  color: #fff;
   margin: 0 2px;
+  color: #D8205E;
   font-weight: 400;
   font-size: 0.85em;
-  background-color: #282c34;
+  background-color: rgba(27, 31, 35, 0.06);
 `;
 
 const SelectedLabelText = styled.span`

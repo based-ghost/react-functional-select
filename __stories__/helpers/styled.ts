@@ -56,7 +56,7 @@ export const List = styled.ul`
   padding-inline-start: 30px;
 
   li + li {
-    margin-top: .25em;
+    margin-top: 0.5em;
   }
   
   ${mediaQueryIsMobile} {
@@ -84,12 +84,20 @@ export const Code = styled.code`
   font-size: 0.90em;
   border-radius: 0.3em;
   word-break: break-word;
-  background-color: rgba(0,0,0,.05);
+  background-color: rgba(27, 31, 35, 0.06);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${mediaQueryIsMobileXS} {
     padding: .1em .25em .1em;
   }
+`;
+
+export const CodeFunction = styled(Code)`
+  font-size: 1em;
+  color: #212529;
+  font-weight: 600;
+  line-height: 1.7;
+  padding: 3.2px 6.4px;
 `;
 
 export const Title = styled.h2`

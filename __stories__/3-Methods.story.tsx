@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { Option, createSelectOptions } from './helpers/utils';
-import { Hr, List, Code, Title, Button, LabelText, ListItem, SubTitle, Label, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, List, CodeFunction, Code, Title, Button, LabelText, ListItem, SubTitle, Label, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Methods', () => {
   const selectRef = useRef<SelectRef | null>(null);
@@ -30,20 +30,20 @@ storiesOf('React Functional Select', module).add('Methods', () => {
       <Hr />
       <ListWrapper>
         Four public methods are exposed to wrapping components and are
-        accessible via <Code>ref</Code>.
+        accessible via a forwarded <Code>ref</Code>.
         <List>
           <ListItem>
-            <Code>blur()</Code> - blur the control programatically
+            <CodeFunction>blur(): void</CodeFunction> - blur the control programatically
           </ListItem>
           <ListItem>
-            <Code>focus()</Code> - focus the control programatically
+            <CodeFunction>focus(): void</CodeFunction> - focus the control programatically
           </ListItem>
           <ListItem>
-            <Code>clearValue()</Code> - clear the current value programatically
+            <CodeFunction>clearValue(): void</CodeFunction> - clear the current value programatically
             <em> (if an option is selected)</em>
           </ListItem>
           <ListItem>
-            <Code>setValue(option?: any)</Code> - set the value programatically
+            <CodeFunction>setValue(option?: any): void</CodeFunction> - set the value programatically
             <em> (option will be validated)</em>
           </ListItem>
         </List>

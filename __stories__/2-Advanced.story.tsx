@@ -2,7 +2,7 @@ import React, { useCallback, ReactNode } from 'react';
 import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
-import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, Label, LabelText, Code, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, Label, LabelText, CodeFunction, Code, Card, CardHeader, CardBody } from './helpers/styled';
 
 const ReactLogo = require('./assets/react-logo.svg') as string;
 
@@ -89,16 +89,16 @@ storiesOf('React Functional Select', module).add('Advanced', () => {
         Implementation using a couple of the more specialized properties.
         <List>
           <ListItem>
-            <Code>renderOptionLabel(option)</Code><em> => ReactNode</em> - Callback function 
-            with a return type of <em>ReactNode</em>. Use this property in cases where the 
+            <CodeFunction>renderOptionLabel(option: any): ReactNode</CodeFunction> - Callback function 
+            with a return type of <Code>ReactNode</Code>. Use this property in cases where the 
             standard <Code>getOptionLabel</Code> property won't meet your needs (for instance, 
             you want to render each option's label using custom JSX).
           </ListItem>
           <ListItem>
-            <Code>getIsOptionDisabled(option)</Code><em> => Boolean</em> - Callback function 
-            with a return type of <em>Boolean</em>. When it evaluates to a value of true, that 
+            <CodeFunction>getIsOptionDisabled(option: any): Boolean</CodeFunction> - Callback function 
+            with a return type of <Code>Boolean</Code>. When it evaluates to a value of true, that 
             option iteration will be rendered <em>disabled</em>. As an alternative, you can also 
-            pass a property of <em>isDisabled</em> with each option. Use of these two options - 
+            pass a property of <Code>isDisabled</Code> with each option. Use of these two options - 
             they cannot both be specified.
           </ListItem>
         </List>

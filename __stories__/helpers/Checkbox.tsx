@@ -23,19 +23,15 @@ const Checkbox = React.memo<CheckboxProps>(({
   checked,
   onCheck,
   readOnly,
-}) => {
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => onCheck(e.target.checked);
-
-  return (
-    <Label $readOnly={readOnly}>
-      <Input
-        type='checkbox'
-        checked={checked}
-        onChange={handleOnChange}
-      />
-      {label && <span>{label}</span>}
-    </Label>
-  );
-});
+}) =>  (
+  <Label $readOnly={readOnly}>
+    <Input
+      type='checkbox'
+      checked={checked}
+      onChange={(e: ChangeEvent<HTMLInputElement>): void => onCheck(e.target.checked)}
+    />
+    {label && <span>{label}</span>}
+  </Label>
+));
 
 export default Checkbox;
