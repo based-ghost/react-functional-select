@@ -26,7 +26,6 @@ Please feel free to contribute and/or make suggestions (below are key areas that
 
 ### Development for future releases:
 - <strong>Make theme API more flexible/customizable.</strong> Currently handles simple-to-mid level complexity scenarios via `styled-component`'s overrideable `ThemeProvider`. As a fallback, you can generate static `className` attributes on container nodes by enabling the `addClassNames` property.
-- <strong>Diacritics & special character handling.</strong> Unsure of where to place the scope for this work.
 - <strong>Async wrapper component.</strong> This may be unecessary given the ease with which the standard component can handle large amounts of records. However, it would be nice to have the ability to easily operate on subsets of data just as needed and not have to be burdened with excessive memory allocation.
 
 ## Usage
