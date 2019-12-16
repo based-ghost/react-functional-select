@@ -1,8 +1,8 @@
 import React from 'react';
 import DefaultThemeObj from '../src/theme';
+import { ThemeProvider } from 'styled-components';
 import { IndicatorIcons } from '../src/components';
 import { IndicatorIconsProps } from '../src/types';
-import { ThemeProvider } from 'styled-components';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_CLS } from '../src/constants/dom';
 

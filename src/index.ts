@@ -1,10 +1,7 @@
-import Select from './Select';
-import * as Types from './types';
+import * as SelectModule from './Select';
 
-export type Theme = Types.Theme;
-export type SelectRef = Types.SelectHandle;
-export type SelectProps = Types.SelectProps;
+export type Theme = SelectModule.Theme;
+export type SelectRef = SelectModule.SelectRef;
+export type SelectProps = SelectModule.SelectProps;
 
-export {
-  Select
-};
+export { default as Select } from './Select';

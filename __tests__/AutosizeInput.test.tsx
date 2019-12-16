@@ -1,8 +1,8 @@
 import React from 'react';
 import DefaultThemeObj from '../src/theme';
-import { AutosizeInput } from '../src/components';
 import { AutosizeInputProps } from '../src/types';
 import { ThemeProvider } from 'styled-components';
+import { AutosizeInput } from '../src/components';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants/dom';
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Select } from '../src';
-import { SelectProps } from '../src/types';
+import { Select, SelectProps } from '../src';
 import { render, fireEvent, wait, RenderResult } from '@testing-library/react';
 import {
   MENU_CONTAINER_CLS,

@@ -1,24 +1,12 @@
-import React, { useEffect, useMemo, useState, useCallback, useRef, useImperativeHandle, FocusEvent, FormEvent, KeyboardEvent, ReactNode, ReactText } from 'react';
+import React, { useEffect, useMemo, useState, useCallback, useRef, useImperativeHandle, KeyboardEventHandler, FocusEventHandler, FocusEvent, FormEvent, KeyboardEvent, ReactNode, ReactText } from 'react';
 import DefaultThemeObj from './theme';
 import { FixedSizeList } from 'react-window';
 import { fadeInAnimationCss } from './constants/styled';
 import { useDebounce, useMenuHeight, useMenuOptions } from './hooks';
+import { FocusedOption, SelectedOption, MouseOrTouchEvent } from './types';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
 import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateApiValues } from './utils';
-import {
-  OptionData,
-  MenuOption,
-  ValueIndex,
-  OptionIndex,
-  SelectProps,
-  SelectHandle,
-  FocusedOption,
-  SelectedOption,
-  MenuWrapperProps,
-  MouseOrTouchEvent,
-  ControlWrapperProps,
-} from './types';
 import {
   OPTIONS_DEFAULT,
   PLACEHOLDER_DEFAULT,
@@ -45,6 +33,86 @@ import {
   SELECT_CONTAINER_TESTID,
   CONTROL_CONTAINER_TESTID,
 } from './constants/dom';
+
+type OptionData = any;
+type ValueIndex = 0 | 1;
+type OptionIndex = 0 | 1 | 2 | 3;
+
+type MenuOption = {
+  label: ReactText;
+  value: ReactText;
+  data: OptionData;
+  isDisabled?: boolean;
+  isSelected?: boolean;
+};
+
+type MenuWrapperProps = {
+  readonly hideMenu: boolean;
+};
+
+type ControlWrapperProps = {
+  readonly isFocused: boolean;
+  readonly isInvalid?: boolean;
+  readonly isDisabled?: boolean;
+};
+
+export type Theme = Partial<DefaultTheme>;
+
+export type SelectRef = {
+  readonly blur: () => void;
+  readonly focus: () => void;
+  readonly clearValue: () => void;
+  readonly setValue: (option?: OptionData) => void;
+};
+
+export type SelectProps = {
+  readonly inputId?: string;
+  readonly selectId?: string;
+  readonly isMulti?: boolean;
+  readonly ariaLabel?: string;
+  readonly autoFocus?: boolean;
+  readonly isLoading?: boolean;
+  readonly isInvalid?: boolean;
+  readonly inputDelay?: number;
+  readonly themeConfig?: Theme;
+  readonly isDisabled?: boolean;
+  readonly placeholder?: string;
+  readonly menuWidth?: ReactText;
+  readonly menuItemSize?: number;
+  readonly isClearable?: boolean;
+  readonly noOptionsMsg?: string;
+  readonly clearIcon?: ReactNode;
+  readonly caretIcon?: ReactNode;
+  readonly options?: OptionData[];
+  readonly isSearchable?: boolean;
+  readonly menuMaxHeight?: number;
+  readonly addClassNames?: boolean;
+  readonly ariaLabelledBy?: string;
+  readonly openMenuOnClick?: boolean;
+  readonly openMenuOnFocus?: boolean;
+  readonly menuOverscanCount?: number;
+  readonly tabSelectsOption?: boolean;
+  readonly filterIgnoreCase?: boolean;
+  readonly blurInputOnSelect?: boolean;
+  readonly closeMenuOnSelect?: boolean;
+  readonly isAriaLiveEnabled?: boolean;
+  readonly scrollMenuIntoView?: boolean;
+  readonly hideSelectedOptions?: boolean;
+  readonly filterIgnoreAccents?: boolean;
+  readonly backspaceClearsValue?: boolean;
+  readonly onMenuOpen?: (...args: any[]) => void;
+  readonly onMenuClose?: (...args: any[]) => void;
+  readonly initialValue?: OptionData | OptionData[];
+  readonly onOptionChange?: (data: OptionData) => void;
+  readonly onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
+  readonly getOptionLabel?: (data: OptionData) => ReactText;
+  readonly getOptionValue?: (data: OptionData) => ReactText;
+  readonly onInputBlur?: FocusEventHandler<HTMLInputElement>;
+  readonly onInputFocus?: FocusEventHandler<HTMLInputElement>;
+  readonly renderOptionLabel?: (data: OptionData) => ReactNode;
+  readonly getIsOptionDisabled?: (data: OptionData) => boolean;
+  readonly getFilterOptionString?: (option: MenuOption) => string;
+};
 
 const ValueIndexEnum = Object.freeze<{[key: string]: ValueIndex}>({
   NEXT: 0,
@@ -148,7 +216,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   }
 `;
 
-const Select = React.forwardRef<SelectHandle, SelectProps>((
+const Select = React.forwardRef<SelectRef, SelectProps>((
   {
     isMulti,
     inputId,
@@ -197,7 +265,7 @@ const Select = React.forwardRef<SelectHandle, SelectProps>((
     menuItemSize = MENU_ITEM_SIZE_DEFAULT,
     menuMaxHeight = MENU_MAX_HEIGHT_DEFAULT,
   }, 
-  ref: React.Ref<SelectHandle>,
+  ref: React.Ref<SelectRef>,
 ) => {
   // Instance prop & DOM node refs
   const prevMenuOptionsCount = useRef<number>();
