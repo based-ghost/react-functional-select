@@ -24,9 +24,9 @@ const _themeConfigMap = Object.freeze<{ [key: string]: any }>({
   [_themeEnum.DEFAULT]: undefined,
   [_themeEnum.DARK_COLORS]: {
     color: {
-      accent: '#555555',
       border: '#A8AEB4',
       textColor: '#000',
+      primary: '#555555',
     },
     control: {
       boxShadowColor: 'rgba(85, 85, 85, 0.25)',

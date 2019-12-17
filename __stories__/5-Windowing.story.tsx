@@ -62,11 +62,11 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
             memoization (testing &amp; debugging becomes much easier as well).
           </ListItem>
         </List>
-        <em>Note: </em>The only time any noticeable performance degradation will
-        be observed is during search input updates when the <Code>options</Code> count 
-        reaches the high tens of thousands. To work around this, the <Code>inputDelay</Code> (
-        type number in milliseconds) can be set to debounce the input value. That way, 
-        the <Code>menuOptions</Code> will not be recalculated on every keystroke.
+        <em>Note: </em>The only time any noticeable performance degradation will be observed 
+        is during search input updates when the <Code>options</Code> count reaches the high 
+        tens of thousands. To work around this, the <Code>inputDelay</Code> (number in milliseconds) 
+        can be set to debounce the input value. That way, the <Code>menuOptions</Code> will not be 
+        recalculated on every keystroke.
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
       <Hr />
