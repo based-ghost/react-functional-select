@@ -38,14 +38,6 @@ type OptionData = any;
 type ValueIndex = 0 | 1;
 type OptionIndex = 0 | 1 | 2 | 3;
 
-type MenuOption = {
-  label: ReactText;
-  value: ReactText;
-  data: OptionData;
-  isDisabled?: boolean;
-  isSelected?: boolean;
-};
-
 type MenuWrapperProps = {
   readonly hideMenu: boolean;
 };
@@ -54,6 +46,14 @@ type ControlWrapperProps = {
   readonly isFocused: boolean;
   readonly isInvalid?: boolean;
   readonly isDisabled?: boolean;
+};
+
+type MenuOption = {
+  readonly label: ReactText;
+  readonly value: ReactText;
+  readonly data: OptionData;
+  readonly isDisabled?: boolean;
+  readonly isSelected?: boolean;
 };
 
 export type Theme = Partial<DefaultTheme>;

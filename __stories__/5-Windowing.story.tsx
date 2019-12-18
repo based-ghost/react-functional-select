@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { Option, createSelectOptions } from './helpers/utils';

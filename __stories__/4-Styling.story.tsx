@@ -95,8 +95,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
         The root node is wrapped in styled-component's <Code>&lt;ThemeProvider /&gt;</Code> wrapper 
         component which gives all child styled-components access to the provided theme via React's 
         context API. To override react-functional-select's default theme, pass an object to
-        the <Code>themeConfig</Code> prop - any matching properties will replace those
-        in the default theme.
+        the <Code>themeConfig</Code> prop - any matching properties will replace those in the 
+        default theme.
       </Paragraph>
       <JsonContainer>
         <PrettyPrintJson

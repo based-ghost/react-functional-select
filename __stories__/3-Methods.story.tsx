@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { Option, createSelectOptions } from './helpers/utils';
@@ -6,7 +6,7 @@ import { Hr, List, CodeFunction, Code, Title, Button, LabelText, ListItem, SubTi
 
 storiesOf('React Functional Select', module).add('Methods', () => {
   const selectRef = useRef<SelectRef | null>(null);
-  const [options] = useState<Option[]>(() => createSelectOptions(5));
+  const options = useMemo<Option[]>(() => createSelectOptions(5), []);
 
   const blurSelect = (): void => {
     selectRef.current && selectRef.current.blur();

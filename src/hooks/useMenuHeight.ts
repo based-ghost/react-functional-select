@@ -16,15 +16,21 @@ export const useMenuHeight = (
   onMenuOpen?: (...args: any[]) => void,
   onMenuClose?: (...args: any[]) => void
 ): number => {
-  const doResetRef = useRef<boolean>(false);
+  const isFirstRenderRef = useRef<boolean>(true);
+  const resetMenuHeightRef = useRef<boolean>(false);
   const [menuHeight, setMenuHeight] = useState<number>(menuHeightDefault);
 
   useEffect(() => {
+    if (isFirstRenderRef.current) {
+      isFirstRenderRef.current = false;
+      return;
+    }
+
     if (menuOpen) {
       const handleOnMenuOpen = (availableSpace?: number): void => {
         onMenuOpen && onMenuOpen();
         if (availableSpace) {
-          doResetRef.current = true;
+          resetMenuHeightRef.current = true;
           setMenuHeight(availableSpace);
         }
       };
@@ -32,8 +38,8 @@ export const useMenuHeight = (
       scrollMenuIntoViewOnOpen(menuRef.current, scrollMenuIntoView, handleOnMenuOpen);
     } else {
       onMenuClose && onMenuClose();
-      if (doResetRef.current) {
-        doResetRef.current = false;
+      if (resetMenuHeightRef.current) {
+        resetMenuHeightRef.current = false;
         setMenuHeight(menuHeightDefault);
       }
     }
