@@ -22,6 +22,17 @@ const Toastify__trackProgress = keyframes`
   }
 `;
 
+const Toastify__bounceOutRight = keyframes`
+  20% {
+    opacity: 1;
+    transform: translate3d(-20px, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+`;
+
 const Toastify__bounceInRight = keyframes`
   from,
   60%,
@@ -46,17 +57,6 @@ const Toastify__bounceInRight = keyframes`
   }
   to {
     transform: none;
-  }
-`;
-
-const Toastify__bounceOutRight = keyframes`
-  20% {
-    opacity: 1;
-    transform: translate3d(-20px, 0, 0);
-  }
-  to {
-    opacity: 0;
-    transform: translate3d(2000px, 0, 0);
   }
 `;
 
@@ -115,6 +115,10 @@ const reactToastifyCss = css`
         right: 0;
         left: initial;
       }
+
+      .Toastify__toast {
+        border-radius: 0 !important;
+      }
     }
 
     .Toastify__toast {
@@ -129,6 +133,8 @@ const reactToastifyCss = css`
       justify-content: space-between;
       max-height: 800px;
       overflow: hidden;
+      font-size: 1.1rem;
+      font-weight: 600;
       font-family: ${fontFamily};
       cursor: pointer;
       direction: ltr;
@@ -152,7 +158,7 @@ const reactToastifyCss = css`
         background: #e74c3c;
       }
       &-body {
-        margin: auto 0;
+        margin: auto 0 auto 0.75rem;
         flex: 1;
       }
     }
@@ -209,14 +215,14 @@ const reactToastifyCss = css`
   .Toastify__bounce-enter {
     &--top-right,
     &--bottom-right {
-        animation-name: ${Toastify__bounceInRight};
+      animation-name: ${Toastify__bounceInRight};
     }
   }
 
   .Toastify__bounce-exit {
     &--top-right,
     &--bottom-right {
-        animation-name: ${Toastify__bounceOutRight};
+      animation-name: ${Toastify__bounceOutRight};
     }
   }
 `;

@@ -8,7 +8,7 @@ import { useCallbackState } from './helpers/useCallbackState';
 import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
 import { Hr, Code, Title, SubTitle, Spacer, Paragraph, JsonContainer, LabelText, Label, Container, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
-const _themeEnum = Object.freeze<{ [key: string]: string }>({
+const _themeEnum = Object.freeze({
   DEFAULT: 'Default',
   LARGE_TEXT: 'Large Text',
   DARK_COLORS: 'Dark Colors',

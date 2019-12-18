@@ -1,6 +1,9 @@
+import { ReactText } from 'react';
+import { toast } from 'react-toastify';
+
 export type Option = {
-  readonly label: string;
-  readonly value: string | number;
+  readonly label: ReactText;
+  readonly value: ReactText;
 };
 
 export type CityOption = {
@@ -9,18 +12,13 @@ export type CityOption = {
   readonly state: string;
 };
 
-export const CITY_OPTIONS: CityOption[] = [
-  { id: 1, city: 'Boston', state: 'MA' },
-  { id: 2, city: 'Austin', state: 'TX' },
-  { id: 3, city: 'Denver', state: 'CO' },
-  { id: 4, city: 'Chicago', state: 'IL' },
-  { id: 5, city: 'Phoenix', state: 'AZ' },
-  { id: 6, city: 'Houston', state: 'TX' },
-  { id: 7, city: 'Orlando', state: 'FL' },
-  { id: 8, city: 'Portland', state: 'OR' },
-  { id: 9, city: 'Milwaukee', state: 'WI' },
-  { id: 10, city: 'Louisville', state: 'KY' },
-];
+export const renderInfoToast = (message: string): void => {
+  toast.info(message);
+};
+
+export const renderSuccessToast = (message: string): void => {
+  toast.success(message);
+};
 
 export const numberWithCommas = (value: number): string => {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -36,3 +34,16 @@ export const createSelectOptions = (optionCount: number): Option[] => {
   }
   return results;
 };
+
+export const CITY_OPTIONS: CityOption[] = [
+  { id: 1, city: 'Boston', state: 'MA' },
+  { id: 2, city: 'Austin', state: 'TX' },
+  { id: 3, city: 'Denver', state: 'CO' },
+  { id: 4, city: 'Chicago', state: 'IL' },
+  { id: 5, city: 'Phoenix', state: 'AZ' },
+  { id: 6, city: 'Houston', state: 'TX' },
+  { id: 7, city: 'Orlando', state: 'FL' },
+  { id: 8, city: 'Portland', state: 'OR' },
+  { id: 9, city: 'Milwaukee', state: 'WI' },
+  { id: 10, city: 'Louisville', state: 'KY' },
+];

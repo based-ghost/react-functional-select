@@ -3,9 +3,8 @@ import { Select } from '../src';
 import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
 import { useCallbackState } from './helpers/useCallbackState';
-import { Option, createSelectOptions } from './helpers/utils';
 import { ToastContainer, ToastPosition } from 'react-toastify';
-import { showInfoToast, showSuccessToast } from './helpers/toastify';
+import { Option, renderInfoToast, renderSuccessToast, createSelectOptions } from './helpers/utils';
 import { Hr, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, Code, CodeFunction, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Events', () => {
@@ -18,14 +17,14 @@ storiesOf('React Functional Select', module).add('Events', () => {
   const [addOnInputFocus, setAddOnInputFocus] = useCallbackState(true);
   const [addOnOptionChange, setAddOnOptionChange] = useCallbackState(true);
 
-  const onMenuOpen = useCallback((...args: any[]): void => showInfoToast('Menu opened !'), []);
-  const onMenuClose = useCallback((...args: any[]): void => showInfoToast('Menu closed !'), []);
-  const onInputBlur = useCallback((e: FocusEvent<HTMLInputElement>): void => showInfoToast('Control blurred !'), []);
-  const onInputFocus = useCallback((e: FocusEvent<HTMLInputElement>): void => showInfoToast('Control focused !'), []);
-  const onKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>): void => showInfoToast('keydown event executed !'), []);
+  const onMenuOpen = useCallback((...args: any[]): void => renderInfoToast('Menu opened !'), []);
+  const onMenuClose = useCallback((...args: any[]): void => renderInfoToast('Menu closed !'), []);
+  const onInputBlur = useCallback((e: FocusEvent<HTMLInputElement>): void => renderInfoToast('Control blurred !'), []);
+  const onInputFocus = useCallback((e: FocusEvent<HTMLInputElement>): void => renderInfoToast('Control focused !'), []);
+  const onKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>): void => renderInfoToast('keydown event executed !'), []);
 
   const onOptionChange = useCallback((option: Option | null): void => {
-    option && showSuccessToast(`Selected Option: ${JSON.stringify(option)}`);
+    option && renderSuccessToast(`Selected Option: ${JSON.stringify(option)}`);
   }, []);
 
   return (
