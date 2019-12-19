@@ -34,7 +34,7 @@ Please feel free to contribute and/or make suggestions (below are key areas that
 - [Demo](https://based-ghost.github.io/react-functional-select/)
 - [Stories source code](./__stories__)
 
-#### Condensed 0-Single.story.tsx
+#### You can find a similar example, along with others, in the storybook:
 
 ```tsx
 import { Select } from 'react-functional-select';
