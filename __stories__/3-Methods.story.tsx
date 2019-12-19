@@ -2,7 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { Option, createSelectOptions } from './helpers/utils';
-import { Hr, List, CodeFunction, Code, Title, Button, LabelText, ListItem, SubTitle, Label, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, List, CodeFunction, Code, Title, Button, ListItem, SubTitle, Label, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Methods', () => {
   const selectRef = useRef<SelectRef | null>(null);
@@ -52,10 +52,8 @@ storiesOf('React Functional Select', module).add('Methods', () => {
       <Hr />
       <Card>
         <CardHeader supportMobile>
-          <Label>
-            <LabelText>Simulate Methods</LabelText>
-          </Label>
           <ButtonGroup>
+            <Label>Simulate Methods</Label>
             <Button onClick={focusSelect}>Focus</Button>
             <Button onClick={blurSelect}>Blur</Button>
             <Button onClick={clearValue}>Clear Value</Button>

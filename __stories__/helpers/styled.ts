@@ -1,4 +1,9 @@
+import { CSSProperties } from 'react';
 import styled, { css } from 'styled-components';
+
+export const singleLabelStyle = Object.freeze<CSSProperties>({
+  marginBottom: '0.4rem'
+});
 
 export const mediaQueryIsMobile = '@media only screen and (max-width: 768px)';
 export const mediaQueryIsMobileXS = '@media only screen and (max-width: 525px)';
@@ -163,31 +168,15 @@ export const Button = styled.button`
   }
 `;
 
-export const Label = styled.label<{ $readOnly?: boolean }>`
-  margin-top: 0.5rem;
-  display: inline-block;
-
-  > span {
-    user-select: none;
-    font-style: italic;
-    margin-left: 0.4rem;
-    color: rgb(102, 102, 102);
-  }
-
-  ${({ $readOnly }) => $readOnly && css`
-    opacity: 0.7;
-    cursor: default;
-    pointer-events: none;
-
-    > input {
-      opacity: 0.7;
-    }
-  `}
-`;
-
-export const LabelText = styled.span`
+export const Label = styled.label`
+  user-select: none;
+  font-style: italic;
+  margin-top: 0.4rem;
+  margin-left: 0.4rem;
   margin-right: 1.15rem;
+  display: inline-block;
   vertical-align: middle;
+  color: rgb(102, 102, 102);
 `;
 
 export const CheckboxGroup = styled.div`

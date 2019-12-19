@@ -165,18 +165,18 @@ const reactToastifyCss = css`
 
     .Toastify__close-button {
       color: #fff;
-      font-weight: bold;
+      font-weight: 700;
       font-size: 14px;
       background: transparent;
-      outline: none;
-      border: none;
+      outline: 0;
+      border: 0;
       padding: 0;
       cursor: pointer;
       opacity: 0.7;
-      transition: 0.3s ease;
+      transition: color 0.3s ease, opacity 0.3s ease;
       align-self: flex-start;
       &--default {
-        color: #000;
+        color: #fff;
         opacity: 0.3;
       }
       &:hover,

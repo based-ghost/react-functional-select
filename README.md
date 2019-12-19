@@ -36,7 +36,7 @@ Please feel free to contribute and/or make suggestions (below are key areas that
 
 #### Condensed 0-Single.story.tsx
 
-```TSX
+```tsx
 import { Select } from 'react-functional-select';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardHeader, CardBody, Container, SelectContainer } from './helpers/styled';

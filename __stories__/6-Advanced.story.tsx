@@ -2,7 +2,7 @@ import React, { useCallback, ReactNode } from 'react';
 import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
-import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, Label, LabelText, CodeFunction, Code, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, Label, CodeFunction, Code, Card, CardHeader, CardBody, singleLabelStyle } from './helpers/styled';
 
 const ReactLogo = require('./assets/react-logo.svg') as string;
 
@@ -112,9 +112,7 @@ storiesOf('React Functional Select', module).add('Advanced', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>
-            <LabelText>JSX labels &amp; disabled option..</LabelText>
-          </Label>
+          <Label style={singleLabelStyle}>JSX labels &amp; disabled option..</Label>
         </CardHeader>
         <CardBody>
           <SelectContainer>

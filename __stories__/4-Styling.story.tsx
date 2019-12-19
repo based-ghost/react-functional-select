@@ -6,7 +6,7 @@ import { storiesOf } from '@storybook/react';
 import PrettyPrintJson from './helpers/PrettyPrintJson';
 import { useCallbackState } from './helpers/useCallbackState';
 import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
-import { Hr, Code, Title, SubTitle, Spacer, Paragraph, JsonContainer, LabelText, Label, Container, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, Code, Title, SubTitle, Spacer, Paragraph, JsonContainer, Label, Container, Card, CardHeader, CardBody, SelectContainer, singleLabelStyle } from './helpers/styled';
 
 const _themeEnum = Object.freeze({
   DEFAULT: 'Default',
@@ -115,9 +115,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>
-            <LabelText>Select themes below..</LabelText>
-          </Label>
+          <Label style={singleLabelStyle}>Select themes below..</Label>
         </CardHeader>
         <CardBody>
           <SelectContainer>

@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { Option, createSelectOptions } from './helpers/utils';
 import OptionsCountButton from './helpers/OptionsCountButton';
 import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
-import { Hr, Title, SubTitle, List, ListWrapper, ListItem, LabelText, Label, Container, Code, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, Title, SubTitle, List, ListWrapper, ListItem, Label, Container, Code, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 const _reactWindowLink = Object.freeze<PackageLinkProps>({
   name: 'react-window',
@@ -72,10 +72,8 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
       <Hr />
       <Card>
         <CardHeader supportMobile>
-          <Label>
-            <LabelText>Load Testing Tiers</LabelText>
-          </Label>
           <ButtonGroup>
+            <Label>Load Testing Tiers</Label>
             <OptionsCountButton
               count={100}
               optionsCount={optionsCount}
