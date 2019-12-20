@@ -156,4 +156,4 @@ This project was inspired by [`react-select`](https://github.com/JedWatson/react
 
 ## License
 
-react-functional-select is [MIT licensed](./LICENSE).
+[MIT licensed](./LICENSE). Copyright (c) Matt Areddia 2019.
