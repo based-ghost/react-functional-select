@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState, useCallback, useRef, useImperativeHandle, KeyboardEventHandler, FocusEventHandler, FocusEvent, FormEvent, KeyboardEvent, ReactNode, ReactText } from 'react';
 import DefaultThemeObj from './theme';
 import { FixedSizeList } from 'react-window';
-import { fadeInAnimationCss } from './constants/styled';
+import { FADE_IN_ANIMATION_CSS } from './constants/styled';
 import { useDebounce, useMenuHeight, useMenuOptions } from './hooks';
 import { FocusedOption, SelectedOption, MouseOrTouchEvent } from './types';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
-import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateApiValues } from './utils';
+import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
 import {
   OPTIONS_DEFAULT,
   PLACEHOLDER_DEFAULT,
@@ -19,10 +19,9 @@ import {
   ON_CHANGE_SINGLE_VALUE_DEFAULT,
 } from './constants/defaults';
 import {
-  TagName,
-  EventType,
   OPTION_CLS,
   IME_KEY_CODE,
+  INPUT_TAG_NAME,
   OPTION_FOCUSED_CLS,
   MENU_CONTAINER_CLS,
   OPTION_DISABLED_CLS,
@@ -30,6 +29,7 @@ import {
   SELECT_CONTAINER_CLS,
   CONTROL_CONTAINER_CLS,
   MENU_CONTAINER_TESTID,
+  MOUSE_DOWN_EVENT_TYPE,
   SELECT_CONTAINER_TESTID,
   CONTROL_CONTAINER_TESTID,
 } from './constants/dom';
@@ -178,7 +178,7 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
 const MenuWrapper = styled.div<MenuWrapperProps>`
   z-index: 999;
   position: absolute;
-  ${fadeInAnimationCss}
+  ${FADE_IN_ANIMATION_CSS}
   
   ${({ hideMenu, theme: { menu } }) => css`
     width: ${menu.width};
@@ -364,7 +364,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
     },
     setValue: (option?: OptionData) => {
-      const validatedSelectedOption = validateApiValues(option, menuOptions, getOptionValueCB);
+      const validatedSelectedOption = validateSetValueParam(option, menuOptions, getOptionValueCB);
       setSelectedOption(validatedSelectedOption);
     },
   }));
@@ -372,7 +372,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const removeSelectedOption = useCallback((value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {
     if (e) {
       e.stopPropagation();
-      (e.type === EventType.MOUSE_DOWN) && e.preventDefault();
+      (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
     }
     setSelectedOption((prevSelectedOption) => prevSelectedOption.filter(x => x.value !== value));
   }, []);
@@ -625,7 +625,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     if (isDisabled) { return; }
     if (!isFocused) { focusInput(); }
 
-    const isNotInputEl = (e.currentTarget.tagName !== TagName.INPUT);
+    const isNotInputEl = (e.currentTarget.tagName !== INPUT_TAG_NAME);
     if (!menuOpen) {
       openMenuOnClick && openMenuAndFocusOption(OptionIndexEnum.FIRST);
     } else if (isNotInputEl) {
@@ -663,14 +663,14 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
     e.stopPropagation();
-    (e.type === EventType.MOUSE_DOWN) && e.preventDefault();
+    (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
     setSelectedOption(SELECTED_OPTION_DEFAULT);
     focusInput();
   }, []);
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
     e.stopPropagation();
-    (e.type === EventType.MOUSE_DOWN) && e.preventDefault();
+    (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
     focusInput();
     
     if (menuOpen) {
@@ -752,9 +752,10 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             renderOptionLabel={renderOptionLabelCB}
           />
         </MenuWrapper>
-        {(isAriaLiveEnabled && isFocused) && (
+        {isAriaLiveEnabled && (
           <AriaLiveRegion
             menuOpen={menuOpen}
+            isFocused={isFocused}
             ariaLabel={ariaLabel}
             inputValue={inputValue}
             isSearchable={isSearchable}

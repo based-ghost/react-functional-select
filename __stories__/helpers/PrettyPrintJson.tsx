@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { mediaQueryIsMobileXS } from './styled';
+import { MEDIA_QUERY_IS_MOBILE_XS } from './styled';
 
 type PrintJsonProps = {
   readonly data: any;
@@ -29,7 +29,7 @@ const PrintJsonHeader = styled.div`
   text-transform: uppercase;
   background-color: #1D2027;
 
-  ${mediaQueryIsMobileXS} {
+  ${MEDIA_QUERY_IS_MOBILE_XS} {
     font-size: 1.05rem;
     letter-spacing: 0.05em;
   }
@@ -46,7 +46,7 @@ const PrintJsonPre = styled.pre`
   touch-action: manipulation;
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
-  ${mediaQueryIsMobileXS} {
+  ${MEDIA_QUERY_IS_MOBILE_XS} {
     font-size: 0.75em;
     letter-spacing: normal;
     padding: 0.625rem 1.125rem;

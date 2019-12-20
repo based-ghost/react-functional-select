@@ -97,6 +97,7 @@ export type MenuProps = {
 
 export type AriaLiveRegionProps = {
   readonly menuOpen: boolean;
+  readonly isFocused: boolean;
   readonly ariaLabel?: string;
   readonly inputValue: string;
   readonly optionCount: number;

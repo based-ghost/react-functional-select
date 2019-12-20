@@ -1,8 +1,8 @@
 import React from 'react';
 import LoadingDots from './LoadingDots';
 import styled, { css } from 'styled-components';
-import { fadeInAnimationCss } from '../constants/styled';
 import { CaretProps, IndicatorIconsProps } from '../types';
+import { FADE_IN_ANIMATION_CSS } from '../constants/styled';
 import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/dom';
 
 const IndicatorIconsWrapper = styled.div`
@@ -26,11 +26,11 @@ const IndicatorIcon = styled.div`
 
 const Clear = styled.div`
   overflow: hidden;
+  ${FADE_IN_ANIMATION_CSS}
   font-size: ${({ theme }) => theme.icon.clear.fontSize};
   transition: ${({ theme }) => theme.icon.clear.transition};
   font-weight: ${({ theme }) => theme.icon.clear.fontWeight};
   font-family: ${({ theme }) => theme.icon.clear.fontFamily};
-  ${fadeInAnimationCss}
 `;
 
 const Caret = styled.div<CaretProps>`
@@ -39,8 +39,8 @@ const Caret = styled.div<CaretProps>`
   border-left: ${({ theme }) => theme.icon.caret.size} solid transparent;
   border-right: ${({ theme }) => theme.icon.caret.size} solid transparent;
 
-  ${({ menuOpen, isInvalid, theme: { color } }) => 
-    menuOpen && 
+  ${({ menuOpen, isInvalid, theme: { color } }) =>
+    menuOpen &&
     css`
       transform: rotate(180deg);
       color: ${isInvalid ? color.danger : (color.caretActive || color.primary)};

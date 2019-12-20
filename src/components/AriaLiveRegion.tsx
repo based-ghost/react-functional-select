@@ -18,6 +18,7 @@ const A11yText = styled.span`
 
 const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
   menuOpen,
+  isFocused,
   ariaLabel,
   inputValue,
   optionCount,
@@ -25,6 +26,10 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
   focusedOption,
   selectedOption,
 }) => {
+  if (!isFocused) {
+    return null;
+  }
+
   const {
     label: focusedOptionLabel,
     index: focusedOptionIndex,
@@ -45,8 +50,8 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
 
   return (
     <A11yText aria-live='polite'>
-      <p>{selectedOptionMsg}</p>
-      <p>{`${focusedMsg} ${optionsMsg} ${menuMsg}`}</p>
+      <p id='aria-selection-event'>{selectedOptionMsg}</p>
+      <p id='aria-context'>{`${focusedMsg} ${optionsMsg} ${menuMsg}`}</p>
     </A11yText>
   );
 };

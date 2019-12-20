@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MultiValueProps } from '../types';
-import { fadeInAnimationCss } from '../constants/styled';
+import { FADE_IN_ANIMATION_CSS } from '../constants/styled';
 
 const MultiValueWrapper = styled.div`
   min-width: 0;
   display: flex;
+  ${FADE_IN_ANIMATION_CSS}
   margin: ${({ theme }) => theme.multiValue.margin};
   border-radius: ${({ theme }) => theme.multiValue.borderRadius};
   background-color: ${({ theme }) => theme.multiValue.backgroundColor};
-  ${fadeInAnimationCss}
 `;
 
 const Label = styled.div`

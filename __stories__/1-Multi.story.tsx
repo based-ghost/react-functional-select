@@ -42,22 +42,22 @@ storiesOf('React Functional Select', module).add('Multi-select', () => {
         <CardHeader>
           <CheckboxGroup>
             <Checkbox
-              label='Close Menu On Select'
+              label='closeMenuOnSelect'
               checked={closeMenuOnSelect}
               onCheck={setCloseMenuOnSelect}
             />
             <Checkbox
-              label='Blur Input On Select'
+              label='blurInputOnSelect'
               checked={blurInputOnSelect}
               onCheck={setBlurInputOnSelect}
             />
             <Checkbox
-              label='Hide Selected Options'
+              label='hideSelectedOptions'
               checked={hideSelectedOptions}
               onCheck={setHideSelectedOptions}
             />
             <Checkbox
-              label='Open Menu On Click (use caret if false)'
+              label='openMenuOnClick (click caret if false)'
               checked={openMenuOnClick}
               onCheck={setOpenMenuOnClick}
             />

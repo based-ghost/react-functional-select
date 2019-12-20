@@ -1,0 +1,26 @@
+import React from 'react';
+import DefaultThemeObj from '../src/theme';
+import { ThemeProvider } from 'styled-components';
+import LoadingDots from '../src/components/LoadingDots';
+import { render, RenderResult } from '@testing-library/react';
+
+// ============================================
+// Helper functions for LoadingDots component
+// ============================================
+
+const renderLoadingDots = (): RenderResult => {
+  return render(
+    <ThemeProvider theme={DefaultThemeObj}>
+      <LoadingDots />
+    </ThemeProvider>
+  );
+};
+
+// ============================================
+// Test cases
+// ============================================
+
+test('LoadingDots component mounts and renders successfully', async () => {
+  const { container } = renderLoadingDots();
+  expect(container.hasChildNodes()).toBeTruthy();
+});

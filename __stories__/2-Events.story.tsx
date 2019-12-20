@@ -10,11 +10,11 @@ import { Hr, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Contai
 storiesOf('React Functional Select', module).add('Events', () => {
   const options = useMemo<Option[]>(() => createSelectOptions(5), []);
 
-  const [addOnKeyDown, setAddOnKeyDown] = useCallbackState(true);
+  const [addOnKeyDown, setAddOnKeyDown] = useCallbackState(false);
   const [addOnMenuOpen, setAddOnMenuOpen] = useCallbackState(true);
   const [addOnMenuClose, setAddOnMenuClose] = useCallbackState(true);
-  const [addOnInputBlur, setAddOnInputBlur] = useCallbackState(true);
-  const [addOnInputFocus, setAddOnInputFocus] = useCallbackState(true);
+  const [addOnInputBlur, setAddOnInputBlur] = useCallbackState(false);
+  const [addOnInputFocus, setAddOnInputFocus] = useCallbackState(false);
   const [addOnOptionChange, setAddOnOptionChange] = useCallbackState(true);
 
   const onMenuOpen = useCallback((...args: any[]): void => renderInfoToast('Menu opened !'), []);
@@ -80,6 +80,11 @@ storiesOf('React Functional Select', module).add('Events', () => {
                 onCheck={setAddOnMenuClose}
               />
               <Checkbox
+                label='onOptionChange'
+                checked={addOnOptionChange}
+                onCheck={setAddOnOptionChange}
+              />
+              <Checkbox
                 label='onInputBlur'
                 checked={addOnInputBlur}
                 onCheck={setAddOnInputBlur}
@@ -93,11 +98,6 @@ storiesOf('React Functional Select', module).add('Events', () => {
                 label='onKeyDown'
                 checked={addOnKeyDown}
                 onCheck={setAddOnKeyDown}
-              />
-              <Checkbox
-                label='onOptionChange'
-                checked={addOnOptionChange}
-                onCheck={setAddOnOptionChange}
               />
             </CheckboxGroup>
           </CardHeader>

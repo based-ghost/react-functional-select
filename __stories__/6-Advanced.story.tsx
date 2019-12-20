@@ -2,9 +2,7 @@ import React, { useCallback, ReactNode } from 'react';
 import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
-import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, Label, CodeFunction, Code, Card, CardHeader, CardBody, singleLabelStyle } from './helpers/styled';
-
-const ReactLogo = require('./assets/react-logo.svg') as string;
+import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, LabelHeader, CodeFunction, Code, Card, CardHeader, CardBody } from './helpers/styled';
 
 type StyledImageProps = {
   readonly isDisabled: boolean;
@@ -15,7 +13,15 @@ type PackageOption = {
   readonly packageName: string;
 };
 
-const _themeConfig = Object.freeze({
+const SPIN_LOGO = keyframes`
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+`;
+
+const THEME_CONFIG = Object.freeze({
   menu: {
     option: {
       selectedColor: '#515151',
@@ -25,17 +31,16 @@ const _themeConfig = Object.freeze({
   }
 });
 
-const _spinLogo = keyframes`
-  from {
-    transform: rotate(0deg);
-  } to {
-    transform: rotate(360deg);
-  }
-`;
+const OPTIONS: PackageOption[] = [
+  { id: 1, packageName: 'react' },
+  { id: 2, packageName: 'react-dom' },
+  { id: 3, packageName: 'reactstrap' },
+  { id: 4, packageName: 'react-scripts' },
+  { id: 5, packageName: 'react-window' },
+];
 
-const _spinLogoAnimation = css`
-  animation: ${_spinLogo} infinite 8s linear;
-`;
+const REACT_LOGO_SVG = require('./assets/react-logo.svg') as string;
+const SPIN_ANIMATION_CSS = css`animation: ${SPIN_LOGO} infinite 8s linear;`;
 
 const StyledDiv = styled.div`
   height: 100%;
@@ -57,25 +62,17 @@ const StyledImg = styled.img<StyledImageProps>`
   height: 30px;
   border-style: none;
   display: inline-block;
-  ${({ isDisabled }) => (!isDisabled &&  _spinLogoAnimation)}
+  ${({ isDisabled }) => (!isDisabled && SPIN_ANIMATION_CSS)}
 `;
-
-const _options: PackageOption[] = [
-  { id: 1, packageName: 'react' },
-  { id: 2, packageName: 'react-dom' },
-  { id: 3, packageName: 'reactstrap' },
-  { id: 4, packageName: 'react-scripts' },
-  { id: 5, packageName: 'react-window' },
-];
 
 storiesOf('React Functional Select', module).add('Advanced', () => {
   const getOptionValue = useCallback((option: PackageOption): number => (option.id), []);
-  const getIsOptionDisabled = useCallback((option: PackageOption): boolean => (option.packageName === _options[3].packageName), []);
+  const getIsOptionDisabled = useCallback((option: PackageOption): boolean => (option.packageName === OPTIONS[3].packageName), []);
 
   const renderOptionLabel = useCallback((option: PackageOption): ReactNode => {
     return (
       <StyledDiv>
-        <StyledImg src={ReactLogo} isDisabled={getIsOptionDisabled(option)} />
+        <StyledImg src={REACT_LOGO_SVG} isDisabled={getIsOptionDisabled(option)} />
         <StyledSpan>{option.packageName}</StyledSpan>
       </StyledDiv>
     );
@@ -112,14 +109,14 @@ storiesOf('React Functional Select', module).add('Advanced', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label style={singleLabelStyle}>JSX labels &amp; disabled option..</Label>
+          <LabelHeader>JSX labels &amp; disabled option..</LabelHeader>
         </CardHeader>
         <CardBody>
           <SelectContainer>
             <Select
-              options={_options}
+              options={OPTIONS}
               isSearchable={false}
-              themeConfig={_themeConfig}
+              themeConfig={THEME_CONFIG}
               getOptionValue={getOptionValue}
               renderOptionLabel={renderOptionLabel}
               getIsOptionDisabled={getIsOptionDisabled}

@@ -4,15 +4,11 @@ const isNotProd = (process.env.NODE_ENV !== 'production');
 // Keydown event from an Input Method Editor (IME) - event.keyCode === 229
 export const IME_KEY_CODE = 229;
 
-// HTMLElement TagName Enum
-export const TagName = Object.freeze({
-  INPUT: 'INPUT'
-});
+// HTMLInputElement event.currentTarget.tagName
+export const INPUT_TAG_NAME = 'INPUT';
 
-// Event Type Enum
-export const EventType = Object.freeze({
-  MOUSE_DOWN: 'mousedown'
-});
+// mousedown event.type
+export const MOUSE_DOWN_EVENT_TYPE = 'mousedown';
 
 // classNames (menu options)
 export const OPTION_CLS = `${attrPrefix}-option`;

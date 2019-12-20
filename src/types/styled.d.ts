@@ -19,7 +19,6 @@ declare module 'styled-components' {
     loader: {
       size: string;
       color: string;
-      opacity: string;
       padding: string;
     };
     icon: {

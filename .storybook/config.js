@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DarkTheme from './darkTheme';
+import theme from './theme';
 import GlobalStyle from './globalStyle';
 import { configure, addParameters } from '@storybook/react';
 import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
@@ -14,7 +14,7 @@ const req = require.context('../__stories__', true, /\.story\.tsx$/);
 
 addParameters({
   options: {
-    theme: DarkTheme,
+    theme,
     storySort: (a, b) => {
       return (a[1].kind === b[1].kind) ? 0 : a[1].id.localeCompare(b[1].id, { numeric: true });
     },

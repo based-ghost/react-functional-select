@@ -1,7 +1,7 @@
 import { ReactText } from 'react';
 import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
 import { MenuOption, OptionData, SelectedOption } from './types';
-import { trimPattern, overflowPattern, msBrowserPattern, diacriticsPattern } from './constants/regexp';
+import { TRIM_REGEXP, OVERFLOW_REGEXP, MS_BROWSER_REGEXP, DIACRITICS_REGEXP } from './constants/regexp';
 
 // ============================================
 // Private utility functions
@@ -11,7 +11,7 @@ import { trimPattern, overflowPattern, msBrowserPattern, diacriticsPattern } fro
  * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).
  */
 function stripDiacritics(value: string): string {
-  return value.normalize('NFD').replace(diacriticsPattern, '');
+  return value.normalize('NFD').replace(DIACRITICS_REGEXP, '');
 }
 
 function isDocumentElement(el: HTMLElement | Window): boolean {
@@ -46,7 +46,7 @@ function getScrollParent(el: HTMLElement): HTMLElement {
     style = getComputedStyle(parent);
     if (excludeStaticParent && style.position === 'static') {
       continue;
-    } else if (overflowPattern.test(`${style.overflow}${style.overflowY}${style.overflowX}`)) {
+    } else if (OVERFLOW_REGEXP.test(`${style.overflow}${style.overflowY}${style.overflowX}`)) {
       return parent;
     }
   }
@@ -104,7 +104,7 @@ export const isTouchDevice = (): boolean => window.matchMedia('(pointer: coarse)
 /**
  * Determines if browser is Edge or IE.
  */
-export const isEdgeOrIE = (): boolean => msBrowserPattern.test(window.navigator.userAgent);
+export const isEdgeOrIE = (): boolean => MS_BROWSER_REGEXP.test(window.navigator.userAgent);
 
 /**
  * Apply regex to string, and if the value is NOT case sensitive, call .toLowerCase() and return result.
@@ -114,7 +114,7 @@ export function trimAndFormatFilterStr(
   filterIgnoreCase?: boolean,
   filterIgnoreAccents?: boolean
 ): string {
-  let formatVal = value.replace(trimPattern, '');
+  let formatVal = value.replace(TRIM_REGEXP, '');
   if (filterIgnoreCase) {
     formatVal = formatVal.toLowerCase();
   }
@@ -191,7 +191,7 @@ export function scrollMenuIntoViewOnOpen(
  * Validates the 'option' parameter passed to the public instance method 'setValue' that is exposed
  * ...to wrapping parent components.
  */
-export function validateApiValues(
+export function validateSetValueParam(
   values: any,
   menuOptions: MenuOption[],
   getOptionValueCB: (data: OptionData) => ReactText

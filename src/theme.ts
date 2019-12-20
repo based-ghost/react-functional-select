@@ -12,13 +12,11 @@ export default Object.freeze<DefaultTheme>({
     placeholder: '#6E7276',
     dangerLight: 'rgba(220, 53, 69, 0.25)',
   },
-  select: {
-  },
+  select: {},
   loader: {
-    opacity: '0.42',
     size: '0.625rem',
-    color: '#007bff',
     padding: '0.375rem 0.75rem',
+    color: 'rgba(0, 123, 255, 0.42)',
   },
   icon: {
     color: '#cccccc',

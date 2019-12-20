@@ -8,6 +8,6 @@ const fadeIn = keyframes`
   }
 `;
 
-export const fadeInAnimationCss = css`
+export const FADE_IN_ANIMATION_CSS = css`
   animation: ${fadeIn} 0.225s ease-in-out forwards;
 `;
