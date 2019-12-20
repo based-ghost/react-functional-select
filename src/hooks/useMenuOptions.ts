@@ -1,7 +1,8 @@
 import { useEffect, useState, ReactText } from 'react';
 import { trimAndFormatFilterStr } from '../utils';
+import { FilterMatchEnum } from '../constants/enum';
 import { OPTIONS_DEFAULT } from '../constants/defaults';
-import { OptionData, MenuOption, SelectedOption } from '../types';
+import { OptionData, MenuOption, SelectedOption, FilterMatchFrom } from '../types';
 
 /**
  * Custom Hook.
@@ -11,6 +12,7 @@ import { OptionData, MenuOption, SelectedOption } from '../types';
 export const useMenuOptions = (
   options: OptionData[],
   debouncedInputValue: string,
+  filterMatchFrom: FilterMatchFrom,
   hideSelectedOptions: boolean,
   selectedOption: SelectedOption[],
   getOptionValueCB: (data: OptionData) => ReactText,
@@ -23,7 +25,8 @@ export const useMenuOptions = (
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(OPTIONS_DEFAULT);
 
   useEffect(() => {
-    const normalizedSearchValue: string = trimAndFormatFilterStr(debouncedInputValue, filterIgnoreCase, filterIgnoreCase);
+    const filterMatchFromAny: boolean = (filterMatchFrom === FilterMatchEnum.ANY);
+    const normalizedInput: string = trimAndFormatFilterStr(debouncedInputValue, filterIgnoreCase, filterIgnoreCase);
     const getIsOptionDisabled2: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
     const getFilterOptionString2: (option: MenuOption) => string = getFilterOptionString || ((option) => String(option.label));
     
@@ -33,7 +36,9 @@ export const useMenuOptions = (
 
     const isOptionSearchFilterMatch = (menuOption: MenuOption): boolean => {
       const normalizedOptionLabel = trimAndFormatFilterStr(getFilterOptionString2(menuOption), filterIgnoreCase, filterIgnoreCase);
-      return normalizedOptionLabel.indexOf(normalizedSearchValue) > -1;
+      return filterMatchFromAny
+        ? normalizedOptionLabel.indexOf(normalizedInput) > -1
+        : normalizedOptionLabel.substr(0, normalizedInput.length) === normalizedInput;
     };
 
     const createMenuOptions = (): MenuOption[] => {
@@ -46,10 +51,7 @@ export const useMenuOptions = (
           ...((selectedValues && selectedValues.includes(value)) && { isSelected: true }),
         };
 
-        if (
-          (normalizedSearchValue && !isOptionSearchFilterMatch(menuOption)) ||
-          (hideSelectedOptions && menuOption.isSelected)
-        ) {
+        if ((normalizedInput && !isOptionSearchFilterMatch(menuOption)) || (hideSelectedOptions && menuOption.isSelected)) {
           return;
         }
 
@@ -67,7 +69,7 @@ export const useMenuOptions = (
     };
 
     setMenuOptions(createMenuOptions() || OPTIONS_DEFAULT);
-  }, [options, selectedOption, hideSelectedOptions, filterIgnoreCase, filterIgnoreAccents, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
+  }, [options, selectedOption, hideSelectedOptions, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
 
   return menuOptions;
 };

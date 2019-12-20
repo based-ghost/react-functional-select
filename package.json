@@ -1,6 +1,6 @@
 {
   "name": "react-functional-select",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)",
   "description": "Miro-sized and micro-optimized select component for React.js",
   "main": "./dist/index.cjs.js",
@@ -57,7 +57,7 @@
     "@testing-library/react": "^9.4.0",
     "@types/jest": "^24.0.24",
     "@types/node": "^12.12.21",
-    "@types/react": "^16.9.16",
+    "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "@types/react-window": "^1.8.1",
     "@types/styled-components": "^4.4.1",
@@ -68,7 +68,7 @@
     "concurrently": "^5.0.2",
     "cross-env": "^6.0.3",
     "enzyme": "^3.11.0",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "eslint-config-poetez": "^0.1.4",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-prettier": "^3.1.2",
@@ -95,7 +95,7 @@
     "tslint-config-poetez": "^2.0.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
-    "typescript": "^3.7.3",
+    "typescript": "^3.7.4",
     "webpack": "^4.41.4"
   },
   "peerDependencies": {

@@ -5,6 +5,7 @@ import { FADE_IN_ANIMATION_CSS } from './constants/styled';
 import { useDebounce, useMenuHeight, useMenuOptions } from './hooks';
 import { FocusedOption, SelectedOption, MouseOrTouchEvent } from './types';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
+import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enum';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
 import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
 import {
@@ -37,6 +38,7 @@ import {
 type OptionData = any;
 type ValueIndex = 0 | 1;
 type OptionIndex = 0 | 1 | 2 | 3;
+type FilterMatchFrom = 'any' | 'start';
 
 type MenuWrapperProps = {
   readonly hideMenu: boolean;
@@ -100,6 +102,7 @@ export type SelectProps = {
   readonly hideSelectedOptions?: boolean;
   readonly filterIgnoreAccents?: boolean;
   readonly backspaceClearsValue?: boolean;
+  readonly filterMatchFrom?: FilterMatchFrom;
   readonly onMenuOpen?: (...args: any[]) => void;
   readonly onMenuClose?: (...args: any[]) => void;
   readonly initialValue?: OptionData | OptionData[];
@@ -113,18 +116,6 @@ export type SelectProps = {
   readonly getIsOptionDisabled?: (data: OptionData) => boolean;
   readonly getFilterOptionString?: (option: MenuOption) => string;
 };
-
-const ValueIndexEnum = Object.freeze<{[key: string]: ValueIndex}>({
-  NEXT: 0,
-  PREVIOUS: 1
-});
-
-const OptionIndexEnum = Object.freeze<{[key: string]: OptionIndex}>({
-  UP: 0,
-  DOWN: 1,
-  FIRST: 2,
-  LAST: 3
-});
 
 const SelectWrapper = styled.div`
   position: relative;
@@ -162,10 +153,10 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
     border-radius: ${control.borderRadius};
 
     border-color: ${
-      isInvalid 
-        ? color.danger 
-        : isFocused 
-          ? control.focusedBorderColor 
+      isInvalid
+        ? color.danger
+        : isFocused
+          ? control.focusedBorderColor
           : color.border};
 
     ${isDisabled && `pointer-events: none;`}
@@ -261,6 +252,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     backspaceClearsValue = true,
     options = OPTIONS_DEFAULT,
     placeholder = PLACEHOLDER_DEFAULT,
+    filterMatchFrom = FilterMatchEnum.ANY,
     noOptionsMsg = NO_OPTIONS_MSG_DEFAULT,
     menuItemSize = MENU_ITEM_SIZE_DEFAULT,
     menuMaxHeight = MENU_MAX_HEIGHT_DEFAULT,
@@ -334,6 +326,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const menuOptions: MenuOption[] = useMenuOptions(
     options,
     debouncedInputValue,
+    filterMatchFrom,
     hideSelectedOptionsOrDefault,
     selectedOption,
     getOptionValueCB,

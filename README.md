@@ -8,25 +8,18 @@
 [![Downloads](https://img.shields.io/npm/dt/react-functional-select?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
 
 ## Overview
+
 Key features:
 
-- Fully-featured select component that is truly "lightweight" - this package is only about (gzipped) 7.85 KB!
-- Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [react-window](https://github.com/bvaughn/react-window) + performance conscious code
-- Flexible control over your data, with customizable function properties - create labels with JSX, filtering rules, disable specific options, etc..
+- Fully-featured, yet "lightweight" package - only (gzipped) 7.85 KB!
 - Extensible styling API with [styled-components](https://github.com/styled-components/styled-components)
 - Opt-in properties to make the component fully accessible
+- Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [react-window](https://github.com/bvaughn/react-window) + performance conscious code
 
 Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely using `React Hooks` and `FunctionComponents`. In addition, most of the code I was able to roll myself, so there are minimal peer dependencies to worry about. The peer dependencies for this package are:
 
 - [`react-window`](https://github.com/bvaughn/react-window) leveraged for integrated data virtualization/windowing (easily handles data-sets numbering in the tens of thousands with minimal-to-no impact on normally resource-intensive actions like keying and searching).
 - [`styled-components`](https://github.com/styled-components/styled-components) to handle dynamic, extensible styling via CSS-in-JS (there is also the option to generate `className` attributes for legacy stylesheets as a fall-back option).
-
-Please feel free to contribute and/or make suggestions (below are key areas that still need to be addressed).
-
-Development for future releases:
-
-- <strong>Make theme API more flexible/customizable.</strong> Currently handles simple-to-mid level complexity scenarios via `styled-component`'s overrideable `ThemeProvider`. As a fallback, you can generate static `className` attributes on container nodes by enabling the `addClassNames` property.
-- <strong>Async wrapper component.</strong> This may be unecessary given the ease with which the standard component can handle large amounts of records. However, it would be nice to have the ability to easily operate on subsets of data just as needed and not have to be burdened with excessive memory allocation.
 
 ## Installation
 
@@ -141,6 +134,7 @@ All properties are technically optional (with a few having default values). Very
 |`isAriaLiveEnabled`| bool | `false` | Enables visually hidden div that reports stateful information (for assistive tech)
 |`scrollMenuIntoView`| bool | `true` | Performs animated scroll to show menu in view when menu is opened (if there is room to do so)
 |`backspaceClearsValue`| bool | `true` | Remove the currently focused option when the user presses backspace
+|`filterMatchFrom`| 'any' OR 'start' | `'any'` | Position in stringified option to match search input
 |`filterIgnoreCase`| bool | `true` | Search input ignores case of characters when comparing
 |`filterIgnoreAccents`| bool | `false` | Search input will strip diacritics from string before comparing
 |`onMenuOpen`| (...args: any[]) => void | `undefined` | Callback function executed after the menu is opened
