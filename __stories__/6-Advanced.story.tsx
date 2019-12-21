@@ -66,7 +66,7 @@ const StyledImg = styled.img<StyledImageProps>`
 `;
 
 storiesOf('React Functional Select', module).add('Advanced', () => {
-  const getOptionValue = useCallback((option: PackageOption): number => (option.id), []);
+  const getOptionValue = useCallback((option: PackageOption): number => option.id, []);
   const getIsOptionDisabled = useCallback((option: PackageOption): boolean => (option.packageName === OPTIONS[3].packageName), []);
 
   const renderOptionLabel = useCallback((option: PackageOption): ReactNode => {

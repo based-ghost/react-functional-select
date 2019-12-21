@@ -1,8 +1,8 @@
 import { useEffect, useState, ReactText } from 'react';
 import { trimAndFormatFilterStr } from '../utils';
-import { FilterMatchEnum } from '../constants/enum';
+import { FilterMatchEnum } from '../constants/enums';
 import { OPTIONS_DEFAULT } from '../constants/defaults';
-import { OptionData, MenuOption, SelectedOption, FilterMatchFrom } from '../types';
+import { OptionData, MenuOption, SelectedOption } from '../types';
 
 /**
  * Custom Hook.
@@ -12,7 +12,7 @@ import { OptionData, MenuOption, SelectedOption, FilterMatchFrom } from '../type
 export const useMenuOptions = (
   options: OptionData[],
   debouncedInputValue: string,
-  filterMatchFrom: FilterMatchFrom,
+  filterMatchFrom: 'any' | 'start',
   hideSelectedOptions: boolean,
   selectedOption: SelectedOption[],
   getOptionValueCB: (data: OptionData) => ReactText,

@@ -2,8 +2,8 @@ import { create, color, themes } from '@storybook/theming';
 
 const _colorDarker = '#282c34';
 const _colorDarkest = '#1D2027';
-const _colorPrimary = '#fc929e';   //pinkish-red-salmon
-const _colorSecondary = '#f5b83d'; // golden-yellow (PrettyPrintJson.tsx header)
+const _colorPrimary = '#fc929e'; //pinkish-red-salmon
+const _colorSecondary = '#f5b83d'; // golden-yellow
 const _colorPrimaryOpacity = 'rgba(252, 146, 158, 0.675)';
 
 export default create({

@@ -3,21 +3,21 @@ module.exports = async ({ config }) => {
     test: /\.story\.tsx?$/,
     loaders: [
       {
-        loader: require.resolve("@storybook/source-loader"),
+        loader: require.resolve('@storybook/source-loader'),
         options: {
-          parser: "typescript"
+          parser: 'typescript'
         }
       }
     ],
-    enforce: "pre"
+    enforce: 'pre'
   });
 
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
-    loader: require.resolve("babel-loader"),
+    loader: require.resolve('babel-loader'),
   });
   
-  config.resolve.extensions.push(".ts", ".tsx");
+  config.resolve.extensions.push('.ts', '.tsx');
 
   return config;
 };

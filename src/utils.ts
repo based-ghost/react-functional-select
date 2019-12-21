@@ -57,7 +57,7 @@ function getScrollParent(el: HTMLElement): HTMLElement {
 function smoothScrollTo(
   element: HTMLElement,
   to: number,
-  duration: number,
+  duration: number = 300,
   callback?: (...args: any[]) => void
 ): void {
   let currentTime = 0;
@@ -146,6 +146,7 @@ export function mergeDeep(target: any, source: any): any {
  */
 export function scrollMenuIntoViewOnOpen(
   menuEl: HTMLElement | null,
+  menuScrollDuration: number | undefined,
   scrollMenuIntoView: boolean | undefined,
   handleOnMenuOpen: (availableSpace?: number) => void
 ): void {
@@ -184,7 +185,7 @@ export function scrollMenuIntoViewOnOpen(
   // Do scroll and upon scroll animation completion, execute the callback if defined
   const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom || '0', 10);
   const scrollDown = (menuBottom - viewHeight + scrollTop + marginBottom);
-  smoothScrollTo(scrollParent, scrollDown, 300, handleOnMenuOpen);
+  smoothScrollTo(scrollParent, scrollDown, menuScrollDuration, handleOnMenuOpen);
 }
 
 /**

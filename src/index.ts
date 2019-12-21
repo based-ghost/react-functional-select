@@ -5,4 +5,4 @@ export type SelectRef = SelectModule.SelectRef;
 export type SelectProps = SelectModule.SelectProps;
 
 export { default as Select } from './Select';
-export { FilterMatchEnum } from './constants/enum';
+export { FilterMatchEnum } from './constants/enums';

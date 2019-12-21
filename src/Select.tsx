@@ -5,7 +5,7 @@ import { FADE_IN_ANIMATION_CSS } from './constants/styled';
 import { useDebounce, useMenuHeight, useMenuOptions } from './hooks';
 import { FocusedOption, SelectedOption, MouseOrTouchEvent } from './types';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
-import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enum';
+import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
 import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
 import {
@@ -38,7 +38,6 @@ import {
 type OptionData = any;
 type ValueIndex = 0 | 1;
 type OptionIndex = 0 | 1 | 2 | 3;
-type FilterMatchFrom = 'any' | 'start';
 
 type MenuWrapperProps = {
   readonly hideMenu: boolean;
@@ -95,6 +94,7 @@ export type SelectProps = {
   readonly menuOverscanCount?: number;
   readonly tabSelectsOption?: boolean;
   readonly filterIgnoreCase?: boolean;
+  readonly menuScrollDuration?: number;
   readonly blurInputOnSelect?: boolean;
   readonly closeMenuOnSelect?: boolean;
   readonly isAriaLiveEnabled?: boolean;
@@ -102,7 +102,7 @@ export type SelectProps = {
   readonly hideSelectedOptions?: boolean;
   readonly filterIgnoreAccents?: boolean;
   readonly backspaceClearsValue?: boolean;
-  readonly filterMatchFrom?: FilterMatchFrom;
+  readonly filterMatchFrom?: 'any' | 'start';
   readonly onMenuOpen?: (...args: any[]) => void;
   readonly onMenuClose?: (...args: any[]) => void;
   readonly initialValue?: OptionData | OptionData[];
@@ -159,7 +159,7 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
           ? control.focusedBorderColor
           : color.border};
 
-    ${isDisabled && `pointer-events: none;`}
+    ${isDisabled && 'pointer-events: none;'}
     ${control.height && `height: ${control.height};`}
     ${(control.backgroundColor || isDisabled) && `background-color: ${isDisabled ? color.disabled : control.backgroundColor};`}
     ${isFocused && `box-shadow: ${control.boxShadow} ${isInvalid ? color.dangerLight : control.boxShadowColor};`}
@@ -195,12 +195,10 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     &:hover:not(.${OPTION_DISABLED_CLS}):not(.${OPTION_SELECTED_CLS}) {
       background-color: ${({ theme }) => theme.menu.option.focusedBgColor};
     }
-
     &.${OPTION_SELECTED_CLS} {
       color: ${({ theme }) => theme.menu.option.selectedColor};
       background-color: ${({ theme }) => theme.menu.option.selectedBgColor};
     }
-
     &.${OPTION_DISABLED_CLS} {
       opacity: 0.35;
     }
@@ -239,6 +237,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     menuOverscanCount,
     blurInputOnSelect,
     renderOptionLabel,
+    menuScrollDuration,
     filterIgnoreAccents,
     hideSelectedOptions,
     getIsOptionDisabled,
@@ -313,6 +312,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     menuRef,
     menuOpen,
     menuMaxHeight,
+    menuScrollDuration,
     scrollMenuIntoView,
     onMenuOpen,
     onMenuClose
@@ -459,13 +459,13 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       return;
     }
 
-    const newSelectedOption = {
+    const newOption = {
       data: focusedOptionData,
       value: focusedOptionValue,
       label: focusedOptionLabel
     };
 
-    selectOption(newSelectedOption, isFocusedOptionSelected);
+    selectOption(newOption, isFocusedOptionSelected);
   };
 
   // Only Multiselect mode supports value focusing
@@ -521,7 +521,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
     if (onKeyDown) {
       onKeyDown(e);
-      if (e.defaultPrevented) { return; }
+      if (e.defaultPrevented) {
+        return;
+      }
     }
 
     switch (e.key) {
@@ -559,7 +561,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
           break;
         } else if (!focusedOptionData) {
           return;
-        }        
+        }
         selectOptionFromFocused();
         break;
       case 'Enter':
@@ -618,15 +620,14 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     if (isDisabled) { return; }
     if (!isFocused) { focusInput(); }
 
-    const isNotInputEl = (e.currentTarget.tagName !== INPUT_TAG_NAME);
     if (!menuOpen) {
       openMenuOnClick && openMenuAndFocusOption(OptionIndexEnum.FIRST);
-    } else if (isNotInputEl) {
+    } else if (e.currentTarget.tagName !== INPUT_TAG_NAME) {
       setMenuOpen(false);
       inputValue && setInputValue('');
     }
 
-    if (isNotInputEl) {
+    if (e.currentTarget.tagName !== INPUT_TAG_NAME) {
       e.preventDefault();
     }
   };

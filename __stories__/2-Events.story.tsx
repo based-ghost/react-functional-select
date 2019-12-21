@@ -12,7 +12,7 @@ storiesOf('React Functional Select', module).add('Events', () => {
 
   const [addOnKeyDown, setAddOnKeyDown] = useCallbackState(false);
   const [addOnMenuOpen, setAddOnMenuOpen] = useCallbackState(true);
-  const [addOnMenuClose, setAddOnMenuClose] = useCallbackState(true);
+  const [addOnMenuClose, setAddOnMenuClose] = useCallbackState(false);
   const [addOnInputBlur, setAddOnInputBlur] = useCallbackState(false);
   const [addOnInputFocus, setAddOnInputFocus] = useCallbackState(false);
   const [addOnOptionChange, setAddOnOptionChange] = useCallbackState(true);
@@ -70,6 +70,11 @@ storiesOf('React Functional Select', module).add('Events', () => {
           <CardHeader>
             <CheckboxGroup>
               <Checkbox
+                label='onOptionChange'
+                checked={addOnOptionChange}
+                onCheck={setAddOnOptionChange}
+              />
+              <Checkbox
                 label='onMenuOpen'
                 checked={addOnMenuOpen}
                 onCheck={setAddOnMenuOpen}
@@ -78,11 +83,6 @@ storiesOf('React Functional Select', module).add('Events', () => {
                 label='onMenuClose'
                 checked={addOnMenuClose}
                 onCheck={setAddOnMenuClose}
-              />
-              <Checkbox
-                label='onOptionChange'
-                checked={addOnOptionChange}
-                onCheck={setAddOnOptionChange}
               />
               <Checkbox
                 label='onInputBlur'

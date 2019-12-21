@@ -12,6 +12,7 @@ export const useMenuHeight = (
   menuRef: MutableRefObject<HTMLDivElement | null>,
   menuOpen: boolean,
   menuHeightDefault: number,
+  menuScrollDuration?: number,
   scrollMenuIntoView?: boolean,
   onMenuOpen?: (...args: any[]) => void,
   onMenuClose?: (...args: any[]) => void
@@ -35,7 +36,7 @@ export const useMenuHeight = (
         }
       };
 
-      scrollMenuIntoViewOnOpen(menuRef.current, scrollMenuIntoView, handleOnMenuOpen);
+      scrollMenuIntoViewOnOpen(menuRef.current, menuScrollDuration, scrollMenuIntoView, handleOnMenuOpen);
     } else {
       onMenuClose && onMenuClose();
       if (resetMenuHeightRef.current) {
@@ -43,7 +44,7 @@ export const useMenuHeight = (
         setMenuHeight(menuHeightDefault);
       }
     }
-  }, [menuRef, menuOpen, onMenuClose, onMenuOpen, menuHeightDefault, scrollMenuIntoView]);
+  }, [menuRef, menuOpen, onMenuClose, onMenuOpen, menuHeightDefault, scrollMenuIntoView, menuScrollDuration]);
 
   return menuHeight;
 };

@@ -15,7 +15,6 @@ import {
 // ============================================
 
 export type OptionData = any;
-export type FilterMatchFrom = 'any' | 'start';
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
 
