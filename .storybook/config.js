@@ -9,7 +9,7 @@ import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
 global.EventSource = NativeEventSource || EventSourcePolyfill;
 
 // Define storybook global configuration
-const _globalStyleId = 'gen3-global-style';
+const GLOBAL_STYLE_ID = 'gen3-global-style';
 const req = require.context('../__stories__', true, /\.story\.tsx$/);
 
 addParameters({
@@ -25,12 +25,14 @@ addParameters({
 // ...instead of the alternative which is to add it as a decorator - this causes mount/unmount with every story navigation
 const loadStories = () => {
   const setupGlobalStyle = () => {
-    const globalStyleEl = document.getElementById(_globalStyleId) || (() => {
-      const el = document.createElement('div');
-      el.id = _globalStyleId;
-      document.head.append(el);
-      return el;
-    })();
+    const globalStyleEl =
+      document.getElementById(GLOBAL_STYLE_ID) ||
+      (() => {
+        const el = document.createElement('div');
+        el.id = GLOBAL_STYLE_ID;
+        document.head.append(el);
+        return el;
+      })();
 
     return {
       containerNode: globalStyleEl,
