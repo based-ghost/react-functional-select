@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import { useCallbackState } from './helpers/useCallbackState';
 import { ToastContainer, ToastPosition } from 'react-toastify';
 import { Option, renderInfoToast, renderSuccessToast, createSelectOptions } from './helpers/utils';
-import { Hr, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, Code, CodeFunction, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, CodeHeader, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Events', () => {
   const options = useMemo<Option[]>(() => createSelectOptions(5), []);
@@ -39,28 +39,31 @@ storiesOf('React Functional Select', module).add('Events', () => {
         <Title>Events</Title>
         <Hr />
         <ListWrapper>
-          There are various callback properties, aside from the most commonly 
-          used <Code>onOptionChange(data: any): void</Code>, that are executed
-          following certain events:
+          There are various callback function properties that are executed following 
+          their associated events:
           <List>
             <ListItem>
-              <CodeFunction>onMenuOpen(...args: any[]): void</CodeFunction> - 
+              <CodeHeader>onOptionChange(data: any): void</CodeHeader> -
+              executed after an option is selected or removed
+            </ListItem>
+            <ListItem>
+              <CodeHeader>onMenuOpen(...args: any[]): void</CodeHeader> - 
               executed after the menu is opened
             </ListItem>
             <ListItem>
-              <CodeFunction>onMenuClose(...args: any[]): void</CodeFunction> - 
+              <CodeHeader>onMenuClose(...args: any[]): void</CodeHeader> - 
               executed after the menu is closed
             </ListItem>
             <ListItem>
-              <CodeFunction>onKeyDown(e: KeyboardEvent&lt;HTMLDivElement&gt;): void</CodeFunction> -
+              <CodeHeader>onKeyDown(e: KeyboardEvent&lt;HTMLDivElement&gt;): void</CodeHeader> -
               executed after the onKeyDown event
             </ListItem>
             <ListItem>
-              <CodeFunction>onInputBlur(e: FocusEvent&lt;HTMLInputElement&gt;): void</CodeFunction> - 
+              <CodeHeader>onInputBlur(e: FocusEvent&lt;HTMLInputElement&gt;): void</CodeHeader> - 
               executed after the input control is blurred
             </ListItem>
             <ListItem>
-              <CodeFunction>onInputFocus(e: FocusEvent&lt;HTMLInputElement&gt;): void</CodeFunction> - 
+              <CodeHeader>onInputFocus(e: FocusEvent&lt;HTMLInputElement&gt;): void</CodeHeader> - 
               executed after the input control is focused
             </ListItem>
           </List>

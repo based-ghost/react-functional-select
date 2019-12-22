@@ -92,7 +92,7 @@ export const Code = styled.code`
   }
 `;
 
-export const CodeFunction = styled(Code)`
+export const CodeHeader = styled(Code)`
   font-size: 1em;
   color: #212529;
   font-weight: 600;

@@ -2,7 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { Option, createSelectOptions } from './helpers/utils';
-import { Hr, List, CodeFunction, Code, Title, Button, ListItem, SubTitle, Label, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, List, CodeHeader, Code, Title, Button, ListItem, SubTitle, Label, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Methods', () => {
   const selectRef = useRef<SelectRef | null>(null);
@@ -33,17 +33,17 @@ storiesOf('React Functional Select', module).add('Methods', () => {
         accessible via a forwarded <Code>ref</Code>.
         <List>
           <ListItem>
-            <CodeFunction>blur(): void</CodeFunction> - blur the control programatically
+            <CodeHeader>blur(): void</CodeHeader> - blur the control programatically
           </ListItem>
           <ListItem>
-            <CodeFunction>focus(): void</CodeFunction> - focus the control programatically
+            <CodeHeader>focus(): void</CodeHeader> - focus the control programatically
           </ListItem>
           <ListItem>
-            <CodeFunction>clearValue(): void</CodeFunction> - clear the current value programatically
+            <CodeHeader>clearValue(): void</CodeHeader> - clear the current value programatically
             <em> (if an option is selected)</em>
           </ListItem>
           <ListItem>
-            <CodeFunction>setValue(option?: any): void</CodeFunction> - set the value programatically
+            <CodeHeader>setValue(option?: any): void</CodeHeader> - set the value programatically
             <em> (option will be validated)</em>
           </ListItem>
         </List>

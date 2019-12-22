@@ -2,7 +2,7 @@ import React, { useCallback, ReactNode } from 'react';
 import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
-import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, LabelHeader, CodeFunction, Code, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, LabelHeader, CodeHeader, Code, Card, CardHeader, CardBody } from './helpers/styled';
 
 type StyledImageProps = {
   readonly isDisabled: boolean;
@@ -86,7 +86,7 @@ storiesOf('React Functional Select', module).add('Advanced', () => {
         Implementation using a couple of the more specialized properties.
         <List>
           <ListItem>
-            <CodeFunction>renderOptionLabel(option: any): React.ReactNode</CodeFunction> - Callback 
+            <CodeHeader>renderOptionLabel(option: any): React.ReactNode</CodeHeader> - Callback 
             function with a return type of <Code>ReactNode</Code>. Use this property in cases 
             where the standard <Code>getOptionLabel</Code> property won't meet your needs (for 
             instance, you want to render each option's label using custom JSX). More complex 
@@ -97,7 +97,7 @@ storiesOf('React Functional Select', module).add('Advanced', () => {
             important to note that increasing this value can negatively impact performance.
           </ListItem>
           <ListItem>
-            <CodeFunction>getIsOptionDisabled(option: any): boolean</CodeFunction> - Callback 
+            <CodeHeader>getIsOptionDisabled(option: any): boolean</CodeHeader> - Callback 
             function with a return type of <Code>Boolean</Code>. When it evaluates to a value of 
             true, that option iteration will be rendered <em>disabled</em>. As an alternative, you 
             can also pass a property of <Code>isDisabled</Code> with each option. Use of these two 

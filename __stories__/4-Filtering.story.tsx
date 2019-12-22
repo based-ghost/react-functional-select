@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { CityOption, CITY_OPTIONS } from './helpers/utils';
 import { Select, FilterMatchEnum, MenuOption } from '../src';
 import { useCallbackState } from './helpers/useCallbackState';
-import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, CodeFunction, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, CodeHeader, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Filtering', () => {
   const options = useMemo<CityOption[]>(() => {
@@ -31,19 +31,19 @@ storiesOf('React Functional Select', module).add('Filtering', () => {
         The default filtering functionality can be customized via the following properties:
         <List>
           <ListItem>
-            <CodeFunction>filterIgnoreCase?: boolean</CodeFunction> - Filter ignores case 
+            <CodeHeader>filterIgnoreCase?: boolean</CodeHeader> - Filter ignores case 
             when matching strings. Default value is <Code>true</Code>.
           </ListItem>
           <ListItem>
-            <CodeFunction>filterIgnoreAccents?: boolean</CodeFunction> - Filter ignores 
+            <CodeHeader>filterIgnoreAccents?: boolean</CodeHeader> - Filter ignores 
             accents when matching strings. Default value is <Code>false</Code>.
           </ListItem>
           <ListItem>
-            <CodeFunction>filterMatchFrom?: 'any' | 'start'</CodeFunction> - Position 
+            <CodeHeader>filterMatchFrom?: 'any' | 'start'</CodeHeader> - Position 
             in source string to perform match. Default value is <Code>'any'</Code>.
           </ListItem>
           <ListItem>
-            <CodeFunction>getFilterOptionString(option: MenuOption): string</CodeFunction> - 
+            <CodeHeader>getFilterOptionString(option: MenuOption): string</CodeHeader> - 
             When defined will take each option and generate a string used in the 
             filtering process. By default, the stringified version of what is generated 
             by <Code>getOptionLabel</Code>, if definded, or the option's label as a fallback.
