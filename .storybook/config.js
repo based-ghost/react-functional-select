@@ -10,7 +10,7 @@ global.EventSource = NativeEventSource || EventSourcePolyfill;
 
 // Define storybook global configuration
 const GLOBAL_STYLE_ID = 'gen3-global-style';
-const req = require.context('../__stories__', true, /\.story\.tsx$/);
+const REQ = require.context('../__stories__', true, /\.story\.tsx$/);
 
 addParameters({
   options: {
@@ -47,7 +47,7 @@ const loadStories = () => {
   ReactDOM.render(<GlobalStyle />, containerNode, cleanupContainerNode);
 
   // Automatically import all files ending in *.story.tsx found at path '../__stories__'
-  req.keys().forEach(file => req(file));
+  REQ.keys().forEach(file => REQ(file));
 };
 
 configure(loadStories, module);

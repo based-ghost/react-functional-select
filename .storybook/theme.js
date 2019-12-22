@@ -1,32 +1,32 @@
 import { create, color, themes } from '@storybook/theming';
 
-const _colorDarker = '#282c34';
-const _colorDarkest = '#1D2027';
-const _colorPrimary = '#fc929e'; //pinkish-red-salmon
-const _colorSecondary = '#f5b83d'; // golden-yellow
-const _colorPrimaryOpacity = 'rgba(252, 146, 158, 0.675)';
+const COLOR_DARKER = '#282c34';
+const COLOR_DARKEST = '#1D2027';
+const COLOR_PRIMARY = '#fc929e'; //pinkish-red-salmon
+const COLOR_SECONDARY = '#f5b83d'; // golden-yellow
+const COLOR_PRIMARY_OPACITY = 'rgba(252, 146, 158, 0.675)';
 
 export default create({
   base: 'dark',
 
   // Base theme colors
-  colorPrimary: _colorSecondary,
-  colorSecondary: _colorPrimaryOpacity,
+  colorPrimary: COLOR_SECONDARY,
+  colorSecondary: COLOR_PRIMARY_OPACITY,
 
   // UI
   appBorderRadius: 0,
-  appBg: _colorDarkest,
+  appBg: COLOR_DARKEST,
   appBorderColor: '#535353',
-  appContentBg: _colorDarker,
+  appContentBg: COLOR_DARKER,
 
   // Text colors
   textColor: '#fff',
   textInverseColor: 'rgba(255, 255, 255, 0.95)',
 
   // Toolbar default and active colors
-  barBg: _colorDarkest,
+  barBg: COLOR_DARKEST,
   barTextColor: color.medium,
-  barSelectedColor: _colorPrimary,
+  barSelectedColor: COLOR_PRIMARY,
 
   // Form colors
   inputBorderRadius: 4,

@@ -97,7 +97,7 @@ const CheckIcon = styled.i<CheckIconProps>`
     ${({ $checked }) =>
       $checked &&
       css`
-        height: 1.2rem;
+        height: 1.16rem;
         transition-delay: 0.15s;
       `};
   }

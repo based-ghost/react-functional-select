@@ -97,7 +97,7 @@ export const CodeHeader = styled(Code)`
   color: #212529;
   font-weight: 600;
   line-height: 1.7;
-  padding: 3.2px 6.4px;
+  padding: 3px 6.4px;
 `;
 
 export const Title = styled.h2`

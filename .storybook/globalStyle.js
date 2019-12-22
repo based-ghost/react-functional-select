@@ -4,7 +4,7 @@ import { css, createGlobalStyle, keyframes } from 'styled-components';
 // SCSS variables
 // ============================================
 
-const fontFamily = `
+const FONT_FAMILY = `
   -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
   'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
   'Helvetica Neue', sans-serif
@@ -134,7 +134,7 @@ const reactToastifyCss = css`
       overflow: hidden;
       font-size: 1.1rem;
       font-weight: 600;
-      font-family: ${fontFamily};
+      font-family: ${FONT_FAMILY};
       cursor: pointer;
       direction: ltr;
       &--rtl {
@@ -256,7 +256,7 @@ export default createGlobalStyle`
     min-height: 120vh;
     flex-direction: column;
     background-color: #fff;
-    font-family: ${fontFamily};
+    font-family: ${FONT_FAMILY};
   }
 
   em {
