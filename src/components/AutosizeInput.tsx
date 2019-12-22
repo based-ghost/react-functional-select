@@ -19,7 +19,7 @@ const STATIC_ATTRIBUTES = Object.freeze<AutosizeInputHTMLAttributes>({
   'data-testid': AUTOSIZE_INPUT_TESTID
 });
 
-const StyledSizer = styled.div`
+const SizerDiv = styled.div`
   top: 0;
   left: 0;
   height: 0;
@@ -32,7 +32,7 @@ const StyledSizer = styled.div`
   font-family: inherit;
 `;
 
-const StyledAutosizeInput = styled.input`
+const Input = styled.input`
   border: 0;
   outline: 0;
   padding: 0;
@@ -92,7 +92,7 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
 
   return (
     <div style={WRAPPER_DIV_STYLE}>
-      <StyledAutosizeInput
+      <Input
         id={id}
         ref={ref}
         onBlur={onBlur}
@@ -103,7 +103,7 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
         onChange={!readOnly ? onChange : undefined}
         className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
       />
-      <StyledSizer ref={sizerRef}>{inputValue}</StyledSizer>
+      <SizerDiv ref={sizerRef}>{inputValue}</SizerDiv>
     </div>
   );
 }));

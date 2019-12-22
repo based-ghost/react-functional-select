@@ -49,15 +49,15 @@ type ControlWrapperProps = {
   readonly isDisabled?: boolean;
 };
 
-type MenuOption = {
+export type Theme = Partial<DefaultTheme>;
+
+export type MenuOption = {
   readonly label: ReactText;
   readonly value: ReactText;
   readonly data: OptionData;
   readonly isDisabled?: boolean;
   readonly isSelected?: boolean;
 };
-
-export type Theme = Partial<DefaultTheme>;
 
 export type SelectRef = {
   readonly blur: () => void;

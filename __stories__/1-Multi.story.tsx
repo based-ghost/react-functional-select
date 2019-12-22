@@ -25,12 +25,12 @@ storiesOf('React Functional Select', module).add('Multi-select', () => {
         more pertinent.
         <List>
           <ListItem>
-            <CodeFunction>hideSelectedOptions?: Boolean</CodeFunction> - Hide the 
+            <CodeFunction>hideSelectedOptions?: boolean</CodeFunction> - Hide the 
             selected option from the menu. Default value is false, however, if 
             undefined and <Code>isMulti === true</Code>, then its value defaults to true.
           </ListItem>
           <ListItem>
-            <CodeFunction>closeMenuOnSelect?: Boolean</CodeFunction> - Close the menu of 
+            <CodeFunction>closeMenuOnSelect?: boolean</CodeFunction> - Close the menu of 
             options when the user selects an option. Default value is false, however, it may 
             be benefical to set this property to true for convenience in multi-select scenarios.
           </ListItem>

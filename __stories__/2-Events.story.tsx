@@ -39,8 +39,9 @@ storiesOf('React Functional Select', module).add('Events', () => {
         <Title>Events</Title>
         <Hr />
         <ListWrapper>
-          There are various callback properties aside from the most commonly 
-          used <Code>onOptionChange(data: any): void</Code>:
+          There are various callback properties, aside from the most commonly 
+          used <Code>onOptionChange(data: any): void</Code>, that are executed
+          following certain events:
           <List>
             <ListItem>
               <CodeFunction>onMenuOpen(...args: any[]): void</CodeFunction> - 
