@@ -9,7 +9,7 @@
 
 ## Overview
 
-#### Key features:
+<strong>Key features:</strong>
 
 - Fully-featured, yet lightweight package: ~7.85 KB (gzipped)!
 - Extensible styling API with [`styled-components`](https://github.com/styled-components/styled-components)
