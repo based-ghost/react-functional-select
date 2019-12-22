@@ -11,7 +11,7 @@
 
 #### Key features:
 
-- Fully-featured, yet lightweight package - only ~7.85 KB (gzipped)!
+- Fully-featured, yet lightweight package: ~7.85 KB (gzipped)!
 - Extensible styling API with [`styled-components`](https://github.com/styled-components/styled-components)
 - Opt-in properties to make the component fully accessible
 - Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [`react-window`](https://github.com/bvaughn/react-window) + performance conscious code
