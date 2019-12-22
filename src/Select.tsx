@@ -4,7 +4,7 @@ import { FixedSizeList } from 'react-window';
 import { FADE_IN_ANIMATION_CSS } from './constants/styled';
 import { useDebounce, useMenuHeight, useMenuOptions } from './hooks';
 import { FocusedOption, SelectedOption, MouseOrTouchEvent } from './types';
-import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
+import styled, { DefaultTheme, ThemeProvider } from 'styled-components';
 import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
 import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
@@ -87,6 +87,7 @@ export type SelectProps = {
   readonly options?: OptionData[];
   readonly isSearchable?: boolean;
   readonly menuMaxHeight?: number;
+  readonly loadingNode?: ReactNode;
   readonly addClassNames?: boolean;
   readonly ariaLabelledBy?: string;
   readonly openMenuOnClick?: boolean;
@@ -120,8 +121,8 @@ export type SelectProps = {
 const SelectWrapper = styled.div`
   position: relative;
   box-sizing: border-box;
-  ${({ theme }) => theme.color.textColor && css`color: ${theme.color.textColor};`}
-  ${({ theme }) => theme.select.fontSize && css`font-size: ${theme.select.fontSize};`}
+  ${({ theme }) => (theme.color.textColor ? `color: ${theme.color.textColor};` : '')}
+  ${({ theme }) => (theme.select.fontSize ? `font-size: ${theme.select.fontSize};` : '')}
 `;
 
 const ValueWrapper = styled.div`
@@ -145,25 +146,18 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
   box-sizing: border-box;
   justify-content: space-between;
 
-  ${({ isDisabled, isFocused, isInvalid, theme: { control, color } }) => css`
+  ${({ isDisabled, isFocused, isInvalid, theme: { control, color } }) => (`
     min-height: ${control.minHeight};
     transition: ${control.transition};
     border-style: ${control.borderStyle};
     border-width: ${control.borderWidth};
     border-radius: ${control.borderRadius};
-
-    border-color: ${
-      isInvalid
-        ? color.danger
-        : isFocused
-          ? control.focusedBorderColor
-          : color.border};
-
-    ${isDisabled && 'pointer-events: none;'}
-    ${control.height && `height: ${control.height};`}
-    ${(control.backgroundColor || isDisabled) && `background-color: ${isDisabled ? color.disabled : control.backgroundColor};`}
-    ${isFocused && `box-shadow: ${control.boxShadow} ${isInvalid ? color.dangerLight : control.boxShadowColor};`}
-  `}
+    border-color: ${(isInvalid ? color.danger : (isFocused ? control.focusedBorderColor : color.border))};
+    ${isDisabled ? 'pointer-events: none;' : ''}
+    ${control.height ? `height: ${control.height};` : ''}
+    ${(control.backgroundColor || isDisabled) ? `background-color: ${isDisabled ? color.disabled : control.backgroundColor};` : ''}
+    ${isFocused ? `box-shadow: ${control.boxShadow} ${isInvalid ? color.dangerLight : control.boxShadowColor};` : ''}
+  `)}
 `;
 
 const MenuWrapper = styled.div<MenuWrapperProps>`
@@ -171,15 +165,15 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   position: absolute;
   ${FADE_IN_ANIMATION_CSS}
   
-  ${({ hideMenu, theme: { menu } }) => css`
+  ${({ hideMenu, theme: { menu } }) => (`
     width: ${menu.width};
     margin: ${menu.margin};
     padding: ${menu.padding};
     box-shadow: ${menu.boxShadow};
     border-radius: ${menu.borderRadius};
     background-color: ${menu.backgroundColor};
-    ${hideMenu && 'display: none;'}
-  `}
+    ${hideMenu ? 'display: none;' : ''}
+  `)}
 
   .${OPTION_CLS} {
     display: block;
@@ -195,10 +189,12 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     &:hover:not(.${OPTION_DISABLED_CLS}):not(.${OPTION_SELECTED_CLS}) {
       background-color: ${({ theme }) => theme.menu.option.focusedBgColor};
     }
+
     &.${OPTION_SELECTED_CLS} {
       color: ${({ theme }) => theme.menu.option.selectedColor};
       background-color: ${({ theme }) => theme.menu.option.selectedBgColor};
     }
+
     &.${OPTION_DISABLED_CLS} {
       opacity: 0.35;
     }
@@ -225,6 +221,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     onInputBlur,
     isClearable,
     themeConfig,
+    loadingNode,
     onInputFocus,
     initialValue,
     addClassNames,
@@ -720,6 +717,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             caretIcon={caretIcon}
             isInvalid={isInvalid}
             isLoading={isLoading}
+            loadingNode={loadingNode}
             addClassNames={addClassNames}
             onClearMouseDown={handleOnClearMouseDown}
             showClear={!!(isClearable && !isDisabled && isArrayWithLength(selectedOption))}

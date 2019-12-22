@@ -1,6 +1,6 @@
 import React from 'react';
 import LoadingDots from './LoadingDots';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { CaretProps, IndicatorIconsProps } from '../types';
 import { FADE_IN_ANIMATION_CSS } from '../constants/styled';
 import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/dom';
@@ -40,11 +40,10 @@ const Caret = styled.div<CaretProps>`
   border-right: ${({ theme }) => theme.icon.caret.size} solid transparent;
 
   ${({ menuOpen, isInvalid, theme: { color } }) =>
-    menuOpen &&
-    css`
+    menuOpen && (`
       transform: rotate(180deg);
-      color: ${isInvalid ? color.danger : (color.caretActive || color.primary)};
-    `}
+      color: ${(isInvalid ? color.danger : (color.caretActive || color.primary))};
+    `)}
 `;
 
 const Separator = styled.div`
@@ -62,6 +61,7 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
   isInvalid,
   showClear,
   isLoading,
+  loadingNode,
   addClassNames,
   onCaretMouseDown,
   onClearMouseDown,
@@ -77,7 +77,7 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
         {clearIcon || <Clear className={addClassNames ? CLEAR_ICON_CLS : undefined}>X</Clear>}
       </IndicatorIcon>
     )}
-    {isLoading && <LoadingDots />}
+    {isLoading && (loadingNode || <LoadingDots />)}
     <Separator />
     <IndicatorIcon
       aria-hidden='true'

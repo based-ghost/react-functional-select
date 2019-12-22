@@ -116,8 +116,9 @@ All properties are technically optional (with a few having default values). Very
 |`menuItemSize`| number | `35` | The height of each option in the menu (px)
 |`isClearable`| bool | `false` | Is the select value clearable
 |`noOptionsMsg`| string | `No options` | The text displayed in the menu when there are no options available
-|`clearIcon`| React.ReactNode | `undefined` | Custom clear icon
-|`caretIcon`| React.ReactNode | `undefined` | Custom caret icon
+|`clearIcon`| React.ReactNode | `undefined` | Custom clear icon node
+|`caretIcon`| React.ReactNode | `undefined` | Custom caret icon node
+|`loadingNode`| React.ReactNode | `undefined` | Custom loading node
 |`options`| array | `[]` | The menu options
 |`isSearchable`| bool | `true` | Whether to enable search functionality or not
 |`hideSelectedOptions`| bool | `false` | Hide the selected option from the menu (if undefined and isMulti = true, then defaults to true)

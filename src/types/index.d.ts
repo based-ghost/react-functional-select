@@ -125,6 +125,7 @@ export type IndicatorIconsProps = {
   readonly isInvalid?: boolean;
   readonly clearIcon?: ReactNode;
   readonly caretIcon?: ReactNode;
+  readonly loadingNode?: ReactNode;
   readonly addClassNames?: boolean;
   readonly onCaretMouseDown?: MouseOrTouchEventHandler<HTMLDivElement>;
   readonly onClearMouseDown: MouseOrTouchEventHandler<HTMLDivElement>;

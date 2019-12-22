@@ -79,6 +79,21 @@ test('clear icon is not rendered and loading animation is rendered when "isLoadi
   expect(queryByTestId(CLEAR_ICON_TESTID!)).toBeNull();
 });
 
+test('loading node/component can render custom node (instead of default LoadingDots.tsx component)', async () => {
+  const loadingNodeText = 'loading-node';
+  const loadingNode = (<span>{loadingNodeText}</span>);
+
+  const { props } = createIndicatorIconsProps();
+  const mergedProps = {
+    ...props,
+    loadingNode,
+    isLoading: true,
+  };
+
+  const { getByText } = renderIndicatorIcons(mergedProps);
+  expect(getByText(loadingNodeText)).toBeInTheDocument();
+});
+
 test('clear and caret icons can render custom nodes', async () => {
   const clearIconText = 'clear-icon-node';
   const caretIconText = 'caret-icon-node';
@@ -86,7 +101,6 @@ test('clear and caret icons can render custom nodes', async () => {
   const caretIcon = (<span>{caretIconText}</span>);
 
   const { props } = createIndicatorIconsProps();
-  
   const mergedProps = {
     ...props,
     clearIcon,

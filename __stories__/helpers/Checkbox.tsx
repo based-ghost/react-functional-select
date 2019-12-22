@@ -86,7 +86,7 @@ const CheckIcon = styled.i<CheckIconProps>`
     left: 0;
     top: 0.3rem;
     transform: rotate(-45deg);
-    ${({ $checked }) => $checked && css`height: 0.5rem;`};
+    ${({ $checked }) => $checked ? `height: 0.5rem;` : ''};
   }
 
   :before {
@@ -95,11 +95,10 @@ const CheckIcon = styled.i<CheckIconProps>`
     transform: rotate(-135deg);
 
     ${({ $checked }) =>
-      $checked &&
-      css`
+      $checked && (`
         height: 1.16rem;
         transition-delay: 0.15s;
-      `};
+      `)};
   }
 `;
 
