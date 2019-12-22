@@ -1,15 +1,13 @@
-import React, { useMemo, useCallback, Fragment, FocusEvent, KeyboardEvent } from 'react';
+import React, { useCallback, Fragment, FocusEvent, KeyboardEvent } from 'react';
 import { Select } from '../src';
 import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
 import { useCallbackState } from './helpers/useCallbackState';
 import { ToastContainer, ToastPosition } from 'react-toastify';
-import { Option, renderInfoToast, renderSuccessToast, createSelectOptions } from './helpers/utils';
+import { Option, renderInfoToast, renderSuccessToast, FIVE_BASIC_OPTIONS } from './helpers/utils';
 import { Hr, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, CodeHeader, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Events', () => {
-  const options = useMemo<Option[]>(() => createSelectOptions(5), []);
-
   const [addOnKeyDown, setAddOnKeyDown] = useCallbackState(false);
   const [addOnMenuOpen, setAddOnMenuOpen] = useCallbackState(true);
   const [addOnMenuClose, setAddOnMenuClose] = useCallbackState(false);
@@ -108,7 +106,7 @@ storiesOf('React Functional Select', module).add('Events', () => {
           <CardBody>
             <SelectContainer>
               <Select
-                options={options}
+                options={FIVE_BASIC_OPTIONS}
                 onKeyDown={addOnKeyDown ? onKeyDown : undefined}
                 onMenuOpen={addOnMenuOpen ? onMenuOpen : undefined}
                 onMenuClose={addOnMenuClose ? onMenuClose : undefined}

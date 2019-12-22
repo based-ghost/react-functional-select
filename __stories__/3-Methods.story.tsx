@@ -1,12 +1,11 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef } from 'react';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
-import { Option, createSelectOptions } from './helpers/utils';
+import { FIVE_BASIC_OPTIONS } from './helpers/utils';
 import { Hr, List, CodeHeader, Code, Title, Button, ListItem, SubTitle, Label, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Methods', () => {
   const selectRef = useRef<SelectRef | null>(null);
-  const options = useMemo<Option[]>(() => createSelectOptions(5), []);
 
   const blurSelect = (): void => {
     selectRef.current && selectRef.current.blur();
@@ -21,7 +20,7 @@ storiesOf('React Functional Select', module).add('Methods', () => {
   };
 
   const updateSelectedOption = (): void => {
-    selectRef.current && selectRef.current.setValue(options[0]);
+    selectRef.current && selectRef.current.setValue(FIVE_BASIC_OPTIONS[0]);
   };
 
   return (
@@ -64,8 +63,8 @@ storiesOf('React Functional Select', module).add('Methods', () => {
           <SelectContainer>
             <Select
               ref={selectRef}
-              options={options}
-              initialValue={options[0]}
+              options={FIVE_BASIC_OPTIONS}
+              initialValue={FIVE_BASIC_OPTIONS[0]}
             />
           </SelectContainer>
         </CardBody>

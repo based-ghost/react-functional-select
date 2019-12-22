@@ -47,3 +47,5 @@ export const CITY_OPTIONS: CityOption[] = [
   { id: 9, city: 'Milwaukee', state: 'WI' },
   { id: 10, city: 'Louisville', state: 'KY' },
 ];
+
+export const FIVE_BASIC_OPTIONS: Option[] = createSelectOptions(5);
