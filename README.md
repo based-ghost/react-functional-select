@@ -3,15 +3,15 @@
 > Micro-sized & micro-optimized select component for React.js.
 
 [![Latest Stable Version](https://img.shields.io/npm/v/react-functional-select.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
-[![Travis](https://img.shields.io/badge/ci-travis-green.svg?style=for-the-badge)](https://travis-ci.org/based-ghost/react-functional-select)
-[![NPM license](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](./LICENSE)
+[![Issues](https://img.shields.io/github/issues/based-ghost/react-functional-select.svg?style=for-the-badge)](https://github.com/based-ghost/react-functional-select/issues)
+[![License](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
 [![Downloads](https://img.shields.io/npm/dt/react-functional-select?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
 
 ## Overview
 
 <strong>Key features:</strong>
 
-- Fully-featured, yet lightweight package - only ~7.85 KB (gzipped)!
+- Fully-featured, yet lightweight package: ~7.85 KB (gzipped)!
 - Extensible styling API with [`styled-components`](https://github.com/styled-components/styled-components)
 - Opt-in properties to make the component fully accessible
 - Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [`react-window`](https://github.com/bvaughn/react-window) + performance conscious code
