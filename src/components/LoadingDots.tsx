@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-const BOUNCE = keyframes`
+const BOUNCE_KEYFRAMES = keyframes`
   0%, 80%, 100% {
     transform: scale(0);
   } 40% {
@@ -19,10 +19,10 @@ const StyledLoadingDots = styled.div`
   > div {
     border-radius: 100%;
     display: inline-block;
-    animation: ${BOUNCE} 1.19s ease-in-out infinite;
     width: ${({ theme }) => theme.loader.size};
     height: ${({ theme }) => theme.loader.size};
     background-color: ${({ theme }) => theme.loader.color};
+    animation: ${BOUNCE_KEYFRAMES} 1.19s ease-in-out infinite;
 
     :nth-of-type(1) {
       animation-delay: -0.272s;

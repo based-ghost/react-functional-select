@@ -1,6 +1,6 @@
 import { css, keyframes } from 'styled-components';
 
-const fadeIn = keyframes`
+const FADE_IN_KEYFRAMES = keyframes`
   from {
     opacity: 0;
   } to {
@@ -9,5 +9,5 @@ const fadeIn = keyframes`
 `;
 
 export const FADE_IN_ANIMATION_CSS = css`
-  animation: ${fadeIn} 0.225s ease-in-out forwards;
+  animation: ${FADE_IN_KEYFRAMES} 0.225s ease-in-out forwards;
 `;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, CSSProperties } from 'react';
 import { isEdgeOrIE } from '../utils';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
 
@@ -50,12 +50,11 @@ const Input = styled.input`
   }
 
   ${() =>
-    isEdgeOrIE() &&
-    css`
+    isEdgeOrIE() && (`
       ::-ms-clear {
         display: none;
       }
-    `}
+    `)}
 `;
 
 const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInputProps>((

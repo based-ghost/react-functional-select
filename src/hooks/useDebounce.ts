@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 /**
- * Custom Hook.
  * Generic debouncer hook (potential hack to prevent unecessary state mutations if no delay is passed).
  * If a number is passed for the delay parameter, use to debounce/set the value.
  */

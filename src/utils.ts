@@ -202,10 +202,7 @@ export function validateSetValueParam(
   }
 
   // Get unique array of MenuOption values (ReactText[]) and use to check against menuOptions
-  const results = [];
-  const normalizedValuesArr = normalizeValue(values);
-
-  const validValuesArr = normalizedValuesArr
+  const validValuesArr = normalizeValue(values)
     .filter((x) => isPlainObject(x))
     .map((x) => getOptionValueCB(x))
     .filter((item, index, self) => self.indexOf(item) === index);
@@ -214,6 +211,7 @@ export function validateSetValueParam(
     return SELECTED_OPTION_DEFAULT;
   }
 
+  const results = [];
   for (const option of menuOptions) {
     if (validValuesArr.includes(getOptionValueCB(option))) {
       results.push(option);
@@ -237,7 +235,7 @@ export function normalizeValue(
   // Cast to array of type SelectedOption[]
   const initialValues = Array.isArray(value)
     ? value.filter(Boolean)
-    : (typeof value === 'object' && value !== null)
+    : isPlainObject(value)
       ? [value]
       : SELECTED_OPTION_DEFAULT;
   
@@ -247,9 +245,9 @@ export function normalizeValue(
   }
 
   // Array has initial values - cast to typeof SelectedOption and return SelectedOption[]
-  return initialValues.map((val) => ({
-    data: val,
-    value: getOptionValueCB(val),
-    label: getOptionLabelCB(val)
+  return initialValues.map((v) => ({
+    data: v,
+    value: getOptionValueCB(v),
+    label: getOptionLabelCB(v)
   }));
 }

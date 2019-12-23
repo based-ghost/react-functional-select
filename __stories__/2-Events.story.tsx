@@ -20,10 +20,7 @@ storiesOf('React Functional Select', module).add('Events', () => {
   const onInputBlur = useCallback((e: FocusEvent<HTMLInputElement>): void => renderInfoToast('Control blurred !'), []);
   const onInputFocus = useCallback((e: FocusEvent<HTMLInputElement>): void => renderInfoToast('Control focused !'), []);
   const onKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>): void => renderInfoToast('keydown event executed !'), []);
-
-  const onOptionChange = useCallback((option: Option | null): void => {
-    option && renderSuccessToast(`Selected Option: ${JSON.stringify(option)}`);
-  }, []);
+  const onOptionChange = useCallback((option: Option | null): void => renderSuccessToast(`Selected Option: ${JSON.stringify(option || {})}`), []);
 
   return (
     <Fragment>

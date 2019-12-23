@@ -79,7 +79,7 @@ test('clear icon is not rendered and loading animation is rendered when "isLoadi
   expect(queryByTestId(CLEAR_ICON_TESTID!)).toBeNull();
 });
 
-test('loading node/component can render custom node (instead of default LoadingDots.tsx component)', async () => {
+test('loading can render as a custom node (instead of default LoadingDots.tsx component)', async () => {
   const loadingNodeText = 'loading-node';
   const loadingNode = (<span>{loadingNodeText}</span>);
 
@@ -94,20 +94,30 @@ test('loading node/component can render custom node (instead of default LoadingD
   expect(getByText(loadingNodeText)).toBeInTheDocument();
 });
 
-test('clear and caret icons can render custom nodes', async () => {
+test('clear icon can render as a custom node', async () => {
   const clearIconText = 'clear-icon-node';
-  const caretIconText = 'caret-icon-node';
   const clearIcon = (<span>{clearIconText}</span>);
-  const caretIcon = (<span>{caretIconText}</span>);
 
   const { props } = createIndicatorIconsProps();
   const mergedProps = {
     ...props,
     clearIcon,
-    caretIcon,
   };
 
   const { getByText } = renderIndicatorIcons(mergedProps);
   expect(getByText(clearIconText)).toBeInTheDocument();
+});
+
+test('caret icon can render as a custom node', async () => {
+  const caretIconText = 'caret-icon-node';
+  const caretIcon = (<span>{caretIconText}</span>);
+
+  const { props } = createIndicatorIconsProps();
+  const mergedProps = {
+    ...props,
+    caretIcon,
+  };
+
+  const { getByText } = renderIndicatorIcons(mergedProps);
   expect(getByText(caretIconText)).toBeInTheDocument();
 });

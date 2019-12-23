@@ -5,7 +5,6 @@ import { OPTIONS_DEFAULT } from '../constants/defaults';
 import { OptionData, MenuOption, SelectedOption } from '../types';
 
 /**
- * Custom Hook.
  * Parse options to array of MenuOptions and perform filtering (if applicable).
  * Set menuOptions state (ensure array returned).
  */

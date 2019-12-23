@@ -2,10 +2,10 @@ import React, { useEffect, useMemo, useState, useCallback, useRef, useImperative
 import DefaultThemeObj from './theme';
 import { FixedSizeList } from 'react-window';
 import { FADE_IN_ANIMATION_CSS } from './constants/styled';
-import { useDebounce, useMenuHeight, useMenuOptions } from './hooks';
 import { FocusedOption, SelectedOption, MouseOrTouchEvent } from './types';
 import styled, { DefaultTheme, ThemeProvider } from 'styled-components';
 import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
+import { useDebounce, useMenuHeight, useMenuOptions, useUpdateEffect } from './hooks';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
 import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
 import {
@@ -162,6 +162,7 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
 
 const MenuWrapper = styled.div<MenuWrapperProps>`
   z-index: 999;
+  cursor: default;
   position: absolute;
   ${FADE_IN_ANIMATION_CSS}
   
@@ -408,10 +409,10 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     }
   }, [isMulti, closeMenuOnSelect, blurInputOnSelect, removeSelectedOption]);
 
-  /*** useEffect ***/
+  /*** useEffect/useUpdateEffect ***/
   // 1: If autoFocus = true, focus the control following initial mount
   // 2: If control recieves focus & openMenuOnFocus = true, open menu
-  // 3: Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
+  // 3: (useUpdateEffect) Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
   // 4: Handle clearing focused option if menuOptions array has 0 length;
   //    Handle menuOptions changes - conditionally focus first option and do scroll to first option;
   //    Handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
@@ -426,7 +427,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     }
   }, [isFocused, openMenuOnFocus, openMenuAndFocusOption]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (onOptionChange) {
       const normalizedOptionValue = isMulti
         ? selectedOption.map(x => x.data)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Select, Theme } from '../src';
 import { Option } from './helpers/utils';
 import DefaultThemeObj from '../src/theme';
@@ -62,8 +62,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
   const [themeConfig, setThemeConfig] = useState<Theme | undefined>(undefined);
   const [selectedOption, setSelectedOption] = useCallbackState<Option | null>(null);
 
-  // Create theme options based upon key-value pairs in _themeEnum object defined above
-  const [options] = useState<Option[]>(() => {
+  // Create theme options based upon key-value pairs in ThemeEnum object defined above
+  const options = useMemo<Option[]>(() => {
     const results: Option[] = [];
     Object.keys(ThemeEnum).forEach((key: string): void => {
       results.push({
@@ -72,7 +72,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       });
     });
     return results;
-  });
+  }, []);
 
   // Adjust the react-window itemSize (height of menu option) from default of 35 to 44 for 'Large Text'
   const menuItemSize = (selectedOption && selectedOption.value === ThemeEnum.LARGE_TEXT) ? 44 : 35;

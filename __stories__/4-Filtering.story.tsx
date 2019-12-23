@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
 import { CityOption, CITY_OPTIONS } from './helpers/utils';
@@ -6,14 +6,12 @@ import { Select, FilterMatchEnum, MenuOption } from '../src';
 import { useCallbackState } from './helpers/useCallbackState';
 import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, CodeHeader, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
-storiesOf('React Functional Select', module).add('Filtering', () => {
-  const options = useMemo<CityOption[]>(() => {
-    return [
-      ...CITY_OPTIONS,
-      { id: 11, city: 'São Paulo', state: 'BR' }
-    ];
-  }, []);
+const CITY_OPTIONS_PLUS_ACCENT = [
+  ...CITY_OPTIONS,
+  { id: 11, city: 'São Paulo', state: 'BR' }
+];
 
+storiesOf('React Functional Select', module).add('Filtering', () => {
   const [filterIgnoreCase, setFilterIgnoreCase] = useCallbackState(true);
   const [useCustomFilterFunc, setUseCustomFilterFunc] = useCallbackState(false);
   const [filterIgnoreAccents, setFilterIgnoreAccents] = useCallbackState(false);
@@ -84,9 +82,9 @@ storiesOf('React Functional Select', module).add('Filtering', () => {
           <SelectContainer>
             <Select
               isClearable
-              options={options}
               getOptionValue={getOptionValue}
               getOptionLabel={getOptionLabel}
+              options={CITY_OPTIONS_PLUS_ACCENT}
               filterIgnoreCase={filterIgnoreCase}
               filterIgnoreAccents={filterIgnoreAccents}
               getFilterOptionString={useCustomFilterFunc ? getFilterOptionString : undefined}

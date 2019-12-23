@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef, MutableRefObject } from 'react';
+import { useState, useRef, MutableRefObject } from 'react';
+import { useUpdateEffect } from './useUpdateEffect';
 import { scrollMenuIntoViewOnOpen } from '../utils';
 
 /**
- * Custom Hook.
  * Handle calculating and maintaining the menuHeight used by react-window.
  * Handle scroll animation and callback execution when menuOpen = true.
  * Handle resetting menuHeight back to the menuHeightDefault and callback execution when menuOpen = false.
@@ -17,30 +17,29 @@ export const useMenuHeight = (
   onMenuOpen?: (...args: any[]) => void,
   onMenuClose?: (...args: any[]) => void
 ): number => {
-  const isFirstRenderRef = useRef<boolean>(true);
-  const resetMenuHeightRef = useRef<boolean>(false);
+  const resetMenuHeight = useRef<boolean>(false);
   const [menuHeight, setMenuHeight] = useState<number>(menuHeightDefault);
 
-  useEffect(() => {
-    if (isFirstRenderRef.current) {
-      isFirstRenderRef.current = false;
-      return;
-    }
-
+  useUpdateEffect(() => {
     if (menuOpen) {
       const handleOnMenuOpen = (availableSpace?: number): void => {
         onMenuOpen && onMenuOpen();
         if (availableSpace) {
-          resetMenuHeightRef.current = true;
+          resetMenuHeight.current = true;
           setMenuHeight(availableSpace);
         }
       };
 
-      scrollMenuIntoViewOnOpen(menuRef.current, menuScrollDuration, scrollMenuIntoView, handleOnMenuOpen);
+      scrollMenuIntoViewOnOpen(
+        menuRef.current,
+        menuScrollDuration,
+        scrollMenuIntoView,
+        handleOnMenuOpen
+      );
     } else {
       onMenuClose && onMenuClose();
-      if (resetMenuHeightRef.current) {
-        resetMenuHeightRef.current = false;
+      if (resetMenuHeight.current) {
+        resetMenuHeight.current = false;
         setMenuHeight(menuHeightDefault);
       }
     }
