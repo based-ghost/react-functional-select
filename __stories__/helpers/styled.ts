@@ -182,14 +182,16 @@ export const CheckboxGroup = styled.div`
   font-size: 1rem;
 
   > label {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 
     :not(:last-of-type) {
       margin-right: 1.35rem;
     }
 
     ${MEDIA_QUERY_IS_MOBILE} {
-      margin-top: 0.75rem;
+      margin-top: 0.35rem;
+      margin-bottom: 0.35rem;
     }
   }
 `;
