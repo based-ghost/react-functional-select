@@ -2,6 +2,7 @@ import React, { useCallback, ReactNode } from 'react';
 import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
 import styled, { css, keyframes } from 'styled-components';
+import { useClearAllToasts } from './helpers/useClearAllToasts';
 import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, LabelHeader, CodeHeader, Code, Card, CardHeader, CardBody } from './helpers/styled';
 
 type StyledImageProps = {
@@ -69,18 +70,18 @@ storiesOf('React Functional Select', module).add('Advanced', () => {
   const getOptionValue = useCallback((option: PackageOption): number => option.id, []);
   const getIsOptionDisabled = useCallback((option: PackageOption): boolean => (option.packageName === OPTIONS[3].packageName), []);
 
-  const renderOptionLabel = useCallback((option: PackageOption): ReactNode => {
-    return (
-      <StyledDiv>
-        <StyledImg src={REACT_LOGO_SVG} isDisabled={getIsOptionDisabled(option)} />
-        <StyledSpan>{option.packageName}</StyledSpan>
-      </StyledDiv>
-    );
-  }, [getIsOptionDisabled]);
+  const renderOptionLabel = useCallback((option: PackageOption): ReactNode => (
+    <StyledDiv>
+      <StyledImg src={REACT_LOGO_SVG} isDisabled={getIsOptionDisabled(option)} />
+      <StyledSpan>{option.packageName}</StyledSpan>
+    </StyledDiv>
+  ), [getIsOptionDisabled]);
+
+  useClearAllToasts();
 
   return (
     <Container>
-      <Title>Advanced Properties</Title>
+      <Title>Advanced Configuration</Title>
       <Hr />
       <ListWrapper>
         Implementation using a couple of the more specialized properties.

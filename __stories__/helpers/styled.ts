@@ -84,7 +84,7 @@ export const Code = styled.code`
   font-size: 0.90em;
   border-radius: 0.3em;
   word-break: break-word;
-  background-color: rgba(27, 31, 35, 0.06);
+  background-color: rgba(27, 31, 35, 0.0575);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${MEDIA_QUERY_IS_MOBILE_XS} {
@@ -223,19 +223,21 @@ export const CardHeader = styled.div<{ supportMobile?: boolean }>`
     text-align: center;
   }
 
-  ${({ supportMobile }) => supportMobile && css`
-    > * {
-      ${MEDIA_QUERY_IS_MOBILE} {
-        width: 100%;
-        display: block;
-        margin: 0 3.25rem 0.25rem;
-      }
+  ${({ supportMobile }) =>
+    supportMobile
+    && (`
+      > * {
+        ${MEDIA_QUERY_IS_MOBILE} {
+          width: 100%;
+          display: block;
+          margin: 0 3.25rem 0.25rem;
+        }
 
-      ${MEDIA_QUERY_IS_MOBILE_XS} {
-        margin: 0 1.25rem 0.25rem;
+        ${MEDIA_QUERY_IS_MOBILE_XS} {
+          margin: 0 1.25rem 0.25rem;
+        }
       }
-    }
-  `}
+    `)}
 `;
 
 export const CardBody = styled.div`

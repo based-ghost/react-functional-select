@@ -4,6 +4,7 @@ import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
 import { CityOption, CITY_OPTIONS } from './helpers/utils';
 import { useCallbackState } from './helpers/useCallbackState';
+import { useClearAllToasts } from './helpers/useClearAllToasts';
 import { Hr, Title, SubTitle, List, ListItem, ListWrapper, Container, SelectContainer, CodeHeader, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Multi-select', () => {
@@ -14,6 +15,8 @@ storiesOf('React Functional Select', module).add('Multi-select', () => {
 
   const getOptionValue = useCallback((option: CityOption): number => option.id, []);
   const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
+
+  useClearAllToasts();
 
   return (
     <Container>

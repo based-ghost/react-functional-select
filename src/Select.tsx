@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState, useCallback, useRef, useImperative
 import DefaultThemeObj from './theme';
 import { FixedSizeList } from 'react-window';
 import { FADE_IN_ANIMATION_CSS } from './constants/styled';
-import { FocusedOption, SelectedOption, MouseOrTouchEvent } from './types';
 import styled, { DefaultTheme, ThemeProvider } from 'styled-components';
+import { FocusedOption, SelectedOption, MouseOrTouchEvent } from './types';
 import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { useDebounce, useMenuHeight, useMenuOptions, useUpdateEffect } from './hooks';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
@@ -145,8 +145,7 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
   align-items: center;
   box-sizing: border-box;
   justify-content: space-between;
-
-  ${({ isDisabled, isFocused, isInvalid, theme: { control, color } }) => (`
+  ${({ isDisabled, isFocused, isInvalid, theme: { control, color }}) => (`
     min-height: ${control.minHeight};
     transition: ${control.transition};
     border-style: ${control.borderStyle};
@@ -165,8 +164,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   cursor: default;
   position: absolute;
   ${FADE_IN_ANIMATION_CSS}
-  
-  ${({ hideMenu, theme: { menu } }) => (`
+  ${({ hideMenu, theme: { menu }}) => (`
     width: ${menu.width};
     margin: ${menu.margin};
     padding: ${menu.padding};

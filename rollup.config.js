@@ -34,7 +34,10 @@ export default [
       file: pkg.main,
       format: 'cjs',
     },
-    plugins: [typescript2Plugin, babelPlugin],
+    plugins: [
+      typescript2Plugin,
+      babelPlugin
+    ],
   },
 
   /*** MODULE ***/
@@ -45,7 +48,10 @@ export default [
       file: pkg.module,
       format: 'esm',
     },
-    plugins: [typescript2Plugin, babelPlugin],
+    plugins: [
+      typescript2Plugin,
+      babelPlugin
+    ],
   },
 
   /*** BROWSER (DEVELOPMENT) ***/

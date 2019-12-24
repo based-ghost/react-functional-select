@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { CityOption, CITY_OPTIONS } from './helpers/utils';
 import { Select, FilterMatchEnum, MenuOption } from '../src';
 import { useCallbackState } from './helpers/useCallbackState';
+import { useClearAllToasts } from './helpers/useClearAllToasts';
 import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, CodeHeader, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 const CITY_OPTIONS_PLUS_ACCENT = [
@@ -20,6 +21,8 @@ storiesOf('React Functional Select', module).add('Filtering', () => {
   const getOptionValue = useCallback((option: CityOption): number => option.id, []);
   const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
   const getFilterOptionString = useCallback((menuOption: MenuOption): string => menuOption.data.state, []);
+
+  useClearAllToasts();
 
   return (
     <Container>

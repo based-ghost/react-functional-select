@@ -27,20 +27,25 @@ const IndicatorIcon = styled.div`
 const Clear = styled.div`
   overflow: hidden;
   ${FADE_IN_ANIMATION_CSS}
-  font-size: ${({ theme }) => theme.icon.clear.fontSize};
-  transition: ${({ theme }) => theme.icon.clear.transition};
-  font-weight: ${({ theme }) => theme.icon.clear.fontWeight};
-  font-family: ${({ theme }) => theme.icon.clear.fontFamily};
+  ${({ theme: { icon: { clear }}}) => (`
+    font-size: ${clear.fontSize};
+    transition: ${clear.transition};
+    font-weight: ${clear.fontWeight};
+    font-family: ${clear.fontFamily};
+  `)}
 `;
 
 const Caret = styled.div<CaretProps>`
-  transition: ${({ theme }) => theme.icon.caret.transition};
-  border-top: ${({ theme }) => theme.icon.caret.size} dashed;
-  border-left: ${({ theme }) => theme.icon.caret.size} solid transparent;
-  border-right: ${({ theme }) => theme.icon.caret.size} solid transparent;
+  ${({ theme: { icon: { caret }}}) => (`
+    transition: ${caret.transition};
+    border-top: ${caret.size} dashed;
+    border-left: ${caret.size} solid transparent;
+    border-right: ${caret.size} solid transparent;
+  `)}
 
-  ${({ menuOpen, isInvalid, theme: { color } }) =>
-    menuOpen && (`
+  ${({ menuOpen, isInvalid, theme: { color }}) =>
+    menuOpen
+    && (`
       transform: rotate(180deg);
       color: ${(isInvalid ? color.danger : (color.caretActive || color.primary))};
     `)}

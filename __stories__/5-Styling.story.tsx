@@ -5,6 +5,7 @@ import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
 import PrettyPrintJson from './helpers/PrettyPrintJson';
 import { useCallbackState } from './helpers/useCallbackState';
+import { useClearAllToasts } from './helpers/useClearAllToasts';
 import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
 import { Hr, Code, Title, SubTitle, Spacer, Paragraph, JsonContainer, LabelHeader, Container, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
@@ -20,7 +21,7 @@ const StyledComponentsLink = Object.freeze<PackageLinkProps>({
   href: 'https://www.styled-components.com',
 });
 
-const ThemeConfigMap = Object.freeze<{ [key: string]: any }>({
+const ThemeConfigMap = Object.freeze<{[key: string]: any}>({
   [ThemeEnum.DEFAULT]: undefined,
   [ThemeEnum.DARK_COLORS]: {
     color: {
@@ -83,6 +84,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       setThemeConfig(mappedThemeConfig);
     }
   }, [selectedOption]);
+
+  useClearAllToasts();
 
   return (
     <Container>

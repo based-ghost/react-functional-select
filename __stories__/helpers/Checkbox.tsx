@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 type CheckIconProps = {
   readonly $checked: boolean;
@@ -44,14 +44,14 @@ const LabelWrapper = styled.label<LabelWrapperProps>`
   display: inline-block;
 
   ${({ $readOnly }) =>
-    $readOnly &&
-    css`
+    $readOnly
+    && (`
       cursor: default;
       pointer-events: none;
       > i {
         opacity: 0.5;
       }
-    `}
+    `)}
 `;
 
 const CheckIcon = styled.i<CheckIconProps>`
@@ -95,7 +95,8 @@ const CheckIcon = styled.i<CheckIconProps>`
     transform: rotate(-135deg);
 
     ${({ $checked }) =>
-      $checked && (`
+      $checked
+      && (`
         height: 1.16rem;
         transition-delay: 0.15s;
       `)};

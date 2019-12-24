@@ -7,10 +7,12 @@ import { MenuProps, ItemData } from '../types';
 
 const NoOptionsMsg = styled.div`
   text-align: center;
-  color: ${({ theme }) => theme.noOptions.color};
-  margin: ${({ theme }) => theme.noOptions.margin};
-  padding: ${({ theme }) => theme.noOptions.padding};
-  font-size: ${({ theme }) => theme.noOptions.fontSize};
+  ${({ theme: { noOptions }}) => (`
+    color: ${noOptions.color};
+    margin: ${noOptions.margin};
+    padding: ${noOptions.padding};
+    font-size: ${noOptions.fontSize};
+  `)}
 `;
 
 const Menu = React.forwardRef<FixedSizeList, MenuProps>((

@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { FIVE_BASIC_OPTIONS } from './helpers/utils';
+import { useClearAllToasts } from './helpers/useClearAllToasts';
 import { Hr, List, CodeHeader, Code, Title, Button, ListItem, SubTitle, Label, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Methods', () => {
@@ -22,6 +23,8 @@ storiesOf('React Functional Select', module).add('Methods', () => {
   const updateSelectedOption = (): void => {
     selectRef.current && selectRef.current.setValue(FIVE_BASIC_OPTIONS[0]);
   };
+
+  useClearAllToasts();
 
   return (
     <Container>

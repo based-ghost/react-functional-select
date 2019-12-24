@@ -3,6 +3,7 @@ import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { Option, createSelectOptions } from './helpers/utils';
 import OptionsCountButton from './helpers/OptionsCountButton';
+import { useClearAllToasts } from './helpers/useClearAllToasts';
 import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
 import { Hr, Title, SubTitle, List, ListWrapper, ListItem, Label, Container, Code, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
@@ -29,6 +30,8 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
   useEffect(() => {
     selectRef.current && selectRef.current.clearValue();
   }, [options]);
+
+  useClearAllToasts();
 
   return (
     <Container>

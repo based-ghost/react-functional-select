@@ -50,7 +50,8 @@ const Input = styled.input`
   }
 
   ${() =>
-    isEdgeOrIE() && (`
+    isEdgeOrIE()
+    && (`
       ::-ms-clear {
         display: none;
       }

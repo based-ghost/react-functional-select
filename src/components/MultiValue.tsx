@@ -7,34 +7,40 @@ const MultiValueWrapper = styled.div`
   min-width: 0;
   display: flex;
   ${FADE_IN_ANIMATION_CSS}
-  margin: ${({ theme }) => theme.multiValue.margin};
-  border-radius: ${({ theme }) => theme.multiValue.borderRadius};
-  background-color: ${({ theme }) => theme.multiValue.backgroundColor};
+  ${({ theme: { multiValue }}) => (`
+    margin: ${multiValue.margin};
+    border-radius: ${multiValue.borderRadius};
+    background-color: ${multiValue.backgroundColor};
+  `)}
 `;
 
 const Label = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding: ${({ theme }) => theme.multiValue.label.padding};
-  font-size: ${({ theme }) => theme.multiValue.label.fontSize};
-  border-radius: ${({ theme }) => theme.multiValue.label.borderRadius};
+  ${({ theme: { multiValue: { label }}}) => (`
+    padding: ${label.padding};
+    font-size: ${label.fontSize};
+    border-radius: ${label.borderRadius};
+  `)}
 `;
 
 const Clear = styled.div<{ isFocused: boolean }>`
   display: flex;
-  padding: ${({ theme }) => theme.multiValue.clear.padding};
-  font-size: ${({ theme }) => theme.multiValue.clear.fontSize};
-  transition: ${({ theme }) => theme.multiValue.clear.transition};
-  align-items: ${({ theme }) => theme.multiValue.clear.alignItems};
-  font-weight: ${({ theme }) => theme.multiValue.clear.fontWeight};
-  border-radius: ${({ theme }) => theme.multiValue.clear.borderRadius};
-  background-color: ${({ theme, isFocused }) => isFocused ? theme.color.dangerLight : 'transparent'};
-  
-  :hover {
-    color: ${({ theme }) => theme.color.danger};
-    background-color: ${({ theme }) => theme.color.dangerLight};
-  }
+  ${({ isFocused, theme: { color, multiValue: { clear }}}) => (`
+    padding: ${clear.padding};
+    font-size: ${clear.fontSize};
+    transition: ${clear.transition};
+    align-items: ${clear.alignItems};
+    font-weight: ${clear.fontWeight};
+    border-radius: ${clear.borderRadius};
+    background-color: ${isFocused ? color.dangerLight : 'transparent'};
+
+    :hover {
+      color: ${color.danger};
+      background-color: ${color.dangerLight};
+    }
+  `)}
 `;
 
 const MultiValue: React.FC<MultiValueProps> = ({

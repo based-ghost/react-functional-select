@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import theme from './theme';
 import GlobalStyle from './globalStyle';
+import { toast, ToastPosition } from 'react-toastify';
 import { configure, addParameters } from '@storybook/react';
 import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
 
@@ -48,6 +49,14 @@ const loadStories = () => {
   // Automatically import all files ending in *.story.tsx found at path '../__stories__'
   const req = require.context('../__stories__', true, /\.story\.tsx$/);
   req.keys().forEach(file => req(file));
+
+  // Configure react-toastify (should be rendered once in your app, so call here)
+  toast.configure({
+    autoClose: 2500,
+    draggable: false,
+    newestOnTop: true,
+    position: ToastPosition.TOP_RIGHT
+  });
 };
 
 configure(loadStories, module);

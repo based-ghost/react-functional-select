@@ -25,22 +25,17 @@ const Toastify__bounceInRight = keyframes`
   90%,
   to {
     animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-  }
-  from {
+  } from {
     opacity: 0;
     transform: translate3d(3000px, 0, 0);
-  }
-  60% {
+  } 60% {
     opacity: 1;
     transform: translate3d(-25px, 0, 0);
-  }
-  75% {
+  } 75% {
     transform: translate3d(10px, 0, 0);
-  }
-  90% {
+  } 90% {
     transform: translate3d(-5px, 0, 0);
-  }
-  to {
+  } to {
     transform: none;
   }
 `;
@@ -112,7 +107,7 @@ const reactToastifyCss = css`
       box-sizing: border-box;
       margin-bottom: 1rem;
       padding: 8px;
-      border-radius: 0.25rem;
+      border-radius: 3px;
       box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
       display: flex;
       justify-content: space-between;

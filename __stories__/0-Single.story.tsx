@@ -4,6 +4,7 @@ import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
 import { CityOption, CITY_OPTIONS } from './helpers/utils';
 import { useCallbackState } from './helpers/useCallbackState';
+import { useClearAllToasts } from './helpers/useClearAllToasts';
 import { Hr, Title, SubTitle, Container, SelectContainer, Paragraph, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Single-select', () => {
@@ -19,6 +20,8 @@ storiesOf('React Functional Select', module).add('Single-select', () => {
   useEffect(() => {
     isDisabled && setIsInvalid(false);
   }, [isDisabled]);
+
+  useClearAllToasts();
 
   return (
     <Container>
