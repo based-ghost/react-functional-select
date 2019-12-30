@@ -24,51 +24,46 @@ export const useMenuOptions = (
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(OPTIONS_DEFAULT);
 
   useEffect(() => {
-    const filterMatchFromAny: boolean = (filterMatchFrom === FilterMatchEnum.ANY);
-    const normalizedInput: string = trimAndFormatFilterStr(debouncedInputValue, filterIgnoreCase, filterIgnoreCase);
-    const getIsOptionDisabled2: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
-    const getFilterOptionString2: (option: MenuOption) => string = getFilterOptionString || ((option) => String(option.label));
-    
-    const selectedValues: Array<ReactText | undefined> | undefined = selectedOption.length
-      ? selectedOption.map(x => x.value)
-      : undefined;
+    const isFilterMatchAny = (filterMatchFrom === FilterMatchEnum.ANY);
+    const selectedValues = selectedOption.length ? selectedOption.map(x => x.value) : undefined;
+    const normalizedInput = trimAndFormatFilterStr(debouncedInputValue, filterIgnoreCase, filterIgnoreCase);
 
-    const isOptionSearchFilterMatch = (menuOption: MenuOption): boolean => {
+    const getIsOptionDisabled2: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
+    const getFilterOptionString2: (option: MenuOption) => string = getFilterOptionString || ((option) => String(option.label));  
+
+    const isOptionFilterMatch = (menuOption: MenuOption): boolean => {
       const normalizedOptionLabel = trimAndFormatFilterStr(getFilterOptionString2(menuOption), filterIgnoreCase, filterIgnoreCase);
-      return filterMatchFromAny
+      return isFilterMatchAny
         ? normalizedOptionLabel.indexOf(normalizedInput) > -1
         : normalizedOptionLabel.substr(0, normalizedInput.length) === normalizedInput;
     };
 
-    const createMenuOptions = (): MenuOption[] => {
-      const parseMenuOption = (data: OptionData): MenuOption | undefined => {
-        const value: ReactText = getOptionValueCB(data);
-
-        const menuOption: MenuOption = {
-          data,
-          value,
-          label: getOptionLabelCB(data),
-          ...((selectedValues && selectedValues.includes(value)) && { isSelected: true }),
-        };
-
-        if ((normalizedInput && !isOptionSearchFilterMatch(menuOption)) || (hideSelectedOptions && menuOption.isSelected)) {
-          return;
-        }
-
-        return {
-          ...menuOption,
-          ...(getIsOptionDisabled2(data) && { isDisabled: true }),
-        };
+    const parseMenuOption = (data: OptionData): MenuOption | undefined => {
+      const value = getOptionValueCB(data);
+      const menuOption: MenuOption = {
+        data,
+        value,
+        label: getOptionLabelCB(data),
+        ...((selectedValues && selectedValues.includes(value)) && { isSelected: true }),
       };
 
-      return options.reduce((accumulator: MenuOption[], data: OptionData) => {
-        const option = parseMenuOption(data);
-        option && accumulator.push(option);
-        return accumulator;
-      }, []);
+      if ((normalizedInput && !isOptionFilterMatch(menuOption)) || (hideSelectedOptions && menuOption.isSelected)) {
+        return;
+      }
+
+      return {
+        ...menuOption,
+        ...(getIsOptionDisabled2(data) && { isDisabled: true }),
+      };
     };
 
-    setMenuOptions(createMenuOptions() || OPTIONS_DEFAULT);
+    const menuOptionsOrDefault = options.reduce((accumulator: MenuOption[], data: OptionData) => {
+      const option = parseMenuOption(data);
+      option && accumulator.push(option);
+      return accumulator;
+    }, []) || OPTIONS_DEFAULT;
+
+    setMenuOptions(menuOptionsOrDefault);
   }, [options, selectedOption, hideSelectedOptions, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
 
   return menuOptions;

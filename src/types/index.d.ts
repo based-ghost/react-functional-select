@@ -15,6 +15,8 @@ import {
 // ============================================
 
 export type OptionData = any;
+export type ValueIndex = 0 | 1;
+export type OptionIndex = 0 | 1 | 2 | 3;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
 

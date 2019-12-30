@@ -30,12 +30,7 @@ export const useMenuHeight = (
         }
       };
 
-      scrollMenuIntoViewOnOpen(
-        menuRef.current,
-        menuScrollDuration,
-        scrollMenuIntoView,
-        handleOnMenuOpen
-      );
+      scrollMenuIntoViewOnOpen(menuRef.current, menuScrollDuration, scrollMenuIntoView, handleOnMenuOpen);
     } else {
       onMenuClose && onMenuClose();
       if (resetMenuHeight.current) {

@@ -13,13 +13,7 @@ const Option = React.memo<OptionProps>(({
     focusedOptionIndex,
   },
 }) => {
-  const {
-    data,
-    value,
-    label,
-    isDisabled,
-    isSelected
-  } = menuOptions[index];
+  const { data, value, label, isDisabled, isSelected } = menuOptions[index];
 
   const className = OPTION_CLS
     + (isDisabled ? ' ' + OPTION_DISABLED_CLS : '')

@@ -50,13 +50,7 @@ const Input = styled.input`
     cursor: default;
   }
 
-  ${() =>
-    isEdgeOrIE()
-    && (`
-      ::-ms-clear {
-        display: none;
-      }
-    `)}
+  ${() => isEdgeOrIE() && (`::-ms-clear { display: none; }`)}
 `;
 
 const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInputProps>((

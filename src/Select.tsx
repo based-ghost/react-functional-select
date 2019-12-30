@@ -3,10 +3,10 @@ import DefaultThemeObj from './theme';
 import { FixedSizeList } from 'react-window';
 import { FADE_IN_ANIMATION_CSS } from './constants/styled';
 import styled, { DefaultTheme, ThemeProvider } from 'styled-components';
-import { FocusedOption, SelectedOption, MouseOrTouchEvent } from './types';
 import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { useDebounce, useMenuHeight, useMenuOptions, useUpdateEffect } from './hooks';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
+import { FocusedOption, SelectedOption, MouseOrTouchEvent, OptionIndex, ValueIndex } from './types';
 import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
 import {
   OPTIONS_DEFAULT,
@@ -36,8 +36,6 @@ import {
 } from './constants/dom';
 
 type OptionData = any;
-type ValueIndex = 0 | 1;
-type OptionIndex = 0 | 1 | 2 | 3;
 
 type MenuWrapperProps = {
   readonly hideMenu: boolean;
@@ -181,22 +179,24 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     white-space: nowrap;
     text-overflow: ellipsis;
     -webkit-tap-highlight-color: transparent;
-    padding: ${({ theme }) => theme.menu.option.padding};
-    text-align: ${({ theme }) => theme.menu.option.textAlign};
+    ${({ theme: { menu: { option } } }) => (`
+      padding: ${option.padding};
+      text-align: ${option.textAlign};
 
-    &.${OPTION_FOCUSED_CLS},
-    &:hover:not(.${OPTION_DISABLED_CLS}):not(.${OPTION_SELECTED_CLS}) {
-      background-color: ${({ theme }) => theme.menu.option.focusedBgColor};
-    }
+      &.${OPTION_FOCUSED_CLS},
+      &:hover:not(.${OPTION_DISABLED_CLS}):not(.${OPTION_SELECTED_CLS}) {
+        background-color: ${option.focusedBgColor};
+      }
 
-    &.${OPTION_SELECTED_CLS} {
-      color: ${({ theme }) => theme.menu.option.selectedColor};
-      background-color: ${({ theme }) => theme.menu.option.selectedBgColor};
-    }
+      &.${OPTION_SELECTED_CLS} {
+        color: ${option.selectedColor};
+        background-color: ${option.selectedBgColor};
+      }
 
-    &.${OPTION_DISABLED_CLS} {
-      opacity: 0.35;
-    }
+      &.${OPTION_DISABLED_CLS} {
+        opacity: 0.35;
+      }
+    `)}
   }
 `;
 
