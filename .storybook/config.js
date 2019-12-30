@@ -35,16 +35,16 @@ const loadStories = () => {
       })();
 
     return {
-      containerNode: globalStyleEl,
-      cleanupContainerNode: () => {
+      container: globalStyleEl,
+      cleanupContainer: () => {
         globalStyleEl && document.head.removeChild(globalStyleEl);
       }
     };
   };
   
   // Mount GlobalStyle & cleanup temp node created after mounting
-  const { containerNode, cleanupContainerNode } = setupGlobalStyle();
-  ReactDOM.render(<GlobalStyle />, containerNode, cleanupContainerNode);
+  const { container, cleanupContainer } = setupGlobalStyle();
+  ReactDOM.render(<GlobalStyle />, container, cleanupContainer);
 
   // Configure react-toastify (should be rendered once in your app, so call here)
   toast.configure({

@@ -55,6 +55,7 @@ test('input element has a static className (enables styling via classic CSS) whe
 
 test('input has functional, optional ARIA attributes', async () => {
   const { props } = createAutosizeInputProps();
+
   const mergedProps = {
     ...props,
     ariaLabel: 'test-label',
