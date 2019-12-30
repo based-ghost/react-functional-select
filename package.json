@@ -1,6 +1,6 @@
 {
   "name": "react-functional-select",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)",
   "description": "Miro-sized and micro-optimized select component for React.js",
   "main": "./dist/index.cjs.js",
@@ -55,8 +55,8 @@
     "@storybook/react": "^5.2.8",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
-    "@types/jest": "^24.0.24",
-    "@types/node": "^13.1.0",
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.1",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "@types/react-window": "^1.8.1",
@@ -70,7 +70,7 @@
     "enzyme": "^3.11.0",
     "eslint": "^6.8.0",
     "eslint-config-poetez": "^0.2.0",
-    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
     "event-source-polyfill": "^1.0.11",
@@ -96,7 +96,7 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.1.0",
     "typescript": "^3.7.4",
-    "webpack": "^4.41.4",
+    "webpack": "^4.41.5",
     "webpack-merge": "^4.2.2"
   },
   "peerDependencies": {

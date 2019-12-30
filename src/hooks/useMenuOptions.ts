@@ -43,6 +43,7 @@ export const useMenuOptions = (
     const createMenuOptions = (): MenuOption[] => {
       const parseMenuOption = (data: OptionData): MenuOption | undefined => {
         const value: ReactText = getOptionValueCB(data);
+
         const menuOption: MenuOption = {
           data,
           value,

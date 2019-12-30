@@ -1,6 +1,6 @@
 import React from 'react';
-import LoadingDots from './LoadingDots';
 import styled from 'styled-components';
+import LoadingDots from './LoadingDots';
 import { CaretProps, IndicatorIconsProps } from '../types';
 import { FADE_IN_ANIMATION_CSS } from '../constants/styled';
 import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/dom';
@@ -16,12 +16,13 @@ const IndicatorIconsWrapper = styled.div`
 const IndicatorIcon = styled.div`
   display: flex;
   box-sizing: border-box;
-  color: ${({ theme }) => theme.icon.color};
-  padding: ${({ theme }) => theme.icon.padding};
-
-  :hover {
-    color: ${({ theme }) => theme.icon.hoverColor};
-  }
+  ${({ theme: { icon }}) => (`
+    color: ${icon.color};
+    padding: ${icon.padding};
+    :hover {
+      color: ${icon.hoverColor};
+    }
+  `)}
 `;
 
 const Clear = styled.div`

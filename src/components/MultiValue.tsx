@@ -35,7 +35,6 @@ const Clear = styled.div<{ isFocused: boolean }>`
     font-weight: ${clear.fontWeight};
     border-radius: ${clear.borderRadius};
     background-color: ${isFocused ? color.dangerLight : 'transparent'};
-
     :hover {
       color: ${color.danger};
       background-color: ${color.dangerLight};

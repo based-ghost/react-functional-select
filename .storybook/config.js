@@ -46,10 +46,6 @@ const loadStories = () => {
   const { containerNode, cleanupContainerNode } = setupGlobalStyle();
   ReactDOM.render(<GlobalStyle />, containerNode, cleanupContainerNode);
 
-  // Automatically import all files ending in *.story.tsx found at path '../__stories__'
-  const req = require.context('../__stories__', true, /\.story\.tsx$/);
-  req.keys().forEach(file => req(file));
-
   // Configure react-toastify (should be rendered once in your app, so call here)
   toast.configure({
     autoClose: 2500,
@@ -57,6 +53,10 @@ const loadStories = () => {
     newestOnTop: true,
     position: ToastPosition.TOP_RIGHT
   });
+
+  // Automatically import all files ending in *.story.tsx found at path '../__stories__'
+  const req = require.context('../__stories__', true, /\.story\.tsx$/);
+  req.keys().forEach(file => req(file));
 };
 
 configure(loadStories, module);

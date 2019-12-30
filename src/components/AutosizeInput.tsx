@@ -5,11 +5,12 @@ import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
 
 const INPUT_MIN_WIDTH_PX = 2;
+
 const WRAPPER_DIV_STYLE: CSSProperties = {
   display: 'inline-block'
 };
 
-const STATIC_ATTRIBUTES = Object.freeze<AutosizeInputHTMLAttributes>({
+const STATIC_ATTRIBUTES: AutosizeInputHTMLAttributes = {
   type: 'text',
   spellCheck: false,
   autoCorrect: 'off',
@@ -17,7 +18,7 @@ const STATIC_ATTRIBUTES = Object.freeze<AutosizeInputHTMLAttributes>({
   autoCapitalize: 'none',
   'aria-autocomplete': 'list',
   'data-testid': AUTOSIZE_INPUT_TESTID
-});
+};
 
 const SizerDiv = styled.div`
   top: 0;
