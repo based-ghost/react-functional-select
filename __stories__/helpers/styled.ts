@@ -71,7 +71,7 @@ export const ListWrapper = styled.div`
 export const List = styled.ul`
   display: block;
   padding-left: 1.75rem;
-  margin-block-end: 1em; 
+  margin-block-end: 1em;
   list-style-type: disc;
   margin-inline-end: 0px;
   margin-block-start: 1em;
@@ -81,7 +81,7 @@ export const List = styled.ul`
   li + li {
     margin-top: 0.5em;
   }
-  
+
   ${MEDIA_QUERY_IS_MOBILE} {
     padding-inline-start: 20px;
   }
@@ -102,12 +102,12 @@ export const Hr = styled.hr`
 
 export const Code = styled.code`
   margin: 0 1px;
-  color: #D8205E;
+  color: #212529;
   padding: 3px 5px;
   font-size: 0.90em;
   border-radius: 0.3em;
   word-break: break-word;
-  background-color: rgba(27, 31, 35, 0.0575);
+  background-color: rgba(27, 31, 35, 0.06);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${MEDIA_QUERY_IS_MOBILE_XS} {
@@ -117,7 +117,6 @@ export const Code = styled.code`
 
 export const CodeHeader = styled(Code)`
   font-size: 1em;
-  color: #212529;
   font-weight: 600;
   line-height: 1.7;
   padding: 3px 6.4px;
@@ -143,7 +142,7 @@ export const ButtonGroup = styled.div`
   > button {
     min-width: 4.5rem;
     margin-top: 0.5rem;
-    
+
     :not(:last-of-type) {
       margin-right: .5rem;
     }

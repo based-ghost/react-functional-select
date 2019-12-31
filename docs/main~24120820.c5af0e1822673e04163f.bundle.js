@@ -50,7 +50,7 @@
 `,List=styled_components__WEBPACK_IMPORTED_MODULE_0__.d.ul`
   display: block;
   padding-left: 1.75rem;
-  margin-block-end: 1em; 
+  margin-block-end: 1em;
   list-style-type: disc;
   margin-inline-end: 0px;
   margin-block-start: 1em;
@@ -60,7 +60,7 @@
   li + li {
     margin-top: 0.5em;
   }
-  
+
   ${MEDIA_QUERY_IS_MOBILE} {
     padding-inline-start: 20px;
   }
@@ -75,12 +75,12 @@
   border-top: 1px solid #ddd;
 `,Code=styled_components__WEBPACK_IMPORTED_MODULE_0__.d.code`
   margin: 0 1px;
-  color: #D8205E;
+  color: #212529;
   padding: 3px 5px;
   font-size: 0.90em;
   border-radius: 0.3em;
   word-break: break-word;
-  background-color: rgba(27, 31, 35, 0.0575);
+  background-color: rgba(27, 31, 35, 0.06);
   font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
   ${MEDIA_QUERY_IS_MOBILE_XS} {
@@ -88,7 +88,6 @@
   }
 `,CodeHeader=Object(styled_components__WEBPACK_IMPORTED_MODULE_0__.d)(Code)`
   font-size: 1em;
-  color: #212529;
   font-weight: 600;
   line-height: 1.7;
   padding: 3px 6.4px;
@@ -108,7 +107,7 @@
   > button {
     min-width: 4.5rem;
     margin-top: 0.5rem;
-    
+
     :not(:last-of-type) {
       margin-right: .5rem;
     }
@@ -242,7 +241,7 @@
   border-radius: 0.0625rem;
   background-color: transparent;
   transition: border-color 0.38s ease;
-  border-color: ${({$checked:$checked})=>$checked?"rgba(25, 162, 248, 0.525)":"#ced4da"};
+  border-color: ${({$checked:$checked})=>$checked?"rgba(229, 45, 107, 0.525)":"#ced4da"};
 
   :after,
   :before {
@@ -253,7 +252,7 @@
     position: absolute;
     border-radius: 0.25rem;
     transform-origin: left top;
-    background-color: ${"#19A2F8"};
+    background-color: ${"#E52D6B"};
     opacity: ${({$checked:$checked})=>$checked?1:0};
     transition: ${({$checked:$checked})=>$checked?"height 0.38s ease":"opacity 0.38s ease, height 0s linear 0.38s"};
   }
@@ -275,14 +274,14 @@
 `,Checkbox=react__WEBPACK_IMPORTED_MODULE_0___default.a.memo(({label:label,onCheck:onCheck,checked:checked,readOnly:readOnly})=>react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LabelWrapper,{$readOnly:readOnly},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Input,{type:"checkbox",checked:checked,onChange:e=>onCheck(e.target.checked)}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CheckIcon,{$checked:checked}),label&&react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LabelSpan,null,label)));__webpack_exports__.a=Checkbox},101:function(module,__webpack_exports__,__webpack_require__){"use strict";__webpack_exports__.a=Object.freeze({color:{border:"#ced4da",danger:"#dc3545",primary:"#007bff",disabled:"#e9ecef",placeholder:"#6E7276",dangerLight:"rgba(220, 53, 69, 0.25)"},select:{},loader:{size:"0.625rem",padding:"0.375rem 0.75rem",color:"rgba(0, 123, 255, 0.42)"},icon:{color:"#cccccc",padding:"0.5rem 0.9375rem",hoverColor:"#A6A6A6",clear:{fontWeight:900,fontSize:"0.85em",transition:"color 0.15s ease-in-out",fontFamily:'"Helvetica", "Arial", sans-serif'},caret:{size:"7px",transition:"transform 0.225s ease-in-out, color 0.15s ease-in-out"}},control:{minHeight:"38px",borderWidth:"1px",borderStyle:"solid",borderRadius:"0.25rem",boxShadow:"0 0 0 0.2rem",padding:"0.375rem 0.75rem",boxShadowColor:"rgba(0, 123, 255, 0.25)",focusedBorderColor:"rgba(0, 123, 255, 0.75)",transition:"box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out"},menu:{width:"100%",margin:"0.5rem 0",padding:"0.15rem 0",borderRadius:"0.25rem",backgroundColor:"#fff",boxShadow:"0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 11px rgba(0, 0, 0, 0.1)",option:{textAlign:"left",selectedColor:"#fff",selectedBgColor:"#007bff",padding:"0.375rem 0.75rem",focusedBgColor:"rgba(0, 123, 255, 0.20)"}},noOptions:{fontSize:"1.25rem",margin:"0.25rem 0",color:"hsl(0, 0%, 60%)",padding:"0.375rem 0.75rem"},multiValue:{margin:"1px 2px",borderRadius:"0.25rem",backgroundColor:"#e7edf3",label:{fontSize:"0.825em",borderRadius:"0.25rem",padding:"1px 2px 1px 6px"},clear:{fontWeight:700,padding:"0 7px",fontSize:"0.675em",alignItems:"center",borderRadius:"0.25rem",transition:"color 0.15s ease-in-out, background-color 0.15s ease-in-out"}}})},103:function(module,__webpack_exports__,__webpack_require__){"use strict";var react__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(0),react__WEBPACK_IMPORTED_MODULE_0___default=__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__),_styled__WEBPACK_IMPORTED_MODULE_1__=__webpack_require__(1),styled_components__WEBPACK_IMPORTED_MODULE_2__=__webpack_require__(3),_utils__WEBPACK_IMPORTED_MODULE_3__=__webpack_require__(12);const StyledButton=Object(styled_components__WEBPACK_IMPORTED_MODULE_2__.d)(_styled__WEBPACK_IMPORTED_MODULE_1__.a)`
   transition: color 0.115s ease, background-color 0.115s ease;
 
-  ${({isActive:isActive})=>isActive&&"\n      color: #fff;\n      background-color: #007bff;\n      :hover {\n        background-color: #0067EB;\n      }\n    "}
+  ${({isActive:isActive})=>isActive&&"\n      color: #fff;\n      background-color: #E52D6B;\n      :hover {\n        background-color: #D8205E;\n      }\n    "}
 
   :focus {
     color: #fff !important;
-    background-color: #007bff !important;
+    background-color: #E52D6B !important;
   }
 `;__webpack_exports__.a=({count:count,optionsCount:optionsCount,setOptionsCount:setOptionsCount})=>{const isActive=!(count!==optionsCount),onClick=isActive?void 0:()=>setOptionsCount(count);return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledButton,{isActive:isActive,onClick:onClick},`${Object(_utils__WEBPACK_IMPORTED_MODULE_3__.d)(count)} Options`)}},12:function(module,__webpack_exports__,__webpack_require__){"use strict";__webpack_require__.d(__webpack_exports__,"e",(function(){return renderInfoToast})),__webpack_require__.d(__webpack_exports__,"f",(function(){return renderSuccessToast})),__webpack_require__.d(__webpack_exports__,"d",(function(){return numberWithCommas})),__webpack_require__.d(__webpack_exports__,"c",(function(){return createSelectOptions})),__webpack_require__.d(__webpack_exports__,"a",(function(){return CITY_OPTIONS})),__webpack_require__.d(__webpack_exports__,"b",(function(){return FIVE_BASIC_OPTIONS}));var react_toastify__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(64);const renderInfoToast=message=>{react_toastify__WEBPACK_IMPORTED_MODULE_0__.b.info(message)},renderSuccessToast=message=>{react_toastify__WEBPACK_IMPORTED_MODULE_0__.b.success(message)},numberWithCommas=value=>value.toString().replace(/\B(?=(\d{3})+(?!\d))/g,","),createSelectOptions=optionCount=>{const results=[];for(let i=0;i<optionCount;i+=1)results.push({value:i+1,label:`Option ${i+1}`});return results},CITY_OPTIONS=[{id:1,city:"Boston",state:"MA"},{id:2,city:"Austin",state:"TX"},{id:3,city:"Denver",state:"CO"},{id:4,city:"Chicago",state:"IL"},{id:5,city:"Phoenix",state:"AZ"},{id:6,city:"Houston",state:"TX"},{id:7,city:"Orlando",state:"FL"},{id:8,city:"Portland",state:"OR"},{id:9,city:"Milwaukee",state:"WI"},{id:10,city:"Louisville",state:"KY"}],FIVE_BASIC_OPTIONS=createSelectOptions(5)},146:function(module,__webpack_exports__,__webpack_require__){"use strict";var react__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(0),react__WEBPACK_IMPORTED_MODULE_0___default=__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);const Link=__webpack_require__(3).d.a`
-  color: #007bff;
+  color: #E52D6B;
   cursor: pointer;
   font-size: 1rem;
   box-shadow: none;
@@ -535,4 +534,4 @@
   display: inline-block;
   ${({isDisabled:isDisabled})=>!isDisabled&&SPIN_ANIMATION_CSS}
 `;Object(_storybook_react__WEBPACK_IMPORTED_MODULE_2__.storiesOf)("React Functional Select",module).addParameters({storySource:{source:__STORY__,locationsMap:__ADDS_MAP__}}).addDecorator(withSourceLoader(__STORY__,__ADDS_MAP__,"/7-Advanced.story.tsx",[],{},"C:\\Users\\matth\\Desktop\\react-functional-select\\__stories__",{})).add("Advanced",()=>{const getOptionValue=Object(react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(option=>option.id,[]),getIsOptionDisabled=Object(react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(option=>option.packageName===OPTIONS[3].packageName,[]),renderOptionLabel=Object(react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(option=>react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledImg,{src:REACT_LOGO_SVG,isDisabled:getIsOptionDisabled(option)}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpan,null,option.packageName)),[getIsOptionDisabled]);return Object(_helpers_useClearAllToasts__WEBPACK_IMPORTED_MODULE_4__.a)(),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.i,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.v,null,"Advanced Configuration"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.j,null),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.p,null,"Implementation using a couple of the more specialized properties.",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.n,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.o,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.h,null,"renderOptionLabel(option: any): React.ReactNode")," - Callback function with a return type of ",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.g,null,"ReactNode"),". Use this property in cases where the standard ",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.g,null,"getOptionLabel")," property won't meet your needs (for instance, you want to render each option's label using custom JSX). More complex option labels will likely equate to longer render durations - this can translate into a flash of empty space when a user first starts scrolling. In order to prevent this, the ",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.g,null,"menuOverscanCount")," property can be increased to render additional rows outside of the visible area. The default value for this property is 1 and it is important to note that increasing this value can negatively impact performance."),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.o,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.h,null,"getIsOptionDisabled(option: any): boolean")," - Callback function with a return type of ",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.g,null,"Boolean"),". When it evaluates to a value of true, that option iteration will be rendered ",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em",null,"disabled"),". As an alternative, you can also pass a property of ",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.g,null,"isDisabled")," with each option. Use of these two options - they cannot both be specified."))),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.u,null,"Demo"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.j,null),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.c,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.e,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.m,null,"JSX labels & disabled option..")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.d,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_helpers_styled__WEBPACK_IMPORTED_MODULE_5__.s,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_src__WEBPACK_IMPORTED_MODULE_1__.b,{options:OPTIONS,isSearchable:!1,themeConfig:THEME_CONFIG,getOptionValue:getOptionValue,renderOptionLabel:renderOptionLabel,getIsOptionDisabled:getIsOptionDisabled})))))})}.call(this,__webpack_require__(49)(module))},633:function(module,exports,__webpack_require__){module.exports=__webpack_require__.p+"static/media/react-logo.9f16557d.svg"},8:function(module,__webpack_exports__,__webpack_require__){"use strict";__webpack_require__.d(__webpack_exports__,"a",(function(){return useCallbackState}));var react__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(0);const useCallbackState=initialState=>{const[state,setState]=Object(react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialState);return[state,Object(react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(newState=>setState(newState),[])]}}},[[304,1,3,5,6,2,4]]]);
-//# sourceMappingURL=main~24120820.290ab7a19cbde7e1e916.bundle.js.map
+//# sourceMappingURL=main~24120820.c5af0e1822673e04163f.bundle.js.map
