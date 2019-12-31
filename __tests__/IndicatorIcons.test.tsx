@@ -51,7 +51,7 @@ test('clear icon has a static className (enables styling via classic CSS) when "
   expect(firstChildOfClearIconElement).toHaveClass(CLEAR_ICON_CLS);
 });
 
-test('clear indicator has functioning mouseDown and touchEnd events', async () => {
+test('clear indicator has functioning "mouseDown" and "touchEnd" events', async () => {
   const { props, onClearMouseDownSpy } = createIndicatorIconsProps();
   const { getByTestId } = renderIndicatorIcons(props);
   const clearIndicatorEl = getByTestId(CLEAR_ICON_TESTID!);
@@ -60,7 +60,7 @@ test('clear indicator has functioning mouseDown and touchEnd events', async () =
   expect(onClearMouseDownSpy).toHaveBeenCalledTimes(2);
 });
 
-test('caret indicator has functioning mouseDown and touchEnd events', async () => {
+test('caret indicator has functioning "mouseDown" and "touchEnd" events', async () => {
   const { props, onCaretMouseDownSpy } = createIndicatorIconsProps();
   const { getByTestId } = renderIndicatorIcons(props);
   const caretIndicatorEl = getByTestId(CARET_ICON_CLS!);

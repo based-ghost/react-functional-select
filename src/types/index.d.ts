@@ -47,8 +47,7 @@ export type ItemData = {
   selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 };
 
-export type AutosizeInputHTMLAttributes = InputHTMLAttributes<HTMLElement>
-  & { readonly 'data-testid'?: string };
+export type AutosizeInputHTMLAttributes = InputHTMLAttributes<HTMLElement> & { 'data-testid'?: string };
 
 // ============================================
 // styled-component Prop types

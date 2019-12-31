@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MultiValueProps } from '../types';
+import { CLEAR_ICON_MV_TESTID } from '../constants/dom';
 import { FADE_IN_ANIMATION_CSS } from '../constants/styled';
 
 const MultiValueWrapper = styled.div`
@@ -54,6 +55,7 @@ const MultiValue: React.FC<MultiValueProps> = ({
     <Clear
       aria-hidden='true'
       isFocused={isFocused}
+      data-testid={CLEAR_ICON_MV_TESTID}
       onTouchEnd={(e) => removeSelectedOption(value, e)}
       onMouseDown={(e) => removeSelectedOption(value, e)}
     >X</Clear>

@@ -43,7 +43,6 @@ const Toastify__bounceInRight = keyframes`
 export default css`
   .Toastify__toast-container {
     z-index: 9999;
-    transform: translate3d(0, 0, 9999px);
     position: fixed;
     padding: 4px;
     width: 320px;
@@ -61,14 +60,6 @@ export default css`
       margin: 0;
       &--top-right {
         top: 0;
-      }
-      &--rtl {
-        right: 0;
-        left: initial;
-      }
-
-      .Toastify__toast {
-        border-radius: 0 !important;
       }
     }
 
@@ -89,9 +80,6 @@ export default css`
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
       cursor: pointer;
       direction: ltr;
-      &--rtl {
-        direction: rtl;
-      }
       &--default {
         background: #fff;
         color: #aaa;
@@ -112,22 +100,28 @@ export default css`
         margin: auto 0 auto 0.75rem;
         flex: 1;
       }
+
+      @media only screen and (max-width: 480px) {
+        font-size: 1rem;
+        border-radius: 0;
+        margin-bottom: 0.25rem;
+      }
     }
 
     .Toastify__close-button {
       color: #fff;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 1rem;
       background: transparent;
-      outline: 0;
-      border: 0;
+      outline: none;
+      border: none;
       padding: 0;
       cursor: pointer;
       opacity: 0.7;
       transition: color 0.3s ease, opacity 0.3s ease;
       align-self: flex-start;
       &--default {
-        color: #fff;
+        color: #000;
         opacity: 0.3;
       }
       &:hover,
@@ -151,11 +145,6 @@ export default css`
       }
       &--controlled {
         transition: transform 0.2s;
-      }
-      &--rtl {
-        right: 0;
-        left: initial;
-        transform-origin: right;
       }
       &--default {
         background: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55);

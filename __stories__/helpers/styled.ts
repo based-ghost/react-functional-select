@@ -5,6 +5,29 @@ export const MEDIA_QUERY_IS_MOBILE_XS = '@media only screen and (max-width: 525p
 export const MEDIA_QUERY_IS_TABLET_OR_DESKTOP = '@media only screen and (min-width: 992px)';
 export const MEDIA_QUERY_IS_TABLET = '@media only screen and (max-width: 991px) and (min-width: 769px)';
 
+// Need to implement a div version of Paragraph since PrettyPrintJson contains an <pre> element
+// ...which cannot be a child of a <p> element
+const PARAGRAPH_CSS = css`
+  margin-top: 0;
+  display: block;
+  margin-bottom: 1rem;
+  margin-block-end: 1em;
+  margin-inline-end: 0px;
+  margin-block-start: 1em;
+  margin-inline-start: 0px;
+  ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
+    max-width: 85%;
+  }
+`;
+
+export const Paragraph = styled.p`
+  ${PARAGRAPH_CSS}
+`;
+
+export const JsonContainer = styled.div`
+  ${PARAGRAPH_CSS}
+`;
+
 export const Container = styled.div`
   width: 100%;
   display: block;
@@ -252,28 +275,4 @@ export const Spacer = styled.div`
   display: block;
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
-`;
-
-// Need to implement a div version of Paragraph since PrettyPrintJson contains an <pre> element
-// ...which cannot be a child of a <p> element
-const _paragraphStyles = css`
-  margin-top: 0;
-  display: block;
-  margin-bottom: 1rem;
-  margin-block-end: 1em;
-  margin-inline-end: 0px;
-  margin-block-start: 1em;
-  margin-inline-start: 0px;
-
-  ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
-    max-width: 85%;
-  }
-`;
-
-export const Paragraph = styled.p`
-  ${_paragraphStyles}
-`;
-
-export const JsonContainer = styled.div`
-  ${_paragraphStyles}
 `;
