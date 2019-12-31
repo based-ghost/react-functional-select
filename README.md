@@ -23,13 +23,12 @@ Essentially, this is a focused subset of [`react-select`](https://github.com/Jed
 
 ## Installation
 
-```bash
-# npm
-npm i react-window styled-components react-functional-select
-
-# Yarn
-yarn add react-window styled-components react-functional-select
 ```
+$ npm i react-window styled-components react-functional-select
+$ yarn add react-window styled-components react-functional-select
+```
+
+> <strong><em>Note that you need to be on a react version that supports hooks, e.g.</em></strong><br>`react@^16.8 react-dom@^16.8 react-is@^16.8`
 
 ## Usage
 
