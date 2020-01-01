@@ -21,7 +21,11 @@
 - [`styled-components`](https://github.com/styled-components/styled-components) for the dynamic CSS-in-JS package.
 - [`react-window`](https://github.com/bvaughn/react-window) leveraged for integrated data virtualization/windowing (easily handles data-sets numbering in the tens of thousands with minimal-to-no impact on normally resource-intensive actions like keying and searching).
 
-Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely using `React Hooks` and `FunctionComponents`.  The primary design principal revolves around weighing the cost/benefits of adding a feature against the impact to performance & # of lines of code its addition would have. I opted to exclude some less in-demand features such as "body scroll locking" if the menu is open - this feature would have added significant overhead to the package. In addition, if we expose the right public methods and/or callback properties, this feature should be trivial to add to wrapping components - proper decoupling and abstraction of code is key to keeping such channels open for similar customizations that can be kept out of this package. 
+Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely using `React Hooks` and `FunctionComponents`.  The primary design principal revolves around weighing the cost/benefits of adding a feature against the impact to performance & # of lines of code its addition would have. 
+
+I opted to exclude less "in-demand" features like: <strong><em>preventing body scrolling if the menu is open</em></strong> or <strong><em>closing an open menu if the app's body is scrolled</em></strong> - these feature would have added significant overhead to the package. In addition, if we expose the right public methods and/or callback properties, this feature should be trivial to add to wrapping components - proper decoupling and abstraction of code is key to keeping such channels open for similar customizations that can be kept out of this package. 
+
+<strong>TODO: add code examples for "plugin" features listed in previous paragraph.</strong>
 
 ## Installation
 
