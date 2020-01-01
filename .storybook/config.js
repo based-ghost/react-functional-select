@@ -10,8 +10,6 @@ import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
 global.EventSource = NativeEventSource || EventSourcePolyfill;
 
 // Define storybook global configuration
-const GLOBAL_STYLE_ID = 'gen3-global-style';
-
 addParameters({
   options: {
     theme,
@@ -25,6 +23,8 @@ addParameters({
 // ...instead of the alternative which is to add it as a decorator - this causes mount/unmount with every story navigation
 const loadStories = () => {
   const setupGlobalStyle = () => {
+    const GLOBAL_STYLE_ID = 'gen3-global-style';
+
     const globalStyleEl =
       document.getElementById(GLOBAL_STYLE_ID) ||
       (() => {
@@ -41,7 +41,7 @@ const loadStories = () => {
       }
     };
   };
-  
+
   // Mount GlobalStyle & cleanup temp node created after mounting
   const { container, cleanupContainer } = setupGlobalStyle();
   ReactDOM.render(<GlobalStyle />, container, cleanupContainer);

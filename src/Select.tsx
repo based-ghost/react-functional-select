@@ -61,6 +61,7 @@ export type SelectRef = {
   readonly blur: () => void;
   readonly focus: () => void;
   readonly clearValue: () => void;
+  readonly toggleMenu: (state?: boolean) => void;
   readonly setValue: (option?: OptionData) => void;
 };
 
@@ -251,7 +252,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     noOptionsMsg = NO_OPTIONS_MSG_DEFAULT,
     menuItemSize = MENU_ITEM_SIZE_DEFAULT,
     menuMaxHeight = MENU_MAX_HEIGHT_DEFAULT,
-  }, 
+  },
   ref: React.Ref<SelectRef>,
 ) => {
   // Instance prop & DOM node refs
@@ -345,19 +346,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     listRef.current && listRef.current.scrollToItem(index);
   };
 
-  useImperativeHandle(ref, () => ({
-    blur: blurInput,
-    focus: focusInput,
-    clearValue: () => {
-      setSelectedOption(SELECTED_OPTION_DEFAULT);
-      setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    },
-    setValue: (option?: OptionData) => {
-      const validatedSelectedOption = validateSetValueParam(option, menuOptions, getOptionValueCB);
-      setSelectedOption(validatedSelectedOption);
-    },
-  }));
-
   const removeSelectedOption = useCallback((value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {
     if (e) {
       e.stopPropagation();
@@ -406,6 +394,28 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setInputValue('');
     }
   }, [isMulti, closeMenuOnSelect, blurInputOnSelect, removeSelectedOption]);
+
+  /*** useImperativeHandle for publicly exposed methods ***/
+  useImperativeHandle(ref, () => ({
+    blur: blurInput,
+    focus: focusInput,
+    clearValue: () => {
+      setSelectedOption(SELECTED_OPTION_DEFAULT);
+      setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    },
+    setValue: (option?: OptionData) => {
+      const validatedSelectedOption = validateSetValueParam(option, menuOptions, getOptionValueCB);
+      setSelectedOption(validatedSelectedOption);
+    },
+    toggleMenu: (state?: boolean) => {
+      if (state === true || (state === undefined && !menuOpen)) {
+        !isFocused && focusInput();
+        openMenuAndFocusOption(OptionIndexEnum.FIRST);
+      } else if (menuOpen) {
+        blurInput();
+      }
+    },
+  }));
 
   /*** useEffect/useUpdateEffect ***/
   // 1: If autoFocus = true, focus the control following initial mount
@@ -489,7 +499,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     const nextFocusedVal = (nextFocusedIndex === -1)
       ? FOCUSED_MULTI_DEFAULT
       : selectedOption[nextFocusedIndex].value!;
- 
+
     focusedOptionData && setFocusedOption(FOCUSED_OPTION_DEFAULT);
     (nextFocusedVal !== focusedMultiValue) && setFocusedMultiValue(nextFocusedVal);
   };
@@ -504,10 +514,10 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       : (focusedOptionIndex > 0)
         ? (focusedOptionIndex - 1)
         : (menuOptions.length - 1);
-        
+
     focusedMultiValue && setFocusedMultiValue(FOCUSED_MULTI_DEFAULT);
     setFocusedOption({ index, ...menuOptions[index] });
-    scrollToItemIndex(index);  
+    scrollToItemIndex(index);
   };
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
@@ -662,7 +672,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     e.stopPropagation();
     (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
     focusInput();
-    
+
     if (menuOpen) {
       setMenuOpen(false);
     } else {

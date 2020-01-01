@@ -3,7 +3,7 @@ import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { FIVE_BASIC_OPTIONS } from './helpers/utils';
 import { useClearAllToasts } from './helpers/useClearAllToasts';
-import { Hr, List, CodeHeader, Code, Title, Button, ListItem, SubTitle, Label, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, List, CodeHeader, Code, Title, Button, ListItem, SubTitle, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Methods', () => {
   const selectRef = useRef<SelectRef | null>(null);
@@ -18,6 +18,10 @@ storiesOf('React Functional Select', module).add('Methods', () => {
 
   const clearValue = (): void => {
     selectRef.current && selectRef.current.clearValue();
+  };
+
+  const toggleMenuOpen = (): void => {
+    selectRef.current && selectRef.current.toggleMenu(true);
   };
 
   const updateSelectedOption = (): void => {
@@ -41,6 +45,9 @@ storiesOf('React Functional Select', module).add('Methods', () => {
             <CodeHeader>focus(): void</CodeHeader> - focus the control programatically
           </ListItem>
           <ListItem>
+            <CodeHeader>toggleMenu(state?: boolean): void</CodeHeader> - toggle the menu programatically
+          </ListItem>
+          <ListItem>
             <CodeHeader>clearValue(): void</CodeHeader> - clear the current value programatically
             <em> (if an option is selected)</em>
           </ListItem>
@@ -55,9 +62,9 @@ storiesOf('React Functional Select', module).add('Methods', () => {
       <Card>
         <CardHeader supportMobile>
           <ButtonGroup>
-            <Label>Simulate Methods</Label>
             <Button onClick={focusSelect}>Focus</Button>
             <Button onClick={blurSelect}>Blur</Button>
+            <Button onClick={toggleMenuOpen}>Open Menu</Button>
             <Button onClick={clearValue}>Clear Value</Button>
             <Button onClick={updateSelectedOption}>Set Value (1st Option)</Button>
           </ButtonGroup>
