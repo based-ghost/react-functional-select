@@ -7,8 +7,6 @@
 [![License](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
 [![Downloads](https://img.shields.io/npm/dt/react-functional-select?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
 
-## Overview
-
 <strong>Key features:</strong>
 
 - Fully-featured package that is truly lightweight: ~7.85 KB (gzipped)!
@@ -20,6 +18,8 @@
 
 - [`styled-components`](https://github.com/styled-components/styled-components) for the dynamic CSS-in-JS package.
 - [`react-window`](https://github.com/bvaughn/react-window) leveraged for integrated data virtualization/windowing (easily handles data-sets numbering in the tens of thousands with minimal-to-no impact on normally resource-intensive actions like keying and searching).
+
+## Overview
 
 Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely using `React Hooks` and `FunctionComponents`.  The primary design principal revolves around weighing the cost/benefits of adding a feature against the impact to performance & # of lines of code its addition would have. 
 
