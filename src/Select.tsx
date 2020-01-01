@@ -251,12 +251,12 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     filterMatchFrom = FilterMatchEnum.ANY,
     noOptionsMsg = NO_OPTIONS_MSG_DEFAULT,
     menuItemSize = MENU_ITEM_SIZE_DEFAULT,
-    menuMaxHeight = MENU_MAX_HEIGHT_DEFAULT,
+    menuMaxHeight = MENU_MAX_HEIGHT_DEFAULT
   },
-  ref: React.Ref<SelectRef>,
+  ref: React.Ref<SelectRef>
 ) => {
   // Instance prop & DOM node refs
-  const prevMenuOptionsCount = useRef<number>();
+  const prevMenuOptionsLength = useRef<number>();
   const listRef = useRef<FixedSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -346,7 +346,10 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     listRef.current && listRef.current.scrollToItem(index);
   };
 
-  const removeSelectedOption = useCallback((value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {
+  const removeSelectedOption = useCallback((
+    value?: ReactText,
+    e?: MouseOrTouchEvent<HTMLDivElement>
+  ): void => {
     if (e) {
       e.stopPropagation();
       (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
@@ -383,7 +386,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       );
     }
 
-    const blurInputOnSelectOrDefault = (typeof blurInputOnSelect === 'boolean')
+    const blurInputOnSelectOrDefault: boolean = (typeof blurInputOnSelect === 'boolean')
       ? blurInputOnSelect
       : isTouchDevice();
 
@@ -395,7 +398,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     }
   }, [isMulti, closeMenuOnSelect, blurInputOnSelect, removeSelectedOption]);
 
-  /*** useImperativeHandle for publicly exposed methods ***/
+  /*** useImperativeHandle ***/
+  // Publicly exposed methods accessed via ref
+
   useImperativeHandle(ref, () => ({
     blur: blurInput,
     focus: focusInput,
@@ -404,14 +409,14 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
     },
     setValue: (option?: OptionData) => {
-      const validatedSelectedOption = validateSetValueParam(option, menuOptions, getOptionValueCB);
+      const validatedSelectedOption: SelectedOption[] = validateSetValueParam(option, menuOptions, getOptionValueCB);
       setSelectedOption(validatedSelectedOption);
     },
     toggleMenu: (state?: boolean) => {
       if (state === true || (state === undefined && !menuOpen)) {
         !isFocused && focusInput();
         openMenuAndFocusOption(OptionIndexEnum.FIRST);
-      } else if (menuOpen) {
+      } else {
         blurInput();
       }
     },
@@ -421,7 +426,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   // 1: If autoFocus = true, focus the control following initial mount
   // 2: If control recieves focus & openMenuOnFocus = true, open menu
   // 3: (useUpdateEffect) Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
-  // 4: Handle clearing focused option if menuOptions array has 0 length;
+  // 4: (useUpdateEffect) Handle clearing focused option if menuOptions array has 0 length;
   //    Handle menuOptions changes - conditionally focus first option and do scroll to first option;
   //    Handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
 
@@ -439,25 +444,27 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     if (onOptionChange) {
       const normalizedOptionValue = isMulti
         ? selectedOption.map(x => x.data)
-        : (isArrayWithLength(selectedOption) ? selectedOption[0].data : ON_CHANGE_SINGLE_VALUE_DEFAULT);
+        : isArrayWithLength(selectedOption)
+          ? selectedOption[0].data
+          : ON_CHANGE_SINGLE_VALUE_DEFAULT;
 
       onOptionChange(normalizedOptionValue);
     }
   }, [isMulti, selectedOption, onOptionChange]);
 
-  useEffect(() => {
-    if ((typeof prevMenuOptionsCount.current === 'number') && !isArrayWithLength(menuOptions)) {
+  useUpdateEffect(() => {
+    const inputChanged: boolean = !!menuOptions.length &&
+      (menuOptions.length !== options.length || prevMenuOptionsLength.current === 0);
+
+    if (!isArrayWithLength(menuOptions)) {
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    } else if (menuOptions.length === 1 || (!!menuOptions.length && (menuOptions.length !== options.length || prevMenuOptionsCount.current === 0))) {
-      setFocusedOption({
-        index: 0,
-        ...menuOptions[0]
-      });
+    } else if (menuOptions.length === 1 || inputChanged) {
+      setFocusedOption({ index: 0, ...menuOptions[0] });
       scrollToItemIndex(0);
     }
 
     // Track the previous value of menuOptions.length (used above)
-    prevMenuOptionsCount.current = menuOptions.length;
+    prevMenuOptionsLength.current = menuOptions.length;
   }, [options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
@@ -465,7 +472,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       return;
     }
 
-    const newOption = {
+    const newOption: SelectedOption = {
       data: focusedOptionData,
       value: focusedOptionValue,
       label: focusedOptionLabel
@@ -496,7 +503,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         : 0;
     }
 
-    const nextFocusedVal = (nextFocusedIndex === -1)
+    const nextFocusedVal: ReactText | null = (nextFocusedIndex === -1)
       ? FOCUSED_MULTI_DEFAULT
       : selectedOption[nextFocusedIndex].value!;
 
@@ -594,8 +601,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         }
 
         if (focusedMultiValue) {
-          const clearFocusedIndex = selectedOption.findIndex((option) => option.value === focusedMultiValue);
-          const nexFocusedMultiValue = (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
+          const clearFocusedIndex: number = selectedOption.findIndex((option) => option.value === focusedMultiValue);
+          const nexFocusedMultiValue: ReactText | null = (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
             ? selectedOption[clearFocusedIndex + 1].value!
             : FOCUSED_MULTI_DEFAULT;
 

@@ -1,7 +1,7 @@
 import { DefaultTheme } from 'styled-components';
 
 /**
- * A contextual styled-components DefaultTheme object with default key-values.
+ * A contextual styled-components DefaultTheme object with default key-value pairs for CSS props.
  */
 export default Object.freeze<DefaultTheme>({
   color: {
@@ -10,13 +10,13 @@ export default Object.freeze<DefaultTheme>({
     primary: '#007bff',
     disabled: '#e9ecef',
     placeholder: '#6E7276',
-    dangerLight: 'rgba(220, 53, 69, 0.25)',
+    dangerLight: 'rgba(220, 53, 69, 0.25)'
   },
   select: {},
   loader: {
     size: '0.625rem',
     padding: '0.375rem 0.75rem',
-    color: 'rgba(0, 123, 255, 0.42)',
+    color: 'rgba(0, 123, 255, 0.42)'
   },
   icon: {
     color: '#cccccc',
@@ -26,12 +26,12 @@ export default Object.freeze<DefaultTheme>({
       fontWeight: 900,
       fontSize: '0.85em',
       transition: 'color 0.15s ease-in-out',
-      fontFamily: '"Helvetica", "Arial", sans-serif',
+      fontFamily: '"Helvetica", "Arial", sans-serif'
     },
     caret: {
       size: '7px',
-      transition: 'transform 0.225s ease-in-out, color 0.15s ease-in-out',
-    },
+      transition: 'transform 0.225s ease-in-out, color 0.15s ease-in-out'
+    }
   },
   control: {
     minHeight: '38px',
@@ -42,7 +42,7 @@ export default Object.freeze<DefaultTheme>({
     padding: '0.375rem 0.75rem',
     boxShadowColor: 'rgba(0, 123, 255, 0.25)',
     focusedBorderColor: 'rgba(0, 123, 255, 0.75)',
-    transition: 'box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out',
+    transition: 'box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out'
   },
   menu: {
     width: '100%',
@@ -56,14 +56,14 @@ export default Object.freeze<DefaultTheme>({
       selectedColor: '#fff',
       selectedBgColor: '#007bff',
       padding: '0.375rem 0.75rem',
-      focusedBgColor: 'rgba(0, 123, 255, 0.20)',
-    },
+      focusedBgColor: 'rgba(0, 123, 255, 0.20)'
+    }
   },
   noOptions: {
     fontSize: '1.25rem',
     margin: '0.25rem 0',
     color: 'hsl(0, 0%, 60%)',
-    padding: '0.375rem 0.75rem',
+    padding: '0.375rem 0.75rem'
   },
   multiValue: {
     margin: '1px 2px',
@@ -72,7 +72,7 @@ export default Object.freeze<DefaultTheme>({
     label: {
       fontSize: '0.825em',
       borderRadius: '0.25rem',
-      padding: '1px 2px 1px 6px',
+      padding: '1px 2px 1px 6px'
     },
     clear: {
       fontWeight: 700,
@@ -80,7 +80,7 @@ export default Object.freeze<DefaultTheme>({
       fontSize: '0.675em',
       alignItems: 'center',
       borderRadius: '0.25rem',
-      transition: 'color 0.15s ease-in-out, background-color 0.15s ease-in-out',
-    },
+      transition: 'color 0.15s ease-in-out, background-color 0.15s ease-in-out'
+    }
   }
 });

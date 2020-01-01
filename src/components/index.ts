@@ -9,5 +9,5 @@ export {
   Value,
   AutosizeInput,
   IndicatorIcons,
-  AriaLiveRegion,
+  AriaLiveRegion
 };

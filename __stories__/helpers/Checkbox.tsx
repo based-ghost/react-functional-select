@@ -20,6 +20,13 @@ const BORDER_COLOR = '#ced4da';
 const CHECK_MARK_COLOR = '#E52D6B';
 const BORDER_COLOR_CHECKED = 'rgba(229, 45, 107, 0.525)';
 
+const Label = styled.span`
+  color: #5E5E5E;
+  user-select: none;
+  font-style: italic;
+  margin-left: 1.6rem;
+`;
+
 const Input = styled.input`
   top: 0.2em;
   z-index: 3;
@@ -30,14 +37,7 @@ const Input = styled.input`
   position: absolute;
 `;
 
-const LabelSpan = styled.span`
-  color: #5E5E5E;
-  user-select: none;
-  font-style: italic;
-  margin-left: 1.6rem;
-`;
-
-const LabelWrapper = styled.label<LabelWrapperProps>`
+const CheckboxWrapper = styled.label<LabelWrapperProps>`
   user-select: none;
   position: relative;
   margin-top: 0.5rem;
@@ -107,17 +107,17 @@ const Checkbox = React.memo<CheckboxProps>(({
   label,
   onCheck,
   checked,
-  readOnly,
+  readOnly
 }) => (
-  <LabelWrapper $readOnly={readOnly}>
+  <CheckboxWrapper $readOnly={readOnly}>
     <Input
       type='checkbox'
       checked={checked}
       onChange={(e: ChangeEvent<HTMLInputElement>): void => onCheck(e.target.checked)}
     />
     <CheckIcon $checked={checked} />
-    {label && <LabelSpan>{label}</LabelSpan>}
-  </LabelWrapper>
+    {label && <Label>{label}</Label>}
+  </CheckboxWrapper>
 ));
 
 export default Checkbox;

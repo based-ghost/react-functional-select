@@ -9,7 +9,7 @@ import { Hr, Title, SubTitle, List, ListWrapper, ListItem, Label, Container, Cod
 
 const _reactWindowLink = Object.freeze<PackageLinkProps>({
   name: 'react-window',
-  href: 'https://github.com/bvaughn/react-window',
+  href: 'https://github.com/bvaughn/react-window'
 });
 
 storiesOf('React Functional Select', module).add('Windowing', () => {
@@ -38,8 +38,8 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
       <Title>Integrated Windowing</Title>
       <Hr />
       <ListWrapper>
-        Option data is 'windowed' using the <PackageLink {..._reactWindowLink} /> package. 
-        Aside from the obvious benefits provided by only rendering a small subset of your 
+        Option data is 'windowed' using the <PackageLink {..._reactWindowLink} /> package.
+        Aside from the obvious benefits provided by only rendering a small subset of your
         enumerable data (rather than bloating the DOM with an excessive amount of nodes),
         'windowing' can also assist with:
         <List>
@@ -50,8 +50,8 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
             this data upfront for each object in your list). This way you can
             perform this work just when you absolutely need to and then can
             immediately release it for the GC to cleanup. As an example I am
-            generating the <Code>onClick</Code>, <Code>id</Code>, 
-            and <Code>className</Code> attributes for each <Code>menuOption</Code> as 
+            generating the <Code>onClick</Code>, <Code>id</Code>,
+            and <Code>className</Code> attributes for each <Code>menuOption</Code> as
             they get passed to the <Code>&lt;Option /&gt;</Code> renderer component.
           </ListItem>
           <ListItem>
@@ -65,10 +65,10 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
             memoization (testing &amp; debugging becomes much easier as well).
           </ListItem>
         </List>
-        <em>Note: </em>The only time any noticeable performance degradation will be observed 
-        is during search input updates when the <Code>options</Code> count reaches the high 
-        tens of thousands. To work around this, the <Code>inputDelay</Code> (number in milliseconds) 
-        can be set to debounce the input value. That way, the <Code>menuOptions</Code> will not be 
+        <em>Note: </em>The only time any noticeable performance degradation will be observed
+        is during search input updates when the <Code>options</Code> count reaches the high
+        tens of thousands. To work around this, the <Code>inputDelay</Code> (number in milliseconds)
+        can be set to debounce the input value. That way, the <Code>menuOptions</Code> will not be
         recalculated on every keystroke.
       </ListWrapper>
       <SubTitle>Demo</SubTitle>

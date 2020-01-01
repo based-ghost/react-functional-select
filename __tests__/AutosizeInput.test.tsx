@@ -28,14 +28,14 @@ const createAutosizeInputProps = () => {
     readOnly: false,
     onBlur: onBlurSpy,
     onFocus: onFocusSpy,
-    onChange: onChangeSpy,
+    onChange: onChangeSpy
   };
 
   return {
     props,
     onBlurSpy,
     onFocusSpy,
-    onChangeSpy,
+    onChangeSpy
   };
 };
 
@@ -64,7 +64,7 @@ test('input has functional, optional ARIA attributes', async () => {
 
   const { getByTestId } = renderAutosizeInput(mergedProps);
   const verifyAriaAttributes = ['aria-label', 'aria-labelledby', 'aria-autocomplete'];
-  
+
   verifyAriaAttributes.forEach((attr) => {
     expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute(attr);
   })

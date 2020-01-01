@@ -37,12 +37,12 @@ const createValueProps = () => {
     selectedOption: SELECTED_OPTION_DEFAULT,
     renderOptionLabel: renderOptionLabelSpy,
     focusedMultiValue: FOCUSED_MULTI_DEFAULT,
-    removeSelectedOption: removeSelectedOptionSpy,
+    removeSelectedOption: removeSelectedOptionSpy
   };
 
   return {
     props,
-    renderOptionLabelSpy,
+    renderOptionLabelSpy
   };
 };
 

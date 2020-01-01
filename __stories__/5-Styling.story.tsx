@@ -13,12 +13,12 @@ const ThemeEnum = Object.freeze({
   DEFAULT: 'Default',
   LARGE_TEXT: 'Large text',
   DARK_COLORS: 'Dark colors',
-  ZERO_BORDER_RADIUS: 'No border-radius',
+  ZERO_BORDER_RADIUS: 'No border-radius'
 });
 
 const StyledComponentsLink = Object.freeze<PackageLinkProps>({
   name: 'styled-components',
-  href: 'https://www.styled-components.com',
+  href: 'https://www.styled-components.com'
 });
 
 const ThemeConfigMap = Object.freeze<{[key: string]: any}>({
@@ -93,11 +93,11 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <Hr />
       <SubTitle>Theming</SubTitle>
       <Paragraph>
-        react-functional-select uses <PackageLink {...StyledComponentsLink} /> to handle its styling. 
-        The root node is wrapped in styled-component's <Code>&lt;ThemeProvider /&gt;</Code> wrapper 
-        component which gives all child styled-components access to the provided theme via React's 
+        react-functional-select uses <PackageLink {...StyledComponentsLink} /> to handle its styling.
+        The root node is wrapped in styled-component's <Code>&lt;ThemeProvider /&gt;</Code> wrapper
+        component which gives all child styled-components access to the provided theme via React's
         context API. To override react-functional-select's default theme, pass an object to
-        the <Code>themeConfig</Code> prop - any matching properties will replace those in the 
+        the <Code>themeConfig</Code> prop - any matching properties will replace those in the
         default theme.
       </Paragraph>
       <JsonContainer>
@@ -108,16 +108,16 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       </JsonContainer>
       <SubTitle>Using classNames</SubTitle>
       <Paragraph>
-        If you want to style the component using CSS classes, set the <Code>addClassNames</Code> prop 
-        to true and it will then generate <Code>className</Code> attributes for that specific instance 
-        of the component. These are the classNames that are available for targeting: rfs-select-container, 
+        If you want to style the component using CSS classes, set the <Code>addClassNames</Code> prop
+        to true and it will then generate <Code>className</Code> attributes for that specific instance
+        of the component. These are the classNames that are available for targeting: rfs-select-container,
         rfs-control-container, rfs-menu-container, rfs-autosize-input, rfs-caret-icon, rfs-clear-icon, rfs-option.
       </Paragraph>
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>
         <CardHeader>
-          <LabelHeader>Select themes below..</LabelHeader>
+          <LabelHeader>Select themes below</LabelHeader>
         </CardHeader>
         <CardBody>
           <SelectContainer>

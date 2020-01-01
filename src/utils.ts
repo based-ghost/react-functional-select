@@ -141,7 +141,7 @@ export function mergeDeep(target: any, source: any): any {
 }
 
 /**
- * Calculate space around the control and menu to determine if an animated 
+ * Calculate space around the control and menu to determine if an animated
  * scroll can performed to show the menu in full view. Also, execute a callback if defined.
  */
 export function scrollMenuIntoViewOnOpen(
@@ -155,13 +155,13 @@ export function scrollMenuIntoViewOnOpen(
     handleOnMenuOpen();
     return;
   }
-  
+
   const {
     top: menuTop,
     bottom: menuBottom,
-    height: menuHeight,
+    height: menuHeight
   } = menuEl.getBoundingClientRect();
-  
+
   const viewHeight = window.innerHeight;
   const viewSpaceBelow = viewHeight - menuTop;
 
@@ -238,7 +238,7 @@ export function normalizeValue(
     : isPlainObject(value)
       ? [value]
       : SELECTED_OPTION_DEFAULT;
-  
+
   // Return default of []
   if (!getOptionValueCB || !getOptionLabelCB || !isArrayWithLength(initialValues)) {
     return initialValues;

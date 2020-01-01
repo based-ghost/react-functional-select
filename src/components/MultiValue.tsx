@@ -48,7 +48,7 @@ const MultiValue: React.FC<MultiValueProps> = ({
   value,
   isFocused,
   renderOptionLabel,
-  removeSelectedOption,
+  removeSelectedOption
 }) => (
   <MultiValueWrapper>
     <Label>{renderOptionLabel(data)}</Label>

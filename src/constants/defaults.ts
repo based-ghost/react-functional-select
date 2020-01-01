@@ -1,16 +1,29 @@
 import { SelectedOption, FocusedOption, OptionData } from '../types';
 
-export const MENU_ITEM_SIZE_DEFAULT = 35;
-export const MENU_MAX_HEIGHT_DEFAULT = 300;
-export const NO_OPTIONS_MSG_DEFAULT = 'No options';
-export const PLACEHOLDER_DEFAULT = 'Select option..';
+const MENU_ITEM_SIZE_DEFAULT = 35;
+const MENU_MAX_HEIGHT_DEFAULT = 300;
 
-export const FOCUSED_MULTI_DEFAULT = null;
-export const ON_CHANGE_SINGLE_VALUE_DEFAULT = null;
+const NO_OPTIONS_MSG_DEFAULT = 'No options';
+const PLACEHOLDER_DEFAULT = 'Select option..';
 
-export const OPTIONS_DEFAULT: OptionData[] = [];
-export const SELECTED_OPTION_DEFAULT: SelectedOption[] = [];
+const FOCUSED_MULTI_DEFAULT = null;
+const ON_CHANGE_SINGLE_VALUE_DEFAULT = null;
 
-export const FOCUSED_OPTION_DEFAULT = Object.freeze<FocusedOption>({
+const OPTIONS_DEFAULT: OptionData[] = [];
+const SELECTED_OPTION_DEFAULT: SelectedOption[] = [];
+
+const FOCUSED_OPTION_DEFAULT = Object.freeze<FocusedOption>({
   index: -1,
 });
+
+export {
+  MENU_ITEM_SIZE_DEFAULT,
+  MENU_MAX_HEIGHT_DEFAULT,
+  NO_OPTIONS_MSG_DEFAULT,
+  PLACEHOLDER_DEFAULT,
+  FOCUSED_MULTI_DEFAULT,
+  ON_CHANGE_SINGLE_VALUE_DEFAULT,
+  OPTIONS_DEFAULT,
+  SELECTED_OPTION_DEFAULT,
+  FOCUSED_OPTION_DEFAULT
+};

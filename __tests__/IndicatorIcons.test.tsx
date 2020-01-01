@@ -26,13 +26,13 @@ const createIndicatorIconsProps = () => {
     menuOpen: false,
     showClear: true,
     onClearMouseDown: onClearMouseDownSpy,
-    onCaretMouseDown: onCaretMouseDownSpy,
+    onCaretMouseDown: onCaretMouseDownSpy
   };
 
   return {
     props,
     onClearMouseDownSpy,
-    onCaretMouseDownSpy,
+    onCaretMouseDownSpy
   };
 };
 

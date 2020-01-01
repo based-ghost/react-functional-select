@@ -8,7 +8,7 @@ import {
   MENU_CONTAINER_TESTID,
   AUTOSIZE_INPUT_TESTID,
   SELECT_CONTAINER_TESTID,
-  CONTROL_CONTAINER_TESTID,
+  CONTROL_CONTAINER_TESTID
 } from '../src/constants/dom';
 
 // ============================================
@@ -93,7 +93,7 @@ test('when "isDisabled" = true, the DOM elements render as expected to prevent u
     isDisabled: true,
     onInputFocus: onFocusSpy,
   };
-  
+
   const { getByTestId } = renderSelect(props);
 
   // mouseDown event should exit function when disabled (should not open the menu/focus input - which it normally would)
@@ -106,7 +106,7 @@ test('when "isDisabled" = true, the DOM elements render as expected to prevent u
 test('toggling the menu to open/close fires corresponding callbacks "onMenuOpen" and "onMenuClose" (if they are defined functions)', async () => {
   const onMenuOpenSpy = jest.fn();
   const onMenuCloseSpy = jest.fn();
-  
+
   const props = {
     onMenuOpen: onMenuOpenSpy,
     onMenuClose: onMenuCloseSpy,
@@ -115,7 +115,7 @@ test('toggling the menu to open/close fires corresponding callbacks "onMenuOpen"
   const { getByTestId } = renderSelect(props);
   fireEvent.mouseDown(getByTestId(CONTROL_CONTAINER_TESTID!));
   fireEvent.mouseDown(getByTestId(CONTROL_CONTAINER_TESTID!));
-  
+
   expect(onMenuOpenSpy).toBeCalled();
   expect(onMenuCloseSpy).toBeCalled();
 });

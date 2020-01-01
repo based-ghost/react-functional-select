@@ -70,7 +70,7 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
   loadingNode,
   addClassNames,
   onCaretMouseDown,
-  onClearMouseDown,
+  onClearMouseDown
 }) => (
   <IndicatorIconsWrapper>
     {(showClear && !isLoading) && (

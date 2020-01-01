@@ -1,13 +1,10 @@
 import { OptionIndex, ValueIndex } from '../types';
 
-type ValueIndexEnum = { [key: string]: ValueIndex };
-type OptionIndexEnum = { [key: string]: OptionIndex };
-
 /**
  * Property filterMatchFrom values. Defaults to 'any'.
  * Determines where to match search input in option during filter process.
  */
-export enum FilterMatchEnum {
+enum FilterMatchEnum {
   ANY = 'any',
   START = 'start'
 }
@@ -15,7 +12,7 @@ export enum FilterMatchEnum {
 /**
  * Arrow key direction for cycling through multi-values.
  */
-export const ValueIndexEnum = Object.freeze<ValueIndexEnum>({
+const ValueIndexEnum = Object.freeze<{[key: string]: ValueIndex}>({
   NEXT: 0,
   PREVIOUS: 1
 });
@@ -23,9 +20,15 @@ export const ValueIndexEnum = Object.freeze<ValueIndexEnum>({
 /**
  * Arrow key direction OR position for cycling through menu options.
  */
-export const OptionIndexEnum = Object.freeze<OptionIndexEnum>({
+const OptionIndexEnum = Object.freeze<{[key: string]: OptionIndex}>({
   UP: 0,
   DOWN: 1,
   FIRST: 2,
   LAST: 3
 });
+
+export {
+  FilterMatchEnum,
+  ValueIndexEnum,
+  OptionIndexEnum
+};

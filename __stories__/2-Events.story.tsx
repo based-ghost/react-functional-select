@@ -1,12 +1,14 @@
-import React, { useCallback, FocusEvent, KeyboardEvent } from 'react';
+import React, { useCallback, useMemo, FocusEvent, KeyboardEvent } from 'react';
 import { Select } from '../src';
 import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
 import { useCallbackState } from './helpers/useCallbackState';
-import { Option, renderInfoToast, renderSuccessToast, FIVE_BASIC_OPTIONS } from './helpers/utils';
+import { Option, renderInfoToast, renderSuccessToast, createSelectOptions } from './helpers/utils';
 import { Hr, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, CodeHeader, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Events', () => {
+  const options = useMemo<Option[]>(() => createSelectOptions(5), []);
+
   const [addOnKeyDown, setAddOnKeyDown] = useCallbackState(false);
   const [addOnMenuOpen, setAddOnMenuOpen] = useCallbackState(true);
   const [addOnMenuClose, setAddOnMenuClose] = useCallbackState(false);
@@ -26,7 +28,7 @@ storiesOf('React Functional Select', module).add('Events', () => {
       <Title>Events</Title>
       <Hr />
       <ListWrapper>
-        There are various callback function properties that are executed following 
+        There are various callback function properties that are executed following
         their associated events:
         <List>
           <ListItem>
@@ -34,11 +36,11 @@ storiesOf('React Functional Select', module).add('Events', () => {
             executed after an option is selected or removed
           </ListItem>
           <ListItem>
-            <CodeHeader>onMenuOpen(...args: any[]): void</CodeHeader> - 
+            <CodeHeader>onMenuOpen(...args: any[]): void</CodeHeader> -
             executed after the menu is opened
           </ListItem>
           <ListItem>
-            <CodeHeader>onMenuClose(...args: any[]): void</CodeHeader> - 
+            <CodeHeader>onMenuClose(...args: any[]): void</CodeHeader> -
             executed after the menu is closed
           </ListItem>
           <ListItem>
@@ -46,11 +48,11 @@ storiesOf('React Functional Select', module).add('Events', () => {
             executed after the onKeyDown event
           </ListItem>
           <ListItem>
-            <CodeHeader>onInputBlur(e: FocusEvent&lt;HTMLInputElement&gt;): void</CodeHeader> - 
+            <CodeHeader>onInputBlur(e: FocusEvent&lt;HTMLInputElement&gt;): void</CodeHeader> -
             executed after the input control is blurred
           </ListItem>
           <ListItem>
-            <CodeHeader>onInputFocus(e: FocusEvent&lt;HTMLInputElement&gt;): void</CodeHeader> - 
+            <CodeHeader>onInputFocus(e: FocusEvent&lt;HTMLInputElement&gt;): void</CodeHeader> -
             executed after the input control is focused
           </ListItem>
         </List>
@@ -95,7 +97,7 @@ storiesOf('React Functional Select', module).add('Events', () => {
         <CardBody>
           <SelectContainer>
             <Select
-              options={FIVE_BASIC_OPTIONS}
+              options={options}
               onKeyDown={addOnKeyDown ? onKeyDown : undefined}
               onMenuOpen={addOnMenuOpen ? onMenuOpen : undefined}
               onMenuClose={addOnMenuClose ? onMenuClose : undefined}

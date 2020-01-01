@@ -54,8 +54,7 @@ const PrintJsonPre = styled.pre`
 `;
 
 const PrettyPrintJson = React.memo<PrintJsonProps>(({ data, header }) => {
-  const jsonWithoutQuotes = JSON
-    .stringify(data || {}, null, 2)
+  const jsonWithoutQuotes = JSON.stringify(data || {}, null, 2)
     .toString()
     .replace(/"/g, '')
     .replace(/\\/g, '');

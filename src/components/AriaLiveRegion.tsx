@@ -24,7 +24,7 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
   optionCount,
   isSearchable,
   focusedOption,
-  selectedOption,
+  selectedOption
 }) => {
   if (!isFocused) {
     return null;

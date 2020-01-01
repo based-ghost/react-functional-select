@@ -63,9 +63,9 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
     ariaLabel,
     inputValue,
     addClassNames,
-    ariaLabelledBy,
+    ariaLabelledBy
   },
-  ref: React.Ref<HTMLInputElement>,
+  ref: React.Ref<HTMLInputElement>
 ) => {
   const sizerRef = useRef<HTMLDivElement | null>(null);
   const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);

@@ -10,8 +10,8 @@ const Option = React.memo<OptionProps>(({
     menuOptions,
     selectOption,
     renderOptionLabel,
-    focusedOptionIndex,
-  },
+    focusedOptionIndex
+  }
 }) => {
   const { data, value, label, isDisabled, isSelected } = menuOptions[index];
 

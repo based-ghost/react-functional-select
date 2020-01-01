@@ -45,7 +45,5 @@ export const CITY_OPTIONS: CityOption[] = [
   { id: 7, city: 'Orlando', state: 'FL' },
   { id: 8, city: 'Portland', state: 'OR' },
   { id: 9, city: 'Milwaukee', state: 'WI' },
-  { id: 10, city: 'Louisville', state: 'KY' },
+  { id: 10, city: 'Louisville', state: 'KY' }
 ];
-
-export const FIVE_BASIC_OPTIONS: Option[] = createSelectOptions(5);

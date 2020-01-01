@@ -1,12 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
-import { FIVE_BASIC_OPTIONS } from './helpers/utils';
+import { createSelectOptions, Option } from './helpers/utils';
 import { useClearAllToasts } from './helpers/useClearAllToasts';
-import { Hr, List, CodeHeader, Code, Title, Button, ListItem, SubTitle, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, List, CodeHeader, Code, Title, Button, Label, ListItem, SubTitle, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Methods', () => {
   const selectRef = useRef<SelectRef | null>(null);
+  const options = useMemo<Option[]>(() => createSelectOptions(5), []);
 
   const blurSelect = (): void => {
     selectRef.current && selectRef.current.blur();
@@ -25,7 +26,7 @@ storiesOf('React Functional Select', module).add('Methods', () => {
   };
 
   const updateSelectedOption = (): void => {
-    selectRef.current && selectRef.current.setValue(FIVE_BASIC_OPTIONS[0]);
+    selectRef.current && selectRef.current.setValue(options[0]);
   };
 
   useClearAllToasts();
@@ -35,7 +36,7 @@ storiesOf('React Functional Select', module).add('Methods', () => {
       <Title>Methods</Title>
       <Hr />
       <ListWrapper>
-        Four public methods are exposed to wrapping components and are
+        Five public methods are exposed to wrapping components and are
         accessible via a forwarded <Code>ref</Code>.
         <List>
           <ListItem>
@@ -62,6 +63,7 @@ storiesOf('React Functional Select', module).add('Methods', () => {
       <Card>
         <CardHeader supportMobile>
           <ButtonGroup>
+            <Label>Methods</Label>
             <Button onClick={focusSelect}>Focus</Button>
             <Button onClick={blurSelect}>Blur</Button>
             <Button onClick={toggleMenuOpen}>Open Menu</Button>
@@ -73,8 +75,8 @@ storiesOf('React Functional Select', module).add('Methods', () => {
           <SelectContainer>
             <Select
               ref={selectRef}
-              options={FIVE_BASIC_OPTIONS}
-              initialValue={FIVE_BASIC_OPTIONS[0]}
+              options={options}
+              initialValue={options[0]}
             />
           </SelectContainer>
         </CardBody>

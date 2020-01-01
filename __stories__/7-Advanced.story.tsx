@@ -27,7 +27,7 @@ const THEME_CONFIG = Object.freeze({
     option: {
       selectedColor: '#515151',
       focusedBgColor: '#F2F2F2',
-      selectedBgColor: '#F2F2F2',
+      selectedBgColor: '#F2F2F2'
     }
   }
 });
@@ -37,7 +37,7 @@ const OPTIONS: PackageOption[] = [
   { id: 2, packageName: 'react-dom' },
   { id: 3, packageName: 'reactstrap' },
   { id: 4, packageName: 'react-scripts' },
-  { id: 5, packageName: 'react-window' },
+  { id: 5, packageName: 'react-window' }
 ];
 
 const REACT_LOGO_SVG = require('./assets/react-logo.svg') as string;
@@ -87,21 +87,21 @@ storiesOf('React Functional Select', module).add('Advanced', () => {
         Implementation using a couple of the more specialized properties.
         <List>
           <ListItem>
-            <CodeHeader>renderOptionLabel(option: any): React.ReactNode</CodeHeader> - Callback 
-            function with a return type of <Code>ReactNode</Code>. Use this property in cases 
-            where the standard <Code>getOptionLabel</Code> property won't meet your needs (for 
-            instance, you want to render each option's label using custom JSX). More complex 
-            option labels will likely equate to longer render durations - this can translate 
-            into a flash of empty space when a user first starts scrolling. In order to prevent 
-            this, the <Code>menuOverscanCount</Code> property can be increased to render additional 
-            rows outside of the visible area. The default value for this property is 1 and it is 
+            <CodeHeader>renderOptionLabel(option: any): React.ReactNode</CodeHeader> - Callback
+            function with a return type of <Code>ReactNode</Code>. Use this property in cases
+            where the standard <Code>getOptionLabel</Code> property won't meet your needs (for
+            instance, you want to render each option's label using custom JSX). More complex
+            option labels will likely equate to longer render durations - this can translate
+            into a flash of empty space when a user first starts scrolling. In order to prevent
+            this, the <Code>menuOverscanCount</Code> property can be increased to render additional
+            rows outside of the visible area. The default value for this property is 1 and it is
             important to note that increasing this value can negatively impact performance.
           </ListItem>
           <ListItem>
-            <CodeHeader>getIsOptionDisabled(option: any): boolean</CodeHeader> - Callback 
-            function with a return type of <Code>Boolean</Code>. When it evaluates to a value of 
-            true, that option iteration will be rendered <em>disabled</em>. As an alternative, you 
-            can also pass a property of <Code>isDisabled</Code> with each option. Use of these two 
+            <CodeHeader>getIsOptionDisabled(option: any): boolean</CodeHeader> - Callback
+            function with a return type of <Code>Boolean</Code>. When it evaluates to a value of
+            true, that option iteration will be rendered <em>disabled</em>. As an alternative, you
+            can also pass a property of <Code>isDisabled</Code> with each option. Use of these two
             options - they cannot both be specified.
           </ListItem>
         </List>

@@ -25,9 +25,9 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     noOptionsMsg,
     overscanCount,
     renderOptionLabel,
-    focusedOptionIndex,
-  }, 
-  ref: React.Ref<FixedSizeList>,
+    focusedOptionIndex
+  },
+  ref: React.Ref<FixedSizeList>
 ) => {
   const itemData = useMemo<ItemData>(() => ({
     menuOptions,

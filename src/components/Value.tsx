@@ -29,25 +29,21 @@ const Value = React.memo<ValueProps>(({
   selectedOption,
   focusedMultiValue,
   renderOptionLabel,
-  removeSelectedOption,
+  removeSelectedOption
 }) => {
   if (inputValue && (!isMulti || (isMulti && !isArrayWithLength(selectedOption)))) {
     return null;
   }
 
   if (!isArrayWithLength(selectedOption)) {
-    return (
-      <Placeholder>{placeholder}</Placeholder>
-    );
+    return (<Placeholder>{placeholder}</Placeholder>);
   }
 
   if (!isMulti) {
     const { data } = selectedOption[0];
-    return (
-      <SingleValue>{renderOptionLabel(data)}</SingleValue>
-    );
+    return (<SingleValue>{renderOptionLabel(data)}</SingleValue>);
   }
-    
+
   return (
     <Fragment>
       {selectedOption.map(({ data, value }) => (
