@@ -25,12 +25,10 @@ Essentially, this is a focused subset of [`react-select`](https://github.com/Jed
 
 I opted to exclude less "in-demand" features such as: 
 
-- Preventing scroll events on the app's body if the menu is open
-- Closing an open menu if the app's body is scrolled
+- Preventing scroll events on the app's body if the menu is open <strong><em>TODO: add code example</em></strong>
+- Closing an open menu if the app's body is scrolled <strong><em>TODO: add code example</em></strong>
 
 These feature would have added significant overhead to the package. In addition, if we expose the right public methods and/or callback properties, this feature should be trivial to add to wrapping components - proper decoupling and abstraction of code is key to keeping such channels open for similar customizations that can be kept out of this package. 
-
-<strong>TODO: add code examples for "plugin" features listed in previous paragraph.</strong>
 
 ## Installation
 
