@@ -149,17 +149,17 @@ All properties are technically optional (with a few having default values). Very
 |`filterMatchFrom`| 'any' OR 'start' | `'any'` | Position in stringified option to match search input
 |`filterIgnoreCase`| bool | `true` | Search input ignores case of characters when comparing
 |`filterIgnoreAccents`| bool | `false` | Search input will strip diacritics from string before comparing
-|`onMenuOpen`| (...args: any[]) => void | `undefined` | Callback function executed after the menu is opened
-|`onMenuClose`| (...args: any[]) => void | `undefined` | Callback function executed after the menu is closed
-|`onOptionChange`| (data: any) => void | `undefined` | Callback function executed after a new option is selected
-|`onKeyDown`| React.KeyboardEventHandler\<HTMLDivElement\> | `undefined` | Callback function executed `onKeyDown` event
-|`getOptionLabel`| (data: any) => React.ReactText | `undefined` | Resolves option data to React.ReactText to be displayed as the label by components (by default will use option.label)
-|`getOptionValue`| (data: any) => React.ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
-|`onInputBlur`| React.FocusEventHandler\<HTMLInputElement\> | `undefined` | Handle blur events on the search input
-|`onInputFocus`| React.FocusEventHandler\<HTMLInputElement\> | `undefined` | Handle focus events on the search input
-|`renderOptionLabel`| (data: any) => React.ReactNode | `undefined` | Formats option labels in the menu and control as JSX.Elements or React Components (by default will use `getOptionLabel`)
-|`getIsOptionDisabled`| (data: any) => boolean | `undefined` | When defined will evaluate each option to determine whether it is disabled or not (if not specified, each option will be evaluated as to whether or not it contains a property of `isDisabled` with a value of `true`)
-|`getFilterOptionString`| (option: any) => string | `undefined` | When defined will take each option and generate a string used in the filtering process (by default, will use option.label)
+|`onMenuOpen`| (...args: any[]): void | `undefined` | Callback function executed after the menu is opened
+|`onMenuClose`| (...args: any[]): void | `undefined` | Callback function executed after the menu is closed
+|`onOptionChange`| (data: any): void | `undefined` | Callback function executed after a new option is selected
+|`onKeyDown`| (e: KeyboardEvent\<HTMLDivElement\>): void | `undefined` | Callback function executed `onKeyDown` event
+|`getOptionLabel`| (data: any): React.ReactText | `undefined` | Resolves option data to React.ReactText to be displayed as the label by components (by default will use option.label)
+|`getOptionValue`| (data: any): React.ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
+|`onInputBlur`| (e: FocusEvent\<HTMLInputElement\>): void | `undefined` | Handle blur events on the search input
+|`onInputFocus`| (e: FocusEvent\<HTMLInputElement\>): void | `undefined` | Handle focus events on the search input
+|`renderOptionLabel`| (data: any): React.ReactNode | `undefined` | Formats option labels in the menu and control as JSX.Elements or React Components (by default will use `getOptionLabel`)
+|`getIsOptionDisabled`| (data: any): boolean | `undefined` | When defined will evaluate each option to determine whether it is disabled or not (if not specified, each option will be evaluated as to whether or not it contains a property of `isDisabled` with a value of `true`)
+|`getFilterOptionString`| (option: any): string | `undefined` | When defined will take each option and generate a string used in the filtering process (by default, will use option.label)
 |`themeConfig`| Partial\<DefaultTheme\> | `undefined` | Object that takes specified property key-value pairs and merges them into the theme object
 
 ## Inspiration
