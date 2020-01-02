@@ -122,13 +122,13 @@ All properties are technically optional (with a few having default values). Very
 |`inputDelay`| number | `undefined` | The debounce delay in for the input search (milliseconds)
 |`isDisabled`| bool | `false` | Is the select control disabled - recieves disabled styling
 |`placeholder`| string | `Select option..` | Placeholder text for the select value
-|`menuWidth`| React.ReactText | `100%` | Width of the menu
+|`menuWidth`| ReactText | `100%` | Width of the menu
 |`menuItemSize`| number | `35` | The height of each option in the menu (px)
 |`isClearable`| bool | `false` | Is the select value clearable
 |`noOptionsMsg`| string | `No options` | The text displayed in the menu when there are no options available
-|`clearIcon`| React.ReactNode | `undefined` | Custom clear icon node
-|`caretIcon`| React.ReactNode | `undefined` | Custom caret icon node
-|`loadingNode`| React.ReactNode | `undefined` | Custom loading node
+|`clearIcon`| ReactNode | `undefined` | Custom clear icon node
+|`caretIcon`| ReactNode | `undefined` | Custom caret icon node
+|`loadingNode`| ReactNode | `undefined` | Custom loading node
 |`options`| array | `[]` | The menu options
 |`isSearchable`| bool | `true` | Whether to enable search functionality or not
 |`hideSelectedOptions`| bool | `false` | Hide the selected option from the menu (if undefined and isMulti = true, then defaults to true)
@@ -153,11 +153,11 @@ All properties are technically optional (with a few having default values). Very
 |`onMenuClose`| (...args: any[]): void | `undefined` | Callback function executed after the menu is closed
 |`onOptionChange`| (data: any): void | `undefined` | Callback function executed after a new option is selected
 |`onKeyDown`| (e: KeyboardEvent\<HTMLDivElement\>): void | `undefined` | Callback function executed `onKeyDown` event
-|`getOptionLabel`| (data: any): React.ReactText | `undefined` | Resolves option data to React.ReactText to be displayed as the label by components (by default will use option.label)
-|`getOptionValue`| (data: any): React.ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
+|`getOptionLabel`| (data: any): ReactText | `undefined` | Resolves option data to React.ReactText to be displayed as the label by components (by default will use option.label)
+|`getOptionValue`| (data: any): ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
 |`onInputBlur`| (e: FocusEvent\<HTMLInputElement\>): void | `undefined` | Handle blur events on the search input
 |`onInputFocus`| (e: FocusEvent\<HTMLInputElement\>): void | `undefined` | Handle focus events on the search input
-|`renderOptionLabel`| (data: any): React.ReactNode | `undefined` | Formats option labels in the menu and control as JSX.Elements or React Components (by default will use `getOptionLabel`)
+|`renderOptionLabel`| (data: any): ReactNode | `undefined` | Formats option labels in the menu and control as JSX.Elements or React Components (by default will use `getOptionLabel`)
 |`getIsOptionDisabled`| (data: any): boolean | `undefined` | When defined will evaluate each option to determine whether it is disabled or not (if not specified, each option will be evaluated as to whether or not it contains a property of `isDisabled` with a value of `true`)
 |`getFilterOptionString`| (option: any): string | `undefined` | When defined will take each option and generate a string used in the filtering process (by default, will use option.label)
 |`themeConfig`| Partial\<DefaultTheme\> | `undefined` | Object that takes specified property key-value pairs and merges them into the theme object
