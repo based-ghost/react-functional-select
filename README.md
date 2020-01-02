@@ -16,8 +16,8 @@
 
 <strong>Peer dependencies:</strong>
 
-- [`styled-components`](https://github.com/styled-components/styled-components) for the dynamic CSS-in-JS package.
-- [`react-window`](https://github.com/bvaughn/react-window) leveraged for integrated data virtualization/windowing (easily handles data-sets numbering in the tens of thousands with minimal-to-no impact on normally resource-intensive actions like keying and searching).
+- [`styled-components`](https://github.com/styled-components/styled-components) for dynamic styling/theming via CSS-in-JS
+- [`react-window`](https://github.com/bvaughn/react-window) for integrated menu option data virtualization/windowing
 
 ## Overview
 
