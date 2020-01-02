@@ -141,7 +141,7 @@ All properties are technically optional (with a few having default values). Very
 |`initialValue`| any | `undefined` | Initial select value
 |`menuOverscanCount`| number | `1` | correlates to `react-window` property `overscanCount`: The number of items (options) to render outside of the visible area. Increasing the number can impact performance, but is useful if the option label is complex and the `renderOptionLabel` prop is defined
 |`tabSelectsOption`| bool | `true` | Select the currently focused option when the user presses tab
-|`blurInputOnSelect`| bool | `true IF device is touch-enabled ELSE false` | Remove focus from the input when the user selects an option (useful for dismissing the keyboard on touch devices)
+|`blurInputOnSelect`| bool | `false` | Remove focus from the input when the user selects an option (useful for dismissing the keyboard on touch devices)
 |`closeMenuOnSelect`| bool | `true` | Close the select menu when the user selects an option
 |`isAriaLiveEnabled`| bool | `false` | Enables visually hidden div that reports stateful information (for assistive tech)
 |`scrollMenuIntoView`| bool | `true` | Performs animated scroll to show menu in view when menu is opened (if there is room to do so)
