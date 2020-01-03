@@ -33,7 +33,7 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     menuOptions,
     selectOption,
     renderOptionLabel,
-    focusedOptionIndex,
+    focusedOptionIndex
   }), [menuOptions, focusedOptionIndex, selectOption, renderOptionLabel]);
 
   return (

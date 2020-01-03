@@ -110,7 +110,7 @@ storiesOf('React Functional Select', module).add('Advanced', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <LabelHeader>JSX labels &amp; disabled option..</LabelHeader>
+          <LabelHeader>JSX labels &amp; disabled option</LabelHeader>
         </CardHeader>
         <CardBody>
           <SelectContainer>

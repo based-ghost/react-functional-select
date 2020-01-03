@@ -268,15 +268,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
   const [focusedMultiValue, setFocusedMultiValue] = useState<ReactText | null>(FOCUSED_MULTI_DEFAULT);
 
-  const {
-    data: focusedOptionData,
-    value: focusedOptionValue,
-    label: focusedOptionLabel,
-    index: focusedOptionIndex,
-    isDisabled: isFocusedOptionDisabled,
-    isSelected: isFocusedOptionSelected
-  } = focusedOption;
-
   // Theme for styled-components ThemeProvider
   const theme = useMemo<DefaultTheme>(() => {
     return !isPlainObject(themeConfig)
@@ -346,10 +337,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     listRef.current && listRef.current.scrollToItem(index);
   };
 
-  const removeSelectedOption = useCallback((
-    value?: ReactText,
-    e?: MouseOrTouchEvent<HTMLDivElement>
-  ): void => {
+  const removeSelectedOption = useCallback((value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {
     if (e) {
       e.stopPropagation();
       (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
@@ -380,10 +368,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     if (isSelected) {
       isMulti && removeSelectedOption(option.value);
     } else {
-      setSelectedOption((prevSelectedOption) => !isMulti
-        ? [option]
-        : [...prevSelectedOption, option]
-      );
+      setSelectedOption((prevSelectedOption) => (!isMulti ? [option] : [...prevSelectedOption, option]));
     }
 
     const blurInputOnSelectOrDefault: boolean = (typeof blurInputOnSelect === 'boolean')
@@ -468,17 +453,17 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   }, [options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
-    if (!focusedOptionData || isFocusedOptionDisabled) {
-      return;
+    const {
+      data,
+      value,
+      label,
+      isSelected,
+      isDisabled: focusedOptionDisabled
+    } = focusedOption;
+
+    if (data && !focusedOptionDisabled) {
+      selectOption({ data, value, label }, isSelected);
     }
-
-    const newOption: SelectedOption = {
-      data: focusedOptionData,
-      value: focusedOptionValue,
-      label: focusedOptionLabel
-    };
-
-    selectOption(newOption, isFocusedOptionSelected);
   };
 
   // Only Multiselect mode supports value focusing
@@ -507,7 +492,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       ? FOCUSED_MULTI_DEFAULT
       : selectedOption[nextFocusedIndex].value!;
 
-    focusedOptionData && setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    focusedOption.data && setFocusedOption(FOCUSED_OPTION_DEFAULT);
     (nextFocusedVal !== focusedMultiValue) && setFocusedMultiValue(nextFocusedVal);
   };
 
@@ -517,9 +502,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     }
 
     const index = (direction === OptionIndexEnum.DOWN)
-      ? (focusedOptionIndex + 1) % menuOptions.length
-      : (focusedOptionIndex > 0)
-        ? (focusedOptionIndex - 1)
+      ? (focusedOption.index + 1) % menuOptions.length
+      : (focusedOption.index > 0)
+        ? (focusedOption.index - 1)
         : (menuOptions.length - 1);
 
     focusedMultiValue && setFocusedMultiValue(FOCUSED_MULTI_DEFAULT);
@@ -572,7 +557,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         } else if (!menuOpen) {
           openMenuAndFocusOption(OptionIndexEnum.FIRST);
           break;
-        } else if (!focusedOptionData) {
+        } else if (!focusedOption.data) {
           return;
         }
         selectOptionFromFocused();
@@ -589,7 +574,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         }
         break;
       case 'Tab':
-        if (!menuOpen || !tabSelectsOption || !focusedOptionData || e.shiftKey) {
+        if (!menuOpen || !tabSelectsOption || !focusedOption.data || e.shiftKey) {
           return;
         }
         selectOptionFromFocused();
@@ -756,8 +741,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             selectOption={selectOption}
             overscanCount={menuOverscanCount}
             width={menuWidth || theme.menu.width}
-            focusedOptionIndex={focusedOptionIndex}
             renderOptionLabel={renderOptionLabelCB}
+            focusedOptionIndex={focusedOption.index}
           />
         </MenuWrapper>
         {isAriaLiveEnabled && (

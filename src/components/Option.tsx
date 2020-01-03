@@ -1,6 +1,6 @@
 import React from 'react';
-import { OptionProps } from '../types';
 import { areEqual } from 'react-window';
+import { MenuOption, OptionProps } from '../types';
 import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants/dom';
 
 const Option = React.memo<OptionProps>(({
@@ -13,9 +13,9 @@ const Option = React.memo<OptionProps>(({
     focusedOptionIndex
   }
 }) => {
-  const { data, value, label, isDisabled, isSelected } = menuOptions[index];
+  const { data, value, label, isDisabled, isSelected }: MenuOption = menuOptions[index];
 
-  const className = OPTION_CLS
+  const className: string = OPTION_CLS
     + (isDisabled ? ' ' + OPTION_DISABLED_CLS : '')
     + (isSelected ? ' ' + OPTION_SELECTED_CLS : '')
     + ((index === focusedOptionIndex) ? ' ' + OPTION_FOCUSED_CLS : '');
