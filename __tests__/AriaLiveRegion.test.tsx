@@ -2,6 +2,7 @@ import React from 'react';
 import DefaultThemeObj from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import { AriaLiveRegion } from '../src/components';
+import { ARIA_LIVE_TESTID } from '../src/constants/dom';
 import { getSelectedOptionMulti } from './helpers/utils';
 import { render, RenderResult } from '@testing-library/react';
 import { AriaLiveRegionProps, SelectedOption, FocusedOption } from '../src/types';
@@ -39,6 +40,8 @@ const createAriaLiveRegionProps = (): AriaLiveRegionProps => {
 
 test('AriaLiveRegion component mounts and renders without error', async () => {
   const props = createAriaLiveRegionProps();
-  const { container } = renderAriaLiveRegion(props);
-  expect(container.hasChildNodes()).toBeTruthy();
+  const { getByTestId } = renderAriaLiveRegion(props);
+  const ariaLiveEl = getByTestId(ARIA_LIVE_TESTID);
+  expect(ariaLiveEl).toBeInTheDocument();
+  expect(ariaLiveEl.hasChildNodes()).toBeTruthy();
 });

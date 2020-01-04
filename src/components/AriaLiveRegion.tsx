@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../utils';
 import { AriaLiveRegionProps } from '../types';
+import { ARIA_LIVE_TESTID } from '../constants/dom';
 
 const A11yText = styled.span`
   border: 0;
@@ -55,7 +56,10 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
     : `${ariaLabel || 'Select'} is focused${isSearchable ? ', type to filter options' : ''}, press Down arrow key to open the menu.`;
 
   return (
-    <A11yText aria-live='polite'>
+    <A11yText
+      aria-live='polite'
+      data-testid={ARIA_LIVE_TESTID}
+    >
       <p>{selectedOptionMsg}</p>
       <p>{`${focusedMsg} ${optionsMsg} ${menuMsg}`}</p>
     </A11yText>

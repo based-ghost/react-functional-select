@@ -30,6 +30,7 @@ export const CLEAR_ICON_TESTID = isNotProd ? CLEAR_ICON_CLS : undefined;
 export const CARET_ICON_TESTID = isNotProd ? CARET_ICON_CLS : undefined;
 export const AUTOSIZE_INPUT_TESTID = isNotProd ? AUTOSIZE_INPUT_CLS : undefined;
 export const MENU_CONTAINER_TESTID = isNotProd ? MENU_CONTAINER_CLS : undefined;
+export const ARIA_LIVE_TESTID = isNotProd ? `${attrPrefix}-aria-live` : undefined;
 export const CLEAR_ICON_MV_TESTID = isNotProd ? `${CLEAR_ICON_CLS}-mv` : undefined;
 export const SELECT_CONTAINER_TESTID = isNotProd ? SELECT_CONTAINER_CLS : undefined;
 export const CONTROL_CONTAINER_TESTID = isNotProd ? CONTROL_CONTAINER_CLS : undefined;
