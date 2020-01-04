@@ -3,9 +3,9 @@ import DefaultThemeObj from '../src/theme';
 import { OptionProps } from '../src/types';
 import Option from '../src/components/Option';
 import { ThemeProvider } from 'styled-components';
+import { OPTION_DISABLED_CLS } from '../src/constants/dom';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
-import { OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS } from '../src/constants/dom';
-import { MENU_OPTIONS, MENU_OPTION_SELECTED, MENU_OPTION_DISABLED, RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
+import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK, stringifyCSSProperties } from './helpers/utils';
 
 // ============================================
 // Helper functions & test data for Option.tsx component
@@ -57,24 +57,38 @@ test('option parent element renders dynamic style attribute correctly', async ()
   const { props } = createOptionProps();
   const { container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
-
-  const stringifyCSSProperties = (): string => {
-    let value = '';
-    Object.keys(OPTION_STYLE).forEach((key) => {
-      value += `${key}: ${OPTION_STYLE[key]}; `;
-    });
-    return value.trim();
-  };
-
-  expect(optionParentEl).toHaveAttribute('style', stringifyCSSProperties());
+  expect(optionParentEl).toHaveAttribute('style', stringifyCSSProperties(OPTION_STYLE));
 });
 
 test('"renderOptionLabel" callback should be executed and the result rendered to DOM', async () => {
   const { props, renderOptionLabelSpy } = createOptionProps();
-  const { data: { label } } = props.data.menuOptions[props.index];
-
+  const { label } = props.data.menuOptions[props.index];
   const { getByText } = renderOption(props);
 
   expect(renderOptionLabelSpy).toHaveBeenCalled();
-  expect(getByText(label)).toBeInTheDocument();
+  expect(getByText(String(label))).toBeInTheDocument();
+});
+
+test('option with "isDisabled" = FALSE should have a functioning onClick handler attached', async () => {
+  const firstEnabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !option.isDisabled);
+  const { props, onClickSelectOptionSpy } = createOptionProps(firstEnabledMenuOptionIndex);
+
+  const { container } = renderOption(props);
+  const optionParentEl = container.querySelector('div');
+
+  fireEvent.click(optionParentEl);
+  expect(onClickSelectOptionSpy).toBeCalled();
+});
+
+test(`option with "isDisabled" = TRUE should not have an onClick handler attached and should have class - ${OPTION_DISABLED_CLS} - added to its classList`, async () => {
+  const firstDisabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !!option.isDisabled);
+  const { props, onClickSelectOptionSpy } = createOptionProps(firstDisabledMenuOptionIndex);
+
+  const { container } = renderOption(props);
+  const optionParentEl = container.querySelector('div');
+
+  fireEvent.click(optionParentEl);
+
+  expect(onClickSelectOptionSpy).not.toBeCalled();
+  expect(optionParentEl).toHaveClass(OPTION_DISABLED_CLS);
 });

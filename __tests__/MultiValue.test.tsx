@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import MultiValue from '../src/components/MultiValue';
 import { CLEAR_ICON_MV_TESTID } from '../src/constants/dom';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
-import { Option, OPTIONS, RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
+import { Option, RENDER_OPTION_LABEL_MOCK, getOptionSingle } from './helpers/utils';
 
 // ============================================
 // Helper functions for MultiValue component
@@ -19,14 +19,15 @@ const renderMultiValue = (props: MultiValueProps): RenderResult => {
   );
 };
 
-const createMultiValueProps = (option: Option = OPTIONS[0]) => {
+const createMultiValueProps = () => {
+  const data: Option = getOptionSingle();
   const removeSelectedOptionSpy = jest.fn();
   const renderOptionLabelSpy = RENDER_OPTION_LABEL_MOCK;
 
   const props: MultiValueProps = {
-    data: option,
+    data,
     isFocused: false,
-    value: option.value,
+    value: data.value,
     renderOptionLabel: renderOptionLabelSpy,
     removeSelectedOption: removeSelectedOptionSpy
   };

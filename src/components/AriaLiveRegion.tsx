@@ -31,9 +31,10 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
   }
 
   const {
+    value: focusedOptionValue,
     label: focusedOptionLabel,
     index: focusedOptionIndex,
-    isDisabled: isFocusedOptionDisabled
+    isDisabled: isFocusedOptionDisabled,
   } = focusedOption;
 
   const selectedOptionLabel = isArrayWithLength(selectedOption)
@@ -41,8 +42,13 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
     : 'N/A';
 
   const selectedOptionMsg = `Selected option: ${selectedOptionLabel}`;
-  const optionsMsg = `${optionCount} result(s) available${inputValue ? (` for search input ${inputValue}`) : ''}.`;
-  const focusedMsg = `Focused option: ${focusedOptionLabel || 'N/A'}${isFocusedOptionDisabled ? ' - disabled' : ''}, ${focusedOptionIndex + 1} of ${optionCount}.`;
+  const optionsMsg = `${optionCount} result(s) available${inputValue ? ` for search input ${inputValue}` : ''}.`;
+
+  const focusedMsg = focusedOptionValue
+    ? `Focused option: ${focusedOptionLabel}${
+        isFocusedOptionDisabled ? ' - disabled' : ''
+      }, ${focusedOptionIndex + 1} of ${optionCount}.`
+    : '';
 
   const menuMsg = menuOpen
     ? 'Use Up and Down arrow keys to choose options, press Enter or Tab to select the currently focused option, press Escape to close the menu.'
@@ -50,8 +56,8 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
 
   return (
     <A11yText aria-live='polite'>
-      <p id='aria-selection-event'>{selectedOptionMsg}</p>
-      <p id='aria-context'>{`${focusedMsg} ${optionsMsg} ${menuMsg}`}</p>
+      <p>{selectedOptionMsg}</p>
+      <p>{`${focusedMsg} ${optionsMsg} ${menuMsg}`}</p>
     </A11yText>
   );
 };

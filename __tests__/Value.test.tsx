@@ -1,10 +1,10 @@
 import React from 'react';
 import { Value } from '../src/components';
-import { ValueProps } from '../src/types';
 import DefaultThemeObj from '../src/theme';
-import { render, RenderResult } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
+import { ValueProps, SelectedOption } from '../src/types';
+import { render, RenderResult } from '@testing-library/react';
+import { RENDER_OPTION_LABEL_MOCK, getSelectedOptionSingle } from './helpers/utils';
 import { PLACEHOLDER_DEFAULT, SELECTED_OPTION_DEFAULT, FOCUSED_MULTI_DEFAULT } from '../src/constants/defaults';
 
 // ============================================
@@ -78,24 +78,19 @@ test('component renders NULL if "inputValue" is truthy AND ("isMulti" != true OR
 });
 
 test('"renderOptionLabel" callback should be executed when an option is selected and should render the selected option label text', async () => {
-  const selectedOptionLabel = 'Option 1';
+  const selectedOption = getSelectedOptionSingle();
   const { props, renderOptionLabelSpy } = createValueProps();
-
-  const data = {
-    value: 1,
-    label: selectedOptionLabel,
-  };
 
   const propsWithSelectedOption = {
     ...props,
-    selectedOption: [{
-      data,
-      value: data.value,
-      label: data.label,
-    }],
+    selectedOption
   };
 
   const { getByText } = renderValue(propsWithSelectedOption);
   expect(renderOptionLabelSpy).toHaveBeenCalledTimes(1);
-  expect(getByText(selectedOptionLabel)).toBeInTheDocument();
+
+  selectedOption.forEach((option: SelectedOption): void => {
+    const { label } = option;
+    expect(getByText(String(label))).toBeInTheDocument();
+  });
 });

@@ -104,7 +104,7 @@ export const isTouchDevice = (): boolean => window.matchMedia('(pointer: coarse)
 /**
  * Determines if browser is Edge or IE.
  */
-export const isEdgeOrIE = (): boolean => MS_BROWSER_REGEXP.test(window.navigator.userAgent);
+export const isBrowserMS = (): boolean => MS_BROWSER_REGEXP.test(window.navigator.userAgent);
 
 /**
  * Apply regex to string, and if the value is NOT case sensitive, call .toLowerCase() and return result.

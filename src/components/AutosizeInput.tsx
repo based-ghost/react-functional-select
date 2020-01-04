@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, CSSProperties } from 'react';
-import { isEdgeOrIE } from '../utils';
+import { isBrowserMS } from '../utils';
 import styled from 'styled-components';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
@@ -50,7 +50,7 @@ const Input = styled.input`
     cursor: default;
   }
 
-  ${() => isEdgeOrIE() && (`::-ms-clear { display: none; }`)}
+  ${() => isBrowserMS() && (`::-ms-clear { display: none; }`)}
 `;
 
 const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInputProps>((
@@ -76,13 +76,10 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
     }
   }, [inputValue]);
 
-  const inputAttributes: AutosizeInputHTMLAttributes = {
+  const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
     ...STATIC_ATTRIBUTES,
     'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy,
-    style: {
-      width: inputWidth
-    }
+    'aria-labelledby': ariaLabelledBy
   };
 
   return (
@@ -94,7 +91,8 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
         onFocus={onFocus}
         value={inputValue}
         readOnly={readOnly}
-        {...inputAttributes}
+        {...autosizeInputAttrs}
+        style={{ width: inputWidth }}
         onChange={!readOnly ? onChange : undefined}
         className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
       />

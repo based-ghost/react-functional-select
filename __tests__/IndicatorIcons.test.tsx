@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { IndicatorIcons } from '../src/components';
 import { IndicatorIconsProps } from '../src/types';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
-import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_CLS } from '../src/constants/dom';
+import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/constants/dom';
 
 // ============================================
 // Helper functions for IndicatorIcons component
@@ -65,7 +65,7 @@ test('clear indicator has functioning "mouseDown" and "touchEnd" events', async 
 test('caret indicator has functioning "mouseDown" and "touchEnd" events', async () => {
   const { props, onCaretMouseDownSpy } = createIndicatorIconsProps();
   const { getByTestId } = renderIndicatorIcons(props);
-  const caretIndicatorEl = getByTestId(CARET_ICON_CLS!);
+  const caretIndicatorEl = getByTestId(CARET_ICON_TESTID!);
 
   fireEvent.touchEnd(caretIndicatorEl);
   fireEvent.mouseDown(caretIndicatorEl);

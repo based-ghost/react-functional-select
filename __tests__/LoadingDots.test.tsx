@@ -20,7 +20,7 @@ const renderLoadingDots = (): RenderResult => {
 // Test cases
 // ============================================
 
-test('LoadingDots component mounts and renders successfully', async () => {
+test('LoadingDots component mounts and renders without error', async () => {
   const { container } = renderLoadingDots();
   expect(container.hasChildNodes()).toBeTruthy();
 });

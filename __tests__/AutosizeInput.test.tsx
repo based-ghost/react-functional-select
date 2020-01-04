@@ -65,7 +65,7 @@ test('input has functional, optional ARIA attributes', async () => {
   const { getByTestId } = renderAutosizeInput(mergedProps);
   const verifyAriaAttributes = ['aria-label', 'aria-labelledby', 'aria-autocomplete'];
 
-  verifyAriaAttributes.forEach((attr) => {
+  verifyAriaAttributes.forEach((attr: string): void => {
     expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute(attr);
   });
 });
