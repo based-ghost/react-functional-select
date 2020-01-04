@@ -67,7 +67,7 @@ test('input has functional, optional ARIA attributes', async () => {
 
   verifyAriaAttributes.forEach((attr) => {
     expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute(attr);
-  })
+  });
 });
 
 test('when "id" has a non-empty string value, input element should get an "id" attribute reflecting that value', async () => {

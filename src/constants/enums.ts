@@ -28,7 +28,7 @@ const OptionIndexEnum = Object.freeze<{[key: string]: OptionIndex}>({
 });
 
 export {
-  FilterMatchEnum,
   ValueIndexEnum,
+  FilterMatchEnum,
   OptionIndexEnum
 };

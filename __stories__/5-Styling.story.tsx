@@ -62,6 +62,7 @@ const ThemeConfigMap = Object.freeze<{[key: string]: any}>({
 storiesOf('React Functional Select', module).add('Styling', () => {
   const [themeConfig, setThemeConfig] = useState<Theme | undefined>(undefined);
   const [selectedOption, setSelectedOption] = useCallbackState<Option | null>(null);
+  const menuItemSize = (selectedOption && selectedOption.value === ThemeEnum.LARGE_TEXT) ? 44 : 35;
 
   // Create theme options based upon key-value pairs in ThemeEnum object defined above
   const options = useMemo<Option[]>(() => {
@@ -74,9 +75,6 @@ storiesOf('React Functional Select', module).add('Styling', () => {
     });
     return results;
   }, []);
-
-  // Adjust the react-window itemSize (height of menu option) from default of 35 to 44 for 'Large Text'
-  const menuItemSize = (selectedOption && selectedOption.value === ThemeEnum.LARGE_TEXT) ? 44 : 35;
 
   useEffect(() => {
     if (selectedOption) {

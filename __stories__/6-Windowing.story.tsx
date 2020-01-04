@@ -20,7 +20,7 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setOptions(createSelectOptions(optionsCount));
-    }, 120);
+    }, 115);
 
     return () => {
       clearTimeout(handler);

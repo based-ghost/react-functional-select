@@ -15,7 +15,7 @@ const Option = React.memo<OptionProps>(({
 }) => {
   const { data, value, label, isDisabled, isSelected }: MenuOption = menuOptions[index];
 
-  const className: string = OPTION_CLS
+  const className = OPTION_CLS
     + (isDisabled ? ' ' + OPTION_DISABLED_CLS : '')
     + (isSelected ? ' ' + OPTION_SELECTED_CLS : '')
     + ((index === focusedOptionIndex) ? ' ' + OPTION_FOCUSED_CLS : '');

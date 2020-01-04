@@ -1,24 +1,15 @@
-import React, { ReactNode, ReactText } from 'react';
+import React from 'react';
 import DefaultThemeObj from '../src/theme';
+import { MultiValueProps } from '../src/types';
 import { ThemeProvider } from 'styled-components';
 import MultiValue from '../src/components/MultiValue';
-import { MultiValueProps, OptionData } from '../src/types';
 import { CLEAR_ICON_MV_TESTID } from '../src/constants/dom';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
+import { Option, OPTIONS, RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
 
 // ============================================
-// Helper functions & test data for MultiValue component
+// Helper functions for MultiValue component
 // ============================================
-
-type Option = {
-  readonly label: ReactText;
-  readonly value: ReactText;
-};
-
-const OPTIONS: Option[] = [
-  { value: 1, label: 'Option 1' },
-  { value: 2, label: 'Option 2' }
-];
 
 const renderMultiValue = (props: MultiValueProps): RenderResult => {
   return render(
@@ -30,20 +21,20 @@ const renderMultiValue = (props: MultiValueProps): RenderResult => {
 
 const createMultiValueProps = (option: Option = OPTIONS[0]) => {
   const removeSelectedOptionSpy = jest.fn();
-  const renderOptionLabelSpy = jest.fn((data: OptionData): ReactNode => data.label);
+  const renderOptionLabelSpy = RENDER_OPTION_LABEL_MOCK;
 
   const props: MultiValueProps = {
     data: option,
     isFocused: false,
     value: option.value,
     renderOptionLabel: renderOptionLabelSpy,
-    removeSelectedOption: removeSelectedOptionSpy,
+    removeSelectedOption: removeSelectedOptionSpy
   };
 
   return {
     props,
     renderOptionLabelSpy,
-    removeSelectedOptionSpy,
+    removeSelectedOptionSpy
   };
 };
 
@@ -67,5 +58,6 @@ test('clear indicator has functioning "mouseDown" and "touchEnd" events', async 
 
   fireEvent.touchEnd(clearIndicatorEl);
   fireEvent.mouseDown(clearIndicatorEl);
+
   expect(removeSelectedOptionSpy).toHaveBeenCalledTimes(2);
 });

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
 import { CityOption, CITY_OPTIONS } from './helpers/utils';
@@ -7,12 +7,14 @@ import { useCallbackState } from './helpers/useCallbackState';
 import { useClearAllToasts } from './helpers/useClearAllToasts';
 import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, CodeHeader, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
-const CITY_OPTIONS_PLUS_ACCENT = [
-  ...CITY_OPTIONS,
-  { id: 11, city: 'São Paulo', state: 'BR' }
-];
-
 storiesOf('React Functional Select', module).add('Filtering', () => {
+  const options = useMemo<CityOption[]>(() => {
+    return [
+      ...CITY_OPTIONS,
+      { id: 11, city: 'São Paulo', state: 'BR' }
+    ];
+  }, []);
+
   const [filterIgnoreCase, setFilterIgnoreCase] = useCallbackState(true);
   const [useCustomFilterFunc, setUseCustomFilterFunc] = useCallbackState(false);
   const [filterIgnoreAccents, setFilterIgnoreAccents] = useCallbackState(false);
@@ -32,24 +34,24 @@ storiesOf('React Functional Select', module).add('Filtering', () => {
         The default filtering functionality can be customized via the following properties:
         <List>
           <ListItem>
-            <CodeHeader>filterIgnoreCase?: boolean</CodeHeader> - Filter ignores case 
+            <CodeHeader>filterIgnoreCase?: boolean</CodeHeader> - Filter ignores case
             when matching strings. Default value is <Code>true</Code>.
           </ListItem>
           <ListItem>
-            <CodeHeader>filterIgnoreAccents?: boolean</CodeHeader> - Filter ignores 
+            <CodeHeader>filterIgnoreAccents?: boolean</CodeHeader> - Filter ignores
             accents when matching strings. Default value is <Code>false</Code>.
           </ListItem>
           <ListItem>
-            <CodeHeader>filterMatchFrom?: 'any' | 'start'</CodeHeader> - Position 
+            <CodeHeader>filterMatchFrom?: 'any' | 'start'</CodeHeader> - Position
             in source string to perform match. Default value is <Code>'any'</Code>.
           </ListItem>
           <ListItem>
-            <CodeHeader>getFilterOptionString(option: MenuOption): string</CodeHeader> - 
-            When defined will take each option and generate a string used in the 
-            filtering process. By default, the stringified version of what is generated 
+            <CodeHeader>getFilterOptionString(option: MenuOption): string</CodeHeader> -
+            When defined will take each option and generate a string used in the
+            filtering process. By default, the stringified version of what is generated
             by <Code>getOptionLabel</Code>, if definded, or the option's label as a fallback.
-            The <Code>MenuOption</Code> typed parameter that <Code>getFilterOptionString</Code> accepts 
-            contains a <Code>data</Code> property that represents the objects that comprise 
+            The <Code>MenuOption</Code> typed parameter that <Code>getFilterOptionString</Code> accepts
+            contains a <Code>data</Code> property that represents the objects that comprise
             your <Code>options</Code> property.
           </ListItem>
         </List>
@@ -85,9 +87,9 @@ storiesOf('React Functional Select', module).add('Filtering', () => {
           <SelectContainer>
             <Select
               isClearable
+              options={options}
               getOptionValue={getOptionValue}
               getOptionLabel={getOptionLabel}
-              options={CITY_OPTIONS_PLUS_ACCENT}
               filterIgnoreCase={filterIgnoreCase}
               filterIgnoreAccents={filterIgnoreAccents}
               getFilterOptionString={useCustomFilterFunc ? getFilterOptionString : undefined}

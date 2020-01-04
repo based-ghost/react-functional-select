@@ -59,11 +59,12 @@ export const useMenuOptions = (
       return menuOption;
     };
 
-    const menuOptionsOrDefault = options.reduce((accumulator: MenuOption[], data: OptionData) => {
-      const option = parseMenuOption(data);
-      option && accumulator.push(option);
-      return accumulator;
-    }, []) || OPTIONS_DEFAULT;
+    const menuOptionsOrDefault =
+      options.reduce((accumulator: MenuOption[], data: OptionData) => {
+        const option = parseMenuOption(data);
+        option && accumulator.push(option);
+        return accumulator;
+      }, []) || OPTIONS_DEFAULT;
 
     setMenuOptions(menuOptionsOrDefault);
   }, [options, selectedOption, hideSelectedOptions, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);

@@ -1,9 +1,10 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Value } from '../src/components';
+import { ValueProps } from '../src/types';
 import DefaultThemeObj from '../src/theme';
 import { render, RenderResult } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { ValueProps, OptionData } from '../src/types';
+import { RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
 import { PLACEHOLDER_DEFAULT, SELECTED_OPTION_DEFAULT, FOCUSED_MULTI_DEFAULT } from '../src/constants/defaults';
 
 // ============================================
@@ -28,7 +29,7 @@ const rerenderValue = (props: ValueProps, rerender: (...args: any[]) => void): v
 
 const createValueProps = () => {
   const removeSelectedOptionSpy = jest.fn();
-  const renderOptionLabelSpy = jest.fn((data: OptionData): ReactNode => data.label);
+  const renderOptionLabelSpy = RENDER_OPTION_LABEL_MOCK;
 
   const props: ValueProps = {
     isMulti: false,
