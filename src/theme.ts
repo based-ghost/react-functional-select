@@ -1,4 +1,5 @@
 import { DefaultTheme } from 'styled-components';
+import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from './constants/styled';
 
 /**
  * A contextual styled-components DefaultTheme object with default key-value pairs for CSS props.
@@ -16,7 +17,8 @@ export default Object.freeze<DefaultTheme>({
   loader: {
     size: '0.625rem',
     padding: '0.375rem 0.75rem',
-    color: 'rgba(0, 123, 255, 0.42)'
+    animation: BOUNCE_ANIMATION_CSS,
+    color: 'rgba(0, 123, 255, 0.42)',
   },
   icon: {
     color: '#cccccc',
@@ -25,6 +27,7 @@ export default Object.freeze<DefaultTheme>({
     clear: {
       fontWeight: 900,
       fontSize: '0.85em',
+      animation: FADE_IN_ANIMATION_CSS,
       transition: 'color 0.15s ease-in-out',
       fontFamily: '"Helvetica", "Arial", sans-serif'
     },
@@ -50,6 +53,7 @@ export default Object.freeze<DefaultTheme>({
     padding: '0.15rem 0',
     borderRadius: '0.25rem',
     backgroundColor: '#fff',
+    animation: FADE_IN_ANIMATION_CSS,
     boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 11px rgba(0, 0, 0, 0.1)',
     option: {
       textAlign: 'left',
@@ -69,6 +73,7 @@ export default Object.freeze<DefaultTheme>({
     margin: '1px 2px',
     borderRadius: '0.25rem',
     backgroundColor: '#e7edf3',
+    animation: FADE_IN_ANIMATION_CSS,
     label: {
       fontSize: '0.825em',
       borderRadius: '0.25rem',

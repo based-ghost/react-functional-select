@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { formatStyledKeyframes } from './utils';
 import { MEDIA_QUERY_IS_MOBILE_XS } from './styled';
 
 type PrintJsonProps = {
   readonly data: any;
   readonly header: string;
+  readonly formatKeyframes?: boolean;
 };
 
 const PrintJsonRoot = styled.div`
@@ -53,15 +55,21 @@ const PrintJsonPre = styled.pre`
   }
 `;
 
-const PrettyPrintJson = React.memo<PrintJsonProps>(({ data, header }) => {
+const PrettyPrintJson = React.memo<PrintJsonProps>(({ data, header, formatKeyframes }) => {
   const jsonWithoutQuotes = JSON.stringify(data || {}, null, 2)
+    .replace(/\\n/g, '')
     .replace(/"/g, '')
     .replace(/\\/g, '');
+
+  // Format strings that were parsed from objects containing styled-component "css" helper function
+  const formattedJson = formatKeyframes
+    ? formatStyledKeyframes(jsonWithoutQuotes)
+    : jsonWithoutQuotes;
 
   return (
     <PrintJsonRoot>
       <PrintJsonHeader>{header}</PrintJsonHeader>
-      <PrintJsonPre>{jsonWithoutQuotes}</PrintJsonPre>
+      <PrintJsonPre>{formattedJson}</PrintJsonPre>
     </PrintJsonRoot>
   );
 });

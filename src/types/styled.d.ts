@@ -1,4 +1,7 @@
 import 'styled-components';
+import { FlattenSimpleInterpolation } from 'styled-components';
+
+type AnimationCSS = string | FlattenSimpleInterpolation;
 
 declare module 'styled-components' {
   export interface DefaultTheme {
@@ -7,7 +10,7 @@ declare module 'styled-components' {
       danger: string;
       primary: string;
       disabled: string;
-      textColor?: string;  
+      textColor?: string;
       placeholder: string;
       dangerLight: string;
       caretActive?: string;
@@ -20,6 +23,7 @@ declare module 'styled-components' {
       size: string;
       color: string;
       padding: string;
+      animation: AnimationCSS;
     };
     icon: {
       color: string;
@@ -29,6 +33,7 @@ declare module 'styled-components' {
         fontSize: string;
         fontFamily: string;
         transition: string;
+        animation: AnimationCSS;
         fontWeight: string | number;
       };
       caret: {
@@ -56,6 +61,7 @@ declare module 'styled-components' {
       borderRadius: string;
       width: string | number;
       backgroundColor: string;
+      animation: AnimationCSS;
       option: {
         padding: string;
         textAlign: string;
@@ -74,6 +80,7 @@ declare module 'styled-components' {
       margin: string;
       borderRadius: string;
       backgroundColor: string;
+      animation: AnimationCSS;
       label: {
         padding: string;
         fontSize: string;

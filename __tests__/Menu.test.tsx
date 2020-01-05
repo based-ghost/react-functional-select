@@ -43,9 +43,10 @@ const createMenuProps = (menuOptions = []): MenuProps => {
 test('Menu component mounts and renders successfully when "menuOptions" array has items', async () => {
   const props = createMenuProps(MENU_OPTIONS);
   const { getByText } = renderMenu(props);
+  const { menuOptions } = props;
 
   // Assert react-window + Option.tsx renders each menuOption correctly
-  props.menuOptions.forEach((option: MenuOption): void => {
+  menuOptions.forEach((option: MenuOption): void => {
     const { label } = option;
     expect(getByText(String(label))).toBeInTheDocument();
   });

@@ -19,6 +19,7 @@ export const OPTION_DISABLED_CLS = `${OPTION_CLS}-disabled`;
 // classNames (containers & icons)
 export const CARET_ICON_CLS = `${attrPrefix}-caret-icon`;
 export const CLEAR_ICON_CLS = `${attrPrefix}-clear-icon`;
+export const LOADING_DOTS_CLS = `${attrPrefix}-loading-dots`;
 export const AUTOSIZE_INPUT_CLS = `${attrPrefix}-autosize-input`;
 export const MENU_CONTAINER_CLS = `${attrPrefix}-menu-container`;
 export const SELECT_CONTAINER_CLS = `${attrPrefix}-select-container`;

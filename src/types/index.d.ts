@@ -62,6 +62,10 @@ export type CaretProps = {
 // FunctionalComponent Prop types
 // ============================================
 
+export type LoadingDotsProps = {
+  readonly addClassNames?: boolean;
+}
+
 export type OptionProps = {
   readonly index: number;
   readonly data: ItemData;

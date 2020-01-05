@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import LoadingDots from './LoadingDots';
+import styled, { css } from 'styled-components';
 import { CaretProps, IndicatorIconsProps } from '../types';
-import { FADE_IN_ANIMATION_CSS } from '../constants/styled';
 import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/dom';
 
 const IndicatorIconsWrapper = styled.div`
@@ -27,7 +26,7 @@ const IndicatorIcon = styled.div`
 
 const Clear = styled.div`
   overflow: hidden;
-  ${FADE_IN_ANIMATION_CSS}
+  animation: ${({ theme }) => css`${theme.icon.clear.animation}`};
   ${({ theme: { icon: { clear }}}) => (`
     font-size: ${clear.fontSize};
     transition: ${clear.transition};
@@ -83,7 +82,9 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
         {clearIcon || <Clear className={addClassNames ? CLEAR_ICON_CLS : undefined}>X</Clear>}
       </IndicatorIcon>
     )}
-    {isLoading && (loadingNode || <LoadingDots />)}
+    {isLoading && (
+      loadingNode || <LoadingDots addClassNames={addClassNames} />
+    )}
     <Separator />
     <IndicatorIcon
       aria-hidden='true'

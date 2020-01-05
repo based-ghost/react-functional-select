@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback, useRef, useImperativeHandle, KeyboardEventHandler, FocusEventHandler, FocusEvent, FormEvent, KeyboardEvent, ReactNode, ReactText } from 'react';
 import DefaultThemeObj from './theme';
 import { FixedSizeList } from 'react-window';
-import { FADE_IN_ANIMATION_CSS } from './constants/styled';
-import styled, { DefaultTheme, ThemeProvider } from 'styled-components';
+import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { useDebounce, useMenuHeight, useMenuOptions, useUpdateEffect } from './hooks';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
@@ -162,7 +161,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   z-index: 999;
   cursor: default;
   position: absolute;
-  ${FADE_IN_ANIMATION_CSS}
+  animation: ${({ theme }) => css`${theme.menu.animation}`};
   ${({ hideMenu, theme: { menu }}) => (`
     width: ${menu.width};
     margin: ${menu.margin};

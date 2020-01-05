@@ -100,6 +100,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       </Paragraph>
       <JsonContainer>
         <PrettyPrintJson
+          formatKeyframes
           header='Default Theme'
           data={DefaultThemeObj}
         />

@@ -1,13 +1,7 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
-
-const BOUNCE_KEYFRAMES = keyframes`
-  0%, 80%, 100% {
-    transform: scale(0);
-  } 40% {
-    transform: scale(1.0);
-  }
-`;
+import { LoadingDotsProps } from '../types';
+import styled, { css } from 'styled-components';
+import { LOADING_DOTS_CLS } from '../constants/dom';
 
 const StyledLoadingDots = styled.div`
   display: flex;
@@ -19,10 +13,12 @@ const StyledLoadingDots = styled.div`
   > div {
     border-radius: 100%;
     display: inline-block;
-    width: ${({ theme }) => theme.loader.size};
-    height: ${({ theme }) => theme.loader.size};
-    background-color: ${({ theme }) => theme.loader.color};
-    animation: ${BOUNCE_KEYFRAMES} 1.19s ease-in-out infinite;
+    animation: ${({ theme }) => css`${theme.loader.animation}`};
+    ${({ theme: { loader }}) => (`
+      width: ${loader.size};
+      height: ${loader.size};
+      background-color: ${loader.color};
+    `)}
 
     :nth-of-type(1) {
       animation-delay: -0.272s;
@@ -34,8 +30,11 @@ const StyledLoadingDots = styled.div`
   }
 `;
 
-const LoadingDots: React.FC = () => (
-  <StyledLoadingDots aria-hidden='true'>
+const LoadingDots: React.FC<LoadingDotsProps> = ({ addClassNames }) => (
+  <StyledLoadingDots
+    aria-hidden='true'
+    className={addClassNames ? LOADING_DOTS_CLS : undefined}
+  >
     <div />
     <div />
     <div />

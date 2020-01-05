@@ -1,13 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 import { MultiValueProps } from '../types';
+import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../constants/dom';
-import { FADE_IN_ANIMATION_CSS } from '../constants/styled';
 
 const MultiValueWrapper = styled.div`
   min-width: 0;
   display: flex;
-  ${FADE_IN_ANIMATION_CSS}
+  animation: ${({ theme }) => css`${theme.multiValue.animation}`};
   ${({ theme: { multiValue }}) => (`
     margin: ${multiValue.margin};
     border-radius: ${multiValue.borderRadius};
