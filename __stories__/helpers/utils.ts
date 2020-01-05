@@ -35,20 +35,6 @@ export const createSelectOptions = (optionCount: number): Option[] => {
   return results;
 };
 
-/**
- * Function used after calling JSON.stringify on DefaultTheme object.
- * The stringified result of what is ouputed from styled-component "css" function is funky.
- */
-export const formatStyledKeyframes = (jsonString: string): string => {
-  return jsonString
-    .replace(/{ {4}/g, '{ ')
-    .replace(/; {2}}/g, '; }')
-    .replace(/ {2}from/g, 'from')
-    .replace(/ {2}0%,/g, '0%,')
-    .replace(/ 1.19s/g, '1.19s')
-    .replace(/ 0.225s/g, '0.225s');
-};
-
 export const CITY_OPTIONS: CityOption[] = [
   { id: 1, city: 'Boston', state: 'MA' },
   { id: 2, city: 'Austin', state: 'TX' },

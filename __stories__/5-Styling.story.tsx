@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Select, Theme } from '../src';
+import { mergeDeep } from '../src/utils';
 import { Option } from './helpers/utils';
 import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
@@ -21,6 +22,29 @@ import {
   SELECT_CONTAINER_CLS,
   CONTROL_CONTAINER_CLS
 } from '../src/constants/dom';
+
+  // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
+const stringifiedBounceCSS = 'BOUNCE 1.19s ease-in-out infinite';
+const stringifiedFadeInCSS = 'FADE_IN 0.225s ease-in-out forwards';
+
+const normalizeStyledKeyframes = {
+  loader: {
+    animation: stringifiedBounceCSS
+  },
+  menu: {
+    animation: stringifiedFadeInCSS
+  },
+  multiValue: {
+    animation: stringifiedFadeInCSS
+  },
+  icon: {
+    clear: {
+      animation: stringifiedFadeInCSS
+    }
+  }
+};
+
+const ThemeDefaultValues = mergeDeep(DefaultThemeObj, normalizeStyledKeyframes);
 
 const ThemeEnum = Object.freeze({
   DEFAULT: 'Default',
@@ -113,9 +137,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       </Paragraph>
       <JsonContainer>
         <PrettyPrintJson
-          formatKeyframes
           header='Default Theme'
-          data={DefaultThemeObj}
+          data={ThemeDefaultValues}
         />
       </JsonContainer>
       <SubTitle>Using classNames</SubTitle>
