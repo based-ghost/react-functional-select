@@ -4,10 +4,8 @@ import { mergeDeep } from '../src/utils';
 import { Option } from './helpers/utils';
 import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
-import PrettyPrintJson from './helpers/PrettyPrintJson';
-import { useCallbackState } from './helpers/useCallbackState';
-import { useClearAllToasts } from './helpers/useClearAllToasts';
-import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
+import { useCallbackState, useClearAllToasts } from './helpers/hooks';
+import { PackageLink, PackageLinkProps, PrettyPrintJson, PrettyPrintHtml } from './helpers/components';
 import { Hr, Code, Title, SubTitle, ListWrapper, List, ListItem, Spacer, Paragraph, JsonContainer, LabelHeader, Container, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 import {
   OPTION_CLS,
@@ -24,38 +22,38 @@ import {
 } from '../src/constants/dom';
 
   // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
-const stringifiedBounceCSS = 'BOUNCE 1.19s ease-in-out infinite';
-const stringifiedFadeInCSS = 'FADE_IN 0.225s ease-in-out forwards';
+const BOUNCE_KEYFRAMES = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
+const FADE_IN_KEYFRAMES = 'FADE_IN_KEYFRAMES 0.225s ease-in-out forwards';
 
-const normalizeStyledKeyframes = {
+const KEYFRAMES_SOURCE_OBJ = {
   loader: {
-    animation: stringifiedBounceCSS
+    animation: BOUNCE_KEYFRAMES
   },
   menu: {
-    animation: stringifiedFadeInCSS
+    animation: FADE_IN_KEYFRAMES
   },
   multiValue: {
-    animation: stringifiedFadeInCSS
+    animation: FADE_IN_KEYFRAMES
   },
   icon: {
     clear: {
-      animation: stringifiedFadeInCSS
+      animation: FADE_IN_KEYFRAMES
     }
   }
 };
 
-const ThemeDefaultValues = mergeDeep(DefaultThemeObj, normalizeStyledKeyframes);
+const THEME_DEFAULTS = mergeDeep(DefaultThemeObj, KEYFRAMES_SOURCE_OBJ);
+
+const StyledComponentsLink: PackageLinkProps = {
+  name: 'styled-components',
+  href: 'https://www.styled-components.com'
+};
 
 const ThemeEnum = Object.freeze({
   DEFAULT: 'Default',
   LARGE_TEXT: 'Large text',
   DARK_COLORS: 'Dark colors',
   ZERO_BORDER_RADIUS: 'No border-radius'
-});
-
-const StyledComponentsLink = Object.freeze<PackageLinkProps>({
-  name: 'styled-components',
-  href: 'https://www.styled-components.com'
 });
 
 const ThemeConfigMap = Object.freeze<{[key: string]: any}>({
@@ -138,7 +136,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <JsonContainer>
         <PrettyPrintJson
           header='Default Theme'
-          data={ThemeDefaultValues}
+          data={THEME_DEFAULTS}
         />
       </JsonContainer>
       <SubTitle>Using classNames</SubTitle>
@@ -178,6 +176,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
           </ListItem>
         </List>
       </ListWrapper>
+      <PrettyPrintHtml header='HTML &amp; Classes' />
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>

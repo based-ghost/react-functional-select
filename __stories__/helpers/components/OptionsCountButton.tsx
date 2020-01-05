@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from './styled';
+import { Button } from '../styled';
 import styled from 'styled-components';
-import { numberWithCommas } from './utils';
+import { numberWithCommas } from '../utils';
 
 type StyledButtonProps = {
   readonly isActive?: boolean;

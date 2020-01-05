@@ -1,8 +1,8 @@
 import React, { useCallback, ReactNode } from 'react';
 import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
+import { useClearAllToasts } from './helpers/hooks';
 import styled, { css, keyframes } from 'styled-components';
-import { useClearAllToasts } from './helpers/useClearAllToasts';
 import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, LabelHeader, CodeHeader, Code, Card, CardHeader, CardBody } from './helpers/styled';
 
 type StyledImageProps = {
@@ -22,7 +22,7 @@ const SPIN_LOGO = keyframes`
   }
 `;
 
-const THEME_CONFIG = Object.freeze({
+const THEME_CONFIG = {
   menu: {
     option: {
       selectedColor: '#515151',
@@ -30,7 +30,7 @@ const THEME_CONFIG = Object.freeze({
       selectedBgColor: '#F2F2F2'
     }
   }
-});
+};
 
 const OPTIONS: PackageOption[] = [
   { id: 1, packageName: 'react' },

@@ -1,8 +1,8 @@
 import React, { useMemo, useRef } from 'react';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
+import { useClearAllToasts } from './helpers/hooks';
 import { createSelectOptions, Option } from './helpers/utils';
-import { useClearAllToasts } from './helpers/useClearAllToasts';
 import { Hr, List, CodeHeader, Code, Title, Button, Label, ListItem, SubTitle, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Methods', () => {

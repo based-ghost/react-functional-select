@@ -107,8 +107,8 @@ export const Code = styled.code`
   font-size: 0.90em;
   border-radius: 0.3em;
   word-break: break-word;
-  background-color: rgba(27, 31, 35, 0.06);
-  font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
+  background-color: rgba(27, 31, 35, 0.0625);
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 
   ${MEDIA_QUERY_IS_MOBILE_XS} {
     padding: .1em .25em .1em;

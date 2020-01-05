@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
 import { Select } from '../src';
-import Checkbox from './helpers/Checkbox';
 import { storiesOf } from '@storybook/react';
+import { Checkbox } from './helpers/components';
 import { CityOption, CITY_OPTIONS } from './helpers/utils';
-import { useCallbackState } from './helpers/useCallbackState';
-import { useClearAllToasts } from './helpers/useClearAllToasts';
+import { useCallbackState, useClearAllToasts } from './helpers/hooks';
 import { Hr, Title, SubTitle, List, ListItem, ListWrapper, Container, SelectContainer, CodeHeader, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Multi-select', () => {
@@ -23,18 +22,18 @@ storiesOf('React Functional Select', module).add('Multi-select', () => {
       <Title>Multi-select</Title>
       <Hr />
       <ListWrapper>
-        Add the <Code>isMulti</Code> property to allow for multiple selections. While 
-        in multi-select mode, some properties are now applicable and others become 
+        Add the <Code>isMulti</Code> property to allow for multiple selections. While
+        in multi-select mode, some properties are now applicable and others become
         more pertinent.
         <List>
           <ListItem>
-            <CodeHeader>hideSelectedOptions?: boolean</CodeHeader> - Hide the 
-            selected option from the menu. Default value is false, however, if 
+            <CodeHeader>hideSelectedOptions?: boolean</CodeHeader> - Hide the
+            selected option from the menu. Default value is false, however, if
             undefined and <Code>isMulti === true</Code>, then its value defaults to true.
           </ListItem>
           <ListItem>
-            <CodeHeader>closeMenuOnSelect?: boolean</CodeHeader> - Close the menu of 
-            options when the user selects an option. Default value is false, however, it may 
+            <CodeHeader>closeMenuOnSelect?: boolean</CodeHeader> - Close the menu of
+            options when the user selects an option. Default value is false, however, it may
             be benefical to set this property to true for convenience in multi-select scenarios.
           </ListItem>
         </List>

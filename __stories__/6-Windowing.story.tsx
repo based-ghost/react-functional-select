@@ -1,16 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
+import { useClearAllToasts } from './helpers/hooks';
 import { Option, createSelectOptions } from './helpers/utils';
-import OptionsCountButton from './helpers/OptionsCountButton';
-import { useClearAllToasts } from './helpers/useClearAllToasts';
-import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
+import { PackageLink, OptionsCountButton, PackageLinkProps } from './helpers/components';
 import { Hr, Title, SubTitle, List, ListWrapper, ListItem, Label, Container, Code, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
-const _reactWindowLink = Object.freeze<PackageLinkProps>({
+const _reactWindowLink: PackageLinkProps = {
   name: 'react-window',
   href: 'https://github.com/bvaughn/react-window'
-});
+};
 
 storiesOf('React Functional Select', module).add('Windowing', () => {
   const selectRef = useRef<SelectRef | null>(null);
