@@ -269,9 +269,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
   // Theme for styled-components ThemeProvider
   const theme = useMemo<DefaultTheme>(() => {
-    return !isPlainObject(themeConfig)
-      ? { ...DefaultThemeObj }
-      : mergeDeep(DefaultThemeObj, themeConfig);
+    return isPlainObject(themeConfig)
+      ? mergeDeep(DefaultThemeObj, themeConfig)
+      : DefaultThemeObj;
   }, [themeConfig]);
 
   // Memoized callback functions referencing optional function properties on Select.tsx

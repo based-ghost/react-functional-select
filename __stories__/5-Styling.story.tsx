@@ -7,7 +7,20 @@ import PrettyPrintJson from './helpers/PrettyPrintJson';
 import { useCallbackState } from './helpers/useCallbackState';
 import { useClearAllToasts } from './helpers/useClearAllToasts';
 import PackageLink, { PackageLinkProps } from './helpers/PackageLink';
-import { Hr, Code, Title, SubTitle, Spacer, Paragraph, JsonContainer, LabelHeader, Container, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, Code, Title, SubTitle, ListWrapper, List, ListItem, Spacer, Paragraph, JsonContainer, LabelHeader, Container, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import {
+  OPTION_CLS,
+  OPTION_FOCUSED_CLS,
+  OPTION_DISABLED_CLS,
+  OPTION_SELECTED_CLS,
+  CARET_ICON_CLS,
+  CLEAR_ICON_CLS,
+  LOADING_DOTS_CLS,
+  AUTOSIZE_INPUT_CLS,
+  MENU_CONTAINER_CLS,
+  SELECT_CONTAINER_CLS,
+  CONTROL_CONTAINER_CLS
+} from '../src/constants/dom';
 
 const ThemeEnum = Object.freeze({
   DEFAULT: 'Default',
@@ -109,9 +122,39 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <Paragraph>
         If you want to style the component using CSS classes, set the <Code>addClassNames</Code> prop
         to true and it will then generate <Code>className</Code> attributes for that specific instance
-        of the component. These are the classNames that are available for targeting: rfs-select-container,
-        rfs-control-container, rfs-menu-container, rfs-autosize-input, rfs-caret-icon, rfs-clear-icon, rfs-option.
+        of the component. These are the classes that are available:
       </Paragraph>
+      <ListWrapper>
+        <List>
+          <ListItem>
+            <Code>{SELECT_CONTAINER_CLS}</Code>
+          </ListItem>
+          <ListItem>
+            <Code>{CONTROL_CONTAINER_CLS}</Code>
+          </ListItem>
+          <ListItem>
+            <Code>{MENU_CONTAINER_CLS}</Code>
+          </ListItem>
+          <ListItem>
+            <Code>{AUTOSIZE_INPUT_CLS}</Code>
+          </ListItem>
+          <ListItem>
+            <Code>{CARET_ICON_CLS}</Code>
+          </ListItem>
+          <ListItem>
+            <Code>{CLEAR_ICON_CLS}</Code>
+          </ListItem>
+          <ListItem>
+            <Code>{LOADING_DOTS_CLS}</Code>
+          </ListItem>
+          <ListItem>
+            <Code>{OPTION_CLS}</Code>{', '}
+            <Code>{OPTION_FOCUSED_CLS}</Code>{', '}
+            <Code>{OPTION_SELECTED_CLS}</Code>{', '}
+            <Code>{OPTION_DISABLED_CLS}</Code>
+          </ListItem>
+        </List>
+      </ListWrapper>
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>

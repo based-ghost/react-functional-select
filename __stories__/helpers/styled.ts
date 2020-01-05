@@ -54,6 +54,14 @@ export const SelectContainer = styled.div`
   }
 `;
 
+export const Hr = styled.hr`
+  border: 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: .225rem;
+  border-top: 1px solid #ddd;
+`;
+
 export const ListWrapper = styled.div`
   margin-top: 0;
   display: block;
@@ -89,15 +97,7 @@ export const List = styled.ul`
 
 export const ListItem = styled.li`
   display: list-item;
-  text-align: -webkit-match-parent;
-`;
-
-export const Hr = styled.hr`
-  border: 0;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  padding-bottom: .225rem;
-  border-top: 1px solid #ddd;
+  text-align: match-parent;
 `;
 
 export const Code = styled.code`
