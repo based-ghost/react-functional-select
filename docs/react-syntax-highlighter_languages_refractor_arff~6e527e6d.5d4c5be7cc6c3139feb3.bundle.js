@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[8],{710:function(module,exports,__webpack_require__){"use strict";function arff(Prism){Prism.languages.arff={comment:/%.*/,string:{pattern:/(["'])(?:\\.|(?!\1)[^\\\r\n])*\1/,greedy:!0},keyword:/@(?:attribute|data|end|relation)\b/i,number:/\b\d+(?:\.\d+)?\b/,punctuation:/[{},]/}}module.exports=arff,arff.displayName="arff",arff.aliases=[]}}]);
+//# sourceMappingURL=react-syntax-highlighter_languages_refractor_arff~6e527e6d.5d4c5be7cc6c3139feb3.bundle.js.map

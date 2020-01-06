@@ -85,7 +85,7 @@ const PreContainer = styled.div`
 
           &.token.operator,
           &.token.punctuation {
-            color: #A6F5E9;
+            color: #FFB0BC;
             font-weight: 600;
           }
         }
