@@ -69,25 +69,21 @@ const PreContainer = styled.div`
       &:last-of-type {
         display: inherit;
 
-        span {
-          &.token.tag.token.tag {
-            color: #FFB0BC;
-          }
+        .token.tag.token.tag {
+          color: #FFB0BC;
+        }
 
-          &.token.tag.token.tag.token.punctuation {
-            color: #B0FFF3;
-            font-weight: 400;
-          }
+        .token.tag.token.tag.token.punctuation {
+          color: #B0FFF3;
+        }
 
-          &.token.tag.token.attr-name {
-            color: #CCB0FF;
-          }
+        .token.tag.token.attr-name {
+          color: #CCB0FF;
+        }
 
-          &.token.operator,
-          &.token.punctuation {
-            color: #FFB0BC;
-            font-weight: 600;
-          }
+        .token.operator,
+        .token.punctuation {
+          color: #FF97A3;
         }
       }
     }
