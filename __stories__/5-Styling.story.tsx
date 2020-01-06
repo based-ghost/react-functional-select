@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Select, Theme } from '../src';
 import { mergeDeep } from '../src/utils';
-import { Option } from './helpers/utils';
 import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
+import { Option, stringifyJsonObj } from './helpers/utils';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
-import { PackageLink, PackageLinkProps, PrettyPrintJson, PrettyPrintHtml } from './helpers/components';
-import { Hr, Code, Title, SubTitle, ListWrapper, List, ListItem, Spacer, Paragraph, JsonContainer, LabelHeader, Container, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { CodeMarkup, PackageLink, PackageLinkProps } from './helpers/components';
+import { Hr, Columns, Column, Code, Title, SubTitle, ListWrapper, List, ListItem, Paragraph, JsonContainer, LabelHeader, Container, Card, CardHeader, CardBody, SelectContainerColumn } from './helpers/styled';
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -20,6 +20,44 @@ import {
   SELECT_CONTAINER_CLS,
   CONTROL_CONTAINER_CLS
 } from '../src/constants/dom';
+
+// Simplified HTML markup example when 'addClassNames' = true
+const CLASS_NAME_HTML =
+`<div class="${SELECT_CONTAINER_CLS}">
+  <div class="${CONTROL_CONTAINER_CLS}">
+    <div>
+      <div>Select option..</div>
+      <div>
+        <input
+          value=""
+          type="text"
+          class="${AUTOSIZE_INPUT_CLS}"
+        />
+      </div>
+    </div>
+    <div>
+      <div aria-hidden="true">
+        <div class="${CLEAR_ICON_CLS}">X</div>
+      </div>
+      <div />
+      <div aria-hidden="true">
+        <div class="${CARET_ICON_CLS}" />
+      </div>
+    </div>
+  </div>
+  <div class="${MENU_CONTAINER_CLS}">
+    <div>
+      <div>
+        <div class="${OPTION_CLS} ${OPTION_FOCUSED_CLS}">
+          Option 1
+        </div>
+        <div class="${OPTION_CLS}">
+          Option 2
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`;
 
   // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
 const BOUNCE_KEYFRAMES = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
@@ -62,36 +100,36 @@ const ThemeConfigMap = Object.freeze<{[key: string]: any}>({
     color: {
       border: '#A8AEB4',
       textColor: '#000',
-      primary: '#555555',
+      primary: '#555555'
     },
     control: {
       boxShadowColor: 'rgba(85, 85, 85, 0.25)',
-      focusedBorderColor: 'rgba(85, 85, 85, 0.75)',
+      focusedBorderColor: 'rgba(85, 85, 85, 0.75)'
     },
     icon: {
-      color: '#A6A6A6',
+      color: '#A6A6A6'
     },
     menu: {
       option: {
         selectedColor: '#fff',
         selectedBgColor: '#555555',
-        focusedBgColor: 'rgba(85, 85, 85, 0.225)',
+        focusedBgColor: 'rgba(85, 85, 85, 0.225)'
       }
     }
   },
   [ThemeEnum.LARGE_TEXT]: {
     select: {
-      fontSize: '1.25rem',
-    },
+      fontSize: '1.25rem'
+    }
   },
   [ThemeEnum.ZERO_BORDER_RADIUS]: {
     control: {
-      borderRadius: '0',
+      borderRadius: '0'
     },
     menu: {
-      borderRadius: '0',
-    },
-  },
+      borderRadius: '0'
+    }
+  }
 });
 
 storiesOf('React Functional Select', module).add('Styling', () => {
@@ -134,9 +172,11 @@ storiesOf('React Functional Select', module).add('Styling', () => {
         default theme.
       </Paragraph>
       <JsonContainer>
-        <PrettyPrintJson
-          header='Default Theme'
+        <CodeMarkup
+          language='json'
           data={THEME_DEFAULTS}
+          header='Default Theme'
+          formatFn={stringifyJsonObj}
         />
       </JsonContainer>
       <SubTitle>Using classNames</SubTitle>
@@ -145,38 +185,48 @@ storiesOf('React Functional Select', module).add('Styling', () => {
         to true and it will then generate <Code>className</Code> attributes for that specific instance
         of the component. These are the classes that are available:
       </Paragraph>
-      <ListWrapper>
-        <List>
-          <ListItem>
-            <Code>{SELECT_CONTAINER_CLS}</Code>
-          </ListItem>
-          <ListItem>
-            <Code>{CONTROL_CONTAINER_CLS}</Code>
-          </ListItem>
-          <ListItem>
-            <Code>{MENU_CONTAINER_CLS}</Code>
-          </ListItem>
-          <ListItem>
-            <Code>{AUTOSIZE_INPUT_CLS}</Code>
-          </ListItem>
-          <ListItem>
-            <Code>{CARET_ICON_CLS}</Code>
-          </ListItem>
-          <ListItem>
-            <Code>{CLEAR_ICON_CLS}</Code>
-          </ListItem>
-          <ListItem>
-            <Code>{LOADING_DOTS_CLS}</Code>
-          </ListItem>
-          <ListItem>
-            <Code>{OPTION_CLS}</Code>{', '}
-            <Code>{OPTION_FOCUSED_CLS}</Code>{', '}
-            <Code>{OPTION_SELECTED_CLS}</Code>{', '}
-            <Code>{OPTION_DISABLED_CLS}</Code>
-          </ListItem>
-        </List>
-      </ListWrapper>
-      <PrettyPrintHtml header='HTML &amp; Classes' />
+      <Columns>
+        <Column className='is-two-fifths'>
+          <ListWrapper>
+            <List className='is-class-list'>
+              <ListItem>
+                <Code>{SELECT_CONTAINER_CLS}</Code>
+              </ListItem>
+              <ListItem>
+                <Code>{CONTROL_CONTAINER_CLS}</Code>
+              </ListItem>
+              <ListItem>
+                <Code>{MENU_CONTAINER_CLS}</Code>
+              </ListItem>
+              <ListItem>
+                <Code>{AUTOSIZE_INPUT_CLS}</Code>
+              </ListItem>
+              <ListItem>
+                <Code>{CARET_ICON_CLS}</Code>
+              </ListItem>
+              <ListItem>
+                <Code>{CLEAR_ICON_CLS}</Code>
+              </ListItem>
+              <ListItem>
+                <Code>{LOADING_DOTS_CLS}</Code>
+              </ListItem>
+              <ListItem>
+                <Code>{OPTION_CLS}</Code>{', '}
+                <Code>{OPTION_FOCUSED_CLS}</Code>{', '}
+                <Code>{OPTION_SELECTED_CLS}</Code>{', '}
+                <Code>{OPTION_DISABLED_CLS}</Code>
+              </ListItem>
+            </List>
+          </ListWrapper>
+        </Column>
+        <Column className='is-three-fifths'>
+          <CodeMarkup
+            language='markup'
+            data={CLASS_NAME_HTML}
+            header='HTML With Classes'
+          />
+        </Column>
+      </Columns>
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>
@@ -184,22 +234,29 @@ storiesOf('React Functional Select', module).add('Styling', () => {
           <LabelHeader>Select themes below</LabelHeader>
         </CardHeader>
         <CardBody>
-          <SelectContainer>
-            <Select
-              options={options}
-              isClearable={false}
-              isSearchable={false}
-              themeConfig={themeConfig}
-              initialValue={options[0]}
-              menuItemSize={menuItemSize}
-              onOptionChange={setSelectedOption}
-            />
-            <Spacer />
-            <PrettyPrintJson
-              data={themeConfig}
-              header='Theme Config'
-            />
-          </SelectContainer>
+          <Columns>
+            <Column className='is-two-fifths'>
+              <SelectContainerColumn>
+                <Select
+                  options={options}
+                  isClearable={false}
+                  isSearchable={false}
+                  themeConfig={themeConfig}
+                  initialValue={options[0]}
+                  menuItemSize={menuItemSize}
+                  onOptionChange={setSelectedOption}
+                />
+              </SelectContainerColumn>
+            </Column>
+            <Column className='is-three-fifths'>
+              <CodeMarkup
+                language='json'
+                data={themeConfig}
+                header='Theme Config'
+                formatFn={stringifyJsonObj}
+              />
+            </Column>
+          </Columns>
         </CardBody>
       </Card>
     </Container>

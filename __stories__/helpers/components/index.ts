@@ -1,15 +1,14 @@
 import Checkbox from './Checkbox';
+import CodeMarkup from './CodeMarkup';
 import OptionsCountButton from './OptionsCountButton';
-import { PrettyPrintHtml, PrettyPrintJson } from './PrettyPrintCode';
 import PackageLink, { PackageLinkProps as IPackageLinkProps } from './PackageLink';
 
 type PackageLinkProps = IPackageLinkProps;
 
 export {
   Checkbox,
+  CodeMarkup,
   PackageLink,
-  PrettyPrintJson,
-  PrettyPrintHtml,
   PackageLinkProps,
   OptionsCountButton
 };

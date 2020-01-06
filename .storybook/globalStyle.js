@@ -21,7 +21,7 @@ export default createGlobalStyle`
     flex: 1;
     margin: 0;
     display: flex;
-    color: #212529;
+    color: #212428;
     font-size: 1rem;
     font-weight: 400;
     text-align: left;

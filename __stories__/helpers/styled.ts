@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 
+export const MEDIA_QUERY_IS_DESKTOP = '@media screen and (min-width: 1024px)';
 export const MEDIA_QUERY_IS_MOBILE = '@media only screen and (max-width: 768px)';
 export const MEDIA_QUERY_IS_MOBILE_XS = '@media only screen and (max-width: 525px)';
 export const MEDIA_QUERY_IS_TABLET_OR_DESKTOP = '@media only screen and (min-width: 992px)';
@@ -26,6 +27,9 @@ export const Paragraph = styled.p`
 
 export const JsonContainer = styled.div`
   ${PARAGRAPH_CSS}
+  > div {
+    margin: 1rem 0 !important;
+  }
 `;
 
 export const Container = styled.div`
@@ -54,12 +58,77 @@ export const SelectContainer = styled.div`
   }
 `;
 
+export const SelectContainerColumn = styled.div`
+  width: 95%;
+  margin-top: 1rem;
+
+  ${MEDIA_QUERY_IS_MOBILE} {
+    width: 100%;
+  }
+`;
+
 export const Hr = styled.hr`
   border: 0;
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding-bottom: .225rem;
   border-top: 1px solid #ddd;
+`;
+
+export const Columns = styled.div`
+  width: 100%;
+  ${MEDIA_QUERY_IS_TABLET} {
+    display: flex;
+  }
+  ${MEDIA_QUERY_IS_DESKTOP} {
+    display: flex;
+  }
+`;
+
+export const Column = styled.div`
+  flex-grow: 1;
+  flex-basis: 0;
+  flex-shrink: 1;
+  display: block;
+  padding: 0.25rem;
+
+  ${MEDIA_QUERY_IS_MOBILE} {
+    padding: 0.25rem 0;
+    width: 100% !important;
+  }
+
+  &.is-one-quarter {
+    flex: none;
+    width: 25%;
+  }
+  &.is-one-third {
+    flex: none;
+    width: 33.3333%;
+  }
+  &.is-two-fifths {
+    flex: none;
+    width: 45%;
+  }
+  &.is-half {
+    flex: none;
+    width: 50%;
+  }
+  &.is-three-fifths {
+    flex: none;
+    width: 55%;
+  }
+  &.is-two-thirds {
+    flex: none;
+    width: 66.6666%;
+  }
+  &.is-three-quarters {
+    flex: none;
+    width: 75%;
+  }
+  &.is-full {
+    flex: none;
+    width: 100%;
+  }
 `;
 
 export const ListWrapper = styled.div`
@@ -87,7 +156,13 @@ export const List = styled.ul`
   padding-inline-start: 30px;
 
   li + li {
-    margin-top: 0.5em;
+    margin-top: 0.55em;
+  }
+
+  &.is-class-list {
+    li + li {
+      margin-top: 0.75em;
+    }
   }
 
   ${MEDIA_QUERY_IS_MOBILE} {
@@ -102,7 +177,7 @@ export const ListItem = styled.li`
 
 export const Code = styled.code`
   margin: 0 1px;
-  color: #212529;
+  color: #212428;
   padding: 3px 5px;
   font-size: 0.90em;
   border-radius: 0.3em;
@@ -126,7 +201,7 @@ export const Title = styled.h2`
   font-size: 2rem;
   font-weight: 600;
   line-height: 1.2;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   margin-bottom: .5rem;
 `;
 
@@ -135,7 +210,7 @@ export const SubTitle = styled.h4`
   line-height: 1.2;
   font-size: 1.65rem;
   margin-top: 1.25rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 `;
 
 export const ButtonGroup = styled.div`
@@ -144,14 +219,14 @@ export const ButtonGroup = styled.div`
     margin-top: 0.5rem;
 
     :not(:last-of-type) {
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
   }
 `;
 
 export const Button = styled.button`
   border: 0;
-  color: #212529;
+  color: #212428;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 400;
@@ -162,7 +237,7 @@ export const Button = styled.button`
   display: inline-block;
   vertical-align: middle;
   border-radius: 0.25rem;
-  padding: .375rem .75rem;
+  padding: 0.375rem 0.75rem;
   -webkit-appearance: button;
   background-color: rgba(9, 30, 66, 0.075);
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
@@ -210,10 +285,19 @@ export const CheckboxGroup = styled.div`
     :not(:last-of-type) {
       margin-right: 1.35rem;
     }
+  }
 
-    ${MEDIA_QUERY_IS_MOBILE} {
-      margin-top: 0.35rem;
-      margin-bottom: 0.35rem;
+  ${MEDIA_QUERY_IS_MOBILE} {
+    text-align: left;
+
+    > label {
+      margin-left: auto;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      :not(:last-of-type) {
+        margin-right: 1.25rem;
+      }
     }
   }
 `;
@@ -230,6 +314,13 @@ export const Card = styled.div`
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+
+  ${MEDIA_QUERY_IS_MOBILE} {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0.5rem 0;
+  }
 `;
 
 export const CardHeader = styled.div<{ supportMobile?: boolean }>`
@@ -245,6 +336,7 @@ export const CardHeader = styled.div<{ supportMobile?: boolean }>`
 
   ${MEDIA_QUERY_IS_MOBILE} {
     text-align: center;
+    padding: 0.75rem 0;
   }
 
   ${({ supportMobile }) =>
@@ -268,10 +360,8 @@ export const CardBody = styled.div`
   flex: 1 1 auto;
   min-height: 32rem;
   padding: 0.75rem 1.25rem;
-`;
 
-export const Spacer = styled.div`
-  display: block;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
+  ${MEDIA_QUERY_IS_MOBILE} {
+    padding: 0.75rem 0;
+  }
 `;

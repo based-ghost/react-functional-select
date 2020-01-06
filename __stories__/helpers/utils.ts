@@ -24,6 +24,13 @@ export const numberWithCommas = (value: number): string => {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+export const stringifyJsonObj = (data: any): string => {
+  return JSON.stringify(data || {}, null, 2)
+    .replace(/"/g, '')
+    .replace(/\\n/g, '')
+    .replace(/\\/g, '');
+};
+
 export const createSelectOptions = (optionCount: number): Option[] => {
   const results: Option[] = [];
   for (let i = 0; i < optionCount; i += 1) {
