@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MEDIA_QUERY_IS_MOBILE } from '../styled';
+import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
 
 // Register async-light build of react-syntax-highlighter and register only what is needed
 import dark from 'react-syntax-highlighter/dist/esm/styles/prism/dark';
@@ -41,6 +41,10 @@ const Header = styled.div`
   letter-spacing: 0.08em;
   background-color: #20232A;
   text-transform: uppercase;
+
+  ${MEDIA_QUERY_IS_MOBILE_XS} {
+    font-size: 1.05rem;
+  }
 `;
 
 const PreContainer = styled.div`
@@ -85,6 +89,13 @@ const PreContainer = styled.div`
         .token.punctuation {
           color: #FF97A3;
         }
+      }
+    }
+
+    ${MEDIA_QUERY_IS_MOBILE_XS} {
+      font-size: 12px;
+      > code:first-of-type {
+        padding-right: 10px !important;
       }
     }
   }
