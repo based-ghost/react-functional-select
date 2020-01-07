@@ -6,7 +6,7 @@ import { storiesOf } from '@storybook/react';
 import { Option, stringifyJavascriptObj } from './helpers/utils';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
 import { CodeMarkup, PackageLink, PackageLinkProps } from './helpers/components';
-import { Hr, Columns, Column, Code, Title, SubTitle, ListWrapperColumn, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody, SelectContainerColumn } from './helpers/styled';
+import { Hr, Columns, Column, Code, Title, SubTitle, ListWrapperColumn, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody } from './helpers/styled';
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -132,6 +132,10 @@ const ThemeConfigMap = Object.freeze<{[key: string]: any}>({
   }
 });
 
+const SELECT_CONTAINER_STYLE = {
+  marginTop: '1rem'
+};
+
 storiesOf('React Functional Select', module).add('Styling', () => {
   const [themeConfig, setThemeConfig] = useState<Theme | undefined>(undefined);
   const [selectedOption, setSelectedOption] = useCallbackState<Option | null>(null);
@@ -234,12 +238,12 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <LabelHeader>Try selecting dfferent 'themeConfig' objects below</LabelHeader>
+          <LabelHeader>Try selecting 'themeConfig' objects below</LabelHeader>
         </CardHeader>
         <CardBody>
           <Columns>
             <Column widthPercent={40}>
-              <SelectContainerColumn>
+              <div style={SELECT_CONTAINER_STYLE}>
                 <Select
                   options={options}
                   isClearable={false}
@@ -249,7 +253,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
                   menuItemSize={menuItemSize}
                   onOptionChange={setSelectedOption}
                 />
-              </SelectContainerColumn>
+              </div>
             </Column>
             <Column widthPercent={60}>
               <CodeMarkup

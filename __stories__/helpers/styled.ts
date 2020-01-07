@@ -55,15 +55,6 @@ export const SelectContainer = styled.div`
   }
 `;
 
-export const SelectContainerColumn = styled.div`
-  width: 95%;
-  margin-top: 1rem;
-
-  ${MEDIA_QUERY_IS_MOBILE} {
-    width: 100%;
-  }
-`;
-
 export const Hr = styled.hr`
   border: 0;
   margin-top: 1rem;

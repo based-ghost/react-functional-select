@@ -19,9 +19,9 @@ type CodeMarkupProps = {
 };
 
 const CodeMarkupContainer = styled.div`
-  margin: 1rem 1.5rem;
   font-size: 1rem;
   overflow: hidden;
+  margin: 1rem 1.5rem;
   border-radius: 0.625rem;
   background-color: rgb(40, 44, 52);
 
@@ -35,9 +35,7 @@ const Header = styled.div`
   line-height: 3;
   padding: 0 .9rem;
   font-weight: 700;
-  font-size: 1.05rem;
   letter-spacing: 0.08em;
-  border-radius: 0.625rem;
   background-color: #20232A;
   text-transform: uppercase;
 `;
@@ -47,8 +45,8 @@ const PreContainer = styled.div`
   height: 100%;
   overflow: auto;
   border-radius: 0.625rem;
-  min-height: 380px !important;
-  max-height: 380px !important;
+  min-height: 385px !important;
+  max-height: 385px !important;
 
   pre {
     font-size: 14px;
