@@ -6,7 +6,7 @@ import { storiesOf } from '@storybook/react';
 import { Option, stringifyJavascriptObj } from './helpers/utils';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
 import { CodeMarkup, PackageLink, PackageLinkProps } from './helpers/components';
-import { Hr, Columns, Column, Code, Title, SubTitle, ListWrapperColumn, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Columns, Column, Code, Title, SubTitle, ListWrapper, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody } from './helpers/styled';
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -170,11 +170,12 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <Columns>
       <Column widthPercent={40}>
         <Content>
-          react-functional-select uses <PackageLink {...StyledComponentsLink} /> to handle its styling.
-          The root node is wrapped in styled-component's <Code>ThemeProvider</Code> wrapper component
-          which gives all child styled-components access to the provided theme via React's context
-          API. To override react-functional-select's default theme, pass an object to
-          the <Code>themeConfig</Code> property - any matching properties will replace those in the default theme.
+          react-functional-select uses <PackageLink {...StyledComponentsLink} /> to handle its
+          styling. The root node is wrapped in styled-component's <Code>ThemeProvider</Code> wrapper
+          component which gives all child styled-components access to the provided theme via React's
+          context API. To override react-functional-select's default theme, pass an object to
+          the <Code>themeConfig</Code> property - any matching properties will replace those in the
+          default theme.
         </Content>
       </Column>
       <Column widthPercent={60}>
@@ -194,8 +195,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             to true and it will then generate <Code>className</Code> attributes for that specific instance
             of the component. These are the classes that are available:
           </Content>
-          <ListWrapperColumn>
-            <List className='is-class-list'>
+          <ListWrapper className='is-class-list'>
+            <List>
               <ListItem>
                 <Code>{SELECT_CONTAINER_CLS}</Code>
               </ListItem>
@@ -224,7 +225,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
                 <Code>{OPTION_DISABLED_CLS}</Code>
               </ListItem>
             </List>
-          </ListWrapperColumn>
+          </ListWrapper>
         </Column>
         <Column widthPercent={60}>
           <CodeMarkup

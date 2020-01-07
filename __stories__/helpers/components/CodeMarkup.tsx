@@ -23,7 +23,7 @@ const CodeMarkupContainer = styled.div`
   overflow: hidden;
   margin: 1rem 1.5rem;
   border-radius: 0.625rem;
-  background-color: rgb(40, 44, 52);
+  background-color: #282c34;
 
   ${MEDIA_QUERY_IS_MOBILE} {
     margin: 1rem 0;
@@ -50,11 +50,11 @@ const PreContainer = styled.div`
 
   pre {
     font-size: 14px;
+    margin: 0 !important;
     border: none !important;
     box-shadow: none !important;
     text-shadow: none !important;
     padding: 1em 1.25em !important;
-    margin: 0 0 0.25em 0 !important;
     background-color: #282c34 !important;
 
     > code {

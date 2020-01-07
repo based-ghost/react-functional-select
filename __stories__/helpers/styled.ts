@@ -45,11 +45,9 @@ export const Container = styled.div`
 export const SelectContainer = styled.div`
   width: 60%;
   margin-top: 1rem;
-
   ${MEDIA_QUERY_IS_TABLET} {
     width: 75%;
   }
-
   ${MEDIA_QUERY_IS_MOBILE} {
     width: 100%;
   }
@@ -65,10 +63,7 @@ export const Hr = styled.hr`
 
 export const Columns = styled.div`
   width: 100%;
-  ${MEDIA_QUERY_IS_TABLET} {
-    display: flex;
-  }
-  ${MEDIA_QUERY_IS_DESKTOP} {
+  ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
     display: flex;
   }
 `;
@@ -95,13 +90,19 @@ export const Column = styled.div<{ widthPercent?: number }>`
 
 export const ListWrapper = styled.div`
   ${PARAGRAPH_CSS}
+
   ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
     max-width: 85%;
   }
-`;
 
-export const ListWrapperColumn = styled.div`
-  ${PARAGRAPH_CSS}
+  &.is-class-list {
+    max-width: 100% !important;
+    ul {
+      li + li {
+        margin-top: 0.75em !important;
+      }
+    }
+  }
 `;
 
 export const List = styled.ul`
@@ -116,12 +117,6 @@ export const List = styled.ul`
 
   li + li {
     margin-top: 0.55em;
-  }
-
-  &.is-class-list {
-    li + li {
-      margin-top: 0.75em;
-    }
   }
 
   ${MEDIA_QUERY_IS_MOBILE} {
@@ -223,20 +218,28 @@ export const Label = styled.label`
   color: #5E5E5E;
   user-select: none;
   font-style: italic;
-  margin-top: 0.4rem;
-  margin-left: 0.4rem;
-  margin-right: 1.15rem;
   display: inline-block;
   vertical-align: middle;
+  margin: 0.4rem 1.15rem 0rem 0.4rem;
+  ${MEDIA_QUERY_IS_MOBILE} {
+    margin: 0 auto .25rem auto;
+  }
 `;
 
 export const LabelHeader = styled(Label)`
   margin-bottom: 0.4rem;
+  ${MEDIA_QUERY_IS_MOBILE} {
+    text-align: left;
+    margin: 0 auto 0.4rem 0;
+  }
 `;
 
 export const LabelNote = styled(Label)`
-  margin-left: 0;
-  margin-bottom: 0.4rem;
+  margin: 0.4rem auto 0.4rem 0;
+  ${MEDIA_QUERY_IS_MOBILE} {
+    text-align: left;
+    margin: 0 auto 0.4rem 0;
+  }
 `;
 
 export const CheckboxGroup = styled.div`
@@ -283,7 +286,7 @@ export const Card = styled.div`
     border: none;
     border-radius: 0;
     box-shadow: none;
-    margin: 0.5rem 0;
+    margin: 0;
   }
 `;
 
@@ -300,7 +303,7 @@ export const CardHeader = styled.div<{ supportMobile?: boolean }>`
 
   ${MEDIA_QUERY_IS_MOBILE} {
     text-align: center;
-    padding: 0.75rem 0;
+    padding: 0 0 1rem 0;
   }
 
   ${({ supportMobile }) =>
@@ -310,11 +313,11 @@ export const CardHeader = styled.div<{ supportMobile?: boolean }>`
         ${MEDIA_QUERY_IS_MOBILE} {
           width: 100%;
           display: block;
-          margin: 0 3.25rem 0.25rem;
+          margin: 0 3.25rem 0.5rem;
         }
 
         ${MEDIA_QUERY_IS_MOBILE_XS} {
-          margin: 0 1.25rem 0.25rem;
+          margin: 0 1.25rem 0.5rem;
         }
       }
     `)}
