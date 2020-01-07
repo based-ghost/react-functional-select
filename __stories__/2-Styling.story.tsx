@@ -3,10 +3,10 @@ import { Select, Theme } from '../src';
 import { mergeDeep } from '../src/utils';
 import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
-import { Option, stringifyJsonObj } from './helpers/utils';
+import { Option, stringifyJavascriptObj } from './helpers/utils';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
 import { CodeMarkup, PackageLink, PackageLinkProps } from './helpers/components';
-import { Hr, Columns, Column, Code, Title, SubTitle, ListWrapper, List, ListItem, Paragraph, JsonContainer, LabelHeader, Container, Card, CardHeader, CardBody, SelectContainerColumn } from './helpers/styled';
+import { Hr, Columns, Column, Code, Title, SubTitle, ListWrapperColumn, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody, SelectContainerColumn } from './helpers/styled';
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -163,31 +163,34 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <Title>Styling</Title>
       <Hr />
       <SubTitle>Theming</SubTitle>
-      <Paragraph>
-        react-functional-select uses <PackageLink {...StyledComponentsLink} /> to handle its styling.
-        The root node is wrapped in styled-component's <Code>&lt;ThemeProvider /&gt;</Code> wrapper
-        component which gives all child styled-components access to the provided theme via React's
-        context API. To override react-functional-select's default theme, pass an object to
-        the <Code>themeConfig</Code> prop - any matching properties will replace those in the
-        default theme.
-      </Paragraph>
-      <JsonContainer>
-        <CodeMarkup
-          language='json'
-          data={THEME_DEFAULTS}
-          header='Default Theme'
-          formatFn={stringifyJsonObj}
-        />
-      </JsonContainer>
-      <SubTitle>Using classNames</SubTitle>
-      <Paragraph>
-        If you want to style the component using CSS classes, set the <Code>addClassNames</Code> prop
-        to true and it will then generate <Code>className</Code> attributes for that specific instance
-        of the component. These are the classes that are available:
-      </Paragraph>
       <Columns>
-        <Column className='is-two-fifths'>
-          <ListWrapper>
+      <Column widthPercent={40}>
+        <Content>
+          react-functional-select uses <PackageLink {...StyledComponentsLink} /> to handle its styling.
+          The root node is wrapped in styled-component's <Code>ThemeProvider</Code> wrapper component
+          which gives all child styled-components access to the provided theme via React's context
+          API. To override react-functional-select's default theme, pass an object to
+          the <Code>themeConfig</Code> property - any matching properties will replace those in the default theme.
+        </Content>
+      </Column>
+      <Column widthPercent={60}>
+        <CodeMarkup
+          language='javascript'
+          data={THEME_DEFAULTS}
+          header='Theme Defaults'
+          formatFn={stringifyJavascriptObj}
+        />
+      </Column>
+      </Columns>
+      <SubTitle>Using classNames</SubTitle>
+      <Columns>
+        <Column widthPercent={40}>
+          <Content>
+            If you want to style the component using CSS classes, set the <Code>addClassNames</Code> prop
+            to true and it will then generate <Code>className</Code> attributes for that specific instance
+            of the component. These are the classes that are available:
+          </Content>
+          <ListWrapperColumn>
             <List className='is-class-list'>
               <ListItem>
                 <Code>{SELECT_CONTAINER_CLS}</Code>
@@ -217,9 +220,9 @@ storiesOf('React Functional Select', module).add('Styling', () => {
                 <Code>{OPTION_DISABLED_CLS}</Code>
               </ListItem>
             </List>
-          </ListWrapper>
+          </ListWrapperColumn>
         </Column>
-        <Column className='is-three-fifths'>
+        <Column widthPercent={60}>
           <CodeMarkup
             language='markup'
             data={CLASS_NAME_HTML}
@@ -231,11 +234,11 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <LabelHeader>Select themes below</LabelHeader>
+          <LabelHeader>Try selecting dfferent 'themeConfig' objects below</LabelHeader>
         </CardHeader>
         <CardBody>
           <Columns>
-            <Column className='is-two-fifths'>
+            <Column widthPercent={40}>
               <SelectContainerColumn>
                 <Select
                   options={options}
@@ -248,12 +251,12 @@ storiesOf('React Functional Select', module).add('Styling', () => {
                 />
               </SelectContainerColumn>
             </Column>
-            <Column className='is-three-fifths'>
+            <Column widthPercent={60}>
               <CodeMarkup
-                language='json'
                 data={themeConfig}
-                header='Theme Config'
-                formatFn={stringifyJsonObj}
+                language='javascript'
+                header='Theme Overrides'
+                formatFn={stringifyJavascriptObj}
               />
             </Column>
           </Columns>

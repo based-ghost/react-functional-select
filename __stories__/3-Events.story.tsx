@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { Checkbox } from './helpers/components';
 import { useCallbackState } from './helpers/hooks';
 import { Option, renderInfoToast, renderSuccessToast, createSelectOptions } from './helpers/utils';
-import { Hr, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, CodeHeader, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, LabelNote, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, CodeHeader, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Events', () => {
   const options = useMemo<Option[]>(() => createSelectOptions(5), []);
@@ -61,6 +61,7 @@ storiesOf('React Functional Select', module).add('Events', () => {
       <Hr />
       <Card>
         <CardHeader>
+          <LabelNote>*Events will trigger a notification when executed</LabelNote>
           <CheckboxGroup>
             <Checkbox
               label='onOptionChange'

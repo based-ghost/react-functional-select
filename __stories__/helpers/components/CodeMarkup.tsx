@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
 
-// Register async-light build of react-syntax-highlighter and register only what is needed
+// Register light build of react-syntax-highlighter and register only what is needed
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
 import dark from 'react-syntax-highlighter/dist/esm/styles/prism/dark';
-import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
 import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
-import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-async-light';
+import javascript from 'react-syntax-highlighter/dist/esm/languages/prism/javascript';
 
-SyntaxHighlighter.registerLanguage('json', json);
 SyntaxHighlighter.registerLanguage('markup', markup);
+SyntaxHighlighter.registerLanguage('javascript', javascript);
 
 type CodeMarkupProps = {
   readonly data: any;
@@ -19,12 +19,11 @@ type CodeMarkupProps = {
 };
 
 const CodeMarkupContainer = styled.div`
-  margin: 1rem;
+  margin: 1rem 1.5rem;
   font-size: 1rem;
   overflow: hidden;
-  border-radius: 0.5rem;
+  border-radius: 0.625rem;
   background-color: rgb(40, 44, 52);
-  box-shadow: rgba(20, 20, 20, 0.19) 1px 1px 18px;
 
   ${MEDIA_QUERY_IS_MOBILE} {
     margin: 1rem 0;
@@ -32,38 +31,38 @@ const CodeMarkupContainer = styled.div`
 `;
 
 const Header = styled.div`
-  color: #A5A8A6;
+  color: #999;
   line-height: 3;
   padding: 0 .9rem;
   font-weight: 700;
-  font-size: 1.075rem;
-  border-radius: 0.5rem;
+  font-size: 1.05rem;
   letter-spacing: 0.08em;
+  border-radius: 0.625rem;
   background-color: #20232A;
   text-transform: uppercase;
-
-  ${MEDIA_QUERY_IS_MOBILE_XS} {
-    font-size: 1.05rem;
-  }
 `;
 
 const PreContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  max-height: 425px !important;
+  border-radius: 0.625rem;
+  min-height: 380px !important;
+  max-height: 380px !important;
 
   pre {
     font-size: 14px;
+    border: none !important;
+    box-shadow: none !important;
     text-shadow: none !important;
     padding: 1em 1.25em !important;
     margin: 0 0 0.25em 0 !important;
-    background-color: rgb(40, 44, 52) !important;
-    border: 0.3em solid rgb(40, 44, 52) !important;
-    box-shadow: rgb(40, 44, 52) 1px 1px 0.5em inset !important;
+    background-color: #282c34 !important;
 
     > code {
+      background: none !important;
       text-shadow: none !important;
+      font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace !important;
 
       &:first-of-type {
         color: #BFC2C0 !important;
@@ -73,21 +72,19 @@ const PreContainer = styled.div`
       &:last-of-type {
         display: inherit;
 
-        .token.tag.token.tag {
+        .tag,
+        .string,
+        .number {
           color: #FFB0BC;
         }
 
-        .token.tag.token.tag.token.punctuation {
+        .operator,
+        .punctuation {
           color: #B0FFF3;
         }
 
-        .token.tag.token.attr-name {
+        .attr-name {
           color: #CCB0FF;
-        }
-
-        .token.operator,
-        .token.punctuation {
-          color: #FF97A3;
         }
       }
     }

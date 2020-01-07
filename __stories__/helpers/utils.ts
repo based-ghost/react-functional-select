@@ -24,11 +24,8 @@ export const numberWithCommas = (value: number): string => {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-export const stringifyJsonObj = (data: any): string => {
-  return JSON.stringify(data || {}, null, 2)
-    .replace(/"/g, '')
-    .replace(/\\n/g, '')
-    .replace(/\\/g, '');
+export const stringifyJavascriptObj = (data: any): string => {
+  return JSON.stringify(data || {}, null, 2).replace(/"(\w+)"\s*:/g, '$1:');
 };
 
 export const createSelectOptions = (optionCount: number): Option[] => {

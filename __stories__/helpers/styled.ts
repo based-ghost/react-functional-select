@@ -16,19 +16,16 @@ const PARAGRAPH_CSS = css`
   margin-inline-end: 0px;
   margin-block-start: 1em;
   margin-inline-start: 0px;
-  ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
-    max-width: 85%;
-  }
+`;
+
+export const Content = styled.p`
+  ${PARAGRAPH_CSS}
 `;
 
 export const Paragraph = styled.p`
   ${PARAGRAPH_CSS}
-`;
-
-export const JsonContainer = styled.div`
-  ${PARAGRAPH_CSS}
-  > div {
-    margin: 1rem 0 !important;
+  ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
+    max-width: 85%;
   }
 `;
 
@@ -85,7 +82,7 @@ export const Columns = styled.div`
   }
 `;
 
-export const Column = styled.div`
+export const Column = styled.div<{ widthPercent?: number }>`
   flex-grow: 1;
   flex-basis: 0;
   flex-shrink: 1;
@@ -97,52 +94,23 @@ export const Column = styled.div`
     width: 100% !important;
   }
 
-  &.is-one-quarter {
-    flex: none;
-    width: 25%;
-  }
-  &.is-one-third {
-    flex: none;
-    width: 33.3333%;
-  }
-  &.is-two-fifths {
-    flex: none;
-    width: 45%;
-  }
-  &.is-half {
-    flex: none;
-    width: 50%;
-  }
-  &.is-three-fifths {
-    flex: none;
-    width: 55%;
-  }
-  &.is-two-thirds {
-    flex: none;
-    width: 66.6666%;
-  }
-  &.is-three-quarters {
-    flex: none;
-    width: 75%;
-  }
-  &.is-full {
-    flex: none;
-    width: 100%;
-  }
+  ${({ widthPercent }) =>
+    widthPercent
+    && (`
+      flex: none;
+      width: ${widthPercent}%;
+    `)}
 `;
 
 export const ListWrapper = styled.div`
-  margin-top: 0;
-  display: block;
-  margin-bottom: 1rem;
-  margin-block-end: 1em;
-  margin-inline-end: 0px;
-  margin-block-start: 1em;
-  margin-inline-start: 0px;
-
+  ${PARAGRAPH_CSS}
   ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
     max-width: 85%;
   }
+`;
+
+export const ListWrapperColumn = styled.div`
+  ${PARAGRAPH_CSS}
 `;
 
 export const List = styled.ul`
@@ -182,7 +150,7 @@ export const Code = styled.code`
   font-size: 0.90em;
   border-radius: 0.3em;
   word-break: break-word;
-  background-color: rgba(27, 31, 35, 0.0625);
+  background-color: rgba(27, 31, 35, 0.065);
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 
   ${MEDIA_QUERY_IS_MOBILE_XS} {
@@ -272,6 +240,11 @@ export const Label = styled.label`
 `;
 
 export const LabelHeader = styled(Label)`
+  margin-bottom: 0.4rem;
+`;
+
+export const LabelNote = styled(Label)`
+  margin-left: 0;
   margin-bottom: 0.4rem;
 `;
 

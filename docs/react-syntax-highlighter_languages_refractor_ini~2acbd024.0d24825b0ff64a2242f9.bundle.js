@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[60],{757:function(module,exports,__webpack_require__){"use strict";function ini(Prism){Prism.languages.ini={comment:/^[ \t]*[;#].*$/m,selector:/^[ \t]*\[.*?\]/m,constant:/^[ \t]*[^\s=]+?(?=[ \t]*=)/m,"attr-value":{pattern:/=.*/,inside:{punctuation:/^[=]/}}}}module.exports=ini,ini.displayName="ini",ini.aliases=[]}}]);
-//# sourceMappingURL=react-syntax-highlighter_languages_refractor_ini~2acbd024.0d24825b0ff64a2242f9.bundle.js.map
