@@ -48,11 +48,17 @@ const CLASS_NAME_HTML =
   <div class="${MENU_CONTAINER_CLS}">
     <div>
       <div>
-        <div class="${OPTION_CLS} ${OPTION_FOCUSED_CLS}">
+        <div class="${OPTION_CLS}">
           Option 1
         </div>
-        <div class="${OPTION_CLS}">
+        <div class="${OPTION_CLS} ${OPTION_FOCUSED_CLS}">
           Option 2
+        </div>
+        <div class="${OPTION_CLS} ${OPTION_SELECTED_CLS}">
+          Option 3
+        </div>
+        <div class="${OPTION_CLS} ${OPTION_DISABLED_CLS}">
+          Option 4
         </div>
       </div>
     </div>
