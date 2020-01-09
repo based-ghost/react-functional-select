@@ -1,7 +1,7 @@
 import { ReactText } from 'react';
 import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
 import { MenuOption, OptionData, SelectedOption } from './types';
-import { TRIM_REGEXP, OVERFLOW_REGEXP, MS_BROWSER_REGEXP, DIACRITICS_REGEXP } from './constants/regexp';
+import { TRIM_REGEXP, OVERFLOW_REGEXP, DIACRITICS_REGEXP } from './constants/regexp';
 
 // ============================================
 // Private utility functions
@@ -99,12 +99,9 @@ export function isPlainObject(test: any): boolean {
  * Determines if the current device is touch-enabled.
  * Prefer (pointer: coarse) over (any-pointer: coarse) since we are likely only targeting the primary input
  */
-export const isTouchDevice = (): boolean => window.matchMedia('(pointer: coarse)').matches;
-
-/**
- * Determines if browser is Edge or IE.
- */
-export const isBrowserMS = (): boolean => MS_BROWSER_REGEXP.test(window.navigator.userAgent);
+export function isTouchDevice(): boolean {
+  return window.matchMedia('(pointer: coarse)').matches;
+}
 
 /**
  * Apply regex to string, and if the value is NOT case sensitive, call .toLowerCase() and return result.

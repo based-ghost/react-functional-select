@@ -11,6 +11,7 @@ const MultiValueWrapper = styled.div`
     margin: ${multiValue.margin};
     border-radius: ${multiValue.borderRadius};
     background-color: ${multiValue.backgroundColor};
+    ${multiValue.css || ''}
   `)}
 `;
 

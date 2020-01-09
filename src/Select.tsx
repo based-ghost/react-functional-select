@@ -5,8 +5,8 @@ import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { useDebounce, useMenuHeight, useMenuOptions, useUpdateEffect } from './hooks';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
-import { FocusedOption, SelectedOption, MouseOrTouchEvent, OptionIndex, ValueIndex } from './types';
 import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
+import { FocusedOption, SelectedOption, MouseOrTouchEvent, OptionIndex, ValueIndex, MenuWrapperProps, ControlWrapperProps } from './types';
 import {
   OPTIONS_DEFAULT,
   PLACEHOLDER_DEFAULT,
@@ -35,16 +35,6 @@ import {
 } from './constants/dom';
 
 type OptionData = any;
-
-type MenuWrapperProps = {
-  readonly hideMenu: boolean;
-};
-
-type ControlWrapperProps = {
-  readonly isFocused: boolean;
-  readonly isInvalid?: boolean;
-  readonly isDisabled?: boolean;
-};
 
 export type Theme = Partial<DefaultTheme>;
 
@@ -119,8 +109,7 @@ export type SelectProps = {
 const SelectWrapper = styled.div`
   position: relative;
   box-sizing: border-box;
-  ${({ theme }) => (theme.color.textColor ? `color: ${theme.color.textColor};` : '')}
-  ${({ theme }) => (theme.select.fontSize ? `font-size: ${theme.select.fontSize};` : '')}
+  ${({ theme }) => theme.select.css}
 `;
 
 const ValueWrapper = styled.div`
@@ -154,6 +143,7 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
     ${control.height ? `height: ${control.height};` : ''}
     ${(control.backgroundColor || isDisabled) ? `background-color: ${isDisabled ? color.disabled : control.backgroundColor};` : ''}
     ${isFocused ? `box-shadow: ${control.boxShadow} ${isInvalid ? color.dangerLight : control.boxShadowColor};` : ''}
+    ${control.css || ''}
   `)}
 `;
 
@@ -161,7 +151,6 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   z-index: 999;
   cursor: default;
   position: absolute;
-  animation: ${({ theme }) => css`${theme.menu.animation}`};
   ${({ hideMenu, theme: { menu }}) => (`
     width: ${menu.width};
     margin: ${menu.margin};
@@ -171,6 +160,9 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     background-color: ${menu.backgroundColor};
     ${hideMenu ? 'display: none;' : ''}
   `)}
+
+  animation: ${({ theme }) => css`${theme.menu.animation}`};
+  ${({ theme }) => theme.menu.css}
 
   .${OPTION_CLS} {
     display: block;

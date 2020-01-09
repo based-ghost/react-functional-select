@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef, CSSProperties } from 'react';
-import { isBrowserMS } from '../utils';
 import styled from 'styled-components';
-import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
+import { useIsBrowserMS } from '../hooks';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
+import { AutosizeInputProps, InputProps, AutosizeInputHTMLAttributes } from '../types';
 
 const INPUT_MIN_WIDTH_PX = 2;
 
@@ -31,9 +31,10 @@ const SizerDiv = styled.div`
   font-size: inherit;
   font-weight: inherit;
   font-family: inherit;
+  ${({ theme }) => theme.input.css}
 `;
 
-const Input = styled.input`
+const Input = styled.input<InputProps>`
   border: 0;
   outline: 0;
   padding: 0;
@@ -50,7 +51,8 @@ const Input = styled.input`
     cursor: default;
   }
 
-  ${() => isBrowserMS() && (`::-ms-clear { display: none; }`)}
+  ${({ theme }) => theme.input.css}
+  ${({ isBrowserMS }) => isBrowserMS && (`::-ms-clear { display: none; }`)}
 `;
 
 const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInputProps>((
@@ -67,6 +69,7 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
   },
   ref: React.Ref<HTMLInputElement>
 ) => {
+  const isBrowserMS = useIsBrowserMS();
   const sizerRef = useRef<HTMLDivElement | null>(null);
   const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
 
@@ -79,7 +82,8 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
   const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
     ...STATIC_ATTRIBUTES,
     'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy
+    'aria-labelledby': ariaLabelledBy,
+    isBrowserMS
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, ReactNode } from 'react';
 import { Select, Theme } from '../src';
 import { mergeDeep } from '../src/utils';
 import DefaultThemeObj from '../src/theme';
@@ -65,6 +65,40 @@ const CLASS_NAME_HTML =
   </div>
 </div>`;
 
+const CLASS_LIST_NODE: ReactNode = (
+  <ListWrapper className='is-class-list'>
+    <List>
+      <ListItem>
+        <Code>{SELECT_CONTAINER_CLS}</Code>
+      </ListItem>
+      <ListItem>
+        <Code>{CONTROL_CONTAINER_CLS}</Code>
+      </ListItem>
+      <ListItem>
+        <Code>{MENU_CONTAINER_CLS}</Code>
+      </ListItem>
+      <ListItem>
+        <Code>{AUTOSIZE_INPUT_CLS}</Code>
+      </ListItem>
+      <ListItem>
+        <Code>{CARET_ICON_CLS}</Code>
+      </ListItem>
+      <ListItem>
+        <Code>{CLEAR_ICON_CLS}</Code>
+      </ListItem>
+      <ListItem>
+        <Code>{LOADING_DOTS_CLS}</Code>
+      </ListItem>
+      <ListItem>
+        <Code>{OPTION_CLS}</Code>{', '}
+        <Code>{OPTION_FOCUSED_CLS}</Code>{', '}
+        <Code>{OPTION_SELECTED_CLS}</Code>{', '}
+        <Code>{OPTION_DISABLED_CLS}</Code>
+      </ListItem>
+    </List>
+  </ListWrapper>
+);
+
   // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
 const BOUNCE_KEYFRAMES = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
 const FADE_IN_KEYFRAMES = 'FADE_IN_KEYFRAMES 0.225s ease-in-out forwards';
@@ -105,8 +139,10 @@ const ThemeConfigMap = Object.freeze<{[key: string]: any}>({
   [ThemeEnum.DARK_COLORS]: {
     color: {
       border: '#A8AEB4',
-      textColor: '#000',
       primary: '#555555'
+    },
+    select: {
+      css: 'color: #000;'
     },
     control: {
       boxShadowColor: 'rgba(85, 85, 85, 0.25)',
@@ -125,7 +161,7 @@ const ThemeConfigMap = Object.freeze<{[key: string]: any}>({
   },
   [ThemeEnum.LARGE_TEXT]: {
     select: {
-      fontSize: '1.25rem'
+      css: 'font-size: 1.25rem;'
     }
   },
   [ThemeEnum.ZERO_BORDER_RADIUS]: {
@@ -174,64 +210,48 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <Hr />
       <SubTitle>Theming</SubTitle>
       <Columns>
-      <Column widthPercent={40}>
-        <Content>
-          react-functional-select uses <PackageLink {...StyledComponentsLink} /> to handle its
-          styling. The root node is wrapped in styled-component's <Code>ThemeProvider</Code> wrapper
-          component which gives all child styled-components access to the provided theme via React's
-          context API. To override react-functional-select's default theme, pass an object to
-          the <Code>themeConfig</Code> property - any matching properties will replace those in the
-          default theme.
-        </Content>
-      </Column>
-      <Column widthPercent={60}>
-        <CodeMarkup
-          language='javascript'
-          data={THEME_DEFAULTS}
-          header='Theme Defaults'
-          formatFn={stringifyJavascriptObj}
-        />
-      </Column>
+        <Column widthPercent={40}>
+          <Content>
+            react-functional-select uses{' '}
+            <PackageLink {...StyledComponentsLink} /> to handle its styling. The
+            root node is wrapped in styled-component's{' '}
+            <Code>ThemeProvider</Code> wrapper component which gives all child
+            styled-components access to the provided theme via React's context
+            API. To override react-functional-select's default theme, pass an
+            object to the <Code>themeConfig</Code> property - any matching
+            properties will replace those in the default theme.
+          </Content>
+          <Content>
+            Starting in version <Code>@2.0.0</Code>, some of the nested objects
+            in the <Code>themeConfig</Code> object contain a <Code>css</Code>{' '}
+            property of type <Code>string</Code> |{' '}
+            <Code>FlattenSimpleInterpolation</Code> | <Code>undefined</Code>{' '}
+            (default value is undefined). This property can be used to pass raw
+            CSS styles as a string or wrapped in{' '}
+            <PackageLink {...StyledComponentsLink} /> exported <Code>css</Code>{' '}
+            function. Those objects are: select, control, icon, menu, noOptions,
+            multiValue, and input.
+          </Content>
+        </Column>
+        <Column widthPercent={60}>
+          <CodeMarkup
+            language='javascript'
+            data={THEME_DEFAULTS}
+            header='Theme Defaults'
+            formatFn={stringifyJavascriptObj}
+          />
+        </Column>
       </Columns>
       <SubTitle>Using classNames</SubTitle>
       <Columns>
         <Column widthPercent={40}>
           <Content>
-            If you want to style the component using CSS classes, set the <Code>addClassNames</Code> prop
-            to true and it will then generate <Code>className</Code> attributes for that specific instance
-            of the component. These are the classes that are available:
+            If you want to style the component using CSS classes, set the{' '}
+            <Code>addClassNames</Code> prop to true and it will then generate{' '}
+            <Code>className</Code> attributes for that specific instance of the
+            component. These are the classes that are available:
           </Content>
-          <ListWrapper className='is-class-list'>
-            <List>
-              <ListItem>
-                <Code>{SELECT_CONTAINER_CLS}</Code>
-              </ListItem>
-              <ListItem>
-                <Code>{CONTROL_CONTAINER_CLS}</Code>
-              </ListItem>
-              <ListItem>
-                <Code>{MENU_CONTAINER_CLS}</Code>
-              </ListItem>
-              <ListItem>
-                <Code>{AUTOSIZE_INPUT_CLS}</Code>
-              </ListItem>
-              <ListItem>
-                <Code>{CARET_ICON_CLS}</Code>
-              </ListItem>
-              <ListItem>
-                <Code>{CLEAR_ICON_CLS}</Code>
-              </ListItem>
-              <ListItem>
-                <Code>{LOADING_DOTS_CLS}</Code>
-              </ListItem>
-              <ListItem>
-                <Code>{OPTION_CLS}</Code>{', '}
-                <Code>{OPTION_FOCUSED_CLS}</Code>{', '}
-                <Code>{OPTION_SELECTED_CLS}</Code>{', '}
-                <Code>{OPTION_DISABLED_CLS}</Code>
-              </ListItem>
-            </List>
-          </ListWrapper>
+          {CLASS_LIST_NODE}
         </Column>
         <Column widthPercent={60}>
           <CodeMarkup

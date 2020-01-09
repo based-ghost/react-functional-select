@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 /**
- * Simple hook used to track if a component is mounted and initial effect executed.
+ * Hook used to track if a component is mounted and initial effect executed.
  */
 export const useIsFirstRender = (): boolean => {
   const isFirst = useRef<boolean>(true);

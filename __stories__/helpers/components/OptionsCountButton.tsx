@@ -41,7 +41,10 @@ const OptionsCountButton: React.FC<OptionsCountButtonProps> = ({
   const onClick = !isActive ? (() => setOptionsCount(count)) : undefined;
 
   return (
-    <StyledButton isActive={isActive} onClick={onClick}>
+    <StyledButton
+      onClick={onClick}
+      isActive={isActive}
+    >
       {`${numberWithCommas(count)} Options`}
     </StyledButton>
   );

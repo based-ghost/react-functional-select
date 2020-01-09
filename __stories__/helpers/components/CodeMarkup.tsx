@@ -44,6 +44,7 @@ const PreContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
+  border-radius: 6px;
   min-height: 385px !important;
   max-height: 385px !important;
 

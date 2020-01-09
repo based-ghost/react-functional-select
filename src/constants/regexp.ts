@@ -13,14 +13,8 @@ const OVERFLOW_REGEXP = /(auto|scroll)/;
  */
 const DIACRITICS_REGEXP = /[\u0300-\u036f]/g;
 
-/**
- * Test window.navigator.userAgent for Edge or IE browser.
- */
-const MS_BROWSER_REGEXP = /MSIE |Trident\/|Edge\//;
-
 export {
   TRIM_REGEXP,
   OVERFLOW_REGEXP,
-  DIACRITICS_REGEXP,
-  MS_BROWSER_REGEXP
+  DIACRITICS_REGEXP
 };

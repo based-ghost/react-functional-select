@@ -22,6 +22,7 @@ const IndicatorIcon = styled.div`
       color: ${icon.hoverColor};
     }
   `)}
+  ${({ theme }) => theme.icon.css}
 `;
 
 const Clear = styled.div`

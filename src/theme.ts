@@ -13,6 +13,7 @@ export default Object.freeze<DefaultTheme>({
     placeholder: '#6E7276',
     dangerLight: 'rgba(220, 53, 69, 0.25)'
   },
+  input: {},
   select: {},
   loader: {
     size: '0.625rem',
@@ -22,14 +23,14 @@ export default Object.freeze<DefaultTheme>({
   },
   icon: {
     color: '#cccccc',
-    padding: '0.5rem 0.9375rem',
     hoverColor: '#A6A6A6',
+    padding: '0.5rem 0.9375rem',
     clear: {
       fontWeight: 900,
       fontSize: '0.85em',
       animation: FADE_IN_ANIMATION_CSS,
       transition: 'color 0.15s ease-in-out',
-      fontFamily: '"Helvetica", "Arial", sans-serif'
+      fontFamily: 'Helvetica, Arial, sans-serif'
     },
     caret: {
       size: '7px',
@@ -45,7 +46,7 @@ export default Object.freeze<DefaultTheme>({
     padding: '0.375rem 0.75rem',
     boxShadowColor: 'rgba(0, 123, 255, 0.25)',
     focusedBorderColor: 'rgba(0, 123, 255, 0.75)',
-    transition: 'box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out'
+    transition: 'box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out',
   },
   menu: {
     width: '100%',

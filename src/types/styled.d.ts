@@ -1,8 +1,6 @@
 import 'styled-components';
 import { FlattenSimpleInterpolation } from 'styled-components';
 
-type AnimationCSS = string | FlattenSimpleInterpolation;
-
 declare module 'styled-components' {
   export interface DefaultTheme {
     color: {
@@ -10,31 +8,31 @@ declare module 'styled-components' {
       danger: string;
       primary: string;
       disabled: string;
-      textColor?: string;
       placeholder: string;
       dangerLight: string;
       caretActive?: string;
       iconSeparator?: string;
     };
     select: {
-      fontSize?: string;
+      css?: string | FlattenSimpleInterpolation;
     };
     loader: {
       size: string;
       color: string;
       padding: string;
-      animation: AnimationCSS;
+      animation: string | FlattenSimpleInterpolation;
     };
     icon: {
       color: string;
       padding: string;
       hoverColor: string;
+      css?: string | FlattenSimpleInterpolation;
       clear: {
         fontSize: string;
         fontFamily: string;
         transition: string;
-        animation: AnimationCSS;
         fontWeight: string | number;
+        animation: string | FlattenSimpleInterpolation;
       };
       caret: {
         size: string;
@@ -53,7 +51,11 @@ declare module 'styled-components' {
       boxShadowColor: string;
       backgroundColor?: string;
       focusedBorderColor: string;
+      css?: string | FlattenSimpleInterpolation;
     },
+    input: {
+      css?: string | FlattenSimpleInterpolation;
+    }
     menu: {
       margin: string;
       padding: string;
@@ -61,7 +63,8 @@ declare module 'styled-components' {
       borderRadius: string;
       width: string | number;
       backgroundColor: string;
-      animation: AnimationCSS;
+      css?: string | FlattenSimpleInterpolation;
+      animation: string | FlattenSimpleInterpolation;
       option: {
         padding: string;
         textAlign: string;
@@ -75,12 +78,14 @@ declare module 'styled-components' {
       margin: string;
       padding: string;
       fontSize: string;
+      css?: string | FlattenSimpleInterpolation;
     };
     multiValue: {
       margin: string;
       borderRadius: string;
       backgroundColor: string;
-      animation: AnimationCSS;
+      css?: string | FlattenSimpleInterpolation;
+      animation: string | FlattenSimpleInterpolation;
       label: {
         padding: string;
         fontSize: string;

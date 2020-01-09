@@ -12,6 +12,7 @@ const NoOptionsMsg = styled.div`
     margin: ${noOptions.margin};
     padding: ${noOptions.padding};
     font-size: ${noOptions.fontSize};
+    ${noOptions.css || ''}
   `)}
 `;
 

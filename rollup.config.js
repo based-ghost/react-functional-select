@@ -15,7 +15,9 @@ const globals = {
 
 const input = './src/index.ts';
 const name = 'ReactFunctionalSelect';
-const external = Object.keys(globals);
+
+// Exclude react-dom package
+const external = Object.keys(globals).filter(x => x !== 'react-dom');
 
 const typescript2Plugin = typescript({
   typescript: require('typescript'),
