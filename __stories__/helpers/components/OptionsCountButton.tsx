@@ -20,7 +20,7 @@ const StyledButton = styled(Button)<StyledButtonProps>`
     isActive
     && (`
       color: #fff;
-      background-color: #E52D6B;
+      background-color: #FA4280;
       :hover {
         background-color: #D8205E;
       }
@@ -28,7 +28,7 @@ const StyledButton = styled(Button)<StyledButtonProps>`
 
   :focus {
     color: #fff !important;
-    background-color: #E52D6B !important;
+    background-color: #FA4280 !important;
   }
 `;
 

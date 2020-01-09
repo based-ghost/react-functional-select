@@ -7,7 +7,7 @@ export type PackageLinkProps = {
 };
 
 const Link = styled.a`
-  color: #E52D6B;
+  color: #FA4280;
   cursor: pointer;
   font-size: 1rem;
   box-shadow: none;

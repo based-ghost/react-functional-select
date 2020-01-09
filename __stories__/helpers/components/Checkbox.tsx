@@ -17,8 +17,8 @@ type CheckboxProps = {
 };
 
 const BORDER_COLOR = '#ced4da';
-const CHECK_MARK_COLOR = '#E52D6B';
-const BORDER_COLOR_CHECKED = 'rgba(229, 45, 107, 0.525)';
+const CHECK_MARK_COLOR = '#FA4280';
+const BORDER_COLOR_CHECKED = 'rgba(250, 66, 128, 0.55)';
 
 const Label = styled.span`
   color: #5E5E5E;
