@@ -222,8 +222,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             properties will replace those in the default theme.
           </Content>
           <Content>
-            Starting in version <Code>@2.0.0</Code>, some of the nested objects
-            in the <Code>themeConfig</Code> object contain a <Code>css</Code>{' '}
+            Starting in <Code>v2.0.0</Code>, some of the nested objects in the{' '}
+            <Code>themeConfig</Code> object contain a <Code>css</Code>{' '}
             property of type <Code>string</Code> |{' '}
             <Code>FlattenSimpleInterpolation</Code> | <Code>undefined</Code>{' '}
             (default value is undefined). This property can be used to pass raw
@@ -265,7 +265,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <LabelHeader>Try selecting 'themeConfig' objects below</LabelHeader>
+          <LabelHeader>Try selecting themeConfig objects below</LabelHeader>
         </CardHeader>
         <CardBody>
           <Columns>

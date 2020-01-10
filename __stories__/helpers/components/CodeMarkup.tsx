@@ -18,12 +18,21 @@ type CodeMarkupProps = {
   readonly formatFn?: (data: any) => string;
 };
 
+const COLOR_BG = '#282c34';
+const COLOR_HEADER = '#999';
+const COLOR_HEADER_BG = '#20232A';
+const COLOR_PRE_BG = COLOR_BG;
+const COLOR_CODE_PINK = '#FFB0BC';
+const COLOR_CODE_BLUE = '#B0FFF3';
+const COLOR_CODE_PURPLE = '#CCB0FF';
+const COLOR_LINE_NUMBER = '#BFC2C0';
+
 const CodeMarkupContainer = styled.div`
   font-size: 1rem;
   overflow: hidden;
   border-radius: 6px;
   margin: 1rem 1.5rem;
-  background-color: #282c34;
+  background-color: ${COLOR_BG};
 
   ${MEDIA_QUERY_IS_MOBILE} {
     margin: 1rem 0;
@@ -31,13 +40,13 @@ const CodeMarkupContainer = styled.div`
 `;
 
 const Header = styled.div`
-  color: #999;
   line-height: 3;
   padding: 0 .9rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  background-color: #20232A;
   text-transform: uppercase;
+  color: ${COLOR_HEADER};
+  background-color: ${COLOR_HEADER_BG};
 `;
 
 const PreContainer = styled.div`
@@ -55,7 +64,7 @@ const PreContainer = styled.div`
     box-shadow: none !important;
     text-shadow: none !important;
     padding: 1em 1.25em !important;
-    background-color: #282c34 !important;
+    background-color: ${COLOR_PRE_BG} !important;
 
     > code {
       background: none !important;
@@ -63,8 +72,8 @@ const PreContainer = styled.div`
       font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace !important;
 
       &:first-of-type {
-        color: #BFC2C0 !important;
         padding-right: 20px !important;
+        color: ${COLOR_LINE_NUMBER} !important;
       }
 
       &:last-of-type {
@@ -73,16 +82,16 @@ const PreContainer = styled.div`
         .tag,
         .string,
         .number {
-          color: #FFB0BC;
+          color: ${COLOR_CODE_PINK};
         }
 
         .operator,
         .punctuation {
-          color: #B0FFF3;
+          color: ${COLOR_CODE_BLUE};
         }
 
         .attr-name {
-          color: #CCB0FF;
+          color: ${COLOR_CODE_PURPLE};
         }
       }
     }

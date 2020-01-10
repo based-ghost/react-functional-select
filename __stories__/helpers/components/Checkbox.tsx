@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from 'react';
+import { hexToRgba } from '../utils';
 import styled from 'styled-components';
 
 type CheckIconProps = {
@@ -16,15 +17,16 @@ type CheckboxProps = {
   readonly onCheck: (checked: boolean) => void;
 };
 
-const BORDER_COLOR = '#ced4da';
-const CHECK_MARK_COLOR = '#FA4280';
-const BORDER_COLOR_CHECKED = 'rgba(250, 66, 128, 0.55)';
+const COLOR_LABEL = '#5E5E5E';
+const COLOR_BORDER = '#ced4da';
+const COLOR_CHECK_MARK = '#FA4280';
+const COLOR_BORDER_CHECKED = hexToRgba(COLOR_CHECK_MARK, 0.55); // rgba(250, 66, 128, 0.55)
 
 const Label = styled.span`
-  color: #5E5E5E;
   user-select: none;
   font-style: italic;
   margin-left: 1.6rem;
+  color: ${COLOR_LABEL};
 `;
 
 const Input = styled.input`
@@ -66,7 +68,7 @@ const CheckIcon = styled.i<CheckIconProps>`
   border-radius: 0.0625rem;
   background-color: transparent;
   transition: border-color 0.38s ease;
-  border-color: ${({ $checked }) => $checked ? BORDER_COLOR_CHECKED : BORDER_COLOR};
+  border-color: ${({ $checked }) => $checked ? COLOR_BORDER_CHECKED : COLOR_BORDER};
 
   :after,
   :before {
@@ -77,7 +79,7 @@ const CheckIcon = styled.i<CheckIconProps>`
     position: absolute;
     border-radius: 0.25rem;
     transform-origin: left top;
-    background-color: ${CHECK_MARK_COLOR};
+    background-color: ${COLOR_CHECK_MARK};
     opacity: ${({ $checked }) => $checked ? 1 : 0};
     transition: ${({ $checked }) => $checked ? 'height 0.38s ease' : 'opacity 0.38s ease, height 0s linear 0.38s'};
   }

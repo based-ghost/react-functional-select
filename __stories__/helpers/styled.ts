@@ -136,7 +136,7 @@ export const Code = styled.code`
   font-size: 0.90em;
   border-radius: 0.3em;
   word-break: break-word;
-  background-color: rgba(27, 31, 35, 0.065);
+  background-color: rgba(27, 31, 35, 0.06);
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 
   ${MEDIA_QUERY_IS_MOBILE_XS} {
@@ -201,7 +201,7 @@ export const Button = styled.button`
   }
 
   :hover {
-    background-color: rgba(9, 30, 66, 0.125);
+    background-color: rgba(9, 30, 66, 0.115);
   }
 
   ${MEDIA_QUERY_IS_MOBILE} {

@@ -39,6 +39,32 @@ export const createSelectOptions = (optionCount: number): Option[] => {
   return results;
 };
 
+export const hexToRgba = (hex: string, alpha: number = 1): string => {
+  const hexReplacer: string = hex.replace(
+    /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
+    (m, r, g, b): string => `#${r}${r}${g}${g}${b}${b}`
+  );
+
+  const alphaValid = Math.min(1, Math.max(0, alpha));
+  const rgbaParts: number[] = hexReplacer
+    .substring(1)
+    .match(/.{2}/g)
+    .map((x: string): number => parseInt(x, 16));
+
+  rgbaParts.push(alphaValid);
+
+  return `rgba(${rgbaParts.join(',')})`;
+};
+
+export const rgbToHex = (r: number, g: number, b: number): string => {
+  const hexParts: string[] = [r, g, b].map((x: number): string => {
+    const hex = x.toString(16);
+    return (hex.length === 1) ? `0${hex}` : hex;
+  });
+
+  return `#${hexParts.join('')}`;
+};
+
 export const CITY_OPTIONS: CityOption[] = [
   { id: 1, city: 'Boston', state: 'MA' },
   { id: 2, city: 'Austin', state: 'TX' },

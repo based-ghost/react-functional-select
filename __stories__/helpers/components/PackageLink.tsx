@@ -6,8 +6,10 @@ export type PackageLinkProps = {
   readonly href: string;
 };
 
+const COLOR = '#FA4280';
+
 const Link = styled.a`
-  color: #FA4280;
+  color: ${COLOR};
   cursor: pointer;
   font-size: 1rem;
   box-shadow: none;
