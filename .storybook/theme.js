@@ -30,9 +30,9 @@ export default create({
 
   // Form colors
   inputBorderRadius: 4,
+  inputTextColor: '#fff',
   inputBg: themes.light.inputBg,
   inputBorder: themes.light.inputBorder,
-  inputTextColor: '#fff',
 
   brandUrl: 'https://based-ghost.github.io/react-functional-select/',
 });

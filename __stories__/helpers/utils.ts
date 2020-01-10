@@ -25,7 +25,9 @@ export const numberWithCommas = (value: number): string => {
 };
 
 export const stringifyJavascriptObj = (data: any): string => {
-  return JSON.stringify(data || {}, null, 2).replace(/"(\w+)"\s*:/g, '$1:');
+  return JSON.stringify(data || {}, null, 2)
+    .replace(/"(\w+)"\s*:/g, '$1:')
+    .replace(/"/g, "'");
 };
 
 export const createSelectOptions = (optionCount: number): Option[] => {
