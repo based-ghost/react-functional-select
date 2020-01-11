@@ -75,7 +75,7 @@ export default css`
       justify-content: space-between;
       max-height: 800px;
       overflow: hidden;
-      font-size: 1.1rem;
+      font-size: 1.075rem;
       font-weight: 600;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
       cursor: pointer;
@@ -85,7 +85,8 @@ export default css`
         color: #aaa;
       }
       &--info {
-        background: #3498db;
+        background: #282c34;
+        color: #ffb0bc;
       }
       &--success {
         background: #21c677;

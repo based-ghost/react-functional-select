@@ -16,10 +16,6 @@ export const renderInfoToast = (message: string): void => {
   toast.info(message);
 };
 
-export const renderSuccessToast = (message: string): void => {
-  toast.success(message);
-};
-
 export const numberWithCommas = (value: number): string => {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };

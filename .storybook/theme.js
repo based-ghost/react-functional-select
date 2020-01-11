@@ -4,7 +4,7 @@ const COLOR_DARKER = '#282c34';
 const COLOR_DARKEST = '#1B1E25';
 const COLOR_PRIMARY = '#fc929e'; //pinkish-red-salmon
 const COLOR_DOES_NOTHING = '#f5b83d'; // golden-yellow
-const COLOR_SECONDARY = '#EA808C'; // 7% darker than COLOR_PRIMARY
+const COLOR_SECONDARY = '#E77D89'; // 8% darker than COLOR_PRIMARY
 
 export default create({
   base: 'dark',
