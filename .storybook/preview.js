@@ -31,7 +31,7 @@ const globalStyleEl =
   (() => {
     const el = document.createElement('div');
     el.id = 'temp3-global-style';
-    document.head.append(el);
+    document.head.appendChild(el);
     return el;
   })();
 
