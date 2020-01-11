@@ -1,7 +1,7 @@
 import { ReactText } from 'react';
 import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
 import { MenuOption, OptionData, SelectedOption } from './types';
-import { TRIM_REGEXP, OVERFLOW_REGEXP, DIACRITICS_REGEXP } from './constants/regexp';
+import { OVERFLOW_REGEXP, DIACRITICS_REGEXP } from './constants/regexp';
 
 // ============================================
 // Private utility functions
@@ -111,11 +111,11 @@ export function trimAndFormatFilterStr(
   filterIgnoreCase?: boolean,
   filterIgnoreAccents?: boolean
 ): string {
-  let formatVal = value.replace(TRIM_REGEXP, '');
+  let trimVal = value.trim();
   if (filterIgnoreCase) {
-    formatVal = formatVal.toLowerCase();
+    trimVal = trimVal.toLowerCase();
   }
-  return !filterIgnoreAccents ? formatVal : stripDiacritics(formatVal);
+  return !filterIgnoreAccents ? trimVal : stripDiacritics(trimVal);
 }
 
 /**

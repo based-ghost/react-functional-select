@@ -22,15 +22,16 @@ const COLOR_BG = '#282c34';
 const COLOR_HEADER = '#999';
 const COLOR_HEADER_BG = '#20232A';
 const COLOR_PRE_BG = COLOR_BG;
-const COLOR_CODE_PINK = '#FFB0BC';
-const COLOR_CODE_BLUE = '#B0FFF3';
-const COLOR_CODE_PURPLE = '#CCB0FF';
-const COLOR_LINE_NUMBER = '#BFC2C0';
+const COLOR_CODE_TAG = '#ffb0bc';
+const COLOR_CODE_ATTR_VALUE = '#9AD59E';
+const COLOR_CODE_ATTR_NAME = '#ccb0ff';
+const COLOR_LINE_NUMBER = '#A6A6A6';
+const COLOR_CODE_PUNCTUATION = '#A3F2E6';
 
 const CodeMarkupContainer = styled.div`
   font-size: 1rem;
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 8px;
   margin: 1rem 1.5rem;
   background-color: ${COLOR_BG};
 
@@ -53,7 +54,7 @@ const PreContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  border-radius: 6px;
+  border-radius: 8px;
   min-height: 385px !important;
   max-height: 385px !important;
 
@@ -82,16 +83,20 @@ const PreContainer = styled.div`
         .tag,
         .string,
         .number {
-          color: ${COLOR_CODE_PINK};
+          color: ${COLOR_CODE_TAG};
+        }
+
+        .attr-value {
+          color: ${COLOR_CODE_ATTR_VALUE};
         }
 
         .operator,
         .punctuation {
-          color: ${COLOR_CODE_BLUE};
+          color: ${COLOR_CODE_PUNCTUATION};
         }
 
         .attr-name {
-          color: ${COLOR_CODE_PURPLE};
+          color: ${COLOR_CODE_ATTR_NAME};
         }
       }
     }
@@ -109,7 +114,7 @@ const CodeMarkup = React.memo<CodeMarkupProps>(({
   data,
   header,
   language,
-  formatFn,
+  formatFn
 }) => (
   <CodeMarkupContainer>
     <Header>{header}</Header>
