@@ -5,7 +5,11 @@ import { addParameters } from '@storybook/react';
 import { toast, ToastPosition } from 'react-toastify';
 import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
 
-// polyfill EventSource for Edge and IE browsers
+// Polyfill string.normalize() for IE browsers
+// LOOK INTO ADDING DYNAMIC IMPORTS WITH BABEL AND THEN ADD ONLY IF IE
+import 'unorm';
+
+// Polyfill EventSource for Edge and IE browsers
 global.EventSource = NativeEventSource || EventSourcePolyfill;
 
 // Define storybook global configuration

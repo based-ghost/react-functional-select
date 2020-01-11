@@ -5,20 +5,24 @@ import styled from 'styled-components';
 import { isArrayWithLength } from '../utils';
 
 const SingleValue = styled.div`
+  top: 50%;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
   box-sizing: border-box;
   text-overflow: ellipsis;
+  transform: translateY(-50%);
   max-width: calc(100% - 0.5rem);
 `;
 
 const Placeholder = styled.div`
+  top: 50%;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
   box-sizing: border-box;
   text-overflow: ellipsis;
+  transform: translateY(-50%);
   color: ${({ theme }) => theme.color.placeholder};
 `;
 

@@ -99,6 +99,7 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.1.0",
     "typescript": "^3.7.4",
+    "unorm": "^1.6.0",
     "webpack": "^4.41.5",
     "webpack-merge": "^4.2.2"
   },
