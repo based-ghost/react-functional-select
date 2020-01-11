@@ -1,14 +1,17 @@
-import { useEffect } from 'react';
-import { useIsFirstRender } from './useIsFirstRender';
+import { useEffect, useRef } from 'react';
 
 /**
  * Run an effect only on updates.
  * Skip the first effect execution that occurrs after initial mount.
  */
 export const useUpdateEffect: typeof useEffect = (effect, deps): void => {
-  const isFirstRender = useIsFirstRender();
+  const isFirstRender = useRef<boolean>(true);
 
   useEffect(() => {
-    !isFirstRender && effect();
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      return effect();
+    }
   }, deps);
 };

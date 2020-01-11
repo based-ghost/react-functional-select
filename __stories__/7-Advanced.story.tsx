@@ -3,7 +3,7 @@ import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
 import { useClearAllToasts } from './helpers/hooks';
 import styled, { css, keyframes } from 'styled-components';
-import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, LabelHeader, CodeHeader, Code, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, LabelHeader, CodeHeader, Card, CardHeader, CardBody } from './helpers/styled';
 
 type StyledImageProps = {
   readonly isDisabled: boolean;
@@ -88,20 +88,20 @@ storiesOf('React Functional Select', module).add('Advanced', () => {
         <List>
           <ListItem>
             <CodeHeader>renderOptionLabel(option: any): React.ReactNode</CodeHeader> - Callback
-            function with a return type of <Code>ReactNode</Code>. Use this property in cases
-            where the standard <Code>getOptionLabel</Code> property won't meet your needs (for
+            function with a return type of <code>ReactNode</code>. Use this property in cases
+            where the standard <code>getOptionLabel</code> property won't meet your needs (for
             instance, you want to render each option's label using custom JSX). More complex
             option labels will likely equate to longer render durations - this can translate
             into a flash of empty space when a user first starts scrolling. In order to prevent
-            this, the <Code>menuOverscanCount</Code> property can be increased to render additional
+            this, the <code>menuOverscanCount</code> property can be increased to render additional
             rows outside of the visible area. The default value for this property is 1 and it is
             important to note that increasing this value can negatively impact performance.
           </ListItem>
           <ListItem>
             <CodeHeader>getIsOptionDisabled(option: any): boolean</CodeHeader> - Callback
-            function with a return type of <Code>Boolean</Code>. When it evaluates to a value of
+            function with a return type of <code>Boolean</code>. When it evaluates to a value of
             true, that option iteration will be rendered <em>disabled</em>. As an alternative, you
-            can also pass a property of <Code>isDisabled</Code> with each option. Use of these two
+            can also pass a property of <code>isDisabled</code> with each option. Use of these two
             options - they cannot both be specified.
           </ListItem>
         </List>

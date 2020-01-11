@@ -259,13 +259,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
   const [focusedMultiValue, setFocusedMultiValue] = useState<ReactText | null>(FOCUSED_MULTI_DEFAULT);
 
-  // Theme for styled-components ThemeProvider
-  const theme = useMemo<DefaultTheme>(() => {
-    return isPlainObject(themeConfig)
-      ? mergeDeep(DefaultThemeObj, themeConfig)
-      : DefaultThemeObj;
-  }, [themeConfig]);
-
   // Memoized callback functions referencing optional function properties on Select.tsx
   const getOptionLabelCB = useMemo<((data: OptionData) => ReactText)>(() => {
     return getOptionLabel || ((data) => data.label);
@@ -298,22 +291,19 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   );
 
   // Custom hook abstraction that handles the creation of menuOptions
-  const hideSelectedOptionsOrDefault: boolean = (typeof hideSelectedOptions !== 'boolean')
-    ? !!isMulti
-    : hideSelectedOptions;
-
   const menuOptions: MenuOption[] = useMenuOptions(
     options,
     debouncedInputValue,
     filterMatchFrom,
-    hideSelectedOptionsOrDefault,
     selectedOption,
     getOptionValueCB,
     getOptionLabelCB,
     getIsOptionDisabled,
     getFilterOptionString,
     filterIgnoreCase,
-    filterIgnoreAccents
+    filterIgnoreAccents,
+    isMulti,
+    hideSelectedOptions
   );
 
   const blurInput = (): void => {
@@ -662,6 +652,13 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       openMenuAndFocusOption(OptionIndexEnum.FIRST);
     }
   }, [menuOpen, openMenuAndFocusOption]);
+
+  // Memoized DefaultTheme object for styled-components ThemeProvider
+  const theme = useMemo<DefaultTheme>(() => {
+    return isPlainObject(themeConfig)
+      ? mergeDeep(DefaultThemeObj, themeConfig)
+      : DefaultThemeObj;
+  }, [themeConfig]);
 
   return (
     <ThemeProvider theme={theme}>

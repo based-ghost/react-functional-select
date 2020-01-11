@@ -3,4 +3,3 @@ export { useMenuHeight } from './useMenuHeight';
 export { useIsBrowserMS } from './useIsBrowserMS';
 export { useMenuOptions } from './useMenuOptions';
 export { useUpdateEffect } from './useUpdateEffect';
-export { useIsFirstRender } from './useIsFirstRender';

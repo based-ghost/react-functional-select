@@ -6,7 +6,7 @@ import { storiesOf } from '@storybook/react';
 import { Option, stringifyJavascriptObj } from './helpers/utils';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
 import { CodeMarkup, PackageLink, PackageLinkProps } from './helpers/components';
-import { Hr, Columns, Column, Code, Title, SubTitle, ListWrapper, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Columns, Column, Title, SubTitle, ListWrapper, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody } from './helpers/styled';
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -69,31 +69,31 @@ const CLASS_LIST_NODE: ReactNode = (
   <ListWrapper className='is-class-list'>
     <List>
       <ListItem>
-        <Code>{SELECT_CONTAINER_CLS}</Code>
+        <code>{SELECT_CONTAINER_CLS}</code>
       </ListItem>
       <ListItem>
-        <Code>{CONTROL_CONTAINER_CLS}</Code>
+        <code>{CONTROL_CONTAINER_CLS}</code>
       </ListItem>
       <ListItem>
-        <Code>{MENU_CONTAINER_CLS}</Code>
+        <code>{MENU_CONTAINER_CLS}</code>
       </ListItem>
       <ListItem>
-        <Code>{AUTOSIZE_INPUT_CLS}</Code>
+        <code>{AUTOSIZE_INPUT_CLS}</code>
       </ListItem>
       <ListItem>
-        <Code>{CARET_ICON_CLS}</Code>
+        <code>{CARET_ICON_CLS}</code>
       </ListItem>
       <ListItem>
-        <Code>{CLEAR_ICON_CLS}</Code>
+        <code>{CLEAR_ICON_CLS}</code>
       </ListItem>
       <ListItem>
-        <Code>{LOADING_DOTS_CLS}</Code>
+        <code>{LOADING_DOTS_CLS}</code>
       </ListItem>
       <ListItem>
-        <Code>{OPTION_CLS}</Code>{', '}
-        <Code>{OPTION_FOCUSED_CLS}</Code>{', '}
-        <Code>{OPTION_SELECTED_CLS}</Code>{', '}
-        <Code>{OPTION_DISABLED_CLS}</Code>
+        <code>{OPTION_CLS}</code>{', '}
+        <code>{OPTION_FOCUSED_CLS}</code>{', '}
+        <code>{OPTION_SELECTED_CLS}</code>{', '}
+        <code>{OPTION_DISABLED_CLS}</code>
       </ListItem>
     </List>
   </ListWrapper>
@@ -215,20 +215,20 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             react-functional-select uses{' '}
             <PackageLink {...StyledComponentsLink} /> to handle its styling. The
             root node is wrapped in styled-component's{' '}
-            <Code>ThemeProvider</Code> wrapper component which gives all child
+            <code>ThemeProvider</code> wrapper component which gives all child
             styled-components access to the provided theme via React's context
             API. To override react-functional-select's default theme, pass an
-            object to the <Code>themeConfig</Code> property - any matching
+            object to the <code>themeConfig</code> property - any matching
             properties will replace those in the default theme.
           </Content>
           <Content>
-            Starting in <Code>v2.0.0</Code>, some of the nested objects in the{' '}
-            <Code>themeConfig</Code> object contain a <Code>css</Code>{' '}
-            property of type <Code>string</Code> |{' '}
-            <Code>FlattenSimpleInterpolation</Code> | <Code>undefined</Code>{' '}
+            Starting in <code>v2.0.0</code>, some of the nested objects in the{' '}
+            <code>themeConfig</code> object contain a <code>css</code>{' '}
+            property of type <code>string</code> |{' '}
+            <code>FlattenSimpleInterpolation</code> | <code>undefined</code>{' '}
             (default value is undefined). This property can be used to pass raw
             CSS styles as a string or wrapped in{' '}
-            <PackageLink {...StyledComponentsLink} /> exported <Code>css</Code>{' '}
+            <PackageLink {...StyledComponentsLink} /> exported <code>css</code>{' '}
             function. Those objects are: select, control, icon, menu, noOptions,
             multiValue, and input.
           </Content>
@@ -247,8 +247,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
         <Column widthPercent={40}>
           <Content>
             If you want to style the component using CSS classes, set the{' '}
-            <Code>addClassNames</Code> prop to true and it will then generate{' '}
-            <Code>className</Code> attributes for that specific instance of the
+            <code>addClassNames</code> prop to true and it will then generate{' '}
+            <code>className</code> attributes for that specific instance of the
             component. These are the classes that are available:
           </Content>
           {CLASS_LIST_NODE}

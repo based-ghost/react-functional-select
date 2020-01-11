@@ -12,16 +12,21 @@ export const useMenuOptions = (
   options: OptionData[],
   debouncedInputValue: string,
   filterMatchFrom: 'any' | 'start',
-  hideSelectedOptions: boolean,
   selectedOption: SelectedOption[],
   getOptionValueCB: (data: OptionData) => ReactText,
   getOptionLabelCB: (data: OptionData) => ReactText,
   getIsOptionDisabled?: (data: OptionData) => boolean,
   getFilterOptionString?: (option: MenuOption) => string,
   filterIgnoreCase?: boolean,
-  filterIgnoreAccents?: boolean
+  filterIgnoreAccents?: boolean,
+  isMulti?: boolean,
+  hideSelectedOptions?: boolean
 ): MenuOption[] => {
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(OPTIONS_DEFAULT);
+
+  const hideSelectedOptionsOrDefault: boolean = (typeof hideSelectedOptions !== 'boolean')
+    ? !!isMulti
+    : hideSelectedOptions;
 
   useEffect(() => {
     const isFilterMatchAny = (filterMatchFrom === FilterMatchEnum.ANY);
@@ -51,7 +56,7 @@ export const useMenuOptions = (
 
       if (
         (normalizedInput && !isOptionFilterMatch(menuOption)) ||
-        (hideSelectedOptions && menuOption.isSelected)
+        (hideSelectedOptionsOrDefault && menuOption.isSelected)
       ) {
         return;
       }
@@ -67,7 +72,7 @@ export const useMenuOptions = (
       }, []) || OPTIONS_DEFAULT;
 
     setMenuOptions(menuOptionsOrDefault);
-  }, [options, selectedOption, hideSelectedOptions, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
+  }, [options, selectedOption, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
 
   return menuOptions;
 };

@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { Checkbox } from './helpers/components';
 import { CityOption, CITY_OPTIONS } from './helpers/utils';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
-import { Hr, Title, SubTitle, List, ListItem, ListWrapper, Container, SelectContainer, CodeHeader, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, SubTitle, List, ListItem, ListWrapper, Container, SelectContainer, CodeHeader, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Multi-select', () => {
   const [openMenuOnClick, setOpenMenuOnClick] = useCallbackState(true);
@@ -22,14 +22,14 @@ storiesOf('React Functional Select', module).add('Multi-select', () => {
       <Title>Multi-select</Title>
       <Hr />
       <ListWrapper>
-        Add the <Code>isMulti</Code> property to allow for multiple selections. While
+        Add the <code>isMulti</code> property to allow for multiple selections. While
         in multi-select mode, some properties are now applicable and others become
         more pertinent.
         <List>
           <ListItem>
             <CodeHeader>hideSelectedOptions?: boolean</CodeHeader> - Hide the
             selected option from the menu. Default value is false, however, if
-            undefined and <Code>isMulti === true</Code>, then its value defaults to true.
+            undefined and <code>isMulti === true</code>, then its value defaults to true.
           </ListItem>
           <ListItem>
             <CodeHeader>closeMenuOnSelect?: boolean</CodeHeader> - Close the menu of

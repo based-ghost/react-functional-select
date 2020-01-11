@@ -1,16 +1,16 @@
 import { create, color, themes } from '@storybook/theming';
 
+const BRAND_URL = 'https://based-ghost.github.io/react-functional-select/';
+
 const COLOR_DARKER = '#282c34';
 const COLOR_DARKEST = '#1B1E25';
-const COLOR_PRIMARY = '#fc929e'; //pinkish-red-salmon
-const COLOR_DOES_NOTHING = '#f5b83d'; // golden-yellow
+const COLOR_PRIMARY = '#fc929e';
 const COLOR_SECONDARY = '#E77D89'; // 8% darker than COLOR_PRIMARY
 
 export default create({
   base: 'dark',
 
   // Base theme colors
-  colorPrimary: COLOR_DOES_NOTHING,
   colorSecondary: COLOR_SECONDARY,
 
   // UI
@@ -34,5 +34,5 @@ export default create({
   inputBg: themes.light.inputBg,
   inputBorder: themes.light.inputBorder,
 
-  brandUrl: 'https://based-ghost.github.io/react-functional-select/',
+  brandUrl: BRAND_URL
 });

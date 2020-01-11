@@ -4,7 +4,7 @@ import { Checkbox } from './helpers/components';
 import { CityOption, CITY_OPTIONS } from './helpers/utils';
 import { Select, FilterMatchEnum, MenuOption } from '../src';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
-import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, CodeHeader, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, CodeHeader, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Filtering', () => {
   const options = useMemo<CityOption[]>(() => {
@@ -34,24 +34,24 @@ storiesOf('React Functional Select', module).add('Filtering', () => {
         <List>
           <ListItem>
             <CodeHeader>filterIgnoreCase?: boolean</CodeHeader> - Filter ignores case
-            when matching strings. Default value is <Code>true</Code>.
+            when matching strings. Default value is <code>true</code>.
           </ListItem>
           <ListItem>
             <CodeHeader>filterIgnoreAccents?: boolean</CodeHeader> - Filter ignores
-            accents when matching strings. Default value is <Code>false</Code>.
+            accents when matching strings. Default value is <code>false</code>.
           </ListItem>
           <ListItem>
             <CodeHeader>filterMatchFrom?: 'any' | 'start'</CodeHeader> - Position
-            in source string to perform match. Default value is <Code>'any'</Code>.
+            in source string to perform match. Default value is <code>'any'</code>.
           </ListItem>
           <ListItem>
             <CodeHeader>getFilterOptionString(option: MenuOption): string</CodeHeader> -
             When defined will take each option and generate a string used in the
             filtering process. By default, the stringified version of what is generated
-            by <Code>getOptionLabel</Code>, if definded, or the option's label as a fallback.
-            The <Code>MenuOption</Code> typed parameter that <Code>getFilterOptionString</Code> accepts
-            contains a <Code>data</Code> property that represents the objects that comprise
-            your <Code>options</Code> property.
+            by <code>getOptionLabel</code>, if definded, or the option's label as a fallback.
+            The <code>MenuOption</code> typed parameter that <code>getFilterOptionString</code> accepts
+            contains a <code>data</code> property that represents the objects that comprise
+            your <code>options</code> property.
           </ListItem>
         </List>
       </ListWrapper>

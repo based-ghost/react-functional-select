@@ -3,7 +3,7 @@ import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { useClearAllToasts } from './helpers/hooks';
 import { createSelectOptions, Option } from './helpers/utils';
-import { Hr, List, CodeHeader, Code, Title, Button, Label, ListItem, SubTitle, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, List, CodeHeader, Title, Button, Label, ListItem, SubTitle, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Methods', () => {
   const selectRef = useRef<SelectRef | null>(null);
@@ -37,7 +37,7 @@ storiesOf('React Functional Select', module).add('Methods', () => {
       <Hr />
       <ListWrapper>
         Five public methods are exposed to wrapping components and are
-        accessible via a forwarded <Code>ref</Code>.
+        accessible via a forwarded <code>ref</code>.
         <List>
           <ListItem>
             <CodeHeader>blur(): void</CodeHeader> - blur the control programatically

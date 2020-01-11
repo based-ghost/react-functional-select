@@ -1,6 +1,6 @@
 import { css, keyframes } from 'styled-components';
 
-const Toastify__trackProgress = keyframes`
+const TOASTIFY_TRACK_PROGRESS = keyframes`
   0% {
     transform: scaleX(1);
   } 100% {
@@ -8,7 +8,7 @@ const Toastify__trackProgress = keyframes`
   }
 `;
 
-const Toastify__bounceOutRight = keyframes`
+const TOASTIFY_BOUCE_OUT_RIGHT = keyframes`
   20% {
     opacity: 1;
     transform: translate3d(-20px, 0, 0);
@@ -18,7 +18,7 @@ const Toastify__bounceOutRight = keyframes`
   }
 `;
 
-const Toastify__bounceInRight = keyframes`
+const TOASTIFY_BOUNCE_IN_RIGHT = keyframes`
   from,
   60%,
   75%,
@@ -85,21 +85,12 @@ export default css`
         color: #aaa;
       }
       &--info {
-        background: #282c34;
-        color: #ffb0bc;
-      }
-      &--success {
-        background: #21c677;
-      }
-      &--warning {
-        background: #f1c40f;
-      }
-      &--error {
-        background: #e74c3c;
+        color: #fff;
+        background: #007bff;
       }
       &-body {
-        margin: auto 0 auto 0.75rem;
         flex: 1;
+        margin: auto 0 auto 0.75rem;
       }
 
       @media only screen and (max-width: 480px) {
@@ -142,7 +133,7 @@ export default css`
       background-color: rgba(255, 255, 255, 0.7);
       transform-origin: left;
       &--animated {
-        animation: ${Toastify__trackProgress} linear 1 forwards;
+        animation: ${TOASTIFY_TRACK_PROGRESS} linear 1 forwards;
       }
       &--controlled {
         transition: transform 0.2s;
@@ -155,13 +146,13 @@ export default css`
 
   .Toastify__bounce-enter {
     &--top-right {
-      animation-name: ${Toastify__bounceInRight};
+      animation-name: ${TOASTIFY_BOUNCE_IN_RIGHT};
     }
   }
 
   .Toastify__bounce-exit {
     &--top-right {
-      animation-name: ${Toastify__bounceOutRight};
+      animation-name: ${TOASTIFY_BOUCE_OUT_RIGHT};
     }
   }
 `;

@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { Checkbox } from './helpers/components';
 import { CityOption, CITY_OPTIONS } from './helpers/utils';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
-import { Hr, Title, SubTitle, Container, SelectContainer, Paragraph, Code, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, SubTitle, Container, SelectContainer, Paragraph, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Single-select', () => {
   const [isInvalid, setIsInvalid] = useCallbackState(false);
@@ -28,18 +28,18 @@ storiesOf('React Functional Select', module).add('Single-select', () => {
       <Hr />
       <Paragraph>
         In this story's source code, notice that the callback function
-        properties <Code>getOptionValue</Code> and <Code>getOptionLabel</Code> are
-        wrapped in a <Code>useCallback</Code>. While not required, <em> strongly prefer </em>
+        properties <code>getOptionValue</code> and <code>getOptionLabel</code> are
+        wrapped in a <code>useCallback</code>. While not required, <em> strongly prefer </em>
         memoization of any callback function property whenever possible. This will boost
         performance and reduce the amount of renders as these properties are referenced
-        in the dependency arrays of <Code>useCallbacks</Code>, <Code>useEffects</Code>,
-        and <Code>useMemos</Code>. When defined in a functional component, wrap in
-        a <Code>useCallback</Code>; when defined in a legacy class component, ensure proper
-        binding to <Code>this</Code>. Alternatively, if there is no dependency on any state,
+        in the dependency arrays of <code>useCallbacks</code>, <code>useEffects</code>,
+        and <code>useMemos</code>. When defined in a functional component, wrap in
+        a <code>useCallback</code>; when defined in a legacy class component, ensure proper
+        binding to <code>this</code>. Alternatively, if there is no dependency on any state,
         you can opt to hoist functions outside of the component entirely.
       </Paragraph>
       <Paragraph>
-        The <Code>options</Code> prop should also be memoized. Either consume it
+        The <code>options</code> prop should also be memoized. Either consume it
         directly from a state management store, or make sure it is stable by
         avoiding inline or render-based mutations.
       </Paragraph>

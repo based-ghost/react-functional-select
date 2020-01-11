@@ -2,12 +2,8 @@ import React, { ChangeEvent } from 'react';
 import { hexToRgba } from '../utils';
 import styled from 'styled-components';
 
-type CheckIconProps = {
-  readonly $checked: boolean;
-};
-
-type LabelWrapperProps = {
-  readonly $readOnly?: boolean;
+type CheckboxWrapperProps = {
+  readonly isReadOnly?: boolean;
 };
 
 type CheckboxProps = {
@@ -20,7 +16,7 @@ type CheckboxProps = {
 const COLOR_LABEL = '#5E5E5E';
 const COLOR_BORDER = '#ced4da';
 const COLOR_CHECK_MARK = '#FA4280';
-const COLOR_BORDER_CHECKED = hexToRgba(COLOR_CHECK_MARK, 0.55); // rgba(250, 66, 128, 0.55)
+const COLOR_BORDER_CHECKED = hexToRgba(COLOR_CHECK_MARK, 0.6); // rgba(250, 66, 128, 0.6)
 
 const Label = styled.span`
   user-select: none;
@@ -37,16 +33,35 @@ const Input = styled.input`
   height: 1rem;
   cursor: pointer;
   position: absolute;
+
+  :checked ~ i {
+    border-color: ${COLOR_BORDER_CHECKED};
+
+    :after,
+    :before {
+      opacity: 1;
+      transition: height 0.38s ease;
+    }
+
+    :after {
+      height: 0.5rem;
+    }
+
+    :before {
+      height: 1.16rem;
+      transition-delay: 0.15s;
+    }
+  }
 `;
 
-const CheckboxWrapper = styled.label<LabelWrapperProps>`
+const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
   user-select: none;
   position: relative;
   margin-top: 0.5rem;
   display: inline-block;
 
-  ${({ $readOnly }) =>
-    $readOnly
+  ${({ isReadOnly }) =>
+    isReadOnly
     && (`
       cursor: default;
       pointer-events: none;
@@ -56,7 +71,7 @@ const CheckboxWrapper = styled.label<LabelWrapperProps>`
     `)}
 `;
 
-const CheckIcon = styled.i<CheckIconProps>`
+const CheckIcon = styled.i`
   top: 0.2em;
   z-index: 0;
   width: 1rem;
@@ -68,11 +83,12 @@ const CheckIcon = styled.i<CheckIconProps>`
   border-radius: 0.0625rem;
   background-color: transparent;
   transition: border-color 0.38s ease;
-  border-color: ${({ $checked }) => $checked ? COLOR_BORDER_CHECKED : COLOR_BORDER};
+  border-color: ${COLOR_BORDER};
 
   :after,
   :before {
     height: 0;
+    opacity: 0;
     content: "";
     width: 0.2rem;
     display: block;
@@ -80,28 +96,19 @@ const CheckIcon = styled.i<CheckIconProps>`
     border-radius: 0.25rem;
     transform-origin: left top;
     background-color: ${COLOR_CHECK_MARK};
-    opacity: ${({ $checked }) => $checked ? 1 : 0};
-    transition: ${({ $checked }) => $checked ? 'height 0.38s ease' : 'opacity 0.38s ease, height 0s linear 0.38s'};
+    transition: opacity 0.38s ease, height 0s linear 0.38s;
   }
 
   :after {
     left: 0;
     top: 0.3rem;
     transform: rotate(-45deg);
-    ${({ $checked }) => $checked ? `height: 0.5rem;` : ''};
   }
 
   :before {
     top: 0.65rem;
     left: 0.38rem;
     transform: rotate(-135deg);
-
-    ${({ $checked }) =>
-      $checked
-      && (`
-        height: 1.16rem;
-        transition-delay: 0.15s;
-      `)};
   }
 `;
 
@@ -111,13 +118,13 @@ const Checkbox = React.memo<CheckboxProps>(({
   checked,
   readOnly
 }) => (
-  <CheckboxWrapper $readOnly={readOnly}>
+  <CheckboxWrapper isReadOnly={readOnly}>
     <Input
       type='checkbox'
       checked={checked}
       onChange={(e: ChangeEvent<HTMLInputElement>): void => onCheck(e.target.checked)}
     />
-    <CheckIcon $checked={checked} />
+    <CheckIcon />
     {label && <Label>{label}</Label>}
   </CheckboxWrapper>
 ));

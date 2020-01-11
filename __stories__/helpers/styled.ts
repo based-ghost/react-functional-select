@@ -129,22 +129,7 @@ export const ListItem = styled.li`
   text-align: match-parent;
 `;
 
-export const Code = styled.code`
-  margin: 0 1px;
-  color: #212428;
-  padding: 3px 5px;
-  font-size: 0.90em;
-  border-radius: 0.3em;
-  word-break: break-word;
-  background-color: rgba(27, 31, 35, 0.06);
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-
-  ${MEDIA_QUERY_IS_MOBILE_XS} {
-    padding: .1em .25em .1em;
-  }
-`;
-
-export const CodeHeader = styled(Code)`
+export const CodeHeader = styled.code`
   font-size: 1em;
   font-weight: 600;
   line-height: 1.7;

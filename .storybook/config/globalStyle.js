@@ -36,5 +36,20 @@ export default createGlobalStyle`
     font-weight: 600;
   }
 
+  code {
+    margin: 0 1px;
+    color: #212428;
+    padding: 3px 5px;
+    font-size: 0.90em;
+    border-radius: 0.3em;
+    word-break: break-word;
+    background-color: rgba(27, 31, 35, 0.06);
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+
+    @media only screen and (max-width: 525px) {
+      padding: .1em .25em .1em;
+    }
+  }
+
   ${reactToastifyCss}
 `;
