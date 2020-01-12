@@ -21,50 +21,6 @@ import {
   CONTROL_CONTAINER_CLS
 } from '../src/constants/dom';
 
-// Simplified HTML markup example when 'addClassNames' = true
-const CLASS_NAME_HTML =
-`<div class="${SELECT_CONTAINER_CLS}">
-  <div class="${CONTROL_CONTAINER_CLS}">
-    <div>
-      <div>Select option..</div>
-      <div>
-        <input
-          value=""
-          type="text"
-          class="${AUTOSIZE_INPUT_CLS}"
-        />
-      </div>
-    </div>
-    <div>
-      <div aria-hidden="true">
-        <div class="${CLEAR_ICON_CLS}">X</div>
-      </div>
-      <div />
-      <div aria-hidden="true">
-        <div class="${CARET_ICON_CLS}" />
-      </div>
-    </div>
-  </div>
-  <div class="${MENU_CONTAINER_CLS}">
-    <div>
-      <div>
-        <div class="${OPTION_CLS}">
-          Option 1
-        </div>
-        <div class="${OPTION_CLS} ${OPTION_FOCUSED_CLS}">
-          Option 2
-        </div>
-        <div class="${OPTION_CLS} ${OPTION_SELECTED_CLS}">
-          Option 3
-        </div>
-        <div class="${OPTION_CLS} ${OPTION_DISABLED_CLS}">
-          Option 4
-        </div>
-      </div>
-    </div>
-  </div>
-</div>`;
-
 const CLASS_LIST_NODE: ReactNode = (
   <ListWrapper className='is-class-list'>
     <List>
@@ -256,7 +212,6 @@ storiesOf('React Functional Select', module).add('Styling', () => {
         <Column widthPercent={60}>
           <CodeMarkup
             language='markup'
-            data={CLASS_NAME_HTML}
             header='HTML With Classes'
           />
         </Column>
