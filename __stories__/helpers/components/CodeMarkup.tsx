@@ -19,7 +19,7 @@ type CodeMarkupProps = {
 };
 
 const COLOR_BG = '#061B2C';
-const COLOR_HEADER = '#889B9B';
+const COLOR_HEADER = '#809393';
 const COLOR_HEADER_BG = '#001122';
 const COLOR_PRE_BG = COLOR_BG;
 const COLOR_CODE_TAG = '#ffa7c4';
