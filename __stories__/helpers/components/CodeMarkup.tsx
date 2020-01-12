@@ -18,15 +18,15 @@ type CodeMarkupProps = {
   readonly formatFn?: (data: any) => string;
 };
 
-const COLOR_BG = '#282c34';
-const COLOR_HEADER = '#999';
-const COLOR_HEADER_BG = '#20232A';
+const COLOR_BG = '#061B2C';
+const COLOR_HEADER = '#889B9B';
+const COLOR_HEADER_BG = '#001122';
 const COLOR_PRE_BG = COLOR_BG;
-const COLOR_CODE_TAG = '#ffb0bc';
-const COLOR_CODE_ATTR_VALUE = '#9AD59E';
-const COLOR_CODE_ATTR_NAME = '#ccb0ff';
-const COLOR_LINE_NUMBER = '#A6A6A6';
-const COLOR_CODE_PUNCTUATION = '#A3F2E6';
+const COLOR_CODE_TAG = '#ffa7c4';
+const COLOR_CODE_ATTR_VALUE = '#fff';
+const COLOR_CODE_ATTR_NAME = '#82aaff';
+const COLOR_LINE_NUMBER = '#94A7A7';
+const COLOR_CODE_PUNCTUATION = '#c792ea';
 
 const CodeMarkupContainer = styled.div`
   font-size: 1rem;
@@ -80,7 +80,11 @@ const PreContainer = styled.div`
       &:last-of-type {
         display: inherit;
 
-        .tag,
+        .operator,
+        .tag {
+          color: ${COLOR_CODE_TAG};
+        }
+
         .string,
         .number {
           color: ${COLOR_CODE_TAG};
@@ -90,7 +94,6 @@ const PreContainer = styled.div`
           color: ${COLOR_CODE_ATTR_VALUE};
         }
 
-        .operator,
         .punctuation {
           color: ${COLOR_CODE_PUNCTUATION};
         }
