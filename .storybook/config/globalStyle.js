@@ -37,13 +37,12 @@ export default createGlobalStyle`
   }
 
   code {
-    margin: 0 1px;
-    color: #212428;
-    padding: 3px 5px;
-    font-size: 0.90em;
+    color: #191c20;
+    font-size: 0.96em;
     border-radius: 0.3em;
     word-break: break-word;
-    background-color: rgba(27, 31, 35, 0.06);
+    padding: .15em .2em .05em;
+    background-color: rgba(255,229,100,0.18);
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 
     @media only screen and (max-width: 525px) {

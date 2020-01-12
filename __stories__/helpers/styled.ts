@@ -220,7 +220,7 @@ export const LabelHeader = styled(Label)`
 `;
 
 export const LabelNote = styled(Label)`
-  margin: 0.4rem auto 0.4rem 0;
+  margin: 0.5rem auto 0.5rem 0;
   ${MEDIA_QUERY_IS_MOBILE} {
     text-align: left;
     margin: 0 auto 0.4rem 0;
