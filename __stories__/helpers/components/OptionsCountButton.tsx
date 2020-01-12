@@ -13,26 +13,22 @@ type OptionsCountButtonProps = {
   readonly setOptionsCount: (count: number) => void;
 };
 
-const COLOR_FOCUS = '#fff';
-const COLOR_BG_FOCUS = '#FA4280';
-const COLOR_BG_HOVER_FOCUS = '#F03876';
-
 const StyledButton = styled(Button)<StyledButtonProps>`
   transition: color 0.115s ease, background-color 0.115s ease;
 
   ${({ isActive }) =>
     isActive
     && (`
-      color: ${COLOR_FOCUS};
-      background-color: ${COLOR_BG_FOCUS};
+      color: #fff;
+      background-color: #FA4280;
       :hover {
-        background-color: ${COLOR_BG_HOVER_FOCUS};
+        background-color: #F03876;
       }
     `)}
 
   :focus {
-    color: ${COLOR_FOCUS} !important;
-    background-color: ${COLOR_BG_FOCUS} !important;
+    color: #fff !important;
+    background-color: #FA4280 !important;
   }
 `;
 

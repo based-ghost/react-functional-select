@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
-
-// Register light build of react-syntax-highlighter and register only what is needed
-import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
 import dark from 'react-syntax-highlighter/dist/esm/styles/prism/dark';
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
 import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
 import javascript from 'react-syntax-highlighter/dist/esm/languages/prism/javascript';
 
+// Register light build of react-syntax-highlighter and register only what is needed
 SyntaxHighlighter.registerLanguage('markup', markup);
 SyntaxHighlighter.registerLanguage('javascript', javascript);
 
@@ -18,22 +17,12 @@ type CodeMarkupProps = {
   readonly formatFn?: (data: any) => string;
 };
 
-const COLOR_BG = '#061B2C';
-const COLOR_HEADER = '#809393';
-const COLOR_HEADER_BG = '#001122';
-const COLOR_PRE_BG = COLOR_BG;
-const COLOR_CODE_TAG = '#ffa7c4';
-const COLOR_CODE_ATTR_VALUE = '#fff';
-const COLOR_CODE_ATTR_NAME = '#82aaff';
-const COLOR_LINE_NUMBER = '#94A7A7';
-const COLOR_CODE_PUNCTUATION = '#c792ea';
-
 const CodeMarkupContainer = styled.div`
   font-size: 1rem;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 10px;
   margin: 1rem 1.5rem;
-  background-color: ${COLOR_BG};
+  background-color: #061B2C;
 
   ${MEDIA_QUERY_IS_MOBILE} {
     margin: 1rem 0;
@@ -42,19 +31,19 @@ const CodeMarkupContainer = styled.div`
 
 const Header = styled.div`
   line-height: 3;
+  color: #809393;
   padding: 0 .9rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: ${COLOR_HEADER};
-  background-color: ${COLOR_HEADER_BG};
+  background-color: #001021;
 `;
 
 const PreContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  border-radius: 8px;
+  border-radius: 10px;
   min-height: 385px !important;
   max-height: 385px !important;
 
@@ -65,7 +54,7 @@ const PreContainer = styled.div`
     box-shadow: none !important;
     text-shadow: none !important;
     padding: 1em 1.25em !important;
-    background-color: ${COLOR_PRE_BG} !important;
+    background-color: #061B2C !important;
 
     > code {
       background: none !important;
@@ -73,27 +62,27 @@ const PreContainer = styled.div`
       font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace !important;
 
       &:first-of-type {
+        color: #94A7A7 !important;
         padding-right: 20px !important;
-        color: ${COLOR_LINE_NUMBER} !important;
       }
 
       &:last-of-type {
         display: inherit;
 
         .tag, .string, .number, .operator {
-          color: ${COLOR_CODE_TAG};
+          color: #ffa7c4;
         }
 
         .attr-value {
-          color: ${COLOR_CODE_ATTR_VALUE};
+          color: #fff;
         }
 
         .punctuation {
-          color: ${COLOR_CODE_PUNCTUATION};
+          color: #c792ea;
         }
 
         .attr-name {
-          color: ${COLOR_CODE_ATTR_NAME};
+          color: #82aaff;
         }
       }
     }

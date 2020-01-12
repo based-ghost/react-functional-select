@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, FocusEvent, KeyboardEvent } from 'react';
 import { Select } from '../src';
+import { Option } from './helpers/types';
 import { storiesOf } from '@storybook/react';
 import { Checkbox } from './helpers/components';
 import { useCallbackState } from './helpers/hooks';
-import { Option, renderInfoToast, createSelectOptions } from './helpers/utils';
+import { renderInfoToast, createSelectOptions } from './helpers/utils';
 import { Hr, LabelNote, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, CodeHeader, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Events', () => {

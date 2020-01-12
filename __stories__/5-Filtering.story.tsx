@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import { storiesOf } from '@storybook/react';
+import { CityOption } from './helpers/types';
 import { Checkbox } from './helpers/components';
-import { CityOption, CITY_OPTIONS } from './helpers/utils';
+import { CITY_OPTIONS } from './helpers/constants';
 import { Select, FilterMatchEnum, MenuOption } from '../src';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
 import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, CodeHeader, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';

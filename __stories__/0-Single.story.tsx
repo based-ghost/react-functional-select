@@ -1,8 +1,9 @@
 import React, { useEffect, useCallback } from 'react';
 import { Select } from '../src';
+import { CityOption } from './helpers/types';
 import { storiesOf } from '@storybook/react';
 import { Checkbox } from './helpers/components';
-import { CityOption, CITY_OPTIONS } from './helpers/utils';
+import { CITY_OPTIONS } from './helpers/constants';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
 import { Hr, Title, SubTitle, Container, SelectContainer, Paragraph, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 

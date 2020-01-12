@@ -1,0 +1,11 @@
+import CLASS_NAME_HTML from './markup';
+import { CITY_OPTIONS, PACKAGE_OPTIONS } from './options-data';
+import { REACT_WINDOW_PACKAGE, STYLED_COMPONENTS_PACKAGE } from './npm-package';
+
+export {
+  CITY_OPTIONS,
+  PACKAGE_OPTIONS,
+  CLASS_NAME_HTML,
+  REACT_WINDOW_PACKAGE,
+  STYLED_COMPONENTS_PACKAGE
+};

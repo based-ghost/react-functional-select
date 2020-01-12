@@ -17,11 +17,12 @@ addParameters({
 });
 
 // Configure createGlobalStyle for styled-components
+const gsElId = 'temp3-global-style';
 const globalStyleEl =
-  document.getElementById('temp3-global-style') ||
+  document.getElementById(gsElId) ||
   (() => {
     const el = document.createElement('div');
-    el.id = 'temp3-global-style';
+    el.id = gsElId;
     document.head.appendChild(el);
     return el;
   })();

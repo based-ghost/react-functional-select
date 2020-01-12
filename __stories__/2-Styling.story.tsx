@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useState, ReactNode } from 'react';
 import { Select, Theme } from '../src';
+import { Option } from './helpers/types';
 import { mergeDeep } from '../src/utils';
 import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
-import classNameMarkup from './helpers/classNameMarkup';
 import { CodeMarkup, PackageLink } from './helpers/components';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
-import { Option, createThemeOptions, stringifyJavascriptObj } from './helpers/utils';
+import { createThemeOptions, stringifyJavascriptObj } from './helpers/utils';
+import { CLASS_NAME_HTML, STYLED_COMPONENTS_PACKAGE } from './helpers/constants';
 import { Hr, Columns, Column, Title, SubTitle, ListWrapper, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody } from './helpers/styled';
 import {
   OPTION_CLS,
@@ -41,11 +42,6 @@ const KEYFRAMES_SOURCE_OBJ = {
       animation: FADE_IN_KEYFRAMES
     }
   }
-};
-
-const StyledComponentsPackage = {
-  name: 'styled-components',
-  href: 'https://www.styled-components.com'
 };
 
 const ThemeEnum = Object.freeze({
@@ -107,16 +103,15 @@ storiesOf('React Functional Select', module).add('Styling', () => {
   const [selectedOption, setSelectedOption] = useCallbackState<Option | null>(null);
   const menuItemSize = (selectedOption && selectedOption.value === ThemeEnum.LARGE_TEXT) ? 44 : 35;
 
-  // classNameMarkup is a primitive string (lengthy) and thus strict equality check occurrs on render
+  // CLASS_NAME_HTML is a primitive string (lengthy) and thus strict equality check occurrs on render
   const memoizedMarkupNode = useMemo<ReactNode>(() => (
     <CodeMarkup
       language='markup'
-      data={classNameMarkup}
+      data={CLASS_NAME_HTML}
       header='HTML With Classes'
     />
   ), []);
 
-  // Memoize static ListWrapper
   const memoizedClassList = useMemo<ReactNode>(() => (
     <ListWrapper className='is-class-list'>
       <List>
@@ -169,7 +164,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
         <Column widthPercent={40}>
           <Content>
             react-functional-select uses{' '}
-            <PackageLink packageInfo={StyledComponentsPackage} /> to handle its
+            <PackageLink packageInfo={STYLED_COMPONENTS_PACKAGE} /> to handle its
             styling.  The root node is wrapped in styled-component's{' '}
             <code>ThemeProvider</code> wrapper component which gives all child
             styled-components access to the provided theme via React's context
@@ -184,7 +179,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             <code>FlattenSimpleInterpolation</code> | <code>undefined</code>{' '}
             (default value is undefined). This property can be used to pass raw
             CSS styles as a string or wrapped in{' '}
-            <PackageLink packageInfo={StyledComponentsPackage} /> exported{' '}
+            <PackageLink packageInfo={STYLED_COMPONENTS_PACKAGE} /> exported{' '}
             <code>css</code> function. Those objects are: select, control, icon,
             menu, noOptions, multiValue, and input.
           </Content>

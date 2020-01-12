@@ -1,14 +1,11 @@
 import Checkbox from './Checkbox';
 import CodeMarkup from './CodeMarkup';
+import PackageLink from './PackageLink';
 import OptionsCountButton from './OptionsCountButton';
-import PackageLink, { PackageLinkProps as IPackageLinkProps } from './PackageLink';
-
-type PackageLinkProps = IPackageLinkProps;
 
 export {
   Checkbox,
   CodeMarkup,
   PackageLink,
-  PackageLinkProps,
   OptionsCountButton
 };

@@ -1,15 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Option } from './helpers/types';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { useClearAllToasts } from './helpers/hooks';
-import { Option, createSelectOptions } from './helpers/utils';
+import { createSelectOptions } from './helpers/utils';
+import { REACT_WINDOW_PACKAGE } from './helpers/constants';
 import { PackageLink, OptionsCountButton } from './helpers/components';
 import { Hr, Title, SubTitle, List, ListWrapper, ListItem, Label, Container, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
-
-const ReactWindowPackage = {
-  name: 'react-window',
-  href: 'https://github.com/bvaughn/react-window'
-};
 
 storiesOf('React Functional Select', module).add('Windowing', () => {
   const selectRef = useRef<SelectRef | null>(null);
@@ -37,7 +34,7 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
       <Title>Integrated Windowing</Title>
       <Hr />
       <ListWrapper>
-        Option data is 'windowed' using the <PackageLink packageInfo={ReactWindowPackage} /> package.
+        Option data is 'windowed' using the <PackageLink packageInfo={REACT_WINDOW_PACKAGE} /> package.
         Aside from the obvious benefits provided by only rendering a small subset of your
         enumerable data (rather than bloating the DOM with an excessive amount of nodes),
         'windowing' can also assist with:
