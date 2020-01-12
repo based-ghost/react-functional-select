@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { GlobalStyle } from './config';
 import { addParameters } from '@storybook/react';
 import { toast, ToastPosition } from 'react-toastify';
-import './config/polyfills';
+import { polyfillBrowserMS, GlobalStyle } from './config';
+
+// Polyfill IE and Edge browsers
+polyfillBrowserMS();
 
 // Define storybook global configuration
 addParameters({
@@ -12,14 +14,6 @@ addParameters({
       return (a[1].kind === b[1].kind) ? 0 : a[1].id.localeCompare(b[1].id, undefined, { numeric: true });
     },
   },
-});
-
-// Configure react-toastify
-toast.configure({
-  autoClose: 2500,
-  draggable: false,
-  newestOnTop: true,
-  position: ToastPosition.TOP_RIGHT,
 });
 
 // Configure createGlobalStyle for styled-components
@@ -32,14 +26,19 @@ const globalStyleEl =
     return el;
   })();
 
-const removeGlobalStyleEl = () => {
+// Callback to configure react-toastify and remove node used to mount GlobalStyle to
+const completeSetupDOM = () => {
   if (globalStyleEl) {
     document.head.removeChild(globalStyleEl);
   }
+
+  toast.configure({
+    autoClose: 2500,
+    draggable: false,
+    newestOnTop: true,
+    position: ToastPosition.TOP_RIGHT,
+  });
 };
 
-ReactDOM.render(
-  <GlobalStyle />,
-  globalStyleEl,
-  removeGlobalStyleEl
-);
+// Mount GlobalStyle to globalStyleEl and then execute callback completeSetupDOM()
+ReactDOM.render(<GlobalStyle />, globalStyleEl, completeSetupDOM);

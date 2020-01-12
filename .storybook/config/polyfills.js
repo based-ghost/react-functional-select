@@ -1,14 +1,22 @@
 import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
 
-// Polyfill EventSource for Edge and IE browsers
-global.EventSource = NativeEventSource || EventSourcePolyfill;
+/**
+ * 1). Polyfill EventSource for Edge and IE browsers.
+ * 2). If IE, polyfill string.prototype.normalize().
+ * Function 'normalizePolyfill' checks for IE or if window object is not intialized.
+ */
+export function polyfillBrowserMS() {
+  function normalizePolyfill() {
+    const isWindowAvailable = Boolean(window && window.navigator);
+    const isBrowserIE = (isWindowAvailable && /MSIE|Trident/.test(window.navigator.userAgent));
+    return !isWindowAvailable || isBrowserIE;
+  }
 
-// Polyfill string.prototype.normalize() for IE only
-// Dynamic imports via @babel/plugin-syntax-dynamic-import
-// If for whatever reason window or window.navigator isn't available, error one side of caution and load polyfill
-const isWindowAvailable = Boolean(window && window.navigator);
-const isBrowserIE = (isWindowAvailable && /MSIE|Trident/.test(window.navigator.userAgent));
+  global.EventSource = NativeEventSource || EventSourcePolyfill;
 
-if (!isWindowAvailable || isBrowserIE) {
-  import('unorm').catch(e => console.error(e));
+  if (normalizePolyfill()) {
+    import('unorm')
+      .then(() => {})
+      .catch((e) => console.error(e));
+  }
 }
