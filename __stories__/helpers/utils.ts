@@ -37,6 +37,17 @@ export const createSelectOptions = (optionCount: number): Option[] => {
   return results;
 };
 
+export const createThemeOptions = (ThemeEnum: any): Option[] => {
+  const results: Option[] = [];
+  Object.keys(ThemeEnum).forEach((key: string): void => {
+    results.push({
+      value: ThemeEnum[key],
+      label: ThemeEnum[key]
+    });
+  });
+  return results;
+};
+
 export const hexToRgba = (hex: string, alpha: number = 1): string => {
   const hexReplacer: string = hex.replace(
     /^#?([a-f\d])([a-f\d])([a-f\d])$/i,

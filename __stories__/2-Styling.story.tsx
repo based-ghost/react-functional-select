@@ -5,8 +5,8 @@ import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
 import classNameMarkup from './helpers/classNameMarkup';
 import { CodeMarkup, PackageLink } from './helpers/components';
-import { Option, stringifyJavascriptObj } from './helpers/utils';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
+import { Option, createThemeOptions, stringifyJavascriptObj } from './helpers/utils';
 import { Hr, Columns, Column, Title, SubTitle, ListWrapper, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody } from './helpers/styled';
 import {
   OPTION_CLS,
@@ -42,8 +42,6 @@ const KEYFRAMES_SOURCE_OBJ = {
     }
   }
 };
-
-const THEME_DEFAULTS = mergeDeep(DefaultThemeObj, KEYFRAMES_SOURCE_OBJ);
 
 const StyledComponentsPackage = {
   name: 'styled-components',
@@ -101,22 +99,13 @@ const SELECT_CONTAINER_STYLE = {
   marginTop: '1rem'
 };
 
+const OPTIONS = createThemeOptions(ThemeEnum);
+const THEME_DEFAULTS = mergeDeep(DefaultThemeObj, KEYFRAMES_SOURCE_OBJ);
+
 storiesOf('React Functional Select', module).add('Styling', () => {
   const [themeConfig, setThemeConfig] = useState<Theme | undefined>(undefined);
   const [selectedOption, setSelectedOption] = useCallbackState<Option | null>(null);
   const menuItemSize = (selectedOption && selectedOption.value === ThemeEnum.LARGE_TEXT) ? 44 : 35;
-
-  // Create theme options based upon key-value pairs in ThemeEnum object defined above
-  const options = useMemo<Option[]>(() => {
-    const results: Option[] = [];
-    Object.keys(ThemeEnum).forEach((key: string): void => {
-      results.push({
-        value: ThemeEnum[key],
-        label: ThemeEnum[key]
-      });
-    });
-    return results;
-  }, []);
 
   // classNameMarkup is a primitive string (lengthy) and thus strict equality check occurrs on render
   const memoizedMarkupNode = useMemo<ReactNode>(() => (
@@ -127,14 +116,49 @@ storiesOf('React Functional Select', module).add('Styling', () => {
     />
   ), []);
 
+  // Memoize static ListWrapper
+  const memoizedClassList = useMemo<ReactNode>(() => (
+    <ListWrapper className='is-class-list'>
+      <List>
+        <ListItem>
+          <code>{SELECT_CONTAINER_CLS}</code>
+        </ListItem>
+        <ListItem>
+          <code>{CONTROL_CONTAINER_CLS}</code>
+        </ListItem>
+        <ListItem>
+          <code>{MENU_CONTAINER_CLS}</code>
+        </ListItem>
+        <ListItem>
+          <code>{AUTOSIZE_INPUT_CLS}</code>
+        </ListItem>
+        <ListItem>
+          <code>{CARET_ICON_CLS}</code>
+        </ListItem>
+        <ListItem>
+          <code>{CLEAR_ICON_CLS}</code>
+        </ListItem>
+        <ListItem>
+          <code>{LOADING_DOTS_CLS}</code>
+        </ListItem>
+        <ListItem>
+          <code>{OPTION_CLS}</code>{', '}
+          <code>{OPTION_FOCUSED_CLS}</code>{', '}
+          <code>{OPTION_SELECTED_CLS}</code>{', '}
+          <code>{OPTION_DISABLED_CLS}</code>
+        </ListItem>
+      </List>
+    </ListWrapper>
+  ), []);
+
+  useClearAllToasts();
+
   useEffect(() => {
     if (selectedOption) {
       const { value } = selectedOption;
       setThemeConfig(ThemeConfigMap[value]);
     }
   }, [selectedOption]);
-
-  useClearAllToasts();
 
   return (
     <Container>
@@ -145,8 +169,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
         <Column widthPercent={40}>
           <Content>
             react-functional-select uses{' '}
-            <PackageLink packageInfo={StyledComponentsPackage} /> to handle its styling. The
-            root node is wrapped in styled-component's{' '}
+            <PackageLink packageInfo={StyledComponentsPackage} /> to handle its
+            styling.  The root node is wrapped in styled-component's{' '}
             <code>ThemeProvider</code> wrapper component which gives all child
             styled-components access to the provided theme via React's context
             API. To override react-functional-select's default theme, pass an
@@ -160,9 +184,9 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             <code>FlattenSimpleInterpolation</code> | <code>undefined</code>{' '}
             (default value is undefined). This property can be used to pass raw
             CSS styles as a string or wrapped in{' '}
-            <PackageLink packageInfo={StyledComponentsPackage} /> exported <code>css</code>{' '}
-            function. Those objects are: select, control, icon, menu, noOptions,
-            multiValue, and input.
+            <PackageLink packageInfo={StyledComponentsPackage} /> exported{' '}
+            <code>css</code> function. Those objects are: select, control, icon,
+            menu, noOptions, multiValue, and input.
           </Content>
         </Column>
         <Column widthPercent={60}>
@@ -183,37 +207,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             <code>className</code> attributes for that specific instance of the
             component. These are the classes that are available:
           </Content>
-          <ListWrapper className='is-class-list'>
-            <List>
-              <ListItem>
-                <code>{SELECT_CONTAINER_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{CONTROL_CONTAINER_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{MENU_CONTAINER_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{AUTOSIZE_INPUT_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{CARET_ICON_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{CLEAR_ICON_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{LOADING_DOTS_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{OPTION_CLS}</code>{', '}
-                <code>{OPTION_FOCUSED_CLS}</code>{', '}
-                <code>{OPTION_SELECTED_CLS}</code>{', '}
-                <code>{OPTION_DISABLED_CLS}</code>
-              </ListItem>
-            </List>
-          </ListWrapper>
+          {memoizedClassList}
         </Column>
         <Column widthPercent={60}>
           {memoizedMarkupNode}
@@ -230,11 +224,11 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             <Column widthPercent={40}>
               <div style={SELECT_CONTAINER_STYLE}>
                 <Select
-                  options={options}
+                  options={OPTIONS}
                   isClearable={false}
                   isSearchable={false}
                   themeConfig={themeConfig}
-                  initialValue={options[0]}
+                  initialValue={OPTIONS[0]}
                   menuItemSize={menuItemSize}
                   onOptionChange={setSelectedOption}
                 />
