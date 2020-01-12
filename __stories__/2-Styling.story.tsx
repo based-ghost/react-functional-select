@@ -3,9 +3,10 @@ import { Select, Theme } from '../src';
 import { mergeDeep } from '../src/utils';
 import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
+import classNameMarkup from './helpers/classNameMarkup';
+import { CodeMarkup, PackageLink } from './helpers/components';
 import { Option, stringifyJavascriptObj } from './helpers/utils';
 import { useCallbackState, useClearAllToasts } from './helpers/hooks';
-import { CodeMarkup, PackageLink, PackageLinkProps } from './helpers/components';
 import { Hr, Columns, Column, Title, SubTitle, ListWrapper, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody } from './helpers/styled';
 import {
   OPTION_CLS,
@@ -20,40 +21,6 @@ import {
   SELECT_CONTAINER_CLS,
   CONTROL_CONTAINER_CLS
 } from '../src/constants/dom';
-
-const CLASS_LIST_NODE: ReactNode = (
-  <ListWrapper className='is-class-list'>
-    <List>
-      <ListItem>
-        <code>{SELECT_CONTAINER_CLS}</code>
-      </ListItem>
-      <ListItem>
-        <code>{CONTROL_CONTAINER_CLS}</code>
-      </ListItem>
-      <ListItem>
-        <code>{MENU_CONTAINER_CLS}</code>
-      </ListItem>
-      <ListItem>
-        <code>{AUTOSIZE_INPUT_CLS}</code>
-      </ListItem>
-      <ListItem>
-        <code>{CARET_ICON_CLS}</code>
-      </ListItem>
-      <ListItem>
-        <code>{CLEAR_ICON_CLS}</code>
-      </ListItem>
-      <ListItem>
-        <code>{LOADING_DOTS_CLS}</code>
-      </ListItem>
-      <ListItem>
-        <code>{OPTION_CLS}</code>{', '}
-        <code>{OPTION_FOCUSED_CLS}</code>{', '}
-        <code>{OPTION_SELECTED_CLS}</code>{', '}
-        <code>{OPTION_DISABLED_CLS}</code>
-      </ListItem>
-    </List>
-  </ListWrapper>
-);
 
   // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
 const BOUNCE_KEYFRAMES = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
@@ -78,7 +45,7 @@ const KEYFRAMES_SOURCE_OBJ = {
 
 const THEME_DEFAULTS = mergeDeep(DefaultThemeObj, KEYFRAMES_SOURCE_OBJ);
 
-const StyledComponentsLink: PackageLinkProps = {
+const StyledComponentsPackage = {
   name: 'styled-components',
   href: 'https://www.styled-components.com'
 };
@@ -151,10 +118,19 @@ storiesOf('React Functional Select', module).add('Styling', () => {
     return results;
   }, []);
 
+  // classNameMarkup is a primitive string (lengthy) and thus strict equality check occurrs on render
+  const memoizedMarkupNode = useMemo<ReactNode>(() => (
+    <CodeMarkup
+      language='markup'
+      data={classNameMarkup}
+      header='HTML With Classes'
+    />
+  ), []);
+
   useEffect(() => {
     if (selectedOption) {
-      const mappedThemeConfig = ThemeConfigMap[selectedOption.value];
-      setThemeConfig(mappedThemeConfig);
+      const { value } = selectedOption;
+      setThemeConfig(ThemeConfigMap[value]);
     }
   }, [selectedOption]);
 
@@ -169,7 +145,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
         <Column widthPercent={40}>
           <Content>
             react-functional-select uses{' '}
-            <PackageLink {...StyledComponentsLink} /> to handle its styling. The
+            <PackageLink packageInfo={StyledComponentsPackage} /> to handle its styling. The
             root node is wrapped in styled-component's{' '}
             <code>ThemeProvider</code> wrapper component which gives all child
             styled-components access to the provided theme via React's context
@@ -184,7 +160,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             <code>FlattenSimpleInterpolation</code> | <code>undefined</code>{' '}
             (default value is undefined). This property can be used to pass raw
             CSS styles as a string or wrapped in{' '}
-            <PackageLink {...StyledComponentsLink} /> exported <code>css</code>{' '}
+            <PackageLink packageInfo={StyledComponentsPackage} /> exported <code>css</code>{' '}
             function. Those objects are: select, control, icon, menu, noOptions,
             multiValue, and input.
           </Content>
@@ -207,13 +183,40 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             <code>className</code> attributes for that specific instance of the
             component. These are the classes that are available:
           </Content>
-          {CLASS_LIST_NODE}
+          <ListWrapper className='is-class-list'>
+            <List>
+              <ListItem>
+                <code>{SELECT_CONTAINER_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{CONTROL_CONTAINER_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{MENU_CONTAINER_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{AUTOSIZE_INPUT_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{CARET_ICON_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{CLEAR_ICON_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{LOADING_DOTS_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{OPTION_CLS}</code>{', '}
+                <code>{OPTION_FOCUSED_CLS}</code>{', '}
+                <code>{OPTION_SELECTED_CLS}</code>{', '}
+                <code>{OPTION_DISABLED_CLS}</code>
+              </ListItem>
+            </List>
+          </ListWrapper>
         </Column>
         <Column widthPercent={60}>
-          <CodeMarkup
-            language='markup'
-            header='HTML With Classes'
-          />
+          {memoizedMarkupNode}
         </Column>
       </Columns>
       <SubTitle>Demo</SubTitle>

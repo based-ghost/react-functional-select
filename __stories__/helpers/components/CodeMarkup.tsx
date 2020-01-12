@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import classNameMarkup from '../classNameMarkup';
 import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
 
 // Register light build of react-syntax-highlighter and register only what is needed
@@ -13,7 +12,7 @@ SyntaxHighlighter.registerLanguage('markup', markup);
 SyntaxHighlighter.registerLanguage('javascript', javascript);
 
 type CodeMarkupProps = {
-  readonly data?: any;
+  readonly data: any;
   readonly header: string;
   readonly language: string;
   readonly formatFn?: (data: any) => string;
@@ -114,9 +113,6 @@ const CodeMarkup = React.memo<CodeMarkupProps>(({
   language,
   formatFn
 }) => {
-  const dataOrDefault = data || classNameMarkup;
-  const codeSyntax = formatFn ? formatFn(dataOrDefault) : dataOrDefault;
-
   return (
     <CodeMarkupContainer>
       <Header>{header}</Header>
@@ -128,11 +124,11 @@ const CodeMarkup = React.memo<CodeMarkupProps>(({
           language={language}
           useInlineStyles={false}
         >
-          {codeSyntax}
+          {formatFn ? formatFn(data) : data}
         </SyntaxHighlighter>
       </PreContainer>
     </CodeMarkupContainer>
-  )
+  );
 });
 
 export default CodeMarkup;

@@ -3,10 +3,10 @@ import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { useClearAllToasts } from './helpers/hooks';
 import { Option, createSelectOptions } from './helpers/utils';
-import { PackageLink, OptionsCountButton, PackageLinkProps } from './helpers/components';
+import { PackageLink, OptionsCountButton } from './helpers/components';
 import { Hr, Title, SubTitle, List, ListWrapper, ListItem, Label, Container, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
-const _reactWindowLink: PackageLinkProps = {
+const ReactWindowPackage = {
   name: 'react-window',
   href: 'https://github.com/bvaughn/react-window'
 };
@@ -37,7 +37,7 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
       <Title>Integrated Windowing</Title>
       <Hr />
       <ListWrapper>
-        Option data is 'windowed' using the <PackageLink {..._reactWindowLink} /> package.
+        Option data is 'windowed' using the <PackageLink packageInfo={ReactWindowPackage} /> package.
         Aside from the obvious benefits provided by only rendering a small subset of your
         enumerable data (rather than bloating the DOM with an excessive amount of nodes),
         'windowing' can also assist with:

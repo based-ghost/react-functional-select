@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export type PackageLinkProps = {
-  readonly name: string;
-  readonly href: string;
+type PackageLinkProps = {
+  readonly packageInfo: {
+    readonly name: string;
+    readonly href: string;
+  };
 };
 
 const Link = styled.a`
@@ -27,15 +29,18 @@ const Link = styled.a`
   }
 `;
 
-const PackageLink: React.FC<PackageLinkProps> = ({ name, href }) => (
-  <Link
-    href={href}
-    target='_blank'
-    aria-label={name}
-    rel='noopener noreferrer'
-  >
-    {name}
-  </Link>
-);
+const PackageLink: React.FC<PackageLinkProps> = React.memo(({ packageInfo }) => {
+  const { name, href } = packageInfo;
+  return (
+    <Link
+      href={href}
+      target='_blank'
+      aria-label={name}
+      rel='noopener noreferrer'
+    >
+      {name}
+    </Link>
+  );
+});
 
 export default PackageLink;
