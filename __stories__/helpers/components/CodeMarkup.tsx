@@ -80,13 +80,7 @@ const PreContainer = styled.div`
       &:last-of-type {
         display: inherit;
 
-        .operator,
-        .tag {
-          color: ${COLOR_CODE_TAG};
-        }
-
-        .string,
-        .number {
+        .tag, .string, .number, .operator {
           color: ${COLOR_CODE_TAG};
         }
 
