@@ -18,6 +18,7 @@ module.exports = (api) => {
   const plugins = [
     ['@babel/proposal-class-properties', { loose: true }],
     ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
+    '@babel/plugin-syntax-dynamic-import',
   ];
 
   return {

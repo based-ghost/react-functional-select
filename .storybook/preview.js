@@ -3,14 +3,7 @@ import ReactDOM from 'react-dom';
 import { GlobalStyle } from './config';
 import { addParameters } from '@storybook/react';
 import { toast, ToastPosition } from 'react-toastify';
-import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
-
-// Polyfill string.normalize() for IE browsers
-// LOOK INTO ADDING DYNAMIC IMPORTS WITH BABEL AND THEN ADD ONLY IF IE
-import 'unorm';
-
-// Polyfill EventSource for Edge and IE browsers
-global.EventSource = NativeEventSource || EventSourcePolyfill;
+import './config/polyfills';
 
 // Define storybook global configuration
 addParameters({
