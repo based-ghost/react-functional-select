@@ -1,11 +1,11 @@
 import { CityOption, PackageOption } from '../types';
 
 const PACKAGE_OPTIONS: PackageOption[] = [
-  { id: 1, packageName: 'react' },
-  { id: 2, packageName: 'react-dom' },
-  { id: 3, packageName: 'reactstrap' },
-  { id: 4, packageName: 'react-scripts' },
-  { id: 5, packageName: 'react-window' }
+  { id: 1, name: 'react' },
+  { id: 2, name: 'react-dom' },
+  { id: 3, name: 'reactstrap' },
+  { id: 4, name: 'react-scripts' },
+  { id: 5, name: 'react-window' }
 ];
 
 const CITY_OPTIONS: CityOption[] = [

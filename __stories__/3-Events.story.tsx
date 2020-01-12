@@ -3,8 +3,8 @@ import { Select } from '../src';
 import { Option } from './helpers/types';
 import { storiesOf } from '@storybook/react';
 import { Checkbox } from './helpers/components';
-import { useCallbackState } from './helpers/hooks';
 import { renderInfoToast, createSelectOptions } from './helpers/utils';
+import { useCallbackState, useClearToastsOnUnmount } from './helpers/hooks';
 import { Hr, LabelNote, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, CodeHeader, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Events', () => {
@@ -23,6 +23,8 @@ storiesOf('React Functional Select', module).add('Events', () => {
   const onInputFocus = useCallback((e: FocusEvent<HTMLInputElement>): void => renderInfoToast('Control focused !'), []);
   const onKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>): void => renderInfoToast('keydown event executed !'), []);
   const onOptionChange = useCallback((option: Option | null): void => renderInfoToast(`Selected Option: ${JSON.stringify(option || {})}`), []);
+
+  useClearToastsOnUnmount();
 
   return (
     <Container>

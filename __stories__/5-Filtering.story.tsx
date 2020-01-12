@@ -3,8 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { CityOption } from './helpers/types';
 import { Checkbox } from './helpers/components';
 import { CITY_OPTIONS } from './helpers/constants';
+import { useCallbackState } from './helpers/hooks';
 import { Select, FilterMatchEnum, MenuOption } from '../src';
-import { useCallbackState, useClearAllToasts } from './helpers/hooks';
 import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, CodeHeader, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Filtering', () => {
@@ -23,8 +23,6 @@ storiesOf('React Functional Select', module).add('Filtering', () => {
   const getOptionValue = useCallback((option: CityOption): number => option.id, []);
   const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
   const getFilterOptionString = useCallback((menuOption: MenuOption): string => menuOption.data.state, []);
-
-  useClearAllToasts();
 
   return (
     <Container>

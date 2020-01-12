@@ -13,5 +13,5 @@ export type CityOption = {
 
 export type PackageOption = {
   readonly id: number;
-  readonly packageName: string;
+  readonly name: string;
 };

@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Option } from './helpers/types';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
-import { useClearAllToasts } from './helpers/hooks';
 import { createSelectOptions } from './helpers/utils';
 import { REACT_WINDOW_PACKAGE } from './helpers/constants';
 import { PackageLink, OptionsCountButton } from './helpers/components';
@@ -26,8 +25,6 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
   useEffect(() => {
     selectRef.current && selectRef.current.clearValue();
   }, [options]);
-
-  useClearAllToasts();
 
   return (
     <Container>

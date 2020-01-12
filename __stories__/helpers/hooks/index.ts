@@ -1,7 +1,7 @@
 import { useCallbackState } from './useCallbackState';
-import { useClearAllToasts } from './useClearAllToasts';
+import { useClearToastsOnUnmount } from './useClearToastsOnUnmount';
 
 export {
   useCallbackState,
-  useClearAllToasts
+  useClearToastsOnUnmount
 };

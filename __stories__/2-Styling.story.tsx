@@ -4,8 +4,8 @@ import { Option } from './helpers/types';
 import { mergeDeep } from '../src/utils';
 import DefaultThemeObj from '../src/theme';
 import { storiesOf } from '@storybook/react';
+import { useCallbackState } from './helpers/hooks';
 import { CodeMarkup, PackageLink } from './helpers/components';
-import { useCallbackState, useClearAllToasts } from './helpers/hooks';
 import { createThemeOptions, stringifyJavascriptObj } from './helpers/utils';
 import { CLASS_NAME_HTML, STYLED_COMPONENTS_PACKAGE } from './helpers/constants';
 import { Hr, Columns, Column, Title, SubTitle, ListWrapper, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody } from './helpers/styled';
@@ -145,8 +145,6 @@ storiesOf('React Functional Select', module).add('Styling', () => {
       </List>
     </ListWrapper>
   ), []);
-
-  useClearAllToasts();
 
   useEffect(() => {
     if (selectedOption) {

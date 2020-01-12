@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-export const useClearAllToasts = (): void => {
+export const useClearToastsOnUnmount = (): void => {
   useEffect(() => {
-    toast.dismiss();
+    return () => {
+      toast.dismiss();
+    };
   }, []);
 };

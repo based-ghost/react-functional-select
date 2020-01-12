@@ -2,7 +2,6 @@ import React, { useCallback, ReactNode } from 'react';
 import { Select } from '../src';
 import { storiesOf } from '@storybook/react';
 import { PackageOption } from './helpers/types';
-import { useClearAllToasts } from './helpers/hooks';
 import { PACKAGE_OPTIONS } from './helpers/constants';
 import styled, { css, keyframes } from 'styled-components';
 import { Hr, Title, List, ListItem, ListWrapper, SubTitle, Container, SelectContainer, LabelHeader, CodeHeader, Card, CardHeader, CardBody } from './helpers/styled';
@@ -53,16 +52,17 @@ const OptionImg = styled.img<{ isDisabled?: boolean }>`
 
 storiesOf('React Functional Select', module).add('Advanced', () => {
   const getOptionValue = useCallback((option: PackageOption): number => option.id, []);
-  const getIsOptionDisabled = useCallback((option: PackageOption): boolean => (option.packageName === PACKAGE_OPTIONS[3].packageName), []);
+  const getIsOptionDisabled = useCallback((option: PackageOption): boolean => (option.name === PACKAGE_OPTIONS[3].name), []);
 
   const renderOptionLabel = useCallback((option: PackageOption): ReactNode => (
     <OptionContainer>
-      <OptionImg src={REACT_LOGO_SVG} isDisabled={getIsOptionDisabled(option)} />
-      <OptionName>{option.packageName}</OptionName>
+      <OptionImg
+        src={REACT_LOGO_SVG}
+        isDisabled={getIsOptionDisabled(option)}
+      />
+      <OptionName>{option.name}</OptionName>
     </OptionContainer>
   ), [getIsOptionDisabled]);
-
-  useClearAllToasts();
 
   return (
     <Container>
