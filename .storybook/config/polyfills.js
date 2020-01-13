@@ -15,8 +15,6 @@ export function polyfillBrowserMS() {
   global.EventSource = NativeEventSource || EventSourcePolyfill;
 
   if (normalizePolyfill()) {
-    import('unorm')
-      .then(() => {})
-      .catch((e) => console.error(e));
+    import('unorm').catch((e) => console.error(e));
   }
 }
