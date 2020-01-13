@@ -14,7 +14,7 @@ export default create({
   colorSecondary: COLOR_SECONDARY,
 
   // UI
-  appBorderRadius: 0,
+  appBorderRadius: 4,
   appBg: COLOR_DARKEST,
   appBorderColor: '#535353',
   appContentBg: COLOR_DARKER,
