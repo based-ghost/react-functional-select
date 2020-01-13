@@ -9,7 +9,7 @@ type PackageLinkProps = {
 };
 
 const Link = styled.a`
-  color: #E8306E;
+  color: #149DF3;
   cursor: pointer;
   font-size: 1rem;
   box-shadow: none;

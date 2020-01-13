@@ -86,7 +86,7 @@ export default css`
       }
       &--info {
         color: #fff;
-        background: #007bff;
+        background: #149DF3;
       }
       &-body {
         flex: 1;
