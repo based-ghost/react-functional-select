@@ -112,40 +112,6 @@ storiesOf('React Functional Select', module).add('Styling', () => {
     />
   ), []);
 
-  const memoizedClassList = useMemo<ReactNode>(() => (
-    <ListWrapper className='is-class-list'>
-      <List>
-        <ListItem>
-          <code>{SELECT_CONTAINER_CLS}</code>
-        </ListItem>
-        <ListItem>
-          <code>{CONTROL_CONTAINER_CLS}</code>
-        </ListItem>
-        <ListItem>
-          <code>{MENU_CONTAINER_CLS}</code>
-        </ListItem>
-        <ListItem>
-          <code>{AUTOSIZE_INPUT_CLS}</code>
-        </ListItem>
-        <ListItem>
-          <code>{CARET_ICON_CLS}</code>
-        </ListItem>
-        <ListItem>
-          <code>{CLEAR_ICON_CLS}</code>
-        </ListItem>
-        <ListItem>
-          <code>{LOADING_DOTS_CLS}</code>
-        </ListItem>
-        <ListItem>
-          <code>{OPTION_CLS}</code>{', '}
-          <code>{OPTION_FOCUSED_CLS}</code>{', '}
-          <code>{OPTION_SELECTED_CLS}</code>{', '}
-          <code>{OPTION_DISABLED_CLS}</code>
-        </ListItem>
-      </List>
-    </ListWrapper>
-  ), []);
-
   useEffect(() => {
     if (selectedOption) {
       const { value } = selectedOption;
@@ -200,7 +166,37 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             <code>className</code> attributes for that specific instance of the
             component. These are the classes that are available:
           </Content>
-          {memoizedClassList}
+          <ListWrapper className='is-class-list'>
+            <List>
+              <ListItem>
+                <code>{SELECT_CONTAINER_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{CONTROL_CONTAINER_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{MENU_CONTAINER_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{AUTOSIZE_INPUT_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{CARET_ICON_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{CLEAR_ICON_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{LOADING_DOTS_CLS}</code>
+              </ListItem>
+              <ListItem>
+                <code>{OPTION_CLS}</code>{', '}
+                <code>{OPTION_FOCUSED_CLS}</code>{', '}
+                <code>{OPTION_SELECTED_CLS}</code>{', '}
+                <code>{OPTION_DISABLED_CLS}</code>
+              </ListItem>
+            </List>
+          </ListWrapper>
         </Column>
         <Column widthPercent={60}>
           {memoizedMarkupNode}
