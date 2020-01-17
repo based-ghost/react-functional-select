@@ -68,13 +68,14 @@ const PreContainer = styled.div`
 
       &:last-of-type {
         display: inherit;
+        color: rgba(255, 255, 255, .965) !important;
 
         .tag, .string, .number, .operator {
           color: #ffa7c4;
         }
 
         .attr-value {
-          color: #fff;
+          color: rgba(255, 255, 255, .965);
         }
 
         .punctuation {
@@ -101,23 +102,21 @@ const CodeMarkup = React.memo<CodeMarkupProps>(({
   header,
   language,
   formatFn
-}) => {
-  return (
-    <CodeMarkupContainer>
-      <Header>{header}</Header>
-      <PreContainer>
-        <SyntaxHighlighter
-          wrapLines
-          style={dark}
-          showLineNumbers
-          language={language}
-          useInlineStyles={false}
-        >
-          {formatFn ? formatFn(data) : data}
-        </SyntaxHighlighter>
-      </PreContainer>
-    </CodeMarkupContainer>
-  );
-});
+}) => (
+  <CodeMarkupContainer>
+    <Header>{header}</Header>
+    <PreContainer>
+      <SyntaxHighlighter
+        wrapLines
+        style={dark}
+        showLineNumbers
+        language={language}
+        useInlineStyles={false}
+      >
+        {formatFn ? formatFn(data) : data}
+      </SyntaxHighlighter>
+    </PreContainer>
+  </CodeMarkupContainer>
+));
 
 export default CodeMarkup;
