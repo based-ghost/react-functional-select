@@ -83,9 +83,7 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
         {clearIcon || <Clear className={addClassNames ? CLEAR_ICON_CLS : undefined}>X</Clear>}
       </IndicatorIcon>
     )}
-    {isLoading && (
-      loadingNode || <LoadingDots addClassNames={addClassNames} />
-    )}
+    {isLoading && (loadingNode || <LoadingDots addClassNames={addClassNames} />)}
     <Separator />
     <IndicatorIcon
       aria-hidden='true'

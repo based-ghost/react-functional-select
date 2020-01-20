@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
 import dark from 'react-syntax-highlighter/dist/esm/styles/prism/dark';
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
 import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
 import javascript from 'react-syntax-highlighter/dist/esm/languages/prism/javascript';
+import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
 
 // Register light build of react-syntax-highlighter and register only what is needed
 SyntaxHighlighter.registerLanguage('markup', markup);

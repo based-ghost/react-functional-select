@@ -40,12 +40,12 @@ const Value = React.memo<ValueProps>(({
   }
 
   if (!isArrayWithLength(selectedOption)) {
-    return (<Placeholder>{placeholder}</Placeholder>);
+    return <Placeholder>{placeholder}</Placeholder>;
   }
 
   if (!isMulti) {
     const { data } = selectedOption[0];
-    return (<SingleValue>{renderOptionLabel(data)}</SingleValue>);
+    return <SingleValue>{renderOptionLabel(data)}</SingleValue>;
   }
 
   return (

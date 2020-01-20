@@ -34,7 +34,7 @@ export const useMenuOptions = (
     const normalizedInput = trimAndFormatFilterStr(debouncedInputValue, filterIgnoreCase, filterIgnoreCase);
 
     const getIsOptionDisabled2: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
-    const getFilterOptionString2: (option: MenuOption) => string = getFilterOptionString || ((option) => String(option.label));
+    const getFilterOptionString2: (option: MenuOption) => string = getFilterOptionString || ((option) => (typeof option.label === 'string') ? option.label : `${option.label}`);
 
     const isOptionFilterMatch = (menuOption: MenuOption): boolean => {
       const normalizedOptionLabel = trimAndFormatFilterStr(getFilterOptionString2(menuOption), filterIgnoreCase, filterIgnoreCase);

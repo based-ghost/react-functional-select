@@ -3,6 +3,12 @@ import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
 import { MenuOption, OptionData, SelectedOption } from './types';
 import { OVERFLOW_REGEXP, DIACRITICS_REGEXP } from './constants/regexp';
 
+/**
+ * Properties in DefaultTheme to always replace, rather than attempt deep merge on.
+ * Referenced in 'mergeDeep' utility function.
+ */
+const REPLACE_KEY_LIST = ['animation'];
+
 // ============================================
 // Private utility functions
 // ============================================
@@ -124,10 +130,9 @@ export function trimAndFormatFilterStr(
  */
 export function mergeDeep(target: any, source: any): any {
   const output = { ...target };
-  const replaceKeyList = ['animation'];
 
   Object.keys(source).forEach((key: string): void => {
-    if (isPlainObject(source[key]) && !replaceKeyList.includes(key)) {
+    if (isPlainObject(source[key]) && !REPLACE_KEY_LIST.includes(key)) {
       output[key] = (key in target)
         ? mergeDeep(target[key], source[key])
         : source[key];
