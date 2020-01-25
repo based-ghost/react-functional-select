@@ -53,12 +53,3 @@ export const hexToRgba = (hex: string, alpha: number = 1): string => {
 
   return `rgba(${rgbaParts.join(',')})`;
 };
-
-export const rgbToHex = (r: number, g: number, b: number): string => {
-  const hexParts: string[] = [r, g, b].map((x: number): string => {
-    const hex = x.toString(16);
-    return (hex.length === 1) ? `0${hex}` : hex;
-  });
-
-  return `#${hexParts.join('')}`;
-};

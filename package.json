@@ -68,7 +68,7 @@
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
     "concurrently": "^5.0.2",
-    "cross-env": "^6.0.3",
+    "cross-env": "^7.0.0",
     "enzyme": "^3.11.0",
     "eslint": "^6.8.0",
     "eslint-config-poetez": "^0.2.0",

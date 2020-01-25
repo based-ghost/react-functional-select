@@ -31,7 +31,7 @@ const CodeMarkupContainer = styled.div`
 
 const Header = styled.div`
   line-height: 3;
-  color: #809393;
+  color: #94A7A7;
   padding: 0 .9rem;
   font-weight: 700;
   letter-spacing: 0.08em;

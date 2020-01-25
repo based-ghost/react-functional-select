@@ -45,9 +45,11 @@ export const Container = styled.div`
 export const SelectContainer = styled.div`
   width: 60%;
   margin-top: 1rem;
+
   ${MEDIA_QUERY_IS_TABLET} {
     width: 75%;
   }
+
   ${MEDIA_QUERY_IS_MOBILE} {
     width: 100%;
   }
@@ -63,6 +65,7 @@ export const Hr = styled.hr`
 
 export const Columns = styled.div`
   width: 100%;
+
   ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
     display: flex;
   }
@@ -96,10 +99,12 @@ export const ListWrapper = styled.div`
   }
 
   &.is-class-list {
+    font-weight: 600;
     max-width: 100% !important;
+
     ul {
       li + li {
-        margin-top: 0.75em !important;
+        margin-top: 0.5em !important;
       }
     }
   }
@@ -206,6 +211,7 @@ export const Label = styled.label`
   display: inline-block;
   vertical-align: middle;
   margin: 0.4rem 1.15rem 0rem 0.4rem;
+
   ${MEDIA_QUERY_IS_MOBILE} {
     margin: 0 auto .25rem auto;
   }
@@ -213,6 +219,7 @@ export const Label = styled.label`
 
 export const LabelHeader = styled(Label)`
   margin-bottom: 0.4rem;
+
   ${MEDIA_QUERY_IS_MOBILE} {
     text-align: left;
     margin: 0 auto 0.4rem 0;
@@ -221,6 +228,7 @@ export const LabelHeader = styled(Label)`
 
 export const LabelNote = styled(Label)`
   margin: 0.5rem auto 0.5rem 0;
+
   ${MEDIA_QUERY_IS_MOBILE} {
     text-align: left;
     margin: 0 auto 0.4rem 0;

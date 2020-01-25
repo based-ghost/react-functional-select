@@ -11,29 +11,6 @@ import {
 } from 'react';
 
 // ============================================
-// styled-component property types
-// ============================================
-
-export type InputProps = {
-  readonly isBrowserMS?: boolean;
-};
-
-export type CaretProps = {
-  readonly menuOpen: boolean;
-  readonly isInvalid?: boolean;
-};
-
-export type MenuWrapperProps = {
-  readonly hideMenu: boolean;
-};
-
-export type ControlWrapperProps = {
-  readonly isFocused: boolean;
-  readonly isInvalid?: boolean;
-  readonly isDisabled?: boolean;
-};
-
-// ============================================
 // Shared / Object / Param / Misc types
 // ============================================
 
@@ -42,10 +19,7 @@ export type ValueIndex = 0 | 1;
 export type OptionIndex = 0 | 1 | 2 | 3;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
-
-export type AutosizeInputHTMLAttributes = InputHTMLAttributes<HTMLElement>
-  & { 'data-testid'?: string }
-  & InputProps;
+export type AutosizeInputHTMLAttributes = InputHTMLAttributes<HTMLElement> & { 'data-testid'?: string };
 
 export type SelectedOption = {
   data?: OptionData;
@@ -72,6 +46,25 @@ export type ItemData = {
   focusedOptionIndex: number;
   renderOptionLabel: (data: OptionData) => ReactNode;
   selectOption: (option: SelectedOption, isSelected?: boolean) => void;
+};
+
+// ============================================
+// styled-component property types
+// ============================================
+
+export type CaretProps = {
+  readonly menuOpen: boolean;
+  readonly isInvalid?: boolean;
+};
+
+export type MenuWrapperProps = {
+  readonly hideMenu: boolean;
+};
+
+export type ControlWrapperProps = {
+  readonly isFocused: boolean;
+  readonly isInvalid?: boolean;
+  readonly isDisabled?: boolean;
 };
 
 // ============================================

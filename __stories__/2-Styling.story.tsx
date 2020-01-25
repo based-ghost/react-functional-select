@@ -107,8 +107,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
   const memoizedMarkupNode = useMemo<ReactNode>(() => (
     <CodeMarkup
       language='markup'
+      header='Class Markup'
       data={CLASS_NAME_HTML}
-      header='HTML With Classes'
     />
   ), []);
 
@@ -168,33 +168,14 @@ storiesOf('React Functional Select', module).add('Styling', () => {
           </Content>
           <ListWrapper className='is-class-list'>
             <List>
-              <ListItem>
-                <code>{SELECT_CONTAINER_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{CONTROL_CONTAINER_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{MENU_CONTAINER_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{AUTOSIZE_INPUT_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{CARET_ICON_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{CLEAR_ICON_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{LOADING_DOTS_CLS}</code>
-              </ListItem>
-              <ListItem>
-                <code>{OPTION_CLS}</code>{', '}
-                <code>{OPTION_FOCUSED_CLS}</code>{', '}
-                <code>{OPTION_SELECTED_CLS}</code>{', '}
-                <code>{OPTION_DISABLED_CLS}</code>
-              </ListItem>
+              <ListItem>{SELECT_CONTAINER_CLS}</ListItem>
+              <ListItem>{CONTROL_CONTAINER_CLS}</ListItem>
+              <ListItem>{MENU_CONTAINER_CLS}</ListItem>
+              <ListItem>{AUTOSIZE_INPUT_CLS}</ListItem>
+              <ListItem>{CARET_ICON_CLS}</ListItem>
+              <ListItem>{CLEAR_ICON_CLS}</ListItem>
+              <ListItem>{LOADING_DOTS_CLS}</ListItem>
+              <ListItem>{`${OPTION_CLS}, ${OPTION_FOCUSED_CLS}, ${OPTION_SELECTED_CLS}, ${OPTION_DISABLED_CLS}`}</ListItem>
             </List>
           </ListWrapper>
         </Column>
@@ -227,7 +208,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
               <CodeMarkup
                 data={themeConfig}
                 language='javascript'
-                header='Theme Overrides'
+                header='theme-config'
                 formatFn={stringifyJavascriptObj}
               />
             </Column>

@@ -1,12 +1,9 @@
 import { ReactText } from 'react';
 import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
 import { MenuOption, OptionData, SelectedOption } from './types';
-import { OVERFLOW_REGEXP, DIACRITICS_REGEXP } from './constants/regexp';
+import { OVERFLOW_REGEXP, DIACRITICS_REGEXP, IE_BROWSER_REGEXP } from './constants/regexp';
 
-/**
- * Properties in DefaultTheme to always replace, rather than attempt deep merge on.
- * Referenced in 'mergeDeep' utility function.
- */
+// Properties in DefaultTheme to always replace, rather than attempt deep merge on. Referenced in 'mergeDeep' utility function.
 const REPLACE_KEY_LIST = ['animation'];
 
 // ============================================
@@ -110,6 +107,13 @@ export function isTouchDevice(): boolean {
 }
 
 /**
+ * Determines if the current browser is IE.
+ */
+export function isBrowserIE(): boolean {
+  return IE_BROWSER_REGEXP.test(window.navigator.userAgent);
+}
+
+/**
  * Apply regex to string, and if the value is NOT case sensitive, call .toLowerCase() and return result.
  */
 export function trimAndFormatFilterStr(
@@ -137,7 +141,7 @@ export function mergeDeep(target: any, source: any): any {
         ? mergeDeep(target[key], source[key])
         : source[key];
     } else {
-      output[key] = source[key];
+      output[key] = (source[key] || '');
     }
   });
 
