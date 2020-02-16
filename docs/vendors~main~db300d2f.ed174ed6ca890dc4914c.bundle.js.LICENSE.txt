@@ -1,9 +1,3 @@
-/** @license
- * eventsource.js
- * Available under MIT License (MIT)
- * https://github.com/Yaffle/EventSource/
- */
-
 /*!
  * https://github.com/es-shims/es5-shim
  * @license es5-shim Copyright 2009-2015 by contributors, MIT License
@@ -18,4 +12,10 @@
  * see https://github.com/paulmillr/es6-shim/blob/0.35.3/LICENSE
  * Details and documentation:
  * https://github.com/paulmillr/es6-shim/
+ */
+
+/** @license
+ * eventsource.js
+ * Available under MIT License (MIT)
+ * https://github.com/Yaffle/EventSource/
  */

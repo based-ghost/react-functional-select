@@ -15,41 +15,41 @@ const IndicatorIconsWrapper = styled.div`
 const IndicatorIcon = styled.div`
   display: flex;
   box-sizing: border-box;
-  ${({ theme: { icon }}) => (`
+  ${({ theme: { icon }}) => `
     color: ${icon.color};
     padding: ${icon.padding};
     :hover {
       color: ${icon.hoverColor};
     }
-  `)}
+  `}
   ${({ theme }) => theme.icon.css}
 `;
 
 const Clear = styled.div`
   overflow: hidden;
   animation: ${({ theme }) => css`${theme.icon.clear.animation}`};
-  ${({ theme: { icon: { clear }}}) => (`
+  ${({ theme: { icon: { clear }}}) => `
     font-size: ${clear.fontSize};
     transition: ${clear.transition};
     font-weight: ${clear.fontWeight};
     font-family: ${clear.fontFamily};
-  `)}
+  `}
 `;
 
 const Caret = styled.div<CaretProps>`
-  ${({ theme: { icon: { caret }}}) => (`
+  ${({ theme: { icon: { caret }}}) => `
     transition: ${caret.transition};
     border-top: ${caret.size} dashed;
     border-left: ${caret.size} solid transparent;
     border-right: ${caret.size} solid transparent;
-  `)}
+  `}
 
   ${({ menuOpen, isInvalid, theme: { color }}) =>
     menuOpen
-    && (`
+    && `
       transform: rotate(180deg);
       color: ${(isInvalid ? color.danger : (color.caretActive || color.primary))};
-    `)}
+    `}
 `;
 
 const Separator = styled.div`
