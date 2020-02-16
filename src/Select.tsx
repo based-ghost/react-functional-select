@@ -132,7 +132,7 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
   align-items: center;
   box-sizing: border-box;
   justify-content: space-between;
-  ${({ isDisabled, isFocused, isInvalid, theme: { control, color }}) => (`
+  ${({ isDisabled, isFocused, isInvalid, theme: { control, color }}) => `
     min-height: ${control.minHeight};
     transition: ${control.transition};
     border-style: ${control.borderStyle};
@@ -144,14 +144,14 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
     ${(control.backgroundColor || isDisabled) ? `background-color: ${isDisabled ? color.disabled : control.backgroundColor};` : ''}
     ${isFocused ? `box-shadow: ${control.boxShadow} ${isInvalid ? color.dangerLight : control.boxShadowColor};` : ''}
     ${control.css || ''}
-  `)}
+  `}
 `;
 
 const MenuWrapper = styled.div<MenuWrapperProps>`
   z-index: 999;
   cursor: default;
   position: absolute;
-  ${({ hideMenu, theme: { menu }}) => (`
+  ${({ hideMenu, theme: { menu }}) => `
     width: ${menu.width};
     margin: ${menu.margin};
     padding: ${menu.padding};
@@ -159,7 +159,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     border-radius: ${menu.borderRadius};
     background-color: ${menu.backgroundColor};
     ${hideMenu ? 'display: none;' : ''}
-  `)}
+  `}
 
   animation: ${({ theme }) => css`${theme.menu.animation}`};
   ${({ theme }) => theme.menu.css}
@@ -171,7 +171,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     white-space: nowrap;
     text-overflow: ellipsis;
     -webkit-tap-highlight-color: transparent;
-    ${({ theme: { menu: { option } } }) => (`
+    ${({ theme: { menu: { option } } }) => `
       padding: ${option.padding};
       text-align: ${option.textAlign};
 
@@ -188,7 +188,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
       &.${OPTION_DISABLED_CLS} {
         opacity: 0.35;
       }
-    `)}
+    `}
   }
 `;
 

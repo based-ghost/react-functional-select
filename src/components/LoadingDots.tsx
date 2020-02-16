@@ -14,11 +14,11 @@ const StyledLoadingDots = styled.div`
     border-radius: 100%;
     display: inline-block;
     animation: ${({ theme }) => css`${theme.loader.animation}`};
-    ${({ theme: { loader }}) => (`
+    ${({ theme: { loader }}) => `
       width: ${loader.size};
       height: ${loader.size};
       background-color: ${loader.color};
-    `)}
+    `}
 
     :nth-of-type(1) {
       animation-delay: -0.272s;

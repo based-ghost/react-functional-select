@@ -7,28 +7,28 @@ const MultiValueWrapper = styled.div`
   min-width: 0;
   display: flex;
   animation: ${({ theme }) => css`${theme.multiValue.animation}`};
-  ${({ theme: { multiValue }}) => (`
+  ${({ theme: { multiValue }}) => `
     margin: ${multiValue.margin};
     border-radius: ${multiValue.borderRadius};
     background-color: ${multiValue.backgroundColor};
     ${multiValue.css || ''}
-  `)}
+  `}
 `;
 
 const Label = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  ${({ theme: { multiValue: { label }}}) => (`
+  ${({ theme: { multiValue: { label }}}) => `
     padding: ${label.padding};
     font-size: ${label.fontSize};
     border-radius: ${label.borderRadius};
-  `)}
+  `}
 `;
 
 const Clear = styled.div<{ isFocused: boolean }>`
   display: flex;
-  ${({ isFocused, theme: { color, multiValue: { clear }}}) => (`
+  ${({ isFocused, theme: { color, multiValue: { clear }}}) => `
     padding: ${clear.padding};
     font-size: ${clear.fontSize};
     transition: ${clear.transition};
@@ -40,7 +40,7 @@ const Clear = styled.div<{ isFocused: boolean }>`
       color: ${color.danger};
       background-color: ${color.dangerLight};
     }
-  `)}
+  `}
 `;
 
 const MultiValue: React.FC<MultiValueProps> = ({
