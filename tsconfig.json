@@ -14,7 +14,7 @@
     "noUnusedLocals": true,
     "removeComments": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*"
