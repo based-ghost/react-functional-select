@@ -72,17 +72,17 @@ const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInpu
   const sizerRef = useRef<HTMLDivElement | null>(null);
   const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
 
-  useEffect(() => {
-    if (sizerRef.current) {
-      setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
-    }
-  }, [inputValue]);
-
   const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
     ...STATIC_ATTRIBUTES,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy
   };
+
+  useEffect(() => {
+    if (sizerRef.current) {
+      setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
+    }
+  }, [inputValue]);
 
   return (
     <div style={WRAPPER_DIV_STYLE}>

@@ -2,9 +2,7 @@ import { ReactText } from 'react';
 import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
 import { MenuOption, OptionData, SelectedOption } from './types';
 import { OVERFLOW_REGEXP, DIACRITICS_REGEXP, IE_BROWSER_REGEXP } from './constants/regexp';
-
-// Properties in DefaultTheme to always replace, rather than attempt deep merge on. Referenced in 'mergeDeep' utility function.
-const REPLACE_KEY_LIST = ['animation'];
+import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from './constants/dom';
 
 // ============================================
 // Private utility functions
@@ -114,6 +112,23 @@ export function isBrowserIE(): boolean {
 }
 
 /**
+ * Builds the className property in Option.tsx component.
+ */
+export function optionClassName(
+  isDisabled?: boolean,
+  isSelected?: boolean,
+  isFocused?: boolean
+): string {
+  let className = OPTION_CLS;
+
+  if (isDisabled) { className += (' ' + OPTION_DISABLED_CLS); }
+  if (isSelected) { className += (' ' + OPTION_SELECTED_CLS); }
+  if (isFocused) { className += (' ' + OPTION_FOCUSED_CLS); }
+
+  return className;
+}
+
+/**
  * Apply regex to string, and if the value is NOT case sensitive, call .toLowerCase() and return result.
  */
 export function trimAndFormatFilterStr(
@@ -134,9 +149,10 @@ export function trimAndFormatFilterStr(
  */
 export function mergeDeep(target: any, source: any): any {
   const output = { ...target };
+  const replaceKeyList = ['animation'];
 
   Object.keys(source).forEach((key: string): void => {
-    if (isPlainObject(source[key]) && !REPLACE_KEY_LIST.includes(key)) {
+    if (isPlainObject(source[key]) && !replaceKeyList.includes(key)) {
       output[key] = (key in target)
         ? mergeDeep(target[key], source[key])
         : source[key];

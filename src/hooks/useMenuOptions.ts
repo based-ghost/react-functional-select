@@ -64,14 +64,13 @@ export const useMenuOptions = (
       return menuOption;
     };
 
-    const menuOptionsOrDefault =
-      options.reduce((accumulator: MenuOption[], data: OptionData) => {
-        const option = parseMenuOption(data);
-        option && accumulator.push(option);
-        return accumulator;
-      }, []) || OPTIONS_DEFAULT;
+    const menuOptionsOrDefault = options.reduce((acc: MenuOption[], data: OptionData) => {
+      const option = parseMenuOption(data);
+      option && acc.push(option);
+      return acc;
+    }, []);
 
-    setMenuOptions(menuOptionsOrDefault);
+    setMenuOptions(menuOptionsOrDefault || OPTIONS_DEFAULT);
   }, [options, selectedOption, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
 
   return menuOptions;

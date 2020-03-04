@@ -16,10 +16,5 @@ const FADE_IN_KEYFRAMES = keyframes`
   }
 `;
 
-const BOUNCE_ANIMATION_CSS = css`${BOUNCE_KEYFRAMES} 1.19s ease-in-out infinite`;
-const FADE_IN_ANIMATION_CSS = css`${FADE_IN_KEYFRAMES} 0.225s ease-in-out forwards`;
-
-export {
-  BOUNCE_ANIMATION_CSS,
-  FADE_IN_ANIMATION_CSS
-};
+export const BOUNCE_ANIMATION_CSS = css`${BOUNCE_KEYFRAMES} 1.19s ease-in-out infinite`;
+export const FADE_IN_ANIMATION_CSS = css`${FADE_IN_KEYFRAMES} 0.225s ease-in-out forwards`;

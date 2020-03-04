@@ -21,7 +21,6 @@ import {
 import {
   OPTION_CLS,
   IME_KEY_CODE,
-  INPUT_TAG_NAME,
   OPTION_FOCUSED_CLS,
   MENU_CONTAINER_CLS,
   OPTION_DISABLED_CLS,
@@ -259,6 +258,13 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
   const [focusedMultiValue, setFocusedMultiValue] = useState<ReactText | null>(FOCUSED_MULTI_DEFAULT);
 
+  // Memoized DefaultTheme object for styled-components ThemeProvider
+  const theme = useMemo<DefaultTheme>(() => {
+    return isPlainObject(themeConfig)
+      ? mergeDeep(DefaultThemeObj, themeConfig)
+      : DefaultThemeObj;
+  }, [themeConfig]);
+
   // Memoized callback functions referencing optional function properties on Select.tsx
   const getOptionLabelCB = useMemo<((data: OptionData) => ReactText)>(() => {
     return getOptionLabel || ((data) => data.label);
@@ -363,9 +369,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setInputValue('');
     }
   }, [isMulti, closeMenuOnSelect, blurInputOnSelect, removeSelectedOption]);
-
-  /*** useImperativeHandle ***/
-  // Publicly exposed methods accessed via ref
 
   useImperativeHandle(ref, () => ({
     blur: blurInput,
@@ -599,14 +602,16 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     if (isDisabled) { return; }
     if (!isFocused) { focusInput(); }
 
+    const tagNameNotInput = (e.currentTarget.tagName !== 'INPUT');
+
     if (!menuOpen) {
       openMenuOnClick && openMenuAndFocusOption(OptionIndexEnum.FIRST);
-    } else if (e.currentTarget.tagName !== INPUT_TAG_NAME) {
+    } else if (tagNameNotInput) {
       setMenuOpen(false);
       inputValue && setInputValue('');
     }
 
-    if (e.currentTarget.tagName !== INPUT_TAG_NAME) {
+    if (tagNameNotInput) {
       e.preventDefault();
     }
   };
@@ -652,13 +657,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       openMenuAndFocusOption(OptionIndexEnum.FIRST);
     }
   }, [menuOpen, openMenuAndFocusOption]);
-
-  // Memoized DefaultTheme object for styled-components ThemeProvider
-  const theme = useMemo<DefaultTheme>(() => {
-    return isPlainObject(themeConfig)
-      ? mergeDeep(DefaultThemeObj, themeConfig)
-      : DefaultThemeObj;
-  }, [themeConfig]);
 
   return (
     <ThemeProvider theme={theme}>

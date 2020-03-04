@@ -4,9 +4,6 @@ const isTest = (process.env.NODE_ENV === 'test');
 // Keydown event from an Input Method Editor (IME) - event.keyCode === 229
 export const IME_KEY_CODE = 229;
 
-// HTMLInputElement event.currentTarget.tagName
-export const INPUT_TAG_NAME = 'INPUT';
-
 // mousedown event.type
 export const MOUSE_DOWN_EVENT_TYPE = 'mousedown';
 
