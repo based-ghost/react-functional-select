@@ -226,11 +226,10 @@ export function validateSetValueParam(
   }
 
   // Get array of valid MenuOption values (ReactText[]) and use to check against menuOptions
-  const validValues = normalizeValue(values)
-    .reduce((acc: ReactText[], x: SelectedOption) => {
-      isPlainObject(x) && acc.push(getOptionValueCB(x));
-      return acc;
-    }, []);
+  const validValues = normalizeValue(values).reduce((acc: ReactText[], x: SelectedOption) => {
+    isPlainObject(x) && acc.push(getOptionValueCB(x));
+    return acc;
+  }, []);
 
   if (!isArrayWithLength(validValues)) {
     return SELECTED_OPTION_DEFAULT;
