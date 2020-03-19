@@ -3,7 +3,7 @@ import { Option } from './helpers/types';
 import { Select, SelectRef } from '../src';
 import { storiesOf } from '@storybook/react';
 import { createSelectOptions } from './helpers/utils';
-import { Hr, List, CodeHeader, Title, Button, Label, ListItem, SubTitle, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, List, TextHeader, Title, Button, Label, ListItem, SubTitle, Container, ListWrapper, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Methods', () => {
   const selectRef = useRef<SelectRef | null>(null);
@@ -38,20 +38,20 @@ storiesOf('React Functional Select', module).add('Methods', () => {
         accessible via a forwarded <code>ref</code>.
         <List>
           <ListItem>
-            <CodeHeader>blur(): void</CodeHeader> - blur the control programatically
+            <TextHeader>blur(): void</TextHeader> - blur the control programatically
           </ListItem>
           <ListItem>
-            <CodeHeader>focus(): void</CodeHeader> - focus the control programatically
+            <TextHeader>focus(): void</TextHeader> - focus the control programatically
           </ListItem>
           <ListItem>
-            <CodeHeader>toggleMenu(state?: boolean): void</CodeHeader> - toggle the menu programatically
+            <TextHeader>toggleMenu(state?: boolean): void</TextHeader> - toggle the menu programatically
           </ListItem>
           <ListItem>
-            <CodeHeader>clearValue(): void</CodeHeader> - clear the current value programatically
+            <TextHeader>clearValue(): void</TextHeader> - clear the current value programatically
             <em> (if an option is selected)</em>
           </ListItem>
           <ListItem>
-            <CodeHeader>setValue(option?: any): void</CodeHeader> - set the value programatically
+            <TextHeader>setValue(option?: any): void</TextHeader> - set the value programatically
             <em> (option will be validated)</em>
           </ListItem>
         </List>

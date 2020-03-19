@@ -5,7 +5,7 @@ import { Checkbox } from './helpers/components';
 import { CITY_OPTIONS } from './helpers/constants';
 import { useCallbackState } from './helpers/hooks';
 import { Select, FilterMatchEnum, MenuOption } from '../src';
-import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, CodeHeader, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, Title, List, ListWrapper, ListItem, SubTitle, Container, SelectContainer, TextHeader, CheckboxGroup, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Filtering', () => {
   const options = useMemo<CityOption[]>(() => {
@@ -32,19 +32,19 @@ storiesOf('React Functional Select', module).add('Filtering', () => {
         The default filtering functionality can be customized via the following properties:
         <List>
           <ListItem>
-            <CodeHeader>filterIgnoreCase?: boolean</CodeHeader> - Filter ignores case
+            <TextHeader>filterIgnoreCase?: boolean</TextHeader> - Filter ignores case
             when matching strings. Default value is <code>true</code>.
           </ListItem>
           <ListItem>
-            <CodeHeader>filterIgnoreAccents?: boolean</CodeHeader> - Filter ignores
+            <TextHeader>filterIgnoreAccents?: boolean</TextHeader> - Filter ignores
             accents when matching strings. Default value is <code>false</code>.
           </ListItem>
           <ListItem>
-            <CodeHeader>filterMatchFrom?: 'any' | 'start'</CodeHeader> - Position
+            <TextHeader>filterMatchFrom?: 'any' | 'start'</TextHeader> - Position
             in source string to perform match. Default value is <code>'any'</code>.
           </ListItem>
           <ListItem>
-            <CodeHeader>getFilterOptionString(option: MenuOption): string</CodeHeader> -
+            <TextHeader>getFilterOptionString(option: MenuOption): string</TextHeader> -
             When defined will take each option and generate a string used in the
             filtering process. By default, the stringified version of what is generated
             by <code>getOptionLabel</code>, if definded, or the option's label as a fallback.

@@ -134,11 +134,16 @@ export const ListItem = styled.li`
   text-align: match-parent;
 `;
 
-export const CodeHeader = styled.code`
-  font-size: 1em;
-  font-weight: 600;
-  line-height: 1.7;
-  padding: 3px 6.4px;
+export const TextHeader = styled.span`
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  word-break: break-word;
+  padding: 3px 0 3px 6.4px;
+
+  ${MEDIA_QUERY_IS_MOBILE_XS} {
+    padding: .1em .25em .1em;
+  }
 `;
 
 export const Title = styled.h2`

@@ -11,7 +11,7 @@ import {
   CONTROL_CONTAINER_CLS
 } from '../../../src/constants/dom';
 
-const CLASS_NAME_HTML =
+export const CLASS_NAME_HTML =
   `<div class="${SELECT_CONTAINER_CLS}">
   <div class="${CONTROL_CONTAINER_CLS}">
     <div>
@@ -53,5 +53,3 @@ const CLASS_NAME_HTML =
     </div>
   </div>
 </div>`;
-
-export default CLASS_NAME_HTML;

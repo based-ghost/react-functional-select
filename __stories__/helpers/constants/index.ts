@@ -1,4 +1,4 @@
-import CLASS_NAME_HTML from './markup';
+import { CLASS_NAME_HTML } from './markup';
 import { CITY_OPTIONS, PACKAGE_OPTIONS } from './options-data';
 import { REACT_WINDOW_PACKAGE, STYLED_COMPONENTS_PACKAGE } from './npm-package';
 

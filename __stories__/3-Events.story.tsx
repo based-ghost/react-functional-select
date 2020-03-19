@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import { Checkbox } from './helpers/components';
 import { renderInfoToast, createSelectOptions } from './helpers/utils';
 import { useCallbackState, useClearToastsOnUnmount } from './helpers/hooks';
-import { Hr, LabelNote, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, CodeHeader, Card, CardHeader, CardBody } from './helpers/styled';
+import { Hr, LabelNote, Title, List, ListWrapper, ListItem, SubTitle, CheckboxGroup, Container, SelectContainer, TextHeader, Card, CardHeader, CardBody } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Events', () => {
   const options = useMemo<Option[]>(() => createSelectOptions(5), []);
@@ -39,27 +39,27 @@ storiesOf('React Functional Select', module).add('Events', () => {
         their associated events:
         <List>
           <ListItem>
-            <CodeHeader>onOptionChange(data: any): void</CodeHeader> -
+            <TextHeader>onOptionChange(data: any): void</TextHeader> -
             executed after an option is selected or removed
           </ListItem>
           <ListItem>
-            <CodeHeader>onMenuOpen(...args: any[]): void</CodeHeader> -
+            <TextHeader>onMenuOpen(...args: any[]): void</TextHeader> -
             executed after the menu is opened
           </ListItem>
           <ListItem>
-            <CodeHeader>onMenuClose(...args: any[]): void</CodeHeader> -
+            <TextHeader>onMenuClose(...args: any[]): void</TextHeader> -
             executed after the menu is closed
           </ListItem>
           <ListItem>
-            <CodeHeader>onKeyDown(e: KeyboardEvent&lt;HTMLDivElement&gt;): void</CodeHeader> -
+            <TextHeader>onKeyDown(e: KeyboardEvent&lt;HTMLDivElement&gt;): void</TextHeader> -
             executed after the onKeyDown event
           </ListItem>
           <ListItem>
-            <CodeHeader>onInputBlur(e: FocusEvent&lt;HTMLInputElement&gt;): void</CodeHeader> -
+            <TextHeader>onInputBlur(e: FocusEvent&lt;HTMLInputElement&gt;): void</TextHeader> -
             executed after the input control is blurred
           </ListItem>
           <ListItem>
-            <CodeHeader>onInputFocus(e: FocusEvent&lt;HTMLInputElement&gt;): void</CodeHeader> -
+            <TextHeader>onInputFocus(e: FocusEvent&lt;HTMLInputElement&gt;): void</TextHeader> -
             executed after the input control is focused
           </ListItem>
         </List>
