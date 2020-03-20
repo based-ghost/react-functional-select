@@ -20,7 +20,7 @@ type CodeMarkupProps = {
 const CodeMarkupContainer = styled.div`
   font-size: 1rem;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 8px;
   margin: 1rem 1.5rem;
   background-color: #061B2C;
 
@@ -43,7 +43,7 @@ const PreContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  border-radius: 10px;
+  border-radius: 8px;
   min-height: 385px !important;
   max-height: 385px !important;
 
