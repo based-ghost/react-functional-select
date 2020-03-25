@@ -145,14 +145,13 @@ export function trimAndFormatFilterStr(
 
 /**
  * Immutable implementation of mergeDeep for two objects. Will return the merged result.
- * 'replaceKeyList' contains list of properties to always replace, rather than attempt deepMerge.
+ * In first condition of if/else block - check that property is no 'animation', since we never want to merge that complex styled-component object.
  */
 export function mergeDeep(target: any, source: any): any {
   const output = { ...target };
-  const replaceKeyList = ['animation'];
 
   Object.keys(source).forEach((key: string): void => {
-    if (isPlainObject(source[key]) && !replaceKeyList.includes(key)) {
+    if (isPlainObject(source[key]) && key !== 'animation') {
       output[key] = (key in target)
         ? mergeDeep(target[key], source[key])
         : source[key];

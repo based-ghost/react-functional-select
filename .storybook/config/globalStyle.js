@@ -42,7 +42,7 @@ export default createGlobalStyle`
     border-radius: 0.3em;
     word-break: break-word;
     padding: .15em .2em .05em;
-    background-color: rgba(255,229,100,0.17);
+    background-color: rgba(255,229,100,0.185);
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 
     @media only screen and (max-width: 525px) {

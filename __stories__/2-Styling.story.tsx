@@ -103,7 +103,6 @@ storiesOf('React Functional Select', module).add('Styling', () => {
   const [selectedOption, setSelectedOption] = useCallbackState<Option | null>(null);
   const menuItemSize = (selectedOption && selectedOption.value === ThemeEnum.LARGE_TEXT) ? 44 : 35;
 
-  // CLASS_NAME_HTML is a primitive type (string), therefore a strict equality check occurrs on render
   const memoizedMarkupNode = useMemo<ReactNode>(() => (
     <CodeMarkup
       language='markup'
@@ -115,7 +114,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
   useEffect(() => {
     if (selectedOption) {
       const { value } = selectedOption;
-      setThemeConfig(ThemeConfigMap[value]);
+      const _themeConfig = ThemeConfigMap[value];
+      setThemeConfig(_themeConfig);
     }
   }, [selectedOption]);
 

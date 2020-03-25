@@ -18,8 +18,8 @@ const THEME_CONFIG = {
   menu: {
     option: {
       selectedColor: '#515151',
-      focusedBgColor: '#F2F2F2',
-      selectedBgColor: '#F2F2F2'
+      focusedBgColor: '#F5F5F5',
+      selectedBgColor: '#F5F5F5'
     }
   }
 };
