@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select, SelectProps } from '../src';
-import { render, fireEvent, wait, RenderResult } from '@testing-library/react';
+import { render, fireEvent, RenderResult } from '@testing-library/react';
 import {
   MENU_CONTAINER_CLS,
   SELECT_CONTAINER_CLS,
@@ -55,7 +55,7 @@ test('menu is not visible by default', async () => {
 test('menu is visible after the "mouseDown" event is fired on the control container', async () => {
   const { getByTestId } = renderSelect();
   fireEvent.mouseDown(getByTestId(CONTROL_CONTAINER_TESTID!));
-  await wait(() => expect(getByTestId(MENU_CONTAINER_TESTID!)).toBeVisible());
+  expect(getByTestId(MENU_CONTAINER_TESTID!)).toBeVisible();
 });
 
 test('"onInputFocus" callback should be fired when input is focused (if a defined function)', async () => {
@@ -74,7 +74,7 @@ test('when "openMenuOnFocus" = true (the default value), then onFocus of input s
   };
   const { getByTestId } = renderSelect(props);
   fireEvent.focus(getByTestId(AUTOSIZE_INPUT_TESTID!));
-  await wait(() => expect(getByTestId(MENU_CONTAINER_TESTID!)).toBeVisible());
+  expect(getByTestId(MENU_CONTAINER_TESTID!)).toBeVisible();
 });
 
 test('"onInputBlur" callback should be fired on blur (if a defined function)', async () => {
