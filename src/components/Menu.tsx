@@ -21,7 +21,9 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     width,
     itemSize,
     maxHeight,
+    loadingMsg,
     menuOptions,
+    asyncLoading,
     selectOption,
     noOptionsMsg,
     overscanCount,
@@ -36,6 +38,10 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     renderOptionLabel,
     focusedOptionIndex
   }), [menuOptions, focusedOptionIndex, selectOption, renderOptionLabel]);
+
+  if (asyncLoading && loadingMsg) {
+    return <NoOptionsMsg>{loadingMsg}</NoOptionsMsg>;
+  }
 
   return (
     <Fragment>

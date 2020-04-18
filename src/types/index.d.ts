@@ -100,9 +100,11 @@ export type MultiValueProps = SelectedOption & {
 export type MenuProps = {
   readonly itemSize: number;
   readonly maxHeight: number;
+  readonly loadingMsg: string;
   readonly noOptionsMsg: string;
   readonly overscanCount?: number;
   readonly width: string | number;
+  readonly asyncLoading?: boolean;
   readonly menuOptions: MenuOption[];
   readonly focusedOptionIndex: number;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;

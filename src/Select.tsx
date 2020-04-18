@@ -9,6 +9,7 @@ import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLen
 import { FocusedOption, SelectedOption, MouseOrTouchEvent, OptionIndex, ValueIndex, MenuWrapperProps, ControlWrapperProps } from './types';
 import {
   OPTIONS_DEFAULT,
+  LOADING_MSG_DEFAULT,
   PLACEHOLDER_DEFAULT,
   FOCUSED_MULTI_DEFAULT,
   FOCUSED_OPTION_DEFAULT,
@@ -60,6 +61,7 @@ export type SelectProps = {
   readonly selectId?: string;
   readonly isMulti?: boolean;
   readonly ariaLabel?: string;
+  readonly loadingMsg?: string;
   readonly autoFocus?: boolean;
   readonly isLoading?: boolean;
   readonly isInvalid?: boolean;
@@ -242,6 +244,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     scrollMenuIntoView = true,
     backspaceClearsValue = true,
     options = OPTIONS_DEFAULT,
+    loadingMsg = LOADING_MSG_DEFAULT,
     placeholder = PLACEHOLDER_DEFAULT,
     filterMatchFrom = FilterMatchEnum.ANY,
     noOptionsMsg = NO_OPTIONS_MSG_DEFAULT,
@@ -742,9 +745,11 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             ref={listRef}
             maxHeight={menuHeight}
             itemSize={menuItemSize}
+            loadingMsg={loadingMsg}
             menuOptions={menuOptions}
             noOptionsMsg={noOptionsMsg}
             selectOption={selectOption}
+            asyncLoading={async && isLoading}
             overscanCount={menuOverscanCount}
             width={menuWidth || theme.menu.width}
             renderOptionLabel={renderOptionLabelCB}
