@@ -40,7 +40,7 @@ const Input = styled.input`
     :after,
     :before {
       opacity: 1;
-      transition: height 0.38s ease;
+      transition: height 0.365s ease;
     }
 
     :after {
@@ -49,7 +49,7 @@ const Input = styled.input`
 
     :before {
       height: 1.16rem;
-      transition-delay: 0.15s;
+      transition-delay: 0.135s;
     }
   }
 `;
@@ -82,7 +82,7 @@ const CheckIcon = styled.i`
   border-width: 0.125rem;
   border-radius: 0.0625rem;
   background-color: transparent;
-  transition: border-color 0.38s ease;
+  transition: border-color 0.365s ease;
   border-color: ${COLOR_BORDER};
 
   :after,
@@ -96,7 +96,7 @@ const CheckIcon = styled.i`
     border-radius: 0.25rem;
     transform-origin: left top;
     background-color: ${COLOR_CHECK_MARK};
-    transition: opacity 0.38s ease, height 0s linear 0.38s;
+    transition: opacity 0.365s ease, height 0s linear 0.365s;
   }
 
   :after {

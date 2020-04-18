@@ -24,7 +24,7 @@ export default Object.freeze<DefaultTheme>({
   icon: {
     color: '#cccccc',
     hoverColor: '#A6A6A6',
-    padding: '0.5rem 0.9375rem',
+    padding: '0.45rem 0.9375rem',
     clear: {
       fontWeight: 900,
       fontSize: '0.85em',
@@ -83,7 +83,7 @@ export default Object.freeze<DefaultTheme>({
     clear: {
       fontWeight: 700,
       padding: '0 7px',
-      fontSize: '0.675em',
+      fontSize: '0.67em',
       alignItems: 'center',
       borderRadius: '0.25rem',
       transition: 'color 0.15s ease-in-out, background-color 0.15s ease-in-out'
