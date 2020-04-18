@@ -21,6 +21,7 @@ import {
 import {
   OPTION_CLS,
   IME_KEY_CODE,
+  IS_PRODUCTION,
   OPTION_FOCUSED_CLS,
   MENU_CONTAINER_CLS,
   OPTION_DISABLED_CLS,
@@ -54,6 +55,7 @@ export type SelectRef = {
 };
 
 export type SelectProps = {
+  readonly async?: boolean;
   readonly inputId?: string;
   readonly selectId?: string;
   readonly isMulti?: boolean;
@@ -93,6 +95,7 @@ export type SelectProps = {
   readonly filterMatchFrom?: 'any' | 'start';
   readonly onMenuOpen?: (...args: any[]) => void;
   readonly onMenuClose?: (...args: any[]) => void;
+  readonly onSearchChange?: (value: string) => void;
   readonly initialValue?: OptionData | OptionData[];
   readonly onOptionChange?: (data: OptionData) => void;
   readonly onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
@@ -193,6 +196,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
 
 const Select = React.forwardRef<SelectRef, SelectProps>((
   {
+    async,
     isMulti,
     inputId,
     selectId,
@@ -219,6 +223,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     onOptionChange,
     getOptionLabel,
     getOptionValue,
+    onSearchChange,
     openMenuOnFocus,
     isAriaLiveEnabled,
     menuOverscanCount,
@@ -309,19 +314,16 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     filterIgnoreCase,
     filterIgnoreAccents,
     isMulti,
-    hideSelectedOptions
+    hideSelectedOptions,
+    async
   );
 
   const blurInput = (): void => {
-    inputRef.current && inputRef.current.blur();
+    inputRef.current!.blur();
   };
 
   const focusInput = (): void => {
-    inputRef.current && inputRef.current.focus();
-  };
-
-  const scrollToItemIndex = (index: number): void => {
-    listRef.current && listRef.current.scrollToItem(index);
+    inputRef.current!.focus();
   };
 
   const removeSelectedOption = useCallback((value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {
@@ -339,7 +341,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     }
 
     const selectedIndex = !isMulti
-      ? menuOptions.findIndex((option) => option.isSelected)
+      ? menuOptions.findIndex(({ isSelected }) => isSelected)
       : -1;
 
     const index = (selectedIndex > -1)
@@ -348,7 +350,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
     setMenuOpen(true);
     setFocusedOption({ index, ...menuOptions[index] });
-    scrollToItemIndex(index);
+    listRef.current!.scrollToItem(index);
   }, [isMulti, menuOptions]);
 
   const selectOption = useCallback((option: SelectedOption, isSelected?: boolean): void => {
@@ -358,7 +360,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setSelectedOption((prevSelectedOption) => (!isMulti ? [option] : [...prevSelectedOption, option]));
     }
 
-    const blurInputOnSelectOrDefault: boolean = (typeof blurInputOnSelect === 'boolean')
+    const blurInputOnSelectOrDefault = (typeof blurInputOnSelect === 'boolean')
       ? blurInputOnSelect
       : isTouchDevice();
 
@@ -394,8 +396,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   /*** useEffect/useUpdateEffect ***/
   // 1: If autoFocus = true, focus the control following initial mount
   // 2: If control recieves focus & openMenuOnFocus = true, open menu
-  // 3: (useUpdateEffect) Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
-  // 4: (useUpdateEffect) Handle clearing focused option if menuOptions array has 0 length;
+  // 3: (useUpdateEffect) If 'onSearchChange' function is defined, run as callback when search value updates (passing latest search value as the param)
+  // 4: (useUpdateEffect) Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
+  // 5: (useUpdateEffect) Handle clearing focused option if menuOptions array has 0 length;
   //    Handle menuOptions changes - conditionally focus first option and do scroll to first option;
   //    Handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
 
@@ -410,9 +413,20 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   }, [isFocused, openMenuOnFocus, openMenuAndFocusOption]);
 
   useUpdateEffect(() => {
+    if (onSearchChange) {
+      onSearchChange(debouncedInputValue);
+    } else if (async && !onSearchChange && !IS_PRODUCTION) {
+      throw new Error(`
+        'async' mode requires that 'onSearchChange' callback function also be defined,
+        so that the consuming parent component can be notified of changes to the search input value.
+      `);
+    }
+  }, [async, onSearchChange, debouncedInputValue]);
+
+  useUpdateEffect(() => {
     if (onOptionChange) {
       const normalizedOptionValue = isMulti
-        ? selectedOption.map(x => x.data)
+        ? selectedOption.map(({ data }) => data)
         : isArrayWithLength(selectedOption)
           ? selectedOption[0].data
           : ON_CHANGE_SINGLE_VALUE_DEFAULT;
@@ -429,7 +443,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
     } else if (menuOptions.length === 1 || inputChanged) {
       setFocusedOption({ index: 0, ...menuOptions[0] });
-      scrollToItemIndex(0);
+      listRef.current!.scrollToItem(0);
     }
 
     // Track the previous value of menuOptions.length (used above)
@@ -456,11 +470,12 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       return;
     }
 
+    const curFocusedIndex = focusedMultiValue
+      ? selectedOption.findIndex(({ value }) => value === focusedMultiValue)
+      : -1;
+
     let nextFocusedIndex = -1;
     const lastValuesIndex = (selectedOption.length - 1);
-    const curFocusedIndex = focusedMultiValue
-      ? selectedOption.findIndex((option) => option.value === focusedMultiValue)
-      : -1;
 
     if (direction === ValueIndexEnum.NEXT) {
       nextFocusedIndex = (curFocusedIndex > -1 && curFocusedIndex < lastValuesIndex)
@@ -476,8 +491,10 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       ? FOCUSED_MULTI_DEFAULT
       : selectedOption[nextFocusedIndex].value!;
 
-    focusedOption.data && setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    (nextFocusedVal !== focusedMultiValue) && setFocusedMultiValue(nextFocusedVal);
+    if (focusedOption.data)
+      setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    if (nextFocusedVal !== focusedMultiValue)
+      setFocusedMultiValue(nextFocusedVal);
   };
 
   const focusOptionOnArrowKey = (direction: OptionIndex): void => {
@@ -486,14 +503,14 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     }
 
     const index = (direction === OptionIndexEnum.DOWN)
-      ? (focusedOption.index + 1) % menuOptions.length
+      ? ((focusedOption.index + 1) % menuOptions.length)
       : (focusedOption.index > 0)
         ? (focusedOption.index - 1)
         : (menuOptions.length - 1);
 
     focusedMultiValue && setFocusedMultiValue(FOCUSED_MULTI_DEFAULT);
     setFocusedOption({ index, ...menuOptions[index] });
-    scrollToItemIndex(index);
+    listRef.current!.scrollToItem(index);
   };
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
@@ -503,9 +520,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
     if (onKeyDown) {
       onKeyDown(e);
-      if (e.defaultPrevented) {
-        return;
-      }
+      if (e.defaultPrevented) return;
     }
 
     switch (e.key) {
@@ -570,7 +585,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         }
 
         if (focusedMultiValue) {
-          const clearFocusedIndex: number = selectedOption.findIndex((option) => option.value === focusedMultiValue);
+          const clearFocusedIndex = selectedOption.findIndex(({ value }) => value === focusedMultiValue);
+
           const nexFocusedMultiValue: ReactText | null = (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
             ? selectedOption[clearFocusedIndex + 1].value!
             : FOCUSED_MULTI_DEFAULT;
@@ -599,8 +615,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   };
 
   const handleOnControlMouseDown = (e: MouseOrTouchEvent<HTMLDivElement>): void => {
-    if (isDisabled) { return; }
-    if (!isFocused) { focusInput(); }
+    if (isDisabled) return;
+    if (!isFocused) focusInput();
 
     const tagNameNotInput = (e.currentTarget.tagName !== 'INPUT');
 

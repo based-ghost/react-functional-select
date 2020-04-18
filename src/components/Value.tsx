@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import { ValueProps } from '../types';
 import MultiValue from './MultiValue';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../utils';
+import { SelectedOption, ValueProps } from '../types';
 
 const SingleValue = styled.div`
   top: 50%;
@@ -44,13 +44,13 @@ const Value = React.memo<ValueProps>(({
   }
 
   if (!isMulti) {
-    const { data } = selectedOption[0];
-    return <SingleValue>{renderOptionLabel(data)}</SingleValue>;
+    const optionLabel = renderOptionLabel(selectedOption[0].data);
+    return <SingleValue>{optionLabel}</SingleValue>;
   }
 
   return (
     <Fragment>
-      {selectedOption.map(({ data, value }) => (
+      {selectedOption.map(({ data, value }: SelectedOption) => (
         <MultiValue
           key={value}
           data={data}

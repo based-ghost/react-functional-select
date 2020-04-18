@@ -20,25 +20,27 @@ export const useMenuOptions = (
   filterIgnoreCase?: boolean,
   filterIgnoreAccents?: boolean,
   isMulti?: boolean,
-  hideSelectedOptions?: boolean
+  hideSelectedOptions?: boolean,
+  async?: boolean
 ): MenuOption[] => {
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(OPTIONS_DEFAULT);
 
-  const hideSelectedOptionsOrDefault: boolean = (typeof hideSelectedOptions !== 'boolean')
-    ? !!isMulti
-    : hideSelectedOptions;
+  // Prevent effect from executing on search input mutations in 'async' mode (also prevents filtering from executing)
+  const searchValue = !async ? debouncedInputValue : '';
+  const hideSelectedOptionsOrDefault = (typeof hideSelectedOptions !== 'boolean') ? !!isMulti : hideSelectedOptions;
 
   useEffect(() => {
-    const isFilterMatchAny = (filterMatchFrom === FilterMatchEnum.ANY);
-    const selectedValues = selectedOption.length ? selectedOption.map(x => x.value) : undefined;
-    const normalizedInput = trimAndFormatFilterStr(debouncedInputValue, filterIgnoreCase, filterIgnoreCase);
+    const matchAny = (filterMatchFrom === FilterMatchEnum.ANY);
+    const normalizedInput = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
+    const selectedValues = selectedOption.length ? selectedOption.map(({ value }) => value) : undefined;
 
-    const getIsOptionDisabled2: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
-    const getFilterOptionString2: (option: MenuOption) => string = getFilterOptionString || ((option) => (typeof option.label === 'string') ? option.label : `${option.label}`);
+    const getIsOptionDisabledOrDefault: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
+    const getFilterOptionStringOrDefault: (option: MenuOption) => string = getFilterOptionString || ((option) => (typeof option.label === 'string') ? option.label : `${option.label}`);
 
     const isOptionFilterMatch = (menuOption: MenuOption): boolean => {
-      const normalizedOptionLabel = trimAndFormatFilterStr(getFilterOptionString2(menuOption), filterIgnoreCase, filterIgnoreCase);
-      return isFilterMatchAny
+      const optionStr = getFilterOptionStringOrDefault(menuOption);
+      const normalizedOptionLabel = trimAndFormatFilterStr(optionStr, filterIgnoreCase, filterIgnoreAccents);
+      return matchAny
         ? normalizedOptionLabel.indexOf(normalizedInput) > -1
         : normalizedOptionLabel.substr(0, normalizedInput.length) === normalizedInput;
     };
@@ -50,14 +52,11 @@ export const useMenuOptions = (
         data,
         value,
         label: getOptionLabelCB(data),
-        ...(getIsOptionDisabled2(data) && { isDisabled: true }),
+        ...(getIsOptionDisabledOrDefault(data) && { isDisabled: true }),
         ...((selectedValues && selectedValues.includes(value)) && { isSelected: true })
       };
 
-      if (
-        (normalizedInput && !isOptionFilterMatch(menuOption)) ||
-        (hideSelectedOptionsOrDefault && menuOption.isSelected)
-      ) {
+      if ((normalizedInput && !isOptionFilterMatch(menuOption)) || (hideSelectedOptionsOrDefault && menuOption.isSelected)) {
         return;
       }
 
@@ -71,7 +70,7 @@ export const useMenuOptions = (
     }, []);
 
     setMenuOptions(menuOptionsOrDefault || OPTIONS_DEFAULT);
-  }, [options, selectedOption, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, debouncedInputValue, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
+  }, [options, selectedOption, searchValue, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
 
   return menuOptions;
 };

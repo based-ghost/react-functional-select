@@ -55,53 +55,57 @@ const Input = styled.input`
   ${() => isBrowserIE() && '::-ms-clear { display: none; }'}
 `;
 
-const AutosizeInput = React.memo(React.forwardRef<HTMLInputElement, AutosizeInputProps>((
-  {
-    id,
-    onBlur,
-    onFocus,
-    readOnly,
-    onChange,
-    ariaLabel,
-    inputValue,
-    addClassNames,
-    ariaLabelledBy
-  },
-  ref: React.Ref<HTMLInputElement>
-) => {
-  const sizerRef = useRef<HTMLDivElement | null>(null);
-  const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
+const AutosizeInput = React.memo(
+  React.forwardRef<HTMLInputElement, AutosizeInputProps>(
+    (
+      {
+        id,
+        onBlur,
+        onFocus,
+        readOnly,
+        onChange,
+        ariaLabel,
+        inputValue,
+        addClassNames,
+        ariaLabelledBy,
+      },
+      ref: React.Ref<HTMLInputElement>
+    ) => {
+      const sizerRef = useRef<HTMLDivElement | null>(null);
+      const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
 
-  const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
-    ...STATIC_ATTRIBUTES,
-    'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy
-  };
+      const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
+        ...STATIC_ATTRIBUTES,
+        'aria-label': ariaLabel,
+        'aria-labelledby': ariaLabelledBy,
+      };
 
-  useEffect(() => {
-    if (sizerRef.current) {
-      setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
+      useEffect(() => {
+        if (sizerRef.current) {
+          setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
+        }
+      }, [inputValue]);
+
+      return (
+        <div style={WRAPPER_DIV_STYLE}>
+          <Input
+            id={id}
+            ref={ref}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            value={inputValue}
+            readOnly={readOnly}
+            {...autosizeInputAttrs}
+            style={{ width: inputWidth }}
+            onChange={!readOnly ? onChange : undefined}
+            className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
+          />
+          <SizerDiv ref={sizerRef}>{inputValue}</SizerDiv>
+        </div>
+      );
     }
-  }, [inputValue]);
-
-  return (
-    <div style={WRAPPER_DIV_STYLE}>
-      <Input
-        id={id}
-        ref={ref}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        value={inputValue}
-        readOnly={readOnly}
-        {...autosizeInputAttrs}
-        style={{ width: inputWidth }}
-        onChange={!readOnly ? onChange : undefined}
-        className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
-      />
-      <SizerDiv ref={sizerRef}>{inputValue}</SizerDiv>
-    </div>
-  );
-}));
+  )
+);
 
 AutosizeInput.displayName = 'AutosizeInput';
 

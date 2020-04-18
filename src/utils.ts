@@ -67,7 +67,8 @@ function smoothScrollTo(
 
   function smoothScroller(): void {
     currentTime += 5;
-    scrollTo(element, easeOutCubic(currentTime, start, change, duration));
+    const top = easeOutCubic(currentTime, start, change, duration);
+    scrollTo(element, top);
     if (currentTime < duration) {
       window.requestAnimationFrame(smoothScroller);
     } else {
@@ -121,9 +122,9 @@ export function optionClassName(
 ): string {
   let className = OPTION_CLS;
 
-  if (isDisabled) { className += (' ' + OPTION_DISABLED_CLS); }
-  if (isSelected) { className += (' ' + OPTION_SELECTED_CLS); }
-  if (isFocused) { className += (' ' + OPTION_FOCUSED_CLS); }
+  if (isDisabled) className += (' ' + OPTION_DISABLED_CLS);
+  if (isSelected) className += (' ' + OPTION_SELECTED_CLS);
+  if (isFocused) className += (' ' + OPTION_FOCUSED_CLS);
 
   return className;
 }
@@ -151,12 +152,14 @@ export function mergeDeep(target: any, source: any): any {
   const output = { ...target };
 
   Object.keys(source).forEach((key: string): void => {
-    if (isPlainObject(source[key]) && key !== 'animation') {
+    const sourceVal = source[key];
+
+    if (isPlainObject(sourceVal) && key !== 'animation') {
       output[key] = (key in target)
-        ? mergeDeep(target[key], source[key])
-        : source[key];
+        ? mergeDeep(target[key], sourceVal)
+        : sourceVal;
     } else {
-      output[key] = (source[key] || '');
+      output[key] = (sourceVal || '');
     }
   });
 
@@ -208,6 +211,7 @@ export function scrollMenuIntoViewOnOpen(
   // Do scroll and upon scroll animation completion, execute the callback if defined
   const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom || '0', 10);
   const scrollDown = (menuBottom - viewHeight + scrollTop + marginBottom);
+
   smoothScrollTo(scrollParent, scrollDown, menuScrollDuration, handleOnMenuOpen);
 }
 
@@ -225,10 +229,11 @@ export function validateSetValueParam(
   }
 
   // Get array of valid MenuOption values (ReactText[]) and use to check against menuOptions
-  const validValues = normalizeValue(values).reduce((acc: ReactText[], x: SelectedOption) => {
-    isPlainObject(x) && acc.push(getOptionValueCB(x));
-    return acc;
-  }, []);
+  const validValues = normalizeValue(values)
+    .reduce((acc: ReactText[], x: SelectedOption) => {
+      isPlainObject(x) && acc.push(getOptionValueCB(x));
+      return acc;
+    }, []);
 
   if (!isArrayWithLength(validValues)) {
     return SELECTED_OPTION_DEFAULT;
@@ -271,9 +276,9 @@ export function normalizeValue(
   }
 
   // Array has initial values - cast to typeof SelectedOption and return SelectedOption[]
-  return initialValues.map((v) => ({
-    data: v,
-    value: getOptionValueCB(v),
-    label: getOptionLabelCB(v)
+  return initialValues.map((initVal) => ({
+    data: initVal,
+    value: getOptionValueCB(initVal),
+    label: getOptionLabelCB(initVal)
   }));
 }

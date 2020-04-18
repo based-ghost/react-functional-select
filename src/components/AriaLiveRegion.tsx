@@ -39,16 +39,14 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
   } = focusedOption;
 
   const selectedOptionLabel = isArrayWithLength(selectedOption)
-    ? selectedOption.map(x => x.label).join(' ')
+    ? selectedOption.map(({ label }) => label).join(' ')
     : 'N/A';
 
   const selectedOptionMsg = `Selected option: ${selectedOptionLabel}`;
   const optionsMsg = `${optionCount} result(s) available${inputValue ? ` for search input ${inputValue}` : ''}.`;
 
   const focusedMsg = focusedOptionValue
-    ? `Focused option: ${focusedOptionLabel}${
-        isFocusedOptionDisabled ? ' - disabled' : ''
-      }, ${focusedOptionIndex + 1} of ${optionCount}.`
+    ? `Focused option: ${focusedOptionLabel}${isFocusedOptionDisabled ? ' - disabled' : ''}, ${focusedOptionIndex + 1} of ${optionCount}.`
     : '';
 
   const menuMsg = menuOpen
