@@ -444,18 +444,17 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   }, [isMulti, selectedOption, onOptionChange]);
 
   useUpdateEffect(() => {
-    const inputChanged: boolean = !!menuOptions.length &&
-      (menuOptions.length !== options.length || prevMenuOptionsLength.current === 0);
+    const curLength = menuOptions.length;
+    const inputChanged = !!curLength && (curLength !== options.length || prevMenuOptionsLength.current === 0);
 
     if (!isArrayWithLength(menuOptions)) {
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    } else if (menuOptions.length === 1 || inputChanged) {
+    } else if (curLength === 1 || inputChanged) {
       setFocusedOption({ index: 0, ...menuOptions[0] });
       scrollToItemIndex(0);
     }
 
-    // Track the previous value of menuOptions.length (used above)
-    prevMenuOptionsLength.current = menuOptions.length;
+    prevMenuOptionsLength.current = curLength;
   }, [options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
