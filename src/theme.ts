@@ -24,7 +24,7 @@ export default Object.freeze<DefaultTheme>({
   icon: {
     color: '#cccccc',
     hoverColor: '#A6A6A6',
-    padding: '0.45rem 0.9375rem',
+    padding: '0 0.9375rem',
     clear: {
       fontWeight: 900,
       fontSize: '0.85em',

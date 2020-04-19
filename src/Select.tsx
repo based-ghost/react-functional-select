@@ -328,6 +328,12 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     inputRef.current!.focus();
   };
 
+  const scrollToItemIndex = (index: number): void => {
+    if (listRef.current) {
+      listRef.current.scrollToItem(index);
+    }
+  };
+
   const removeSelectedOption = useCallback((value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {
     if (e) {
       e.stopPropagation();
@@ -352,7 +358,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
     setMenuOpen(true);
     setFocusedOption({ index, ...menuOptions[index] });
-    listRef.current!.scrollToItem(index);
+    scrollToItemIndex(index);
   }, [isMulti, menuOptions]);
 
   const selectOption = useCallback((option: SelectedOption, isSelected?: boolean): void => {
@@ -445,7 +451,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
     } else if (menuOptions.length === 1 || inputChanged) {
       setFocusedOption({ index: 0, ...menuOptions[0] });
-      listRef.current!.scrollToItem(0);
+      scrollToItemIndex(0);
     }
 
     // Track the previous value of menuOptions.length (used above)
@@ -512,7 +518,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
     focusedMultiValue && setFocusedMultiValue(FOCUSED_MULTI_DEFAULT);
     setFocusedOption({ index, ...menuOptions[index] });
-    listRef.current!.scrollToItem(index);
+    scrollToItemIndex(index);
   };
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
@@ -742,13 +748,13 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         >
           <Menu
             ref={listRef}
+            isLoading={isLoading}
             maxHeight={menuHeight}
             itemSize={menuItemSize}
             loadingMsg={loadingMsg}
             menuOptions={menuOptions}
             noOptionsMsg={noOptionsMsg}
             selectOption={selectOption}
-            asyncLoading={async && isLoading}
             overscanCount={menuOverscanCount}
             width={menuWidth || theme.menu.width}
             renderOptionLabel={renderOptionLabelCB}

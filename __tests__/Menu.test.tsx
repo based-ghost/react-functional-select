@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { MenuProps, MenuOption } from '../src/types';
 import { render, RenderResult } from '@testing-library/react';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
-import { MENU_ITEM_SIZE_DEFAULT, MENU_MAX_HEIGHT_DEFAULT, NO_OPTIONS_MSG_DEFAULT, FOCUSED_OPTION_DEFAULT } from '../src/constants/defaults';
+import { MENU_ITEM_SIZE_DEFAULT, MENU_MAX_HEIGHT_DEFAULT, LOADING_MSG_DEFAULT, NO_OPTIONS_MSG_DEFAULT, FOCUSED_OPTION_DEFAULT } from '../src/constants/defaults';
 
 // ============================================
 // Helper functions for Menu component
@@ -25,11 +25,12 @@ const createMenuProps = (menuOptions = []): MenuProps => {
   const { index: focusedOptionIndex } = FOCUSED_OPTION_DEFAULT;
 
   return {
-    width: '100%',
     menuOptions,
     selectOption,
+    width: '100%',
     renderOptionLabel,
     focusedOptionIndex,
+    loadingMsg: LOADING_MSG_DEFAULT,
     itemSize: MENU_ITEM_SIZE_DEFAULT,
     maxHeight: MENU_MAX_HEIGHT_DEFAULT,
     noOptionsMsg: NO_OPTIONS_MSG_DEFAULT
@@ -62,4 +63,20 @@ test('The "No Options" message element is rendered when "menuOptions" length = 0
   const props = createMenuProps();
   const { getByText } = renderMenu(props);
   expect(getByText(props.noOptionsMsg)).toBeInTheDocument();
+});
+
+test('The "Loading" message element is NOT rendered when "isLoading" != true', async () => {
+  const props = createMenuProps();
+  const { queryByText } = renderMenu(props);
+  expect(queryByText(props.loadingMsg)).toBeNull();
+});
+
+test('The "Loading" message element is rendered when "isLoading" = true', async () => {
+  const props = {
+    isLoading: true,
+    ...createMenuProps(),
+  };
+
+  const { getByText } = renderMenu(props);
+  expect(getByText(props.loadingMsg)).toBeInTheDocument();
 });
