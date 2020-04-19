@@ -14,6 +14,7 @@
     "curly": false,
     "prettier": true,
     "semicolon": true,
+    "no-console": false,
     "trailing-comma": true,
     "variable-name": false,
     "jsx-no-lambda": false,
@@ -26,6 +27,8 @@
     "cyclomatic-complexity": false,
     "newline-before-return": false,
     "arrow-return-shorthand": true,
+    "no-parameter-reassignment": false,
+    "no-conditional-assignment": false,
     "react-a11y-event-has-role": false,
     "interface-over-type-literal": false
   }

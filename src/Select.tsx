@@ -5,8 +5,8 @@ import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { useDebounce, useMenuHeight, useMenuOptions, useUpdateEffect } from './hooks';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
-import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
 import { FocusedOption, SelectedOption, MouseOrTouchEvent, OptionIndex, ValueIndex, MenuWrapperProps, ControlWrapperProps } from './types';
+import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam, logConsoleError } from './utils';
 import {
   OPTIONS_DEFAULT,
   LOADING_MSG_DEFAULT,
@@ -22,7 +22,6 @@ import {
 import {
   OPTION_CLS,
   IME_KEY_CODE,
-  IS_PRODUCTION,
   OPTION_FOCUSED_CLS,
   MENU_CONTAINER_CLS,
   OPTION_DISABLED_CLS,
@@ -418,9 +417,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   useUpdateEffect(() => {
     if (onSearchChange) {
       onSearchChange(debouncedInputValue);
-    } else if (async && !onSearchChange && !IS_PRODUCTION) {
-      throw new Error(`
-        'async' mode requires that 'onSearchChange' callback function also be defined,
+    } else if (async && !onSearchChange) {
+      logConsoleError(`
+        "async" mode requires that "onSearchChange" callback function also be defined,
         so that the consuming parent component can be notified of changes to the search input value.
       `);
     }

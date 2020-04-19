@@ -1,8 +1,6 @@
 const _attrPrefix = 'rfs';
 const _isTest = (process.env.NODE_ENV === 'test');
 
-export const IS_PRODUCTION = (process.env.NODE_ENV === 'production');
-
 // Keydown event from an Input Method Editor (IME) - event.keyCode === 229
 export const IME_KEY_CODE = 229;
 
