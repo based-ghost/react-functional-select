@@ -62,13 +62,20 @@ storiesOf('React Functional Select', module).add('Events', () => {
             <TextHeader>onInputFocus(e: FocusEvent&lt;HTMLInputElement&gt;): void</TextHeader> -
             executed after the input control is focused
           </ListItem>
+          <ListItem>
+            <TextHeader>onSearchChange(value: string): void</TextHeader> -
+            executed after the search input value changes. Can be debounced by setting the <code>inputDelay</code> property.
+          </ListItem>
         </List>
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>
         <CardHeader>
-          <LabelNote>*For demo purposes, events trigger a notification when executed</LabelNote>
+          <LabelNote>
+            *For demo purposes, events trigger a notification when executed.
+            The onSearchChange callback is demonstrated in the 'Async' story.
+          </LabelNote>
           <CheckboxGroup>
             <Checkbox
               label='onOptionChange'

@@ -445,9 +445,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
   useUpdateEffect(() => {
     const curLength = menuOptions.length;
-    const inputChanged = !!curLength && (curLength !== options.length || prevMenuOptionsLength.current === 0);
+    const inputChanged = curLength > 0 && (curLength !== options.length || prevMenuOptionsLength.current === 0);
 
-    if (!isArrayWithLength(menuOptions)) {
+    if (curLength === 0) {
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
     } else if (curLength === 1 || inputChanged) {
       setFocusedOption({ index: 0, ...menuOptions[0] });

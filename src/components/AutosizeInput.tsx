@@ -1,14 +1,10 @@
-import React, { useEffect, useState, useRef, CSSProperties } from 'react';
+import React, { useEffect, useState, useRef, Fragment } from 'react';
 import styled from 'styled-components';
 import { isBrowserIE } from '../utils';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
 
 const INPUT_MIN_WIDTH_PX = 2;
-
-const WRAPPER_DIV_STYLE: CSSProperties = {
-  display: 'inline-block'
-};
 
 const STATIC_ATTRIBUTES: AutosizeInputHTMLAttributes = {
   type: 'text',
@@ -87,7 +83,7 @@ const AutosizeInput = React.memo(
       }, [inputValue]);
 
       return (
-        <div style={WRAPPER_DIV_STYLE}>
+        <Fragment>
           <Input
             id={id}
             ref={ref}
@@ -101,7 +97,7 @@ const AutosizeInput = React.memo(
             className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
           />
           <SizerDiv ref={sizerRef}>{inputValue}</SizerDiv>
-        </div>
+        </Fragment>
       );
     }
   )
