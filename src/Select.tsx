@@ -5,8 +5,8 @@ import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { useDebounce, useMenuHeight, useMenuOptions, useUpdateEffect } from './hooks';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
+import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
 import { FocusedOption, SelectedOption, MouseOrTouchEvent, OptionIndex, ValueIndex, MenuWrapperProps, ControlWrapperProps } from './types';
-import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam, logConsoleError } from './utils';
 import {
   OPTIONS_DEFAULT,
   LOADING_MSG_DEFAULT,
@@ -96,8 +96,9 @@ export type SelectProps = {
   readonly filterMatchFrom?: 'any' | 'start';
   readonly onMenuOpen?: (...args: any[]) => void;
   readonly onMenuClose?: (...args: any[]) => void;
-  readonly onSearchChange?: (value: string) => void;
+  readonly onInputChange?: (value?: string) => void;
   readonly initialValue?: OptionData | OptionData[];
+  readonly onSearchChange?: (value?: string) => void;
   readonly onOptionChange?: (data: OptionData) => void;
   readonly onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
   readonly getOptionLabel?: (data: OptionData) => ReactText;
@@ -219,12 +220,13 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     loadingNode,
     onInputFocus,
     initialValue,
+    onInputChange,
     addClassNames,
     ariaLabelledBy,
     onOptionChange,
+    onSearchChange,
     getOptionLabel,
     getOptionValue,
-    onSearchChange,
     openMenuOnFocus,
     isAriaLiveEnabled,
     menuOverscanCount,
@@ -254,6 +256,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 ) => {
   // Instance prop & DOM node refs
   const prevMenuOptionsLength = useRef<number>();
+  const onChangeEventValue = useRef<boolean>(false);
   const listRef = useRef<FixedSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -404,7 +407,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   /*** useEffect/useUpdateEffect ***/
   // 1: If autoFocus = true, focus the control following initial mount
   // 2: If control recieves focus & openMenuOnFocus = true, open menu
-  // 3: (useUpdateEffect) If 'onSearchChange' function is defined, run as callback when search value updates (passing latest search value as the param)
+  // 3: If 'onDebouncedInputChange' function is defined, run as callback when the stateful debouncedInputValue updates
+  //    check 'debouncedInputValue' against its previous value to account for cases for consuming component is not properly
+  //    memoizing 'onDebouncedInputChange' property
   // 4: (useUpdateEffect) Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
   // 5: (useUpdateEffect) Handle clearing focused option if menuOptions array has 0 length;
   //    Handle menuOptions changes - conditionally focus first option and do scroll to first option;
@@ -420,16 +425,12 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     }
   }, [isFocused, openMenuOnFocus, openMenuAndFocusOption]);
 
-  useUpdateEffect(() => {
-    if (onSearchChange) {
+  useEffect(() => {
+    if (onSearchChange && onChangeEventValue.current) {
       onSearchChange(debouncedInputValue);
-    } else if (async && !onSearchChange) {
-      logConsoleError(`
-        "async" mode requires that "onSearchChange" callback function also be defined,
-        so that the consuming parent component can be notified of changes to the search input value.
-      `);
+      onChangeEventValue.current = false;
     }
-  }, [async, onSearchChange, debouncedInputValue]);
+  }, [onSearchChange, debouncedInputValue]);
 
   useUpdateEffect(() => {
     if (onOptionChange) {
@@ -658,9 +659,11 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   }, [onInputFocus]);
 
   const handleOnInputChange = useCallback((e: FormEvent<HTMLInputElement>): void => {
+    onChangeEventValue.current = true;
+    onInputChange && onInputChange(e.currentTarget.value || '');
     setMenuOpen(true);
     setInputValue(e.currentTarget.value || '');
-  }, []);
+  }, [onInputChange]);
 
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
     e.stopPropagation();

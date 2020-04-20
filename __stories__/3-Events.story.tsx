@@ -63,8 +63,15 @@ storiesOf('React Functional Select', module).add('Events', () => {
             executed after the input control is focused
           </ListItem>
           <ListItem>
+            <TextHeader>onInputChange(value: string): void</TextHeader> -
+            executed directly following the input control's <code>onChange</code> event.
+          </ListItem>
+          <ListItem>
             <TextHeader>onSearchChange(value: string): void</TextHeader> -
-            executed after the search input value changes. Can be debounced by setting the <code>inputDelay</code> property.
+            executed after the input value is persisted to state. This value also evaluates
+            the <code>inputDelay</code> property for debouncing - this callback is really only useful
+            when <code>inputDelay</code> is defined, and if not, it probably makes more sense to use
+            the <code>onInputChange</code> callback.
           </ListItem>
         </List>
       </ListWrapper>
@@ -72,10 +79,7 @@ storiesOf('React Functional Select', module).add('Events', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <LabelNote>
-            *For demo purposes, events trigger a notification when executed.
-            The onSearchChange callback is demonstrated in the 'Async' story.
-          </LabelNote>
+          <LabelNote>*For demo purposes, events trigger a notification when executed.</LabelNote>
           <CheckboxGroup>
             <Checkbox
               label='onOptionChange'

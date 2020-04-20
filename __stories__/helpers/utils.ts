@@ -26,6 +26,15 @@ export const createSelectOptions = (optionCount: number): Option[] => {
   return results;
 };
 
+export const createAsyncOptions = (optionCount: number, labelSuffix: string): Option[] => {
+  const options = createSelectOptions(optionCount);
+
+  return options.map((option) => ({
+    value: option.value,
+    label: `${option.label} - ${labelSuffix}`
+  }));
+};
+
 export const createThemeOptions = (ThemeEnum: any): Option[] => {
   const results: Option[] = [];
   Object.keys(ThemeEnum).forEach((key: string): void => {
@@ -53,3 +62,8 @@ export const hexToRgba = (hex: string, alpha: number = 1): string => {
 
   return `rgba(${rgbaParts.join(',')})`;
 };
+
+export async function mockHttpRequest(delay: number = 1000): Promise<void> {
+  // tslint:disable-next-line: no-string-based-set-timeout
+  await new Promise(resolve => setTimeout(resolve, delay));
+}

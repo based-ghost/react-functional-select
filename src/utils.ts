@@ -113,15 +113,6 @@ export function isBrowserIE(): boolean {
 }
 
 /**
- * Log warning messages to console in non-production environments.
- */
-export function logConsoleError(message: string): void {
-  if ((process.env.NODE_ENV !== 'production') && console) {
-    console.error(message);
-  }
-}
-
-/**
  * Builds the className property in Option.tsx component.
  */
 export function optionClassName(
