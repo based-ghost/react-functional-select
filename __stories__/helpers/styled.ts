@@ -135,8 +135,10 @@ export const ListItem = styled.li`
 `;
 
 export const TextHeader = styled.span`
-  font-weight: 700;
+  color: black;
+  font-weight: 600;
   line-height: 1.6;
+  font-size: 1.025em;
   letter-spacing: 0.01em;
   word-break: break-word;
   padding: 3px 0 3px 6.4px;
@@ -149,17 +151,18 @@ export const TextHeader = styled.span`
 export const Title = styled.h2`
   font-size: 2rem;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.167;
   margin-top: 0.5rem;
   margin-bottom: .5rem;
 `;
 
 export const SubTitle = styled.h4`
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.167;
   font-size: 1.65rem;
   margin-top: 1.25rem;
   margin-bottom: 0.5rem;
+  letter-spacing: 0.00735em;
 `;
 
 export const ButtonGroup = styled.div`
@@ -210,11 +213,10 @@ export const Button = styled.button`
 `;
 
 export const Label = styled.label`
-  color: #5E5E5E;
   user-select: none;
-  font-style: italic;
   display: inline-block;
   vertical-align: middle;
+  color: rgba(0, 0, 0, 0.54);
   margin: 0.4rem 1.15rem 0rem 0.4rem;
 
   ${MEDIA_QUERY_IS_MOBILE} {
@@ -290,7 +292,6 @@ export const Card = styled.div`
 
 export const CardHeader = styled.div<{ supportMobile?: boolean }>`
   display: flex;
-  font-weight: 600;
   font-size: 1.15rem;
   flex-flow: row wrap;
   background-color: #fff;

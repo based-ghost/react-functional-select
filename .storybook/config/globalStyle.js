@@ -21,7 +21,6 @@ export default createGlobalStyle`
     flex: 1;
     margin: 0;
     display: flex;
-    color: #212428;
     font-size: 1rem;
     font-weight: 400;
     text-align: left;
@@ -29,21 +28,30 @@ export default createGlobalStyle`
     min-height: 120vh;
     flex-direction: column;
     background-color: #fff;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    letter-spacing: 0.00938em;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
   }
 
   em {
     font-weight: 600;
   }
 
+  strong {
+    color: black;
+    font-weight: 600;
+    font-size: 1.025em;
+  }
+
   code {
-    color: #191c20;
+    line-height: 1.4;
     font-size: 0.96em;
-    border-radius: 0.3em;
+    border-radius: 2px;
     word-break: break-word;
+    color: rgba(0, 0, 0, 0.87);
     padding: .15em .2em .05em;
     background-color: rgba(255,229,100,0.2);
-    font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 
     @media only screen and (max-width: 525px) {
       padding: .1em .25em .1em;

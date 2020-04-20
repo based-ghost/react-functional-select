@@ -73,7 +73,7 @@ const AutosizeInput = React.memo(
       const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
         ...STATIC_ATTRIBUTES,
         'aria-label': ariaLabel,
-        'aria-labelledby': ariaLabelledBy,
+        'aria-labelledby': ariaLabelledBy
       };
 
       useEffect(() => {

@@ -13,24 +13,20 @@ type CheckboxProps = {
   readonly onCheck: (checked: boolean) => void;
 };
 
-const COLOR_LABEL = '#5E5E5E';
-const COLOR_BORDER = '#ced4da';
 const COLOR_CHECK_MARK = '#149DF3';
-const COLOR_BORDER_CHECKED = hexToRgba(COLOR_CHECK_MARK, 0.6);
+const COLOR_BORDER = 'rgba(0, 0, 0, 0.54)';
+const COLOR_BORDER_CHECKED = hexToRgba(COLOR_CHECK_MARK, 0.85);
 
 const Label = styled.span`
   user-select: none;
-  font-style: italic;
   margin-left: 1.6rem;
-  color: ${COLOR_LABEL};
 `;
 
 const Input = styled.input`
-  top: 0.2em;
   z-index: 3;
   opacity: 0;
-  width: 1rem;
-  height: 1rem;
+  width: 1em;
+  height: 1em;
   cursor: pointer;
   position: absolute;
 
@@ -58,7 +54,8 @@ const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
   user-select: none;
   position: relative;
   margin-top: 0.5rem;
-  display: inline-block;
+  align-items: center;
+  display: inline-flex;
 
   ${({ isReadOnly }) =>
     isReadOnly
@@ -72,14 +69,13 @@ const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
 `;
 
 const CheckIcon = styled.i`
-  top: 0.2em;
   z-index: 0;
   width: 1rem;
   height: 1rem;
   position: absolute;
   border-style: solid;
+  border-width: 1.5px;
   box-sizing: border-box;
-  border-width: 0.125rem;
   border-radius: 0.0625rem;
   background-color: transparent;
   transition: border-color 0.365s ease;

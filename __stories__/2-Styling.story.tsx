@@ -157,7 +157,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
           />
         </Column>
       </Columns>
-      <SubTitle>Using classNames</SubTitle>
+      <SubTitle>Using Classes</SubTitle>
       <Columns>
         <Column widthPercent={40}>
           <Content>
@@ -179,9 +179,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             </List>
           </ListWrapper>
         </Column>
-        <Column widthPercent={60}>
-          {memoizedMarkupNode}
-        </Column>
+        <Column widthPercent={60}>{memoizedMarkupNode}</Column>
       </Columns>
       <SubTitle>Demo</SubTitle>
       <Hr />

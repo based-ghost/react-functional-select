@@ -51,6 +51,10 @@ storiesOf('React Functional Select', module).add('Events', () => {
             executed after the menu is closed
           </ListItem>
           <ListItem>
+            <TextHeader>onInputChange(value: string): void</TextHeader> -
+            executed after the input control's value changes
+          </ListItem>
+          <ListItem>
             <TextHeader>onKeyDown(e: KeyboardEvent&lt;HTMLDivElement&gt;): void</TextHeader> -
             executed after the onKeyDown event
           </ListItem>
@@ -63,15 +67,11 @@ storiesOf('React Functional Select', module).add('Events', () => {
             executed after the input control is focused
           </ListItem>
           <ListItem>
-            <TextHeader>onInputChange(value: string): void</TextHeader> -
-            executed directly following the input control's <code>onChange</code> event.
-          </ListItem>
-          <ListItem>
             <TextHeader>onSearchChange(value: string): void</TextHeader> -
-            executed after the input value is persisted to state. This value also evaluates
+            executed after the input value is persisted to state; this value also evaluates
             the <code>inputDelay</code> property for debouncing - this callback is really only useful
             when <code>inputDelay</code> is defined, and if not, it probably makes more sense to use
-            the <code>onInputChange</code> callback.
+            the <code>onInputChange</code> callback
           </ListItem>
         </List>
       </ListWrapper>
@@ -79,7 +79,7 @@ storiesOf('React Functional Select', module).add('Events', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <LabelNote>*For demo purposes, events trigger a notification when executed.</LabelNote>
+          <LabelNote>For demo purposes, events trigger a notification when executed.</LabelNote>
           <CheckboxGroup>
             <Checkbox
               label='onOptionChange'

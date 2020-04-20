@@ -257,6 +257,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   // Instance prop & DOM node refs
   const prevMenuOptionsLength = useRef<number>();
   const onChangeEventValue = useRef<boolean>(false);
+
   const listRef = useRef<FixedSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -342,6 +343,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       e.stopPropagation();
       (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
     }
+
     setSelectedOption((prevSelectedOption) => prevSelectedOption.filter(x => x.value !== value));
   }, []);
 
@@ -407,13 +409,12 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   /*** useEffect/useUpdateEffect ***/
   // 1: If autoFocus = true, focus the control following initial mount
   // 2: If control recieves focus & openMenuOnFocus = true, open menu
-  // 3: If 'onDebouncedInputChange' function is defined, run as callback when the stateful debouncedInputValue updates
-  //    check 'debouncedInputValue' against its previous value to account for cases for consuming component is not properly
-  //    memoizing 'onDebouncedInputChange' property
+  // 3: If 'onSearchChange' function is defined, run as callback when the stateful debouncedInputValue updates
+  //    check if onChangeEventValue ref is set true, which indicates the inputValue change was triggered by input change event
   // 4: (useUpdateEffect) Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
   // 5: (useUpdateEffect) Handle clearing focused option if menuOptions array has 0 length;
   //    Handle menuOptions changes - conditionally focus first option and do scroll to first option;
-  //    Handle resetting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
+  //    Handle reseting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
 
   useEffect(() => {
     autoFocus && focusInput();
@@ -427,8 +428,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
   useEffect(() => {
     if (onSearchChange && onChangeEventValue.current) {
-      onSearchChange(debouncedInputValue);
       onChangeEventValue.current = false;
+      onSearchChange(debouncedInputValue);
     }
   }, [onSearchChange, debouncedInputValue]);
 
@@ -446,7 +447,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
   useUpdateEffect(() => {
     const curLength = menuOptions.length;
-    const inputChanged = curLength > 0 && (curLength !== options.length || prevMenuOptionsLength.current === 0);
+    const inputChanged = curLength > 0 && (async || (curLength !== options.length || prevMenuOptionsLength.current === 0));
 
     if (curLength === 0) {
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
@@ -456,7 +457,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     }
 
     prevMenuOptionsLength.current = curLength;
-  }, [options, menuOptions]);
+  }, [async, options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
     const {

@@ -9,6 +9,10 @@ export const numberWithCommas = (value: number): string => {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+export const getRandomInt = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 export const stringifyJavascriptObj = (data: any): string => {
   return JSON.stringify(data || {}, null, 2)
     .replace(/"(\w+)"\s*:/g, '$1:')
@@ -30,7 +34,7 @@ export const createAsyncOptions = (optionCount: number, labelSuffix: string): Op
   const options = createSelectOptions(optionCount);
 
   return options.map((option) => ({
-    value: option.value,
+    value: `${option.value}${labelSuffix}`,
     label: `${option.label} - ${labelSuffix}`
   }));
 };

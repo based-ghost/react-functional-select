@@ -18,6 +18,7 @@
     "trailing-comma": true,
     "variable-name": false,
     "jsx-no-lambda": false,
+    "insecure-random": false,
     "prefer-template": false,
     "ordered-imports": false,
     "no-var-requires": false,

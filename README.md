@@ -13,6 +13,7 @@
 - Extensible styling API with [`styled-components`](https://github.com/styled-components/styled-components)
 - Opt-in properties to make the component fully accessible
 - Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [`react-window`](https://github.com/bvaughn/react-window) + performance conscious code
+- Async mode for fetching dynamic options from a remote server using the search input value (starting in `v2.1.0`)
 
 <strong>Peer dependencies:</strong>
 
@@ -21,14 +22,14 @@
 
 ## Overview
 
-Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely using `React Hooks` and `FunctionComponents`.  The primary design principal revolves around weighing the cost/benefits of adding a feature against the impact to performance & # of lines of code its addition would have. 
+Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely using `React Hooks` and `FunctionComponents`.  The primary design principal revolves around weighing the cost/benefits of adding a feature against the impact to performance & # of lines of code its addition would have.
 
-I opted to exclude less "in-demand" features such as: 
+I opted to exclude less "in-demand" features such as:
 
 - Preventing scroll events on the app's body if the menu is open <strong><em>TODO: add code example</em></strong>
 - Closing an open menu if the app's body is scrolled <strong><em>TODO: add code example</em></strong>
 
-These feature would have added significant overhead to the package. In addition, if we expose the right public methods and/or callback properties, this feature should be trivial to add to wrapping components - proper decoupling and abstraction of code is key to keeping such channels open for similar customizations that can be kept out of this package. 
+These feature would have added significant overhead to the package. In addition, if we expose the right public methods and/or callback properties, this feature should be trivial to add to wrapping components - proper decoupling and abstraction of code is key to keeping such channels open for similar customizations that can be kept out of this package.
 
 ## Installation
 
@@ -70,7 +71,7 @@ const SingleSelectDemo: React.FC = () => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isClearable, setIsClearable] = useState<boolean>(true);
   const [selectedOption, setSelectedOption] = useState<CityOption | null>(null);
-  
+
   const getOptionValue = useCallback((option: CityOption): number => option.id, []);
   const onOptionChange = useCallback((option: CityOption | null): void => setSelectedOption(option), []);
   const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
@@ -108,7 +109,7 @@ const SingleSelectDemo: React.FC = () => {
 
 All properties are technically optional (with a few having default values). Very similar with [`react-select`](https://github.com/JedWatson/react-select)'s API.
 
-> <strong><em>Note that the following non-primitive properties should be properly memoized if defined:</em></strong><br>`clearIcon`, `caretIcon`, `options`, `renderOptionLabel`, `onMenuOpen`, `onOptionChange`, `onKeyDown`, `getOptionLabel`, `getOptionLabel`, `getOptionValue`, `onInputBlur`, `onInputFocus`, `getIsOptionDisabled`, `getFilterOptionString`, `themeConfig`
+> <strong><em>Note that the following non-primitive properties should be properly memoized if defined:</em></strong><br>`clearIcon`, `caretIcon`, `options`, `renderOptionLabel`, `onMenuOpen`, `onOptionChange`, `onKeyDown`, `getOptionLabel`, `getOptionLabel`, `getOptionValue`, `onInputBlur`, `onInputFocus`, `onInputChange`, `onSearchChange`, `getIsOptionDisabled`, `getFilterOptionString`, `themeConfig`
 
 | Property | Type | Default | Description
 :---|:---|:---|:---
@@ -116,6 +117,7 @@ All properties are technically optional (with a few having default values). Very
 |`selectId`| string | `undefined` | The id of the parent div
 |`ariaLabel`| string | `undefined` | Aria label (for assistive tech)
 |`isMulti`| bool | `false` | Does the control allow for multiple selections (defaults to single-value mode)
+|`async`| bool | `false` | Is the component in 'async' mode - when in 'async' mode, updates to the input search value will NOT cause the effect `useMenuOptions` to execute (this effect parses `options` into stateful value `menuOptions`)
 |`autoFocus`| bool | `false` | Focus the control following initial mount of component
 |`isLoading`| bool | `false` | Is the select in a state of loading - shows loading dots animation
 |`isInvalid`| bool | `false` | Is the current value invalid - control recieves invalid styling
@@ -126,6 +128,7 @@ All properties are technically optional (with a few having default values). Very
 |`menuItemSize`| number | `35` | The height of each option in the menu (px)
 |`isClearable`| bool | `false` | Is the select value clearable
 |`noOptionsMsg`| string | `No options` | The text displayed in the menu when there are no options available
+|`loadingMsg`| string | `Loading...` | The text displayed in the menu when `isLoading` === `true`
 |`clearIcon`| ReactNode | `undefined` | Custom clear icon node
 |`caretIcon`| ReactNode | `undefined` | Custom caret icon node
 |`loadingNode`| ReactNode | `undefined` | Custom loading node
@@ -157,6 +160,8 @@ All properties are technically optional (with a few having default values). Very
 |`getOptionValue`| (data: any): ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
 |`onInputBlur`| (e: FocusEvent\<HTMLInputElement\>): void | `undefined` | Handle blur events on the search input
 |`onInputFocus`| (e: FocusEvent\<HTMLInputElement\>): void | `undefined` | Handle focus events on the search input
+|`onInputChange`| (value: string): void | `undefined` | Handle change events on the search input
+|`onSearchChange`| (value: string): void | `undefined` | Callback executed after the debounced search input value is persisted to the component's state - if no debounce is defined via the `inputDelay` property, it probably makes more sense to use `onInputChange` instead.
 |`renderOptionLabel`| (data: any): ReactNode | `undefined` | Formats option labels in the menu and control as JSX.Elements or React Components (by default will use `getOptionLabel`)
 |`getIsOptionDisabled`| (data: any): boolean | `undefined` | When defined will evaluate each option to determine whether it is disabled or not (if not specified, each option will be evaluated as to whether or not it contains a property of `isDisabled` with a value of `true`)
 |`getFilterOptionString`| (option: any): string | `undefined` | When defined will take each option and generate a string used in the filtering process (by default, will use option.label)

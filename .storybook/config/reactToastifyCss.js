@@ -76,8 +76,8 @@ export default css`
       max-height: 800px;
       overflow: hidden;
       font-size: 1.075rem;
-      font-weight: 600;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      font-weight: 400;
+      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
       cursor: pointer;
       direction: ltr;
       &--default {
@@ -86,7 +86,7 @@ export default css`
       }
       &--info {
         color: #fff;
-        background: #149DF3;
+        background: #149df3;
       }
       &-body {
         flex: 1;
@@ -139,7 +139,15 @@ export default css`
         transition: transform 0.2s;
       }
       &--default {
-        background: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55);
+        background: linear-gradient(
+          to right,
+          #4cd964,
+          #5ac8fa,
+          #007aff,
+          #34aadc,
+          #5856d6,
+          #ff2d55
+        );
       }
     }
   }

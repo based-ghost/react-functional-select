@@ -19,7 +19,7 @@ export default Object.freeze<DefaultTheme>({
     size: '0.625rem',
     padding: '0.375rem 0.75rem',
     animation: BOUNCE_ANIMATION_CSS,
-    color: 'rgba(0, 123, 255, 0.42)',
+    color: 'rgba(0, 123, 255, 0.42)'
   },
   icon: {
     color: '#cccccc',
@@ -46,7 +46,7 @@ export default Object.freeze<DefaultTheme>({
     padding: '0.375rem 0.75rem',
     boxShadowColor: 'rgba(0, 123, 255, 0.25)',
     focusedBorderColor: 'rgba(0, 123, 255, 0.75)',
-    transition: 'box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out',
+    transition: 'box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out'
   },
   menu: {
     width: '100%',
