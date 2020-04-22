@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react';
 import { createSelectOptions } from './helpers/utils';
 import { REACT_WINDOW_PACKAGE } from './helpers/constants';
 import { PackageLink, OptionsCountButton } from './helpers/components';
-import { Hr, Title, SubTitle, List, ListWrapper, ListItem, Label, Container, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
+import { Hr, Title, SubTitle, List, ListWrapper, ListItem, Container, ButtonGroup, Card, CardHeader, CardBody, SelectContainer } from './helpers/styled';
 
 storiesOf('React Functional Select', module).add('Windowing', () => {
   const selectRef = useRef<SelectRef | null>(null);
@@ -69,7 +69,6 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
       <Card>
         <CardHeader supportMobile>
           <ButtonGroup>
-            <Label>Load Testing Tiers</Label>
             <OptionsCountButton
               count={100}
               optionsCount={optionsCount}
