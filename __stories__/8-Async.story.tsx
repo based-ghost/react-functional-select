@@ -73,7 +73,7 @@ storiesOf('React Functional Select', module).add('Async', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <LabelNote>Search input debounced 375ms and the mock http call resolves after 500ms</LabelNote>
+          <LabelNote>Search debounced 375ms and mock HTTP call resolves after 500ms</LabelNote>
         </CardHeader>
         <CardBody>
           <SelectContainer>

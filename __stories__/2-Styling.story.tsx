@@ -137,7 +137,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             properties will replace those in the default theme.
           </Content>
           <Content>
-            Starting in <code>v2.0.0</code>, some of the nested objects in the{' '}
+            Starting in <strong>v2.0.0</strong>, some of the nested objects in the{' '}
             <code>themeConfig</code> object contain a <code>css</code>{' '}
             property of type <code>string</code> |{' '}
             <code>FlattenSimpleInterpolation</code> | <code>undefined</code>{' '}

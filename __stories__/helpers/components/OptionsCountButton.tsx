@@ -14,6 +14,7 @@ type OptionsCountButtonProps = {
 };
 
 const StyledButton = styled(Button)<StyledButtonProps>`
+  width: 6.25rem;
   transition: color 0.115s ease, background-color 0.115s ease;
 
   ${({ isActive }) =>
@@ -37,15 +38,12 @@ const OptionsCountButton: React.FC<OptionsCountButtonProps> = ({
   optionsCount,
   setOptionsCount
 }) => {
-  const isActive = !!(count === optionsCount);
+  const isActive = (count === optionsCount);
   const onClick = !isActive ? (() => setOptionsCount(count)) : undefined;
 
   return (
-    <StyledButton
-      onClick={onClick}
-      isActive={isActive}
-    >
-      {`${numberWithCommas(count)} Options`}
+    <StyledButton onClick={onClick} isActive={isActive}>
+      {numberWithCommas(count)}
     </StyledButton>
   );
 };

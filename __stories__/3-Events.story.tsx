@@ -79,7 +79,7 @@ storiesOf('React Functional Select', module).add('Events', () => {
       <Hr />
       <Card>
         <CardHeader>
-          <LabelNote>For demo purposes, events trigger a notification when executed.</LabelNote>
+          <LabelNote>Events in demo will trigger a toast notification</LabelNote>
           <CheckboxGroup>
             <Checkbox
               label='onOptionChange'
