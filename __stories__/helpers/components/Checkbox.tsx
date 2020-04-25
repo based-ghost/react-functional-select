@@ -15,7 +15,7 @@ type CheckboxProps = {
 
 const COLOR_CHECK_MARK = '#149DF3';
 const COLOR_BORDER = 'rgba(0, 0, 0, 0.54)';
-const COLOR_BORDER_CHECKED = hexToRgba(COLOR_CHECK_MARK, 0.85);
+const COLOR_BORDER_CHECKED = hexToRgba(COLOR_CHECK_MARK, 0.8);
 
 const Label = styled.span`
   user-select: none;
@@ -96,14 +96,14 @@ const CheckIcon = styled.i`
   }
 
   :after {
-    left: 0;
-    top: 0.3rem;
+    top: 0.33rem;
+    left: 0.01rem;
     transform: rotate(-45deg);
   }
 
   :before {
-    top: 0.65rem;
-    left: 0.38rem;
+    top: 0.68rem;
+    left: 0.39rem;
     transform: rotate(-135deg);
   }
 `;
