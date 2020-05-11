@@ -1,6 +1,16 @@
 import { OptionIndex, ValueIndex } from '../types';
 
 /**
+ * Menu position in relation to the control.
+ * Defaults to 'auto' - meaning, if not enough space below control, then place above.
+ */
+export enum MenuPositionEnum {
+  TOP = 'top',
+  AUTO = 'auto',
+  BOTTOM = 'bottom'
+}
+
+/**
  * Property filterMatchFrom values. Defaults to 'any'.
  * Determines where to match search input in option during filter process.
  */

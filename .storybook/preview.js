@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { toast } from 'react-toastify';
 import { addParameters } from '@storybook/react';
-import { toast, ToastPosition } from 'react-toastify';
 import { polyfillBrowserMS, GlobalStyle } from './config';
 
 // Polyfill IE and Edge browsers
@@ -34,7 +34,7 @@ const completeSetupDOM = () => {
     autoClose: 2500,
     draggable: false,
     newestOnTop: true,
-    position: ToastPosition.TOP_RIGHT,
+    position: 'top-right'
   });
 
   if (globalStyleEl) {

@@ -102,19 +102,23 @@ export default css`
 
     .Toastify__close-button {
       color: #fff;
-      font-weight: 700;
-      font-size: 1rem;
       background: transparent;
       outline: none;
       border: none;
       padding: 0;
       cursor: pointer;
       opacity: 0.7;
-      transition: color 0.3s ease, opacity 0.3s ease;
+      transition: 0.3s ease;
       align-self: flex-start;
       &--default {
         color: #000;
         opacity: 0.3;
+      }
+      & > svg {
+        fill: currentColor;
+        height: 16px;
+        width: 14px;
+        font-weight: 700;
       }
       &:hover,
       &:focus {

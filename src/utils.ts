@@ -99,7 +99,7 @@ export function isPlainObject(test: any): boolean {
 
 /**
  * Determines if the current device is touch-enabled.
- * Prefer (pointer: coarse) over (any-pointer: coarse) since we are likely only targeting the primary input
+ * Prefer (pointer: coarse) over (any-pointer: coarse) since we are likely only targeting the primary input.
  */
 export function isTouchDevice(): boolean {
   return window.matchMedia('(pointer: coarse)').matches;
@@ -122,9 +122,12 @@ export function optionClassName(
 ): string {
   let className = OPTION_CLS;
 
-  if (isDisabled) className += (' ' + OPTION_DISABLED_CLS);
-  if (isSelected) className += (' ' + OPTION_SELECTED_CLS);
-  if (isFocused) className += (' ' + OPTION_FOCUSED_CLS);
+  if (isDisabled)
+    className += (' ' + OPTION_DISABLED_CLS);
+  if (isSelected)
+    className += (' ' + OPTION_SELECTED_CLS);
+  if (isFocused)
+    className += (' ' + OPTION_FOCUSED_CLS);
 
   return className;
 }
@@ -151,19 +154,53 @@ export function trimAndFormatFilterStr(
 export function mergeDeep(target: any, source: any): any {
   const output = { ...target };
 
-  Object.keys(source).forEach((key: string): void => {
+  Object.keys(source).forEach(key => {
     const sourceVal = source[key];
 
-    if (isPlainObject(sourceVal) && key !== 'animation') {
-      output[key] = (key in target)
-        ? mergeDeep(target[key], sourceVal)
-        : sourceVal;
-    } else {
-      output[key] = (sourceVal || '');
-    }
+    output[key] =
+      (isPlainObject(sourceVal) && key !== 'animation')
+        ? (key in target)
+          ? mergeDeep(target[key], sourceVal)
+          : sourceVal
+        : sourceVal || '';
   });
 
   return output;
+}
+
+/**
+ * Calculates the top property value for the MenuWrapper <div />.
+ * This property is only generated when the position of the menu is above the control.
+ */
+export const calculateMenuTop = (
+  menuHeight: number,
+  menuEl: HTMLElement | null,
+  controlEl: HTMLElement | null
+): string => {
+  const menuHeightOrDefault = (menuHeight > 0 || !menuEl)
+    ? menuHeight
+    : menuEl.getBoundingClientRect().height;
+
+  const controlHeight = controlEl
+    ? controlEl.getBoundingClientRect().height
+    : 0;
+
+  const menuElStyle = menuEl && getComputedStyle(menuEl);
+  const marginBottom = menuElStyle ? parseInt(menuElStyle.marginBottom || '0', 10) : 0;
+  const marginTop = menuElStyle ? parseInt(menuElStyle.marginTop || '0', 10) : 0;
+
+  return `calc(${-Math.abs(menuHeightOrDefault + controlHeight)}px + ${marginBottom + marginTop}px)`;
+};
+
+export function menuFitsBelowControl(menuEl: HTMLElement | null): boolean {
+  if (!menuEl) return true;
+
+  const menuRect = menuEl.getBoundingClientRect();
+  const scrollParent = getScrollParent(menuEl);
+  const scrollTop = getScrollTop(scrollParent);
+  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - scrollTop - menuRect.top);
+
+  return (scrollSpaceBelow >= menuRect.height);
 }
 
 /**
@@ -176,42 +213,41 @@ export function scrollMenuIntoViewOnOpen(
   scrollMenuIntoView: boolean | undefined,
   handleOnMenuOpen: (availableSpace?: number) => void
 ): void {
-  // Scroll is disabled with flag or issue retrieving dom element
-  if (!scrollMenuIntoView || !menuEl || !menuEl.getBoundingClientRect) {
+  if (!menuEl) {
     handleOnMenuOpen();
     return;
   }
 
-  const {
-    top: menuTop,
-    bottom: menuBottom,
-    height: menuHeight
-  } = menuEl.getBoundingClientRect();
-
-  const viewHeight = window.innerHeight;
-  const viewSpaceBelow = viewHeight - menuTop;
+  const viewInner = window.innerHeight;
+  const menuRect = menuEl.getBoundingClientRect();
+  const viewSpaceBelow = viewInner - menuRect.top;
 
   // Menu will fit in available space - no need to do scroll
-  if (viewSpaceBelow >= menuHeight) {
+  if (viewSpaceBelow >= menuRect.height) {
     handleOnMenuOpen();
     return;
   }
 
   const scrollParent = getScrollParent(menuEl);
   const scrollTop = getScrollTop(scrollParent);
-  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - scrollTop - menuTop);
+  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - scrollTop - menuRect.top);
+  const notEnoughSpaceBelow = scrollSpaceBelow < menuRect.height;
 
   // Sufficient space does not exist to scroll menu fully into view
-  // Calculate available space and use that as the the new menuHeight (use scrollSpaceBelow for now)
-  if (scrollSpaceBelow < menuHeight) {
-    handleOnMenuOpen(scrollSpaceBelow);
+  // ...Calculate available space and use that as the the new menuHeight (use scrollSpaceBelow for now).
+  // OR scrollMenuIntoView = false
+  if (notEnoughSpaceBelow || !scrollMenuIntoView) {
+    const condensedMenuHeight = notEnoughSpaceBelow
+      ? scrollSpaceBelow
+      : undefined;
+
+    handleOnMenuOpen(condensedMenuHeight);
     return;
   }
 
   // Do scroll and upon scroll animation completion, execute the callback if defined
   const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom || '0', 10);
-  const scrollDown = (menuBottom - viewHeight + scrollTop + marginBottom);
-
+  const scrollDown = (menuRect.bottom - viewInner + scrollTop + marginBottom);
   smoothScrollTo(scrollParent, scrollDown, menuScrollDuration, handleOnMenuOpen);
 }
 

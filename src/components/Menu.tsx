@@ -19,8 +19,8 @@ const NoOptionsMsg = styled.div`
 const Menu = React.forwardRef<FixedSizeList, MenuProps>((
   {
     width,
+    height,
     itemSize,
-    maxHeight,
     isLoading,
     loadingMsg,
     menuOptions,
@@ -48,11 +48,11 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
       <FixedSizeList
         ref={ref}
         width={width}
+        height={height}
         itemSize={itemSize}
         itemData={itemData}
         overscanCount={overscanCount}
         itemCount={menuOptions.length}
-        height={Math.min(maxHeight, menuOptions.length * itemSize)}
       >
         {Option}
       </FixedSizeList>

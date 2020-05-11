@@ -13,7 +13,9 @@ const IndicatorIconsWrapper = styled.div`
 `;
 
 const IndicatorIcon = styled.div`
+  height: 100%;
   display: flex;
+  align-items: center;
   box-sizing: border-box;
   ${({ theme: { icon }}) => `
     color: ${icon.color};

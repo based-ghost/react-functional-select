@@ -150,6 +150,7 @@ All properties are technically optional (with a few having default values). Very
 |`scrollMenuIntoView`| bool | `true` | Performs animated scroll to show menu in view when menu is opened (if there is room to do so)
 |`backspaceClearsValue`| bool | `true` | Remove the currently focused option when the user presses backspace
 |`filterMatchFrom`| 'any' OR 'start' | `'any'` | Position in stringified option to match search input
+|`menuPosition`| 'top' OR 'auto' OR 'bottom' | `'bottom'` | Determines where menu will be placed in relation to the control - `'auto'` will first check if menu has space to open below the control, otherwise it will open above the control.
 |`filterIgnoreCase`| bool | `true` | Search input ignores case of characters when comparing
 |`filterIgnoreAccents`| bool | `false` | Search input will strip diacritics from string before comparing
 |`onMenuOpen`| (...args: any[]): void | `undefined` | Callback function executed after the menu is opened

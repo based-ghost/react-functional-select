@@ -58,6 +58,7 @@ export type CaretProps = {
 };
 
 export type MenuWrapperProps = {
+  readonly menuTop?: string;
   readonly hideMenu: boolean;
 };
 
@@ -98,8 +99,8 @@ export type MultiValueProps = SelectedOption & {
 };
 
 export type MenuProps = {
+  readonly height: number;
   readonly itemSize: number;
-  readonly maxHeight: number;
   readonly loadingMsg: string;
   readonly isLoading?: boolean;
   readonly noOptionsMsg: string;

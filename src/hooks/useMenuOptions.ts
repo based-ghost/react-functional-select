@@ -53,7 +53,7 @@ export const useMenuOptions = (
         value,
         label: getOptionLabelCB(data),
         ...(getIsOptionDisabledOrDefault(data) && { isDisabled: true }),
-        ...((selectedValues && selectedValues.includes(value)) && { isSelected: true })
+        ...(selectedValues && selectedValues.includes(value) && { isSelected: true })
       };
 
       if ((normalizedInput && !isOptionFilterMatch(menuOption)) || (hideSelectedOptionsOrDefault && menuOption.isSelected)) {
@@ -69,7 +69,7 @@ export const useMenuOptions = (
       return acc;
     }, []);
 
-    setMenuOptions(menuOptionsOrDefault || OPTIONS_DEFAULT);
+    setMenuOptions(menuOptionsOrDefault);
   }, [options, selectedOption, searchValue, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
 
   return menuOptions;

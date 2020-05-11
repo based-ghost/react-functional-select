@@ -30,9 +30,9 @@ const createMenuProps = (menuOptions = []): MenuProps => {
     width: '100%',
     renderOptionLabel,
     focusedOptionIndex,
+    height: MENU_MAX_HEIGHT_DEFAULT,
     loadingMsg: LOADING_MSG_DEFAULT,
     itemSize: MENU_ITEM_SIZE_DEFAULT,
-    maxHeight: MENU_MAX_HEIGHT_DEFAULT,
     noOptionsMsg: NO_OPTIONS_MSG_DEFAULT
   };
 };
