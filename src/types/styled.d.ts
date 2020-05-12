@@ -28,10 +28,9 @@ declare module 'styled-components' {
       hoverColor: string;
       css?: string | FlattenSimpleInterpolation;
       clear: {
-        fontSize: string;
-        fontFamily: string;
+        width: string;
+        height: string;
         transition: string;
-        fontWeight: string | number;
         animation: string | FlattenSimpleInterpolation;
       };
       caret: {

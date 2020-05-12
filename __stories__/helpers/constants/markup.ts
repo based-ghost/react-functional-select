@@ -25,12 +25,26 @@ export const CLASS_NAME_HTML =
       </div>
     </div>
     <div>
-      <div aria-hidden="true">
-        <div class="${CLEAR_ICON_CLS}">X</div>
+      <div>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 14 16"
+          class="${CLEAR_ICON_CLS}"
+        >
+          <path
+            fillRule="evenodd"
+            d="M7.71 8.23l3.75 3.75-1.48 1.48-3
+              .75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4
+              .48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
+          />
+        </svg>
       </div>
       <div />
-      <div aria-hidden="true">
-        <div class="${CARET_ICON_CLS}" />
+      <div>
+        <div
+          aria-hidden="true"
+          class="${CARET_ICON_CLS}"
+        />
       </div>
     </div>
   </div>

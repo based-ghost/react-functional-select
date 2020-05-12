@@ -34,6 +34,7 @@ const createValueProps = () => {
   const props: ValueProps = {
     isMulti: false,
     inputValue: '',
+    isTouchDevice: true,
     placeholder: PLACEHOLDER_DEFAULT,
     selectedOption: SELECTED_OPTION_DEFAULT,
     renderOptionLabel: renderOptionLabelSpy,

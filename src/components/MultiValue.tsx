@@ -47,17 +47,17 @@ const MultiValue: React.FC<MultiValueProps> = ({
   data,
   value,
   isFocused,
+  isTouchDevice,
   renderOptionLabel,
   removeSelectedOption
 }) => (
   <MultiValueWrapper>
     <Label>{renderOptionLabel(data)}</Label>
     <Clear
-      aria-hidden='true'
       isFocused={isFocused}
       data-testid={CLEAR_ICON_MV_TESTID}
-      onTouchEnd={(e) => removeSelectedOption(value, e)}
       onMouseDown={(e) => removeSelectedOption(value, e)}
+      onTouchEnd={isTouchDevice ? ((e) => removeSelectedOption(value, e)) : undefined}
     >X</Clear>
   </MultiValueWrapper>
 );

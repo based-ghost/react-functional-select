@@ -3,10 +3,10 @@ import DefaultThemeObj from './theme';
 import { FixedSizeList } from 'react-window';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
-import { useDebounce, useMenuPositioner, useMenuOptions, useUpdateEffect } from './hooks';
 import { MenuPositionEnum, FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
+import { useDebounce, useMenuPositioner, useMenuOptions, useIsTouchDevice, useUpdateEffect } from './hooks';
 import { FocusedOption, SelectedOption, MouseOrTouchEvent, OptionIndex, ValueIndex, MenuWrapperProps, ControlWrapperProps } from './types';
-import { calculateMenuTop, mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
+import { calculateMenuTop, mergeDeep, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
 import {
   OPTIONS_DEFAULT,
   LOADING_MSG_DEFAULT,
@@ -266,6 +266,10 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const inputRef = useRef<HTMLInputElement | null>(null);
   const controlRef = useRef<HTMLDivElement | null>(null);
 
+  // Is current device touch-enabled? Adds various touch events to elements if true.
+  const isTouchDevice = useIsTouchDevice();
+  const blurInputOnSelectOrTouch = (typeof blurInputOnSelect === 'boolean') ? blurInputOnSelect : isTouchDevice;
+
   // Stateful values
   const [inputValue, setInputValue] = useState<string>('');
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -370,17 +374,13 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setSelectedOption((prevSelectedOption) => (!isMulti ? [option] : [...prevSelectedOption, option]));
     }
 
-    const blurInputOnSelectOrDefault = (typeof blurInputOnSelect === 'boolean')
-      ? blurInputOnSelect
-      : isTouchDevice();
-
-    if (blurInputOnSelectOrDefault) {
+    if (blurInputOnSelectOrTouch) {
       blurInput();
     } else if (closeMenuOnSelect) {
       setMenuOpen(false);
       setInputValue('');
     }
-  }, [isMulti, closeMenuOnSelect, blurInputOnSelect, removeSelectedOption]);
+  }, [isMulti, closeMenuOnSelect, removeSelectedOption, blurInputOnSelectOrTouch]);
 
   useImperativeHandle(ref, () => ({
     blur: blurInput,
@@ -692,16 +692,17 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
           isInvalid={isInvalid}
           isFocused={isFocused}
           isDisabled={isDisabled}
-          onTouchEnd={handleOnControlMouseDown}
           onMouseDown={handleOnControlMouseDown}
           data-testid={CONTROL_CONTAINER_TESTID}
           className={addClassNames ? CONTROL_CONTAINER_CLS : undefined}
+          onTouchEnd={isTouchDevice ? handleOnControlMouseDown : undefined}
         >
           <ValueWrapper>
             <Value
               isMulti={isMulti}
               inputValue={inputValue}
               placeholder={placeholder}
+              isTouchDevice={isTouchDevice}
               selectedOption={selectedOption}
               focusedMultiValue={focusedMultiValue}
               renderOptionLabel={renderOptionLabelCB}
@@ -728,6 +729,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             isLoading={isLoading}
             loadingNode={loadingNode}
             addClassNames={addClassNames}
+            isTouchDevice={isTouchDevice}
             onClearMouseDown={handleOnClearMouseDown}
             showClear={!!(isClearable && !isDisabled && isArrayWithLength(selectedOption))}
             onCaretMouseDown={(!isDisabled && !openMenuOnClick) ? handleOnCaretMouseDown : undefined}

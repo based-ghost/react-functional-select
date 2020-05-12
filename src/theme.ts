@@ -26,11 +26,10 @@ export default Object.freeze<DefaultTheme>({
     hoverColor: '#A6A6A6',
     padding: '0 0.9375rem',
     clear: {
-      fontWeight: 900,
-      fontSize: '0.85em',
+      width: '14px',
+      height: '16px',
       animation: FADE_IN_ANIMATION_CSS,
-      transition: 'color 0.15s ease-in-out',
-      fontFamily: 'Helvetica, Arial, sans-serif'
+      transition: 'color 0.15s ease-in-out'
     },
     caret: {
       size: '7px',

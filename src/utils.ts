@@ -98,14 +98,6 @@ export function isPlainObject(test: any): boolean {
 }
 
 /**
- * Determines if the current device is touch-enabled.
- * Prefer (pointer: coarse) over (any-pointer: coarse) since we are likely only targeting the primary input.
- */
-export function isTouchDevice(): boolean {
-  return window.matchMedia('(pointer: coarse)').matches;
-}
-
-/**
  * Determines if the current browser is IE.
  */
 export function isBrowserIE(): boolean {
@@ -265,11 +257,11 @@ export function validateSetValueParam(
   }
 
   // Get array of valid MenuOption values (ReactText[]) and use to check against menuOptions
-  const validValues = normalizeValue(values)
-    .reduce((acc: ReactText[], x: SelectedOption) => {
-      isPlainObject(x) && acc.push(getOptionValueCB(x));
-      return acc;
-    }, []);
+  const normalizedVal = normalizeValue(values);
+  const validValues = normalizedVal.reduce((acc: ReactText[], x: SelectedOption) => {
+    isPlainObject(x) && acc.push(getOptionValueCB(x));
+    return acc;
+  }, []);
 
   if (!isArrayWithLength(validValues)) {
     return SELECTED_OPTION_DEFAULT;

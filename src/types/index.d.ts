@@ -86,6 +86,7 @@ export type ValueProps = {
   readonly isMulti?: boolean;
   readonly inputValue: string;
   readonly placeholder: string;
+  readonly isTouchDevice: boolean;
   readonly selectedOption: SelectedOption[];
   readonly focusedMultiValue: ReactText | null;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;
@@ -94,6 +95,7 @@ export type ValueProps = {
 
 export type MultiValueProps = SelectedOption & {
   readonly isFocused: boolean;
+  readonly isTouchDevice: boolean;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;
   readonly removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
 };
@@ -142,6 +144,7 @@ export type IndicatorIconsProps = {
   readonly isInvalid?: boolean;
   readonly clearIcon?: ReactNode;
   readonly caretIcon?: ReactNode;
+  readonly isTouchDevice: boolean;
   readonly loadingNode?: ReactNode;
   readonly addClassNames?: boolean;
   readonly onCaretMouseDown?: MouseOrTouchEventHandler<HTMLDivElement>;

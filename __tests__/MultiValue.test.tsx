@@ -28,6 +28,7 @@ const createMultiValueProps = () => {
     data,
     isFocused: false,
     value: data.value,
+    isTouchDevice: true,
     renderOptionLabel: renderOptionLabelSpy,
     removeSelectedOption: removeSelectedOptionSpy
   };
