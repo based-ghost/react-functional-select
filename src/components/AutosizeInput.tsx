@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, Fragment } from 'react';
+import { isEdgeOrIE } from '../utils';
 import styled from 'styled-components';
-import { isBrowserIE } from '../utils';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
 
@@ -48,7 +48,7 @@ const Input = styled.input`
   }
 
   ${({ theme }) => theme.input.css}
-  ${isBrowserIE() && '::-ms-clear { display: none; }'}
+  ${isEdgeOrIE() && '::-ms-clear { display: none; }'}
 `;
 
 const AutosizeInput = React.memo(

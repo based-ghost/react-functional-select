@@ -1,7 +1,7 @@
 import { ReactText } from 'react';
 import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
 import { MenuOption, OptionData, SelectedOption } from './types';
-import { OVERFLOW_REGEXP, DIACRITICS_REGEXP, IE_BROWSER_REGEXP } from './constants/regexp';
+import { OVERFLOW_REGEXP, DIACRITICS_REGEXP, IE_EDGE_BROWSER_REGEXP } from './constants/regexp';
 import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from './constants/dom';
 
 // ============================================
@@ -84,9 +84,9 @@ function smoothScrollTo(
 // ============================================
 
 /**
- * Determines if the current browser is IE.
+ * Determines if the current browser is IE or Edge (standard/chromium).
  */
-export const isBrowserIE = (): boolean => IE_BROWSER_REGEXP.test(window.navigator.userAgent);
+export const isEdgeOrIE = (): boolean => IE_EDGE_BROWSER_REGEXP.test(navigator.userAgent);
 
 /**
  * Tests object for type of array with a length of at least 1.
