@@ -48,7 +48,7 @@ const Input = styled.input`
   }
 
   ${({ theme }) => theme.input.css}
-  ${() => isBrowserIE() && '::-ms-clear { display: none; }'}
+  ${isBrowserIE() && '::-ms-clear { display: none; }'}
 `;
 
 const AutosizeInput = React.memo(
@@ -73,7 +73,8 @@ const AutosizeInput = React.memo(
       const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
         ...STATIC_ATTRIBUTES,
         'aria-label': ariaLabel,
-        'aria-labelledby': ariaLabelledBy
+        'aria-labelledby': ariaLabelledBy,
+        'style': { width: inputWidth }
       };
 
       useEffect(() => {
@@ -92,7 +93,6 @@ const AutosizeInput = React.memo(
             value={inputValue}
             readOnly={readOnly}
             {...autosizeInputAttrs}
-            style={{ width: inputWidth }}
             onChange={!readOnly ? onChange : undefined}
             className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
           />

@@ -339,13 +339,13 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     }
   };
 
-  const removeSelectedOption = useCallback((value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {
+  const removeSelectedOption = useCallback((removeValue?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {
     if (e) {
       e.stopPropagation();
       (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
     }
 
-    setSelectedOption((prevSelectedOption) => prevSelectedOption.filter(x => x.value !== value));
+    setSelectedOption((prevSelectedOption) => prevSelectedOption.filter(({ value }) => value !== removeValue));
   }, []);
 
   const openMenuAndFocusOption = useCallback((position: OptionIndex): void => {
@@ -580,7 +580,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         if (focusedMultiValue) {
           const clearFocusedIndex = selectedOption.findIndex(({ value }) => value === focusedMultiValue);
 
-          const nexFocusedMultiValue: ReactText | null = (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
+          const nexFocusedMultiValue = (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
             ? selectedOption[clearFocusedIndex + 1].value!
             : FOCUSED_MULTI_DEFAULT;
 
@@ -658,14 +658,12 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
     e.stopPropagation();
-    (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
-    focusInput();
-
-    if (menuOpen) {
-      setMenuOpen(false);
-    } else {
-      openMenuAndFocusOption(OptionIndexEnum.FIRST);
+    if (e.type === MOUSE_DOWN_EVENT_TYPE) {
+      e.preventDefault();
     }
+
+    focusInput();
+    menuOpen ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
   }, [menuOpen, openMenuAndFocusOption]);
 
   /**

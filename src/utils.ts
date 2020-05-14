@@ -84,6 +84,11 @@ function smoothScrollTo(
 // ============================================
 
 /**
+ * Determines if the current browser is IE.
+ */
+export const isBrowserIE = (): boolean => IE_BROWSER_REGEXP.test(window.navigator.userAgent);
+
+/**
  * Tests object for type of array with a length of at least 1.
  */
 export function isArrayWithLength(test: any): boolean {
@@ -95,13 +100,6 @@ export function isArrayWithLength(test: any): boolean {
  */
 export function isPlainObject(test: any): boolean {
   return test && (typeof test === 'object') && !Array.isArray(test);
-}
-
-/**
- * Determines if the current browser is IE.
- */
-export function isBrowserIE(): boolean {
-  return IE_BROWSER_REGEXP.test(window.navigator.userAgent);
 }
 
 /**
@@ -147,14 +145,12 @@ export function mergeDeep(target: any, source: any): any {
   const output = { ...target };
 
   Object.keys(source).forEach(key => {
-    const sourceVal = source[key];
-
     output[key] =
-      (isPlainObject(sourceVal) && key !== 'animation')
+      (isPlainObject(source[key]) && key !== 'animation')
         ? (key in target)
-          ? mergeDeep(target[key], sourceVal)
-          : sourceVal
-        : sourceVal || '';
+          ? mergeDeep(target[key], source[key])
+          : source[key]
+        : source[key] || '';
   });
 
   return output;

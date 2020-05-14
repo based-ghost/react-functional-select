@@ -33,7 +33,7 @@ export default Object.freeze<DefaultTheme>({
     },
     caret: {
       size: '7px',
-      transition: 'transform 0.225s ease-in-out, color 0.15s ease-in-out'
+      transition: 'transform 0.25s ease-in-out, color 0.15s ease-in-out'
     }
   },
   control: {
