@@ -129,8 +129,8 @@ All properties are technically optional (with a few having default values). Very
 |`isClearable`| bool | `false` | Is the select value clearable
 |`noOptionsMsg`| string | `No options` | The text displayed in the menu when there are no options available
 |`loadingMsg`| string | `Loading...` | The text displayed in the menu when `isLoading` === `true`
-|`clearIcon`| ReactNode | `undefined` | Custom clear icon node
-|`caretIcon`| ReactNode | `undefined` | Custom caret icon node
+|`clearIcon`| ReactNode OR ((state: Partial\<IndicatorIconsProps\>) => ReactNode) | `undefined` | Custom clear icon node - `state` forwarded to a function is `{ menuOpen, isLoading, isInvalid, isDisabled }`
+|`caretIcon`| ReactNode OR ((state: Partial\<IndicatorIconsProps\>) => ReactNode) | `undefined` | Custom caret icon node - `state` forwarded to a function is `{ menuOpen, isLoading, isInvalid, isDisabled }`
 |`loadingNode`| ReactNode | `undefined` | Custom loading node
 |`options`| array | `[]` | The menu options
 |`isSearchable`| bool | `true` | Whether to enable search functionality or not

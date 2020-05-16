@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import LoadingDots from './LoadingDots';
 import styled, { css } from 'styled-components';
 import { CaretProps, IndicatorIconsProps } from '../types';
@@ -68,51 +68,67 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
   isInvalid,
   showClear,
   isLoading,
+  isDisabled,
   loadingNode,
   isTouchDevice,
   addClassNames,
   onCaretMouseDown,
   onClearMouseDown
-}) => (
-  <IndicatorIconsWrapper>
-    {(showClear && !isLoading) && (
+}) => {
+  const forwardState = {
+    menuOpen,
+    isLoading: !!isLoading,
+    isInvalid: !!isInvalid,
+    isDisabled: !!isDisabled
+  };
+
+  const renderCustomIcon = (icon: IndicatorIconsProps['caretIcon']): ReactNode => {
+    return (icon && (typeof icon === 'function'))
+      ? icon(forwardState)
+      : icon;
+  };
+
+  return (
+    <IndicatorIconsWrapper>
+      {(showClear && !isLoading) && (
+        <IndicatorIcon
+          onMouseDown={onClearMouseDown}
+          data-testid={CLEAR_ICON_TESTID}
+          onTouchEnd={isTouchDevice ? onClearMouseDown : undefined}
+        >
+          {renderCustomIcon(clearIcon) || (
+            <ClearSVG
+              aria-hidden='true'
+              viewBox='0 0 14 16'
+              className={addClassNames ? CLEAR_ICON_CLS : undefined}
+            >
+              <path
+                fillRule='evenodd'
+                d='M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z'
+              />
+            </ClearSVG>
+          )}
+        </IndicatorIcon>
+      )}
+      {isLoading && (loadingNode || <LoadingDots addClassNames={addClassNames} />)}
+      <Separator />
       <IndicatorIcon
-        onMouseDown={onClearMouseDown}
-        data-testid={CLEAR_ICON_TESTID}
-        onTouchEnd={isTouchDevice ? onClearMouseDown : undefined}
+        onMouseDown={onCaretMouseDown}
+        data-testid={CARET_ICON_TESTID}
+        onTouchEnd={isTouchDevice ? onCaretMouseDown : undefined}
       >
-        {clearIcon || (
-          <ClearSVG
+        {renderCustomIcon(caretIcon) || (
+          <Caret
             aria-hidden='true'
-            viewBox='0 0 14 16'
-            className={addClassNames ? CLEAR_ICON_CLS : undefined}
-          >
-            <path
-              fillRule='evenodd'
-              d='M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z'
-            />
-          </ClearSVG>
+            menuOpen={menuOpen}
+            isInvalid={isInvalid}
+            className={addClassNames ? CARET_ICON_CLS : undefined}
+          />
         )}
       </IndicatorIcon>
-    )}
-    {isLoading && (loadingNode || <LoadingDots addClassNames={addClassNames} />)}
-    <Separator />
-    <IndicatorIcon
-      onMouseDown={onCaretMouseDown}
-      data-testid={CARET_ICON_TESTID}
-      onTouchEnd={isTouchDevice ? onCaretMouseDown : undefined}
-    >
-      {caretIcon || (
-        <Caret
-          aria-hidden='true'
-          menuOpen={menuOpen}
-          isInvalid={isInvalid}
-          className={addClassNames ? CARET_ICON_CLS : undefined}
-        />
-      )}
-    </IndicatorIcon>
-  </IndicatorIconsWrapper>
-));
+    </IndicatorIconsWrapper>
+  );
+});
 
 IndicatorIcons.displayName = 'IndicatorIcons';
 

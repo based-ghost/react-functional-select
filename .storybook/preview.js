@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { toast } from 'react-toastify';
 import { addParameters } from '@storybook/react';
-import { polyfillBrowserMS, GlobalStyle } from './config';
+import { GlobalStyle, polyfillManager } from './config';
 
-// Polyfill IE and Edge browsers
-polyfillBrowserMS();
+// Polyfill IE/Edge browsers
+polyfillManager.polyfill();
 
 // Define storybook global configuration
 addParameters({

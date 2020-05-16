@@ -5,8 +5,8 @@ import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
 import { MenuPositionEnum, FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { useDebounce, useMenuPositioner, useMenuOptions, useIsTouchDevice, useUpdateEffect } from './hooks';
-import { FocusedOption, SelectedOption, MouseOrTouchEvent, OptionIndex, ValueIndex, MenuWrapperProps, ControlWrapperProps } from './types';
 import { calculateMenuTop, mergeDeep, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
+import { FocusedOption, SelectedOption, MouseOrTouchEvent, OptionIndex, IndicatorIconsProps, ValueIndex, MenuWrapperProps, ControlWrapperProps } from './types';
 import {
   OPTIONS_DEFAULT,
   LOADING_MSG_DEFAULT,
@@ -72,8 +72,6 @@ export type SelectProps = {
   readonly menuItemSize?: number;
   readonly isClearable?: boolean;
   readonly noOptionsMsg?: string;
-  readonly clearIcon?: ReactNode;
-  readonly caretIcon?: ReactNode;
   readonly options?: OptionData[];
   readonly isSearchable?: boolean;
   readonly menuMaxHeight?: number;
@@ -109,6 +107,8 @@ export type SelectProps = {
   readonly renderOptionLabel?: (data: OptionData) => ReactNode;
   readonly getIsOptionDisabled?: (data: OptionData) => boolean;
   readonly getFilterOptionString?: (option: MenuOption) => string;
+  readonly clearIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
+  readonly caretIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
 };
 
 const SelectWrapper = styled.div`
@@ -725,6 +725,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             caretIcon={caretIcon}
             isInvalid={isInvalid}
             isLoading={isLoading}
+            isDisabled={isDisabled}
             loadingNode={loadingNode}
             addClassNames={addClassNames}
             isTouchDevice={isTouchDevice}
