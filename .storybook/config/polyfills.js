@@ -14,17 +14,14 @@ export const polyfillManager = {
     global.EventSource = NativeEventSource || EventSourcePolyfill;
   },
 
-  /*
-   polyfillNormalizeLib() {
-     if (this.isIE()) {
-       import('unorm').catch(e => console.error(e));
-     }
-   },
-  */
+  polyfillNormalizeLib() {
+    if (this.isIE()) {
+      import('unorm').catch(e => console.error(e));
+    }
+  },
 
   polyfill() {
     this.polyfillEventSource();
-    // this.polyfillNormalizeLib();
     return this;
   }
 };
