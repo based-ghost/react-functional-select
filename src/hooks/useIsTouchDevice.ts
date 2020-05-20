@@ -8,6 +8,13 @@ export const useIsTouchDevice = (): boolean => {
   const isTouchDevice = useRef<boolean | null>(null);
 
   if (isTouchDevice.current === null) {
+    // Check for SSR where navigator and window may not be defined.
+    // tslint:disable-next-line:no-typeof-undefined
+    if (typeof navigator === 'undefined' || typeof window === 'undefined') {
+      isTouchDevice.current = false;
+      return isTouchDevice.current;
+    }
+
     isTouchDevice.current = ('ontouchstart' in window || !!navigator.maxTouchPoints);
     return isTouchDevice.current;
   }

@@ -87,6 +87,8 @@ function smoothScrollTo(
  * Determines if the current browser is IE or Edge (standard/chromium).
  */
 export const isEdgeOrIE = (): boolean => IE_EDGE_BROWSER_REGEXP.test(navigator.userAgent);
+// tslint:disable-next-line:no-typeof-undefined
+export const isEdgeOrIE = (): boolean => typeof navigator !== 'undefined' && IE_EDGE_BROWSER_REGEXP.test(navigator.userAgent);
 
 /**
  * Tests object for type of array with a length of at least 1.
