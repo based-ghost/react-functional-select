@@ -81,7 +81,7 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
       : undefined;
 
   const renderCustomIcon = (iconProp: IndicatorIconsProps['caretIcon']): ReactNode => {
-    return (iconProp && (typeof iconProp === 'function'))
+    return (typeof iconProp === 'function')
       ? iconProp(forwardState)
       : iconProp;
   };

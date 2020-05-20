@@ -1,9 +1,15 @@
 /* eslint-disable prettier/prettier */
 import '@testing-library/jest-dom/extend-expect';
 
+export interface Global extends NodeJS.Global {
+  document: Document;
+  window: Window;
+}
+
+declare var global: Global;
+
 // React SSR when environment is not js-dom
 if (global.window !== undefined) {
-
   // Global MutationObserver Mocks
   window.MutationObserver = require('mutation-observer');
 
