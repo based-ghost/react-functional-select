@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
+import { ValueProps } from '../types';
 import MultiValue from './MultiValue';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../utils';
-import { SelectedOption, ValueProps } from '../types';
 
 const SingleValue = styled.div`
   top: 50%;
@@ -34,9 +34,13 @@ const Value = React.memo<ValueProps>(({
   selectedOption,
   focusedMultiValue,
   renderOptionLabel,
+  renderMultiOptions,
   removeSelectedOption
 }) => {
-  if (inputValue && (!isMulti || (isMulti && !isArrayWithLength(selectedOption)))) {
+  if (
+    inputValue &&
+    (!isMulti || (isMulti && (!isArrayWithLength(selectedOption) || renderMultiOptions)))
+  ) {
     return null;
   }
 
@@ -51,17 +55,19 @@ const Value = React.memo<ValueProps>(({
 
   return (
     <Fragment>
-      {selectedOption.map(({ data, value }: SelectedOption) => (
-        <MultiValue
-          key={value}
-          data={data}
-          value={value}
-          isTouchDevice={isTouchDevice}
-          renderOptionLabel={renderOptionLabel}
-          isFocused={(value === focusedMultiValue)}
-          removeSelectedOption={removeSelectedOption}
-        />
-      ))}
+      {renderMultiOptions
+        ? renderMultiOptions({ selected: selectedOption, renderOptionLabel })
+        : selectedOption.map(({ data, value }) => (
+            <MultiValue
+              key={value}
+              data={data}
+              value={value}
+              isTouchDevice={isTouchDevice}
+              renderOptionLabel={renderOptionLabel}
+              isFocused={value === focusedMultiValue}
+              removeSelectedOption={removeSelectedOption}
+            />
+          ))}
     </Fragment>
   );
 });

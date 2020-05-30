@@ -28,11 +28,9 @@ function getScrollTop(el: HTMLElement): number {
 }
 
 function scrollTo(el: HTMLElement, top: number): void {
-  if (isDocumentElement(el)) {
-    window.scrollTo(0, top);
-  } else {
-    el.scrollTop = top;
-  }
+  isDocumentElement(el)
+    ? window.scrollTo(0, top)
+    : el.scrollTop = top;
 }
 
 function getScrollParent(el: HTMLElement): HTMLElement {
@@ -246,7 +244,7 @@ export function scrollMenuIntoViewOnOpen(
 export function validateSetValueParam(
   values: any,
   menuOptions: MenuOption[],
-  getOptionValueCB: (data: OptionData) => ReactText
+  getOptionValue: (data: OptionData) => ReactText
 ): SelectedOption[] {
   if (values === null || values === undefined) {
     return SELECTED_OPTION_DEFAULT;
@@ -255,7 +253,7 @@ export function validateSetValueParam(
   // Get array of valid MenuOption values (ReactText[]) and use to check against menuOptions
   const normalizedVal = normalizeValue(values);
   const validValues = normalizedVal.reduce((acc: ReactText[], x: SelectedOption) => {
-    isPlainObject(x) && acc.push(getOptionValueCB(x));
+    isPlainObject(x) && acc.push(getOptionValue(x));
     return acc;
   }, []);
 
@@ -268,7 +266,7 @@ export function validateSetValueParam(
   const validValuesUniq = [...new Set(validValues)];
 
   for (const option of menuOptions) {
-    if (validValuesUniq.includes(getOptionValueCB(option))) {
+    if (validValuesUniq.includes(getOptionValue(option))) {
       results.push(option);
       if (validValuesUniq.length === results.length) {
         break;
@@ -284,8 +282,8 @@ export function validateSetValueParam(
  */
 export function normalizeValue(
   value: any,
-  getOptionValueCB?: (data: OptionData) => ReactText,
-  getOptionLabelCB?: (data: OptionData) => ReactText
+  getOptionValue?: (data: OptionData) => ReactText,
+  getOptionLabel?: (data: OptionData) => ReactText
 ): SelectedOption[] {
   // Cast to array of type SelectedOption[]
   const initialValues = Array.isArray(value)
@@ -295,14 +293,14 @@ export function normalizeValue(
       : SELECTED_OPTION_DEFAULT;
 
   // Return default of []
-  if (!getOptionValueCB || !getOptionLabelCB || !isArrayWithLength(initialValues)) {
+  if (!getOptionValue || !getOptionLabel || !isArrayWithLength(initialValues)) {
     return initialValues;
   }
 
   // Array has initial values - cast to typeof SelectedOption and return SelectedOption[]
   return initialValues.map((initVal) => ({
     data: initVal,
-    value: getOptionValueCB(initVal),
-    label: getOptionLabelCB(initVal)
+    value: getOptionValue(initVal),
+    label: getOptionLabel(initVal)
   }));
 }

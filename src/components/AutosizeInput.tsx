@@ -69,11 +69,13 @@ const AutosizeInput = React.memo(
     const sizerRef = useRef<HTMLDivElement | null>(null);
     const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
 
-    const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
+    const autosizeInputAttrs = {
       ...STATIC_ATTRIBUTES,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
-      'style': { width: inputWidth }
+      'style': {
+        width: inputWidth
+      }
     };
 
     useEffect(() => {

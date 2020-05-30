@@ -13,8 +13,8 @@ export const useMenuOptions = (
   debouncedInputValue: string,
   filterMatchFrom: 'any' | 'start',
   selectedOption: SelectedOption[],
-  getOptionValueCB: (data: OptionData) => ReactText,
-  getOptionLabelCB: (data: OptionData) => ReactText,
+  getOptionValue: (data: OptionData) => ReactText,
+  getOptionLabel: (data: OptionData) => ReactText,
   getIsOptionDisabled?: (data: OptionData) => boolean,
   getFilterOptionString?: (option: MenuOption) => string,
   filterIgnoreCase?: boolean,
@@ -46,12 +46,12 @@ export const useMenuOptions = (
     };
 
     const parseMenuOption = (data: OptionData): MenuOption | undefined => {
-      const value: ReactText = getOptionValueCB(data);
+      const value: ReactText = getOptionValue(data);
 
       const menuOption: MenuOption = {
         data,
         value,
-        label: getOptionLabelCB(data),
+        label: getOptionLabel(data),
         ...(getIsOptionDisabledOrDefault(data) && { isDisabled: true }),
         ...(selectedValues && selectedValues.includes(value) && { isSelected: true })
       };
@@ -70,7 +70,7 @@ export const useMenuOptions = (
     }, []);
 
     setMenuOptions(menuOptionsOrDefault);
-  }, [options, selectedOption, searchValue, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, getFilterOptionString, getIsOptionDisabled, getOptionValueCB, getOptionLabelCB]);
+  }, [options, selectedOption, searchValue, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, getFilterOptionString, getIsOptionDisabled, getOptionValue, getOptionLabel]);
 
   return menuOptions;
 };

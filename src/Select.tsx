@@ -1,4 +1,18 @@
-import React, { useEffect, useMemo, useState, useCallback, useRef, useImperativeHandle, KeyboardEventHandler, FocusEventHandler, FocusEvent, FormEvent, KeyboardEvent, ReactNode, ReactText } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+  useRef,
+  useImperativeHandle,
+  KeyboardEventHandler,
+  FocusEventHandler,
+  FocusEvent,
+  FormEvent,
+  KeyboardEvent,
+  ReactNode,
+  ReactText
+} from 'react';
 import DefaultThemeObj from './theme';
 import { FixedSizeList } from 'react-window';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
@@ -54,6 +68,11 @@ export type SelectRef = {
   readonly setValue: (option?: OptionData) => void;
 };
 
+export type MultiParams = {
+  readonly selected: SelectedOption[];
+  readonly renderOptionLabel: (data: OptionData) => ReactNode;
+};
+
 export type SelectProps = {
   readonly async?: boolean;
   readonly inputId?: string;
@@ -107,6 +126,7 @@ export type SelectProps = {
   readonly renderOptionLabel?: (data: OptionData) => ReactNode;
   readonly getIsOptionDisabled?: (data: OptionData) => boolean;
   readonly getFilterOptionString?: (option: MenuOption) => string;
+  readonly renderMultiOptions?: (params: MultiParams) => ReactNode;
   readonly clearIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
   readonly caretIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
 };
@@ -234,6 +254,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     menuOverscanCount,
     blurInputOnSelect,
     renderOptionLabel,
+    renderMultiOptions,
     menuScrollDuration,
     filterIgnoreAccents,
     hideSelectedOptions,
@@ -285,15 +306,15 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   }, [themeConfig]);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
-  const getOptionLabelCB = useMemo<((data: OptionData) => ReactText)>(() => getOptionLabel || ((data) => data.label), [getOptionLabel]);
-  const getOptionValueCB = useMemo<((data: OptionData) => ReactText)>(() => getOptionValue || ((data) => data.value), [getOptionValue]);
-  const renderOptionLabelCB = useMemo<((data: OptionData) => ReactNode)>(() => renderOptionLabel || getOptionLabelCB, [renderOptionLabel, getOptionLabelCB]);
+  const getOptionLabelFn = useMemo<((data: OptionData) => ReactText)>(() => getOptionLabel || ((data) => data.label), [getOptionLabel]);
+  const getOptionValueFn = useMemo<((data: OptionData) => ReactText)>(() => getOptionValue || ((data) => data.value), [getOptionValue]);
+  const renderOptionLabelFn = useMemo<((data: OptionData) => ReactNode)>(() => renderOptionLabel || getOptionLabelFn, [renderOptionLabel, getOptionLabelFn]);
 
   // Custom hook abstraction that debounces search input value (opt-in)
   const debouncedInputValue = useDebounce<string>(inputValue, inputDelay);
 
   // If initialValue is specified attempt to initialize, otherwise default to []
-  const [selectedOption, setSelectedOption] = useState<SelectedOption[]>(() => normalizeValue(initialValue, getOptionValueCB, getOptionLabelCB));
+  const [selectedOption, setSelectedOption] = useState<SelectedOption[]>(() => normalizeValue(initialValue, getOptionValueFn, getOptionLabelFn));
 
   // Custom hook abstraction that handles calculating menuHeight (defaults to menuMaxHeight)
   // ...and handles executing callbacks/logic on menuOpen state change.
@@ -314,8 +335,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     debouncedInputValue,
     filterMatchFrom,
     selectedOption,
-    getOptionValueCB,
-    getOptionLabelCB,
+    getOptionValueFn,
+    getOptionLabelFn,
     getIsOptionDisabled,
     getFilterOptionString,
     filterIgnoreCase,
@@ -390,7 +411,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
     },
     setValue: (option?: OptionData) => {
-      const validatedSelectedOption: SelectedOption[] = validateSetValueParam(option, menuOptions, getOptionValueCB);
+      const validatedSelectedOption: SelectedOption[] = validateSetValueParam(option, menuOptions, getOptionValueFn);
       setSelectedOption(validatedSelectedOption);
     },
     toggleMenu: (state?: boolean) => {
@@ -536,12 +557,12 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
         break;
       case 'ArrowLeft':
-        if (!isMulti || inputValue) return;
+        if (!isMulti || inputValue || renderMultiOptions) return;
         focusValueOnArrowKey(ValueIndexEnum.PREVIOUS);
 
         break;
       case 'ArrowRight':
-        if (!isMulti || inputValue) return;
+        if (!isMulti || inputValue || renderMultiOptions) return;
         focusValueOnArrowKey(ValueIndexEnum.NEXT);
 
         break;
@@ -590,7 +611,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
           if (!backspaceClearsValue) return;
 
           if (isArrayWithLength(selectedOption)) {
-            if (isMulti) {
+            if (isMulti && !renderMultiOptions) {
               const { value } = selectedOption[selectedOption.length - 1];
               removeSelectedOption(value);
             } else if (isClearable) {
@@ -703,7 +724,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
               isTouchDevice={isTouchDevice}
               selectedOption={selectedOption}
               focusedMultiValue={focusedMultiValue}
-              renderOptionLabel={renderOptionLabelCB}
+              renderOptionLabel={renderOptionLabelFn}
+              renderMultiOptions={renderMultiOptions}
               removeSelectedOption={removeSelectedOption}
             />
             <AutosizeInput
@@ -716,7 +738,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
               addClassNames={addClassNames}
               onChange={handleOnInputChange}
               ariaLabelledBy={ariaLabelledBy}
-              readOnly={(isDisabled || !isSearchable || !!focusedMultiValue)}
+              readOnly={isDisabled || !isSearchable || !!focusedMultiValue}
             />
           </ValueWrapper>
           <IndicatorIcons
@@ -753,7 +775,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             selectOption={selectOption}
             overscanCount={menuOverscanCount}
             width={menuWidth || theme.menu.width}
-            renderOptionLabel={renderOptionLabelCB}
+            renderOptionLabel={renderOptionLabelFn}
             focusedOptionIndex={focusedOption.index}
           />
         </MenuWrapper>

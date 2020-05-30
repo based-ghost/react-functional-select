@@ -22,7 +22,7 @@ export enum FilterMatchEnum {
 /**
  * Arrow key direction for cycling through multi-values.
  */
-export const ValueIndexEnum: {[key: string]: ValueIndex} = {
+export const ValueIndexEnum: Record<string, ValueIndex> = {
   NEXT: 0,
   PREVIOUS: 1
 };
@@ -30,7 +30,7 @@ export const ValueIndexEnum: {[key: string]: ValueIndex} = {
 /**
  * Arrow key direction OR position for cycling through menu options.
  */
-export const OptionIndexEnum: {[key: string]: OptionIndex} = {
+export const OptionIndexEnum: Record<string, OptionIndex> = {
   UP: 0,
   DOWN: 1,
   FIRST: 2,

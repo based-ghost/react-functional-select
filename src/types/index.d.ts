@@ -10,6 +10,8 @@ import {
   InputHTMLAttributes
 } from 'react';
 
+import { MultiParams } from '../Select';
+
 // ============================================
 // Shared / Object / Param / Misc types
 // ============================================
@@ -90,6 +92,7 @@ export type ValueProps = {
   readonly selectedOption: SelectedOption[];
   readonly focusedMultiValue: ReactText | null;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;
+  readonly renderMultiOptions?: (params: MultiParams) => ReactNode;
   readonly removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
 };
 

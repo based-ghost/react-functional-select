@@ -1,3 +1,4 @@
+import { MultiParams } from '../../src';
 import { ReactNode, ReactText, CSSProperties } from 'react';
 import { MenuOption, OptionData, SelectedOption } from '../../src/types';
 
@@ -70,6 +71,7 @@ const stringifyCSSProperties = (obj: CSSProperties): string => {
 };
 
 const RENDER_OPTION_LABEL_MOCK = jest.fn((data: OptionData): ReactNode => data.label);
+const RENDER_MULTI_OPTIONS_MOCK = jest.fn(({ selected, renderOptionLabel }: MultiParams): ReactNode => selected.map((option) => renderOptionLabel(option.data)).join(', '));
 
 export {
   Option,
@@ -81,5 +83,6 @@ export {
   stringifyCSSProperties,
   getSelectedOptionMulti,
   getSelectedOptionSingle,
-  RENDER_OPTION_LABEL_MOCK
+  RENDER_OPTION_LABEL_MOCK,
+  RENDER_MULTI_OPTIONS_MOCK
 };
