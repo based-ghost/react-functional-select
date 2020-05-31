@@ -15,7 +15,7 @@ export const CLASS_NAME_HTML =
   `<div class="${SELECT_CONTAINER_CLS}">
   <div class="${CONTROL_CONTAINER_CLS}">
     <div>
-      <div>Select option..</div>
+      <div>Select option...</div>
       <input
         value=""
         type="text"
