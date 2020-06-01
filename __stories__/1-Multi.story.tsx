@@ -64,8 +64,8 @@ storiesOf('React Functional Select', module).add('Multi-select', () => {
             convenience in multi-select scenarios.
           </ListItem>
           <ListItem>
-            <TextHeader>renderMultiOptions(params: MultiParams): ReactNode</TextHeader>
-             - Optional callback function that can be used to further customize
+            <TextHeader>renderMultiOptions(params: MultiParams): ReactNode</TextHeader> -
+            Optional callback function that can be used to further customize
             the selection label in multi-select scenarios . <code>params</code>{' '}
             is an object that contains the <code>selected</code> and{' '}
             <code>renderOptionLabel</code> properties (array of selected options

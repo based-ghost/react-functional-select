@@ -692,7 +692,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
    * Also used to calculate MenuWrapper <div /> 'top' style prop if menu is positioned above control.
    */
   const calcMenuHeight = Math.min(menuHeight, menuOptions.length * menuItemSize);
-  const getMenuStyleTop = () => (isMenuTopPosition ? calculateMenuTop(calcMenuHeight, menuRef.current, controlRef.current) : undefined);
+  const menuStyleTop = isMenuTopPosition
+    ? calculateMenuTop(calcMenuHeight, menuRef.current, controlRef.current)
+    : undefined;
 
   return (
     <ThemeProvider theme={theme}>
@@ -759,7 +761,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         <MenuWrapper
           ref={menuRef}
           hideMenu={!menuOpen}
-          menuTop={getMenuStyleTop()}
+          menuTop={menuStyleTop}
           onMouseDown={handleOnMenuMouseDown}
           data-testid={MENU_CONTAINER_TESTID}
           className={addClassNames ? MENU_CONTAINER_CLS : undefined}
