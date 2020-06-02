@@ -111,11 +111,11 @@ export function optionClassName(
   let className = OPTION_CLS;
 
   if (isDisabled)
-    className += (' ' + OPTION_DISABLED_CLS);
+    className += ` ${OPTION_DISABLED_CLS}`;
   if (isSelected)
-    className += (' ' + OPTION_SELECTED_CLS);
+    className += ` ${OPTION_SELECTED_CLS}`;
   if (isFocused)
-    className += (' ' + OPTION_FOCUSED_CLS);
+    className += ` ${OPTION_FOCUSED_CLS}`;
 
   return className;
 }

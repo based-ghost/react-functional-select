@@ -62,7 +62,7 @@ const AutosizeInput = React.memo(
       ariaLabel,
       inputValue,
       addClassNames,
-      ariaLabelledBy,
+      ariaLabelledBy
     },
     ref: React.Ref<HTMLInputElement>
   ) => {

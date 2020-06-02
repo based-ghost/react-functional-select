@@ -411,7 +411,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
     },
     setValue: (option?: OptionData) => {
-      const validatedSelectedOption: SelectedOption[] = validateSetValueParam(option, menuOptions, getOptionValueFn);
+      const validatedSelectedOption = validateSetValueParam(option, menuOptions, getOptionValueFn);
       setSelectedOption(validatedSelectedOption);
     },
     toggleMenu: (state?: boolean) => {

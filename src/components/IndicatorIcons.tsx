@@ -76,14 +76,19 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
   onClearMouseDown
 }) => {
   const forwardState =
-    (typeof caretIcon === 'function' || typeof clearIcon === 'function')
-      ? { menuOpen, isLoading: !!isLoading, isInvalid: !!isInvalid, isDisabled: !!isDisabled }
+    (typeof caretIcon === 'function') || (typeof clearIcon === 'function')
+      ? {
+          menuOpen,
+          isLoading: !!isLoading,
+          isInvalid: !!isInvalid,
+          isDisabled: !!isDisabled
+        }
       : undefined;
 
-  const renderCustomIcon = (iconProp: IndicatorIconsProps['caretIcon']): ReactNode => {
-    return (typeof iconProp === 'function')
-      ? iconProp(forwardState)
-      : iconProp;
+  const renderCustomIcon = (
+    iconProp: IndicatorIconsProps['caretIcon' | 'clearIcon']
+  ): ReactNode => {
+    return (typeof iconProp === 'function') ? iconProp(forwardState) : iconProp;
   };
 
   return (

@@ -35,7 +35,7 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
     value: focusedOptionValue,
     label: focusedOptionLabel,
     index: focusedOptionIndex,
-    isDisabled: isFocusedOptionDisabled,
+    isDisabled: isFocusedOptionDisabled
   } = focusedOption;
 
   const selectedOptionLabel = isArrayWithLength(selectedOption)
