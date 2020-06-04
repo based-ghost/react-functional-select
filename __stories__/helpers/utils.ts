@@ -24,7 +24,7 @@ export const createSelectOptions = (optionCount: number): Option[] => {
   for (let i = 0; i < optionCount; i += 1) {
     results.push({
       value: i + 1,
-      label: `Option ${i + 1}`,
+      label: `Option ${i + 1}`
     });
   }
   return results;
@@ -40,14 +40,10 @@ export const createAsyncOptions = (optionCount: number, labelSuffix: string): Op
 };
 
 export const createThemeOptions = (ThemeEnum: any): Option[] => {
-  const results: Option[] = [];
-  Object.keys(ThemeEnum).forEach((key: string): void => {
-    results.push({
-      value: ThemeEnum[key],
-      label: ThemeEnum[key]
-    });
-  });
-  return results;
+  return Object.keys(ThemeEnum).map((key: string) => ({
+    value: ThemeEnum[key],
+    label: ThemeEnum[key]
+  }));
 };
 
 export const hexToRgba = (hex: string, alpha: number = 1): string => {

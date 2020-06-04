@@ -22,11 +22,11 @@ storiesOf('React Functional Select', module).add('Events', () => {
     renderInfoToast(`Selected Option: ${optionJsonStr}`);
   }, []);
 
-  const onMenuOpen = useCallback((...args: any[]): void => renderInfoToast('Menu opened !'), []);
-  const onMenuClose = useCallback((...args: any[]): void => renderInfoToast('Menu closed !'), []);
-  const onInputBlur = useCallback((e: FocusEvent<HTMLInputElement>): void => renderInfoToast('Control blurred !'), []);
-  const onInputFocus = useCallback((e: FocusEvent<HTMLInputElement>): void => renderInfoToast('Control focused !'), []);
-  const onKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>): void => renderInfoToast('keydown event executed !'), []);
+  const onMenuOpen = useCallback((...args: any[]): void => renderInfoToast('Menu opened!'), []);
+  const onMenuClose = useCallback((...args: any[]): void => renderInfoToast('Menu closed!'), []);
+  const onInputBlur = useCallback((e: FocusEvent<HTMLInputElement>): void => renderInfoToast('Control blurred!'), []);
+  const onInputFocus = useCallback((e: FocusEvent<HTMLInputElement>): void => renderInfoToast('Control focused!'), []);
+  const onKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>): void => renderInfoToast('keydown event executed!'), []);
 
   useClearToastsOnUnmount();
 
