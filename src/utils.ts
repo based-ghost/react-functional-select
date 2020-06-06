@@ -163,13 +163,8 @@ export const calculateMenuTop = (
   menuEl: HTMLElement | null,
   controlEl: HTMLElement | null
 ): string => {
-  const menuHeightOrDefault = (menuHeight > 0 || !menuEl)
-    ? menuHeight
-    : menuEl.getBoundingClientRect().height;
-
-  const controlHeight = controlEl
-    ? controlEl.getBoundingClientRect().height
-    : 0;
+  const menuHeightOrDefault = (menuHeight > 0 || !menuEl) ? menuHeight : menuEl.getBoundingClientRect().height;
+  const controlHeight = controlEl ? controlEl.getBoundingClientRect().height : 0;
 
   const menuElStyle = menuEl && getComputedStyle(menuEl);
   const marginBottom = menuElStyle ? parseInt(menuElStyle.marginBottom || '0', 10) : 0;
@@ -223,10 +218,7 @@ export function scrollMenuIntoViewOnOpen(
   // ...Calculate available space and use that as the the new menuHeight (use scrollSpaceBelow for now).
   // OR scrollMenuIntoView = false
   if (notEnoughSpaceBelow || !scrollMenuIntoView) {
-    const condensedMenuHeight = notEnoughSpaceBelow
-      ? scrollSpaceBelow
-      : undefined;
-
+    const condensedMenuHeight = notEnoughSpaceBelow ? scrollSpaceBelow : undefined;
     handleOnMenuOpen(condensedMenuHeight);
     return;
   }
@@ -298,7 +290,7 @@ export function normalizeValue(
   }
 
   // Array has initial values - cast to typeof SelectedOption and return SelectedOption[]
-  return initialValues.map((initVal) => ({
+  return initialValues.map((initVal: any) => ({
     data: initVal,
     value: getOptionValue(initVal),
     label: getOptionLabel(initVal)
