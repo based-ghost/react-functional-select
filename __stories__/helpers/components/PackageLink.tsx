@@ -2,10 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 type PackageLinkProps = {
-  readonly packageInfo: {
-    readonly name: string;
-    readonly href: string;
-  };
+  readonly name: string;
+  readonly href: string;
 };
 
 const Link = styled.a`
@@ -29,8 +27,7 @@ const Link = styled.a`
   }
 `;
 
-const PackageLink: React.FC<PackageLinkProps> = React.memo(({ packageInfo }) => {
-  const { name, href } = packageInfo;
+const PackageLink: React.FC<PackageLinkProps> = React.memo(({ name, href }) => {
   return (
     <Link
       href={href}

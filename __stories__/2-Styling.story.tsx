@@ -128,7 +128,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
         <Column widthPercent={40}>
           <Content>
             react-functional-select uses{' '}
-            <PackageLink packageInfo={STYLED_COMPONENTS_PACKAGE} /> to handle its
+            <PackageLink {...STYLED_COMPONENTS_PACKAGE} /> to handle its
             styling.  The root node is wrapped in styled-component's{' '}
             <code>ThemeProvider</code> wrapper component which gives all child
             styled-components access to the provided theme via React's context
@@ -143,7 +143,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             <code>FlattenSimpleInterpolation</code> | <code>undefined</code>{' '}
             (default value is undefined). This property can be used to pass raw
             CSS styles as a string or wrapped in{' '}
-            <PackageLink packageInfo={STYLED_COMPONENTS_PACKAGE} /> exported{' '}
+            <PackageLink {...STYLED_COMPONENTS_PACKAGE} /> exported{' '}
             <code>css</code> function. Those objects are: select, control, icon,
             menu, noOptions, multiValue, and input.
           </Content>

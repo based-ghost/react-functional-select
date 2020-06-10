@@ -51,7 +51,7 @@ const OptionImg = styled.img<{ isDisabled?: boolean }>`
   ${({ isDisabled }) => (!isDisabled && SPIN_ANIMATION_CSS)}
 `;
 
-const ChevronDownSVG = styled.svg<{ menuOpen: boolean }>`
+const ChevronDownSvg = styled.svg<{ menuOpen: boolean }>`
   width: 14px;
   height: 14px;
   fill: currentColor;
@@ -78,13 +78,13 @@ storiesOf('React Functional Select', module).add('Advanced Customization', () =>
 
   const customCaretIcon = useCallback(
     ({ menuOpen }): ReactNode => (
-      <ChevronDownSVG
+      <ChevronDownSvg
         aria-hidden='true'
         menuOpen={menuOpen}
         viewBox='0 0 448 512'
       >
         <path d={CHEVRON_SVG_PATH} />
-      </ChevronDownSVG>
+      </ChevronDownSvg>
     ),
     []
   );
@@ -115,7 +115,7 @@ storiesOf('React Functional Select', module).add('Advanced Customization', () =>
             options - they cannot both be specified.
           </ListItem>
           <ListItem>
-            <TextHeader>caretIcon: ReactNode | (...args: any[]) => ReactNode</TextHeader> - A custom
+            <TextHeader>caretIcon: ReactNode | (...args: any[]) =&gt; ReactNode</TextHeader> - A custom
             node or a function that returns a node can used for the <code>caretIcon</code> property.
             When using a function, an object containing stateful data is forwarded and can be used to style
             your custom node accordingly. The state is <code>{'{ menuOpen, isLoading, isInvalid, isDisabled }'}</code> of

@@ -64,7 +64,7 @@ const MENU_OPTIONS: MenuOption[] = [
 
 const stringifyCSSProperties = (obj: CSSProperties): string => {
   let value = '';
-  Object.keys(obj).forEach((key: string): void => {
+  Object.keys(obj).forEach((key) => {
     value += `${key}: ${obj[key]}; `;
   });
   return value.trim();

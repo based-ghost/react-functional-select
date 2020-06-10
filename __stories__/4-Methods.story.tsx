@@ -38,21 +38,24 @@ storiesOf('React Functional Select', module).add('Methods', () => {
         accessible via a forwarded <code>ref</code>.
         <List>
           <ListItem>
-            <TextHeader>blur(): void</TextHeader> - blur the control programatically
+            <TextHeader>blur(): void</TextHeader> - blur the control
+            programatically
           </ListItem>
           <ListItem>
-            <TextHeader>focus(): void</TextHeader> - focus the control programatically
+            <TextHeader>focus(): void</TextHeader> - focus the control
+            programatically
           </ListItem>
           <ListItem>
-            <TextHeader>toggleMenu(state?: boolean): void</TextHeader> - toggle the menu programatically
+            <TextHeader>toggleMenu(state?: boolean): void</TextHeader> - toggle
+            the menu programatically
           </ListItem>
           <ListItem>
-            <TextHeader>clearValue(): void</TextHeader> - clear the current value programatically
-            <em> (if an option is selected)</em>
+            <TextHeader>clearValue(): void</TextHeader> - clear the current
+            value programatically <em>(if an option is selected)</em>
           </ListItem>
           <ListItem>
-            <TextHeader>setValue(option?: any): void</TextHeader> - set the value programatically
-            <em> (option will be validated)</em>
+            <TextHeader>setValue(option?: any): void</TextHeader> - set the
+            value programatically <em>(option will be validated)</em>
           </ListItem>
         </List>
       </ListWrapper>

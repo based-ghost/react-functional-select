@@ -26,21 +26,19 @@ storiesOf('React Functional Select', module).add('Multi-select', () => {
   const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
 
   // Example "renderMultiOptions" property that can be used to further customize labeling for multi-option scenarios
-  const renderMultiOptions = useCallback((params: MultiParams): ReactNode => {
-    const { selected, renderOptionLabel } = params;
-    const length = selected.length;
-
-    return (
+  const renderMultiOptions = useCallback(
+    ({ selected, renderOptionLabel }: MultiParams): ReactNode => (
       <Fragment>
-        {length && renderOptionLabel(selected[0].data)}
-        {(length > 1) && (
+        {selected.length && renderOptionLabel(selected[0].data)}
+        {selected.length > 1 && (
           <OtherSpan>
-            {`(+${length - 1} ${(length === 2) ? 'other' : 'others'})`}
+            {`(+${selected.length - 1} ${selected.length === 2 ? 'other' : 'others'})`}
           </OtherSpan>
         )}
       </Fragment>
-    );
-  }, []);
+    ),
+    []
+  );
 
   return (
     <Container>

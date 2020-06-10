@@ -69,9 +69,9 @@ storiesOf('React Functional Select', module).add('Events', () => {
           <ListItem>
             <TextHeader>onSearchChange(value: string): void</TextHeader> -
             executed after the input value is persisted to state; this value also evaluates
-            the <code>inputDelay</code> property for debouncing - this callback is really only useful
-            when <code>inputDelay</code> is defined, and if not, it probably makes more sense to use
-            the <code>onInputChange</code> callback
+            the <code>inputDelay</code> property for debouncing - this callback is really only
+            useful when <code>inputDelay</code> is defined, and if not, it probably makes more
+            sense to use the <code>onInputChange</code> callback
           </ListItem>
         </List>
       </ListWrapper>

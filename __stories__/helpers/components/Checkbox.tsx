@@ -14,7 +14,6 @@ type CheckboxProps = {
 };
 
 const COLOR_CHECK_MARK = '#149DF3';
-const COLOR_BORDER = 'rgba(0, 0, 0, 0.54)';
 const COLOR_BORDER_CHECKED = hexToRgba(COLOR_CHECK_MARK, 0.8);
 
 const Label = styled.span`
@@ -78,8 +77,8 @@ const CheckIcon = styled.i`
   box-sizing: border-box;
   border-radius: 0.0625rem;
   background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.54);
   transition: border-color 0.365s ease;
-  border-color: ${COLOR_BORDER};
 
   :after,
   :before {
