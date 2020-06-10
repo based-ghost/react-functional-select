@@ -600,7 +600,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
         if (focusedMultiValue) {
           const clearFocusedIndex = selectedOption.findIndex(({ value }) => value === focusedMultiValue);
-
           const nexFocusedMultiValue = (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
             ? selectedOption[clearFocusedIndex + 1].value!
             : FOCUSED_MULTI_DEFAULT;

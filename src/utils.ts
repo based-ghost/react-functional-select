@@ -243,26 +243,24 @@ export function validateSetValueParam(
   }
 
   // Get array of valid MenuOption values (ReactText[]) and use to check against menuOptions
-  const normalizedVal = normalizeValue(values);
-  const validValues = normalizedVal.reduce((acc: ReactText[], x: SelectedOption) => {
-    isPlainObject(x) && acc.push(getOptionValue(x));
-    return acc;
-  }, []);
+  const validValues = normalizeValue(values)
+    .reduce((acc: ReactText[], x: SelectedOption) => {
+      isPlainObject(x) && acc.push(getOptionValue(x));
+      return acc;
+    }, []);
 
   if (!isArrayWithLength(validValues)) {
     return SELECTED_OPTION_DEFAULT;
   }
 
-  // Get uniq validValues and verify against menuOptions provided
-  const results = [];
-  const validValuesUniq = [...new Set(validValues)];
+  const results: SelectedOption[] = [];
 
   for (const option of menuOptions) {
-    if (validValuesUniq.includes(getOptionValue(option))) {
+    if (
+      !results.includes(option) &&
+      validValues.includes(getOptionValue(option))
+    ) {
       results.push(option);
-      if (validValuesUniq.length === results.length) {
-        break;
-      }
     }
   }
 
