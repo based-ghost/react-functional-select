@@ -48,7 +48,7 @@ const Input = styled.input`
   }
 
   ${({ theme }) => theme.input.css}
-  ${isEdgeOrIE() && '::-ms-clear { display: none; }'}
+  ${isEdgeOrIE() && '::-ms-clear{display:none;}'}
 `;
 
 const AutosizeInput = React.memo(

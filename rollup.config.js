@@ -1,10 +1,13 @@
 /* eslint-disable prettier/prettier */
 import pkg from './package.json';
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import typescript from 'rollup-plugin-typescript2';
+
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
+const styledComponentsTransformer = createStyledComponentsTransformer({ minify: true });
 
 const globals = {
   'react': 'React',
@@ -18,10 +21,16 @@ const name = 'ReactFunctionalSelect';
 const external = Object.keys(globals).filter(x => x !== 'react-dom'); // Exclude react-dom package
 
 const typescript2Plugin = typescript({
-  typescript: require('typescript'),
+  transformers: [
+    () => ({
+      before: [styledComponentsTransformer],
+    }),
+  ],
 });
 
 const babelPlugin = babel({
+  babelHelpers: 'bundled',
+  exclude: 'node_modules/**',
   extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
 });
 
@@ -36,7 +45,8 @@ export default [
     },
     plugins: [
       typescript2Plugin,
-      babelPlugin
+      babelPlugin,
+      terser()
     ],
   },
 
@@ -50,7 +60,8 @@ export default [
     },
     plugins: [
       typescript2Plugin,
-      babelPlugin
+      babelPlugin,
+      terser()
     ],
   },
 
