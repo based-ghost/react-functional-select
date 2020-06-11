@@ -5,9 +5,7 @@ import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import typescript from 'rollup-plugin-typescript2';
-
-const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
-const styledComponentsTransformer = createStyledComponentsTransformer({ minify: true });
+import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
 
 const globals = {
   'react': 'React',
@@ -19,6 +17,10 @@ const globals = {
 const input = './src/index.ts';
 const name = 'ReactFunctionalSelect';
 const external = Object.keys(globals).filter(x => x !== 'react-dom'); // Exclude react-dom package
+
+const styledComponentsTransformer = createStyledComponentsTransformer({
+  minify: true,
+});
 
 const typescript2Plugin = typescript({
   transformers: [
