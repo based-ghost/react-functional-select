@@ -71,6 +71,14 @@ const CORE_PLUGINS = [
   babelPlugin,
 ];
 
+const browserEnvPlugins = env => {
+  return [
+    replace({ 'process.env.NODE_ENV': JSON.stringify(env) }),
+    modifyReplacePlugin,
+    terser(),
+  ];
+};
+
 export default [
   /*** COMMONJS ***/
   {
@@ -104,14 +112,7 @@ export default [
       globals,
       name,
     },
-    plugins: [
-      ...CORE_PLUGINS,
-      replace({
-        'process.env.NODE_ENV': JSON.stringify('development'),
-      }),
-      modifyReplacePlugin,
-      terser(),
-    ],
+    plugins: [...CORE_PLUGINS, ...browserEnvPlugins('development')],
   },
 
   /*** BROWSER (PRODUCTION) ***/
@@ -124,13 +125,6 @@ export default [
       globals,
       name,
     },
-    plugins: [
-      ...CORE_PLUGINS,
-      replace({
-        'process.env.NODE_ENV': JSON.stringify('production'),
-      }),
-      modifyReplacePlugin,
-      terser(),
-    ],
+    plugins: [...CORE_PLUGINS, ...browserEnvPlugins('production')],
   },
 ];
