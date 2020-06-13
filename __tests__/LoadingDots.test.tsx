@@ -1,5 +1,5 @@
 import React from 'react';
-import DefaultThemeObj from '../src/theme';
+import { RfsTheme } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import LoadingDots from '../src/components/LoadingDots';
 import { render, RenderResult } from '@testing-library/react';
@@ -10,7 +10,7 @@ import { render, RenderResult } from '@testing-library/react';
 
 const renderLoadingDots = (): RenderResult => {
   return render(
-    <ThemeProvider theme={DefaultThemeObj}>
+    <ThemeProvider theme={RfsTheme}>
       <LoadingDots />
     </ThemeProvider>
   );

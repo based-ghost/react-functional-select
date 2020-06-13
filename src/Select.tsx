@@ -13,7 +13,7 @@ import React, {
   ReactNode,
   ReactText
 } from 'react';
-import DefaultThemeObj from './theme';
+import { RfsTheme } from './theme';
 import { FixedSizeList } from 'react-window';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
@@ -35,7 +35,6 @@ import {
 } from './constants/defaults';
 import {
   OPTION_CLS,
-  IME_KEY_CODE,
   OPTION_FOCUSED_CLS,
   MENU_CONTAINER_CLS,
   OPTION_DISABLED_CLS,
@@ -43,7 +42,6 @@ import {
   SELECT_CONTAINER_CLS,
   CONTROL_CONTAINER_CLS,
   MENU_CONTAINER_TESTID,
-  MOUSE_DOWN_EVENT_TYPE,
   SELECT_CONTAINER_TESTID,
   CONTROL_CONTAINER_TESTID
 } from './constants/dom';
@@ -301,8 +299,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   // Memoized DefaultTheme object for styled-components ThemeProvider
   const theme = useMemo<DefaultTheme>(() => {
     return isPlainObject(themeConfig)
-      ? mergeDeep(DefaultThemeObj, themeConfig)
-      : DefaultThemeObj;
+      ? mergeDeep(RfsTheme, themeConfig)
+      : RfsTheme;
   }, [themeConfig]);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
@@ -363,7 +361,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const removeSelectedOption = useCallback((removeValue?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {
     if (e) {
       e.stopPropagation();
-      (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
+      (e.type === 'mousedown') && e.preventDefault();
     }
 
     setSelectedOption((prevSelectedOption) => prevSelectedOption.filter(({ value }) => value !== removeValue));
@@ -577,8 +575,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         }
         selectOptionFromFocused();
         break;
-      case 'Enter':
-        if (menuOpen && e.keyCode !== IME_KEY_CODE) {
+      case 'Enter': // Check e.keyCode !== 229 (Input Method Editor)
+        if (menuOpen && e.keyCode !== 229) {
           selectOptionFromFocused();
         }
         break;
@@ -671,14 +669,14 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
     e.stopPropagation();
-    (e.type === MOUSE_DOWN_EVENT_TYPE) && e.preventDefault();
+    (e.type === 'mousedown') && e.preventDefault();
     setSelectedOption(SELECTED_OPTION_DEFAULT);
     focusInput();
   }, []);
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
     e.stopPropagation();
-    if (e.type === MOUSE_DOWN_EVENT_TYPE) {
+    if (e.type === 'mousedown') {
       e.preventDefault();
     }
 

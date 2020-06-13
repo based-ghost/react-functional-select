@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState, ReactNode } from 'react';
 import { Select, Theme } from '../src';
 import { Option } from './helpers/types';
 import { mergeDeep } from '../src/utils';
-import DefaultThemeObj from '../src/theme';
+import { RfsTheme } from '../src/theme';
 import { storiesOf } from '@storybook/react';
 import { useCallbackState } from './helpers/hooks';
 import { CodeMarkup, PackageLink } from './helpers/components';
@@ -96,7 +96,7 @@ const SELECT_CONTAINER_STYLE = {
 };
 
 const OPTIONS = createThemeOptions(ThemeEnum);
-const THEME_DEFAULTS = mergeDeep(DefaultThemeObj, KEYFRAMES_SOURCE_OBJ);
+const THEME_DEFAULTS = mergeDeep(RfsTheme, KEYFRAMES_SOURCE_OBJ);
 
 storiesOf('React Functional Select', module).add('Styling', () => {
   const [themeConfig, setThemeConfig] = useState<Theme | undefined>(undefined);

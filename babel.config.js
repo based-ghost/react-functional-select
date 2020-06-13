@@ -1,12 +1,14 @@
 /* eslint-disable prettier/prettier */
 module.exports = (api) => {
-  api.cache.never();
+  const isTestEnv = api.env('test');
+
+  const targets = !isTestEnv
+    ? { browsers: ['>0.2%', 'not dead', 'not op_mini all'] }
+    : { node: 'current' };
 
   const envOpts = {
+    targets,
     loose: true,
-    targets: {
-      node: 'current',
-    },
   };
 
   const presets = [
@@ -18,7 +20,6 @@ module.exports = (api) => {
   const plugins = [
     ['@babel/proposal-class-properties', { loose: true }],
     ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
-    'babel-plugin-styled-components',
   ];
 
   return {

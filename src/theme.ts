@@ -4,7 +4,7 @@ import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from './constants/styled'
 /**
  * A contextual styled-components DefaultTheme object with default key-value pairs for CSS props.
  */
-export default Object.freeze<DefaultTheme>({
+export const RfsTheme: DefaultTheme = {
   color: {
     border: '#ced4da',
     danger: '#dc3545',
@@ -88,4 +88,4 @@ export default Object.freeze<DefaultTheme>({
       transition: 'color 0.15s ease-in-out, background-color 0.15s ease-in-out'
     }
   }
-});
+};

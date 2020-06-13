@@ -1,11 +1,5 @@
 const _isTest = (process.env.NODE_ENV === 'test');
 
-// Keydown event from an Input Method Editor (IME) - event.keyCode === 229
-export const IME_KEY_CODE = 229;
-
-// mousedown event.type
-export const MOUSE_DOWN_EVENT_TYPE = 'mousedown';
-
 // classNames (menu options)
 export const OPTION_CLS = 'rfs-option';
 export const OPTION_FOCUSED_CLS = `${OPTION_CLS}-focused`;

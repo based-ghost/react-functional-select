@@ -1,6 +1,6 @@
 import React from 'react';
+import { RfsTheme } from '../src/theme';
 import { Value } from '../src/components';
-import DefaultThemeObj from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import { ValueProps, SelectedOption } from '../src/types';
 import { render, RenderResult } from '@testing-library/react';
@@ -13,7 +13,7 @@ import { PLACEHOLDER_DEFAULT, SELECTED_OPTION_DEFAULT, FOCUSED_MULTI_DEFAULT } f
 
 const renderValue = (props: ValueProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DefaultThemeObj}>
+    <ThemeProvider theme={RfsTheme}>
       <Value {...props} />
     </ThemeProvider>
   );
@@ -21,7 +21,7 @@ const renderValue = (props: ValueProps): RenderResult => {
 
 const rerenderValue = (props: ValueProps, rerender: (...args: any[]) => void): void => {
   rerender(
-    <ThemeProvider theme={DefaultThemeObj}>
+    <ThemeProvider theme={RfsTheme}>
       <Value {...props} />
     </ThemeProvider>
   );

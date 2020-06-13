@@ -1,6 +1,6 @@
 import React from 'react';
+import { RfsTheme } from '../src/theme';
 import { Menu } from '../src/components';
-import DefaultThemeObj from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import { MenuProps, MenuOption } from '../src/types';
 import { render, RenderResult } from '@testing-library/react';
@@ -13,7 +13,7 @@ import { MENU_ITEM_SIZE_DEFAULT, MENU_MAX_HEIGHT_DEFAULT, LOADING_MSG_DEFAULT, N
 
 const renderMenu = (props: MenuProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DefaultThemeObj}>
+    <ThemeProvider theme={RfsTheme}>
       <Menu {...props} />
     </ThemeProvider>
   );

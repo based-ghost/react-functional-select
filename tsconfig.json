@@ -20,9 +20,8 @@
     "src/**/*"
   ],
   "exclude": [
-    "node_modules",
-    "build",
     "dist",
+    "node_modules",
     "rollup.config.js"
   ]
 }

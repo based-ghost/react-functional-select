@@ -49,8 +49,11 @@ const Value = React.memo<ValueProps>(({
   }
 
   if (!isMulti) {
-    const optionLabel = renderOptionLabel(selectedOption[0].data);
-    return <SingleValue>{optionLabel}</SingleValue>;
+    return (
+      <SingleValue>
+        {renderOptionLabel(selectedOption[0].data)}
+      </SingleValue>
+    );
   }
 
   return (

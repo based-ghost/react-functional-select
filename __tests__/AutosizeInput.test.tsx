@@ -1,5 +1,5 @@
 import React from 'react';
-import DefaultThemeObj from '../src/theme';
+import { RfsTheme } from '../src/theme';
 import { AutosizeInputProps } from '../src/types';
 import { ThemeProvider } from 'styled-components';
 import { AutosizeInput } from '../src/components';
@@ -12,7 +12,7 @@ import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants/dom'
 
 const renderAutosizeInput = (props: AutosizeInputProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DefaultThemeObj}>
+    <ThemeProvider theme={RfsTheme}>
       <AutosizeInput {...props} />
     </ThemeProvider>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import DefaultThemeObj from '../src/theme';
+import { RfsTheme } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import { AriaLiveRegion } from '../src/components';
 import { ARIA_LIVE_TESTID } from '../src/constants/dom';
@@ -13,7 +13,7 @@ import { AriaLiveRegionProps, SelectedOption, FocusedOption } from '../src/types
 
 const renderAriaLiveRegion = (props: AriaLiveRegionProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DefaultThemeObj}>
+    <ThemeProvider theme={RfsTheme}>
       <AriaLiveRegion {...props} />
     </ThemeProvider>
   );

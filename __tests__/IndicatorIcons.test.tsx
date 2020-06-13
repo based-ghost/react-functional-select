@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import DefaultThemeObj from '../src/theme';
+import { RfsTheme } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import { IndicatorIcons } from '../src/components';
 import { IndicatorIconsProps } from '../src/types';
@@ -12,7 +12,7 @@ import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/con
 
 const renderIndicatorIcons = (props: IndicatorIconsProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DefaultThemeObj}>
+    <ThemeProvider theme={RfsTheme}>
       <IndicatorIcons {...props} />
     </ThemeProvider>
   );

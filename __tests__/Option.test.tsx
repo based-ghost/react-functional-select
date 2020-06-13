@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import DefaultThemeObj from '../src/theme';
+import { RfsTheme } from '../src/theme';
 import { OptionProps } from '../src/types';
 import Option from '../src/components/Option';
 import { ThemeProvider } from 'styled-components';
@@ -21,7 +21,7 @@ const OPTION_STYLE: CSSProperties = {
 
 const renderOption = (props: OptionProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DefaultThemeObj}>
+    <ThemeProvider theme={RfsTheme}>
       <Option {...props} />
     </ThemeProvider>
   );

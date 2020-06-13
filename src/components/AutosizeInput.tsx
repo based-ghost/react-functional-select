@@ -1,20 +1,11 @@
-import React, { useEffect, useState, useRef, Fragment } from 'react';
+import React, { useState, useRef, Fragment } from 'react';
 import { isEdgeOrIE } from '../utils';
 import styled from 'styled-components';
+import { useUpdateEffect } from '../hooks';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
 
-const INPUT_MIN_WIDTH_PX = 2;
-
-const STATIC_ATTRIBUTES: AutosizeInputHTMLAttributes = {
-  type: 'text',
-  spellCheck: false,
-  autoCorrect: 'off',
-  autoComplete: 'off',
-  autoCapitalize: 'none',
-  'aria-autocomplete': 'list',
-  'data-testid': AUTOSIZE_INPUT_TESTID
-};
+const INPUT_MIN_WIDTH = 2;
 
 const SizerDiv = styled.div`
   top: 0;
@@ -67,20 +58,24 @@ const AutosizeInput = React.memo(
     ref: React.Ref<HTMLInputElement>
   ) => {
     const sizerRef = useRef<HTMLDivElement | null>(null);
-    const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
+    const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH);
 
-    const autosizeInputAttrs = {
-      ...STATIC_ATTRIBUTES,
+    const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
+      type: 'text',
+      spellCheck: false,
+      autoCorrect: 'off',
+      autoComplete: 'off',
+      autoCapitalize: 'none',
       'aria-label': ariaLabel,
+      'aria-autocomplete': 'list',
       'aria-labelledby': ariaLabelledBy,
-      'style': {
-        width: inputWidth
-      }
+      'data-testid': AUTOSIZE_INPUT_TESTID,
+      style: { width: inputWidth }
     };
 
-    useEffect(() => {
+    useUpdateEffect(() => {
       if (sizerRef.current) {
-        setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
+        setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH);
       }
     }, [inputValue]);
 

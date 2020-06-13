@@ -28,9 +28,7 @@ function getScrollTop(el: HTMLElement): number {
 }
 
 function scrollTo(el: HTMLElement, top: number): void {
-  isDocumentElement(el)
-    ? window.scrollTo(0, top)
-    : el.scrollTop = top;
+  isDocumentElement(el) ? window.scrollTo(0, top) : el.scrollTop = top;
 }
 
 function getScrollParent(el: HTMLElement): HTMLElement {
@@ -111,11 +109,11 @@ export function optionClassName(
   let className = OPTION_CLS;
 
   if (isDisabled)
-    className += ` ${OPTION_DISABLED_CLS}`;
+    className += (' ' + OPTION_DISABLED_CLS);
   if (isSelected)
-    className += ` ${OPTION_SELECTED_CLS}`;
+    className += (' ' + OPTION_SELECTED_CLS);
   if (isFocused)
-    className += ` ${OPTION_FOCUSED_CLS}`;
+    className += (' ' + OPTION_FOCUSED_CLS);
 
   return className;
 }
@@ -243,28 +241,27 @@ export function validateSetValueParam(
   }
 
   // Get array of valid MenuOption values (ReactText[]) and use to check against menuOptions
-  const validValues = normalizeValue(values)
-    .reduce((acc: ReactText[], x: SelectedOption) => {
+  const validValues = normalizeValue(values).reduce(
+    (acc: ReactText[], x: SelectedOption) => {
       isPlainObject(x) && acc.push(getOptionValue(x));
       return acc;
-    }, []);
+    },
+    []
+  );
 
   if (!isArrayWithLength(validValues)) {
     return SELECTED_OPTION_DEFAULT;
   }
 
-  const results: SelectedOption[] = [];
-
-  for (const option of menuOptions) {
-    if (
-      !results.includes(option) &&
-      validValues.includes(getOptionValue(option))
-    ) {
-      results.push(option);
-    }
-  }
-
-  return results;
+  return (menuOptions || []).reduce(
+    (acc: SelectedOption[], option: MenuOption) => {
+      if (!acc.includes(option) && validValues.includes(getOptionValue(option))) {
+        acc.push(option);
+      }
+      return acc;
+    },
+    []
+  );
 }
 
 /**
@@ -277,7 +274,7 @@ export function normalizeValue(
 ): SelectedOption[] {
   // Cast to array of type SelectedOption[]
   const initialValues = Array.isArray(value)
-    ? value.filter(Boolean)
+    ? value
     : isPlainObject(value)
       ? [value]
       : SELECTED_OPTION_DEFAULT;
@@ -288,9 +285,9 @@ export function normalizeValue(
   }
 
   // Array has initial values - cast to typeof SelectedOption and return SelectedOption[]
-  return initialValues.map((initVal: any) => ({
-    data: initVal,
-    value: getOptionValue(initVal),
-    label: getOptionLabel(initVal)
+  return initialValues.map((val: any) => ({
+    data: val,
+    value: getOptionValue(val),
+    label: getOptionLabel(val)
   }));
 }

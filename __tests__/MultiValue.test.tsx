@@ -1,5 +1,5 @@
 import React from 'react';
-import DefaultThemeObj from '../src/theme';
+import { RfsTheme } from '../src/theme';
 import { MultiValueProps } from '../src/types';
 import { ThemeProvider } from 'styled-components';
 import MultiValue from '../src/components/MultiValue';
@@ -13,7 +13,7 @@ import { Option, RENDER_OPTION_LABEL_MOCK, getOptionSingle } from './helpers/uti
 
 const renderMultiValue = (props: MultiValueProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DefaultThemeObj}>
+    <ThemeProvider theme={RfsTheme}>
       <MultiValue {...props} />
     </ThemeProvider>
   );
