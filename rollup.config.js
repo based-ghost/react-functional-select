@@ -21,7 +21,9 @@ const globals = {
 
 const input = './src/index.ts';
 const name = 'ReactFunctionalSelect';
+
 const external = id => !id.startsWith('.') && !path.isAbsolute(id);
+const externalUmd = Object.keys(globals);
 
 const styledComponentsTransformer = createStyledComponentsTransformer({
   ssr: true,
@@ -104,7 +106,7 @@ export default [
 
   /*** BROWSER (DEVELOPMENT) ***/
   {
-    external: Object.keys(globals),
+    external: externalUmd,
     input,
     output: {
       file: 'dist/index-dev.umd.js',
@@ -117,7 +119,7 @@ export default [
 
   /*** BROWSER (PRODUCTION) ***/
   {
-    external: Object.keys(globals),
+    external: externalUmd,
     input,
     output: {
       file: 'dist/index-prod.umd.js',
