@@ -24,8 +24,9 @@ const name = 'ReactFunctionalSelect';
 const external = id => !id.startsWith('.') && !path.isAbsolute(id);
 
 const styledComponentsTransformer = createStyledComponentsTransformer({
-  minify: true,
   ssr: true,
+  minify: true,
+  displayName: false,
 });
 
 /*************************************************
@@ -57,7 +58,6 @@ const babelPlugin = babel({
   extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
   presets: [['@babel/preset-env', { loose: true }], '@babel/preset-react'],
   plugins: [
-    ['@babel/proposal-class-properties', { loose: true }],
     ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
   ],
 });
