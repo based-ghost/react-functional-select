@@ -1,8 +1,6 @@
 /* eslint-disable prettier/prettier */
 module.exports = (api) => {
-  const isTestEnv = api.env('test');
-
-  const targets = !isTestEnv
+  const targets = !api.env('test')
     ? { browsers: ['>0.2%', 'not dead', 'not op_mini all'] }
     : { node: 'current' };
 
