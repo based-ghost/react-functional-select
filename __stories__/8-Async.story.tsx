@@ -37,8 +37,7 @@ storiesOf('React Functional Select', module).add('Async', () => {
         in core functionality with async mode - changes to search input value will not cause
         the <code>useMenuOptions</code> effect to run. The rest of hooking into async mode is
         achieved using some combination of the properties found below
-        . <em>Properties <code>onInputChange</code> and <code>onSearchChange</code> should be
-        memoized.</em>
+        . <em>Properties onInputChange and onSearchChange should be memoized.</em>
         <List>
           <ListItem>
             <TextHeader>onInputChange(value: string): void</TextHeader> -

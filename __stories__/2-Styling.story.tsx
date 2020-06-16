@@ -139,8 +139,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
           <Content>
             Starting in <strong>v2.0.0</strong>, some of the nested objects in the{' '}
             <code>themeConfig</code> object contain a <code>css</code>{' '}
-            property of type <code>string</code> |{' '}
-            <code>FlattenSimpleInterpolation</code> | <code>undefined</code>{' '}
+            property of type <code>string | FlattenSimpleInterpolation | undefined</code>{' '}
             (default value is undefined). This property can be used to pass raw
             CSS styles as a string or wrapped in{' '}
             <PackageLink {...STYLED_COMPONENTS_PACKAGE} /> exported{' '}
