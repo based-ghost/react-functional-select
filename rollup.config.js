@@ -21,7 +21,6 @@ const globals = {
 
 const input = './src/index.ts';
 const name = 'ReactFunctionalSelect';
-
 const external = id => !id.startsWith('.') && !path.isAbsolute(id);
 const externalUmd = Object.keys(globals);
 
@@ -37,7 +36,7 @@ const styledComponentsTransformer = createStyledComponentsTransformer({
 // This takes care of \n (search actual string by escaping \n so to not target line-breaks)
 // ...followed by spaces created by functions nested within styled-components that return template literals ``
 const modifyReplacePlugin = modify({
-  find: /(\\n\s+|\\n)/g,
+  find: /\\n\s*/g,
   replace: '',
 });
 
@@ -58,7 +57,9 @@ const babelPlugin = babel({
   babelHelpers: 'bundled',
   exclude: /node_modules/,
   extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
-  presets: [['@babel/preset-env', { loose: true }], '@babel/preset-react'],
+  presets: [
+    ['@babel/preset-env', { loose: true }],
+  ],
   plugins: [
     ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
   ],
