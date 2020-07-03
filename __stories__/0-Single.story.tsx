@@ -38,8 +38,8 @@ storiesOf('React Functional Select', module).add('Single-select', () => {
         you can opt to hoist functions outside of the component entirely.
       </Paragraph>
       <Paragraph>
-        The <code>options</code> prop should also be memoized. Either consume it
-        directly from a state management store, or make sure it is stable by
+        The <code>options</code> property should also be memoized. Either consume
+        it directly from a state management store, or make sure it is stable by
         avoiding inline or render-based mutations.
       </Paragraph>
       <SubTitle>Demo</SubTitle>
