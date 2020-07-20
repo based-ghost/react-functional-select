@@ -41,9 +41,10 @@ function getScrollParent(el: HTMLElement): HTMLElement {
 
   for (let parent = el as HTMLElement | null; (parent = parent ? parent.parentElement : null);) {
     style = getComputedStyle(parent);
-    if (excludeStaticParent && style.position === 'static') {
-      continue;
-    } else if (OVERFLOW_REGEXP.test(`${style.overflow}${style.overflowY}${style.overflowX}`)) {
+    if (
+      !(excludeStaticParent && style.position === 'static') &&
+      OVERFLOW_REGEXP.test(`${style.overflow}${style.overflowY}${style.overflowX}`)
+    ) {
       return parent;
     }
   }
@@ -63,8 +64,7 @@ function smoothScrollTo(
 
   function smoothScroller(): void {
     currentTime += 5;
-    const top = easeOutCubic(currentTime, start, change, duration);
-    scrollTo(element, top);
+    scrollTo(element, easeOutCubic(currentTime, start, change, duration));
     if (currentTime < duration) {
       window.requestAnimationFrame(smoothScroller);
     } else {

@@ -22,7 +22,7 @@ export const RfsTheme: DefaultTheme = {
     color: 'rgba(0, 123, 255, 0.42)'
   },
   icon: {
-    color: '#cccccc',
+    color: '#ccc',
     hoverColor: '#A6A6A6',
     padding: '0 0.9375rem',
     clear: {

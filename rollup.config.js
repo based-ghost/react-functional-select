@@ -5,7 +5,6 @@ import babel from '@rollup/plugin-babel';
 import modify from 'rollup-plugin-modify';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
-import commonjs from '@rollup/plugin-commonjs';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import typescript from 'rollup-plugin-typescript2';
 import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
@@ -40,10 +39,6 @@ const modifyReplacePlugin = modify({
   replace: '',
 });
 
-const commonJsPlugin = commonjs({
-  include: /node_modules/,
-});
-
 const typescriptPlugin = typescript({
   transformers: [
     () => ({
@@ -68,11 +63,7 @@ const babelPlugin = babel({
 /*************************************************
  # PLUGIN DEFINITIONS (GROUP)
  *************************************************/
-const CORE_PLUGINS = [
-  typescriptPlugin,
-  commonJsPlugin,
-  babelPlugin,
-];
+const CORE_PLUGINS = [typescriptPlugin, babelPlugin];
 
 const browserEnvPlugins = env => {
   return [

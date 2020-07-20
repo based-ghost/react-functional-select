@@ -1,5 +1,5 @@
-const merge = require('webpack-merge');
 const maxAssetSize = 512000;
+const { merge } = require('webpack-merge');
 
 module.exports = async ({ config }) => {
   config.module.rules.push({

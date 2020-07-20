@@ -297,11 +297,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const [focusedMultiValue, setFocusedMultiValue] = useState<ReactText | null>(FOCUSED_MULTI_DEFAULT);
 
   // Memoized DefaultTheme object for styled-components ThemeProvider
-  const theme = useMemo<DefaultTheme>(() => {
-    return isPlainObject(themeConfig)
-      ? mergeDeep(RfsTheme, themeConfig)
-      : RfsTheme;
-  }, [themeConfig]);
+  const theme = useMemo<DefaultTheme>(() => isPlainObject(themeConfig) ? mergeDeep(RfsTheme, themeConfig) : RfsTheme, [themeConfig]);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
   const getOptionLabelFn = useMemo<((data: OptionData) => ReactText)>(() => getOptionLabel || ((data) => data.label), [getOptionLabel]);
@@ -353,9 +349,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   };
 
   const scrollToItemIndex = (index: number): void => {
-    if (listRef.current) {
-      listRef.current.scrollToItem(index);
-    }
+    listRef.current && listRef.current.scrollToItem(index);
   };
 
   const removeSelectedOption = useCallback((removeValue?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>): void => {

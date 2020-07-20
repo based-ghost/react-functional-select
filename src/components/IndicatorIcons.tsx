@@ -4,6 +4,8 @@ import styled, { css } from 'styled-components';
 import { CaretProps, IndicatorIconsProps } from '../types';
 import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/dom';
 
+type CustomIcon = IndicatorIconsProps['caretIcon' | 'clearIcon'];
+
 const IndicatorIconsWrapper = styled.div`
   display: flex;
   flex-shrink: 0;
@@ -85,11 +87,7 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
         }
       : undefined;
 
-  const renderCustomIcon = (
-    iconProp: IndicatorIconsProps['caretIcon' | 'clearIcon']
-  ): ReactNode => {
-    return (typeof iconProp === 'function') ? iconProp(forwardState) : iconProp;
-  };
+  const renderCustomIcon = (ico: CustomIcon): ReactNode => (typeof ico === 'function') ? ico(forwardState) : ico;
 
   return (
     <IndicatorIconsWrapper>
