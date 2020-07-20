@@ -51,6 +51,7 @@
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
     "@rollup/plugin-babel": "^5.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-replace": "^2.3.3",
     "@storybook/addon-storysource": "^5.3.19",
     "@storybook/addons": "^5.3.19",
@@ -109,6 +110,9 @@
     "react-dom": "^16.8.6",
     "react-window": "^1.8.5",
     "styled-components": "^4.4.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.10.5"
   },
   "scripts": {
     "clean-build": "run-s clean build",

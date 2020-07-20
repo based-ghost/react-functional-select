@@ -6,11 +6,12 @@ import modify from 'rollup-plugin-modify';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
 import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
 
 /*************************************************
- # CONFIG DATA
+ - CONFIG DATA
  *************************************************/
 const globals = {
   'react': 'React',
@@ -30,7 +31,7 @@ const styledComponentsTransformer = createStyledComponentsTransformer({
 });
 
 /*************************************************
- # PLUGIN DEFINITIONS (INDIVIDUAL)
+ - PLUGIN DEFINITIONS (INDIVIDUAL)
  *************************************************/
 // This takes care of \n (search actual string by escaping \n so to not target line-breaks)
 // ...followed by spaces created by functions nested within styled-components that return template literals ``
@@ -47,31 +48,36 @@ const typescriptPlugin = typescript({
   ],
 });
 
-const babelPlugin = babel({
+const babelPlugin = (useESModules = false) => babel({
   babelrc: false,
-  babelHelpers: 'bundled',
-  exclude: /node_modules/,
+  babelHelpers: 'runtime',
+  exclude: 'node_modules/**',
   extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
-  presets: [
-    ['@babel/preset-env', { loose: true }],
-  ],
   plugins: [
+    ['@babel/plugin-transform-runtime', { useESModules }],
     ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
   ],
 });
 
 /*************************************************
- # PLUGIN DEFINITIONS (GROUP)
+- PLUGIN DEFINITIONS (GROUP)
  *************************************************/
-const CORE_PLUGINS = [typescriptPlugin, babelPlugin];
 
-const browserEnvPlugins = env => {
-  return [
-    replace({ 'process.env.NODE_ENV': JSON.stringify(env) }),
-    modifyReplacePlugin,
-    terser(),
-  ];
-};
+const cjsAndEsPlugins = () => ([
+  typescriptPlugin,
+  babelPlugin(),
+  resolve(),
+  modifyReplacePlugin,
+]);
+
+const browserEnvPlugins = (env) => ([
+  typescriptPlugin,
+  babelPlugin(true),
+  resolve(),
+  replace({ 'process.env.NODE_ENV': JSON.stringify(env) }),
+  modifyReplacePlugin,
+  terser(),
+]);
 
 export default [
   /*** COMMONJS ***/
@@ -82,7 +88,7 @@ export default [
       file: pkg.main,
       format: 'cjs',
     },
-    plugins: [...CORE_PLUGINS, modifyReplacePlugin],
+    plugins: cjsAndEsPlugins(),
   },
 
   /*** MODULE ***/
@@ -93,7 +99,7 @@ export default [
       file: pkg.module,
       format: 'esm',
     },
-    plugins: [...CORE_PLUGINS, modifyReplacePlugin],
+    plugins: cjsAndEsPlugins(),
   },
 
   /*** BROWSER (DEVELOPMENT) ***/
@@ -106,7 +112,7 @@ export default [
       globals,
       name,
     },
-    plugins: [...CORE_PLUGINS, ...browserEnvPlugins('development')],
+    plugins: browserEnvPlugins('development'),
   },
 
   /*** BROWSER (PRODUCTION) ***/
@@ -119,6 +125,6 @@ export default [
       globals,
       name,
     },
-    plugins: [...CORE_PLUGINS, ...browserEnvPlugins('production')],
+    plugins: browserEnvPlugins('production'),
   },
 ];
