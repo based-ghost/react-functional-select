@@ -40,6 +40,7 @@ export const useMenuOptions = (
     const isOptionFilterMatch = (menuOption: MenuOption): boolean => {
       const optionStr = getFilterOptionStringOrDefault(menuOption);
       const normalizedOptionLabel = trimAndFormatFilterStr(optionStr, filterIgnoreCase, filterIgnoreAccents);
+
       return matchAny
         ? normalizedOptionLabel.indexOf(normalizedInput) > -1
         : normalizedOptionLabel.substr(0, normalizedInput.length) === normalizedInput;
@@ -56,7 +57,10 @@ export const useMenuOptions = (
         ...(selectedValues && selectedValues.includes(value) && { isSelected: true })
       };
 
-      if ((normalizedInput && !isOptionFilterMatch(menuOption)) || (hideSelectedOptionsOrDefault && menuOption.isSelected)) {
+      if (
+        (normalizedInput && !isOptionFilterMatch(menuOption)) ||
+        (hideSelectedOptionsOrDefault && menuOption.isSelected)
+      ) {
         return;
       }
 
