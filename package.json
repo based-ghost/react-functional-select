@@ -43,13 +43,14 @@
   ],
   "devDependencies": {
     "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.10.5",
+    "@babel/core": "^7.11.0",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
-    "@babel/plugin-transform-runtime": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
+    "@babel/runtime": "^7.11.0",
     "@rollup/plugin-babel": "^5.1.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-replace": "^2.3.3",
@@ -86,7 +87,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
-    "react-syntax-highlighter": "^13.0.0",
+    "react-syntax-highlighter": "^13.2.1",
     "react-toastify": "^6.0.8",
     "react-window": "^1.8.5",
     "rimraf": "^3.0.2",
@@ -111,9 +112,7 @@
     "react-window": "^1.8.5",
     "styled-components": "^4.4.0"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.10.5"
-  },
+  "dependencies": {},
   "scripts": {
     "clean-build": "run-s clean build",
     "build": "rollup -c",
