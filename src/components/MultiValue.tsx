@@ -11,8 +11,8 @@ const MultiValueWrapper = styled.div`
     margin: ${multiValue.margin};
     border-radius: ${multiValue.borderRadius};
     background-color: ${multiValue.backgroundColor};
-    ${multiValue.css || ''}
   `}
+  ${({ theme }) => theme.multiValue.css}
 `;
 
 const Label = styled.div`

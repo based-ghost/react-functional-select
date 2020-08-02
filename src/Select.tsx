@@ -156,18 +156,19 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
   box-sizing: border-box;
   justify-content: space-between;
   ${({ isDisabled, isFocused, isInvalid, theme: { control, color } }) => `
-    min-height: ${control.minHeight};
     transition: ${control.transition};
     border-style: ${control.borderStyle};
     border-width: ${control.borderWidth};
     border-radius: ${control.borderRadius};
+    min-height: ${control.height || control.minHeight};
     border-color: ${(isInvalid ? color.danger : (isFocused ? control.focusedBorderColor : color.border))};
     ${isDisabled ? 'pointer-events: none;' : ''}
     ${control.height ? `height: ${control.height};` : ''}
     ${(control.backgroundColor || isDisabled) ? `background-color: ${isDisabled ? color.disabled : control.backgroundColor};` : ''}
     ${isFocused ? `box-shadow: ${control.boxShadow} ${isInvalid ? color.dangerLight : control.boxShadowColor};` : ''}
-    ${control.css || ''}
   `}
+  ${({ theme }) => theme.control.css}
+  ${({ isFocused, theme }) => isFocused && theme.control.focusedCss}
 `;
 
 const MenuWrapper = styled.div<MenuWrapperProps>`
@@ -670,10 +671,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
     e.stopPropagation();
-    if (e.type === 'mousedown') {
-      e.preventDefault();
-    }
-
+    (e.type === 'mousedown') && e.preventDefault();
     focusInput();
     menuOpen ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
   }, [menuOpen, openMenuAndFocusOption]);

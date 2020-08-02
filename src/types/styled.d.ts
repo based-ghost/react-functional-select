@@ -51,6 +51,7 @@ declare module 'styled-components' {
       backgroundColor?: string;
       focusedBorderColor: string;
       css?: string | FlattenSimpleInterpolation;
+      focusedCss?: string | FlattenSimpleInterpolation;
     },
     input: {
       css?: string | FlattenSimpleInterpolation;

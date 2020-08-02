@@ -129,7 +129,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
           <Content>
             react-functional-select uses{' '}
             <PackageLink {...STYLED_COMPONENTS_PACKAGE} /> to handle its
-            styling.  The root node is wrapped in styled-component's{' '}
+            styling. The root node is wrapped in styled-component's{' '}
             <code>ThemeProvider</code> wrapper component which gives all child
             styled-components access to the provided theme via React's context
             API. To override react-functional-select's default theme, pass an
@@ -137,21 +137,29 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             properties will replace those in the default theme.
           </Content>
           <Content>
-            Starting in <strong>v2.0.0</strong>, some of the nested objects in the{' '}
-            <code>themeConfig</code> object contain a <code>css</code>{' '}
-            property of type <code>string | FlattenSimpleInterpolation | undefined</code>{' '}
+            Starting in <strong>v2.0.0</strong>, some of the nested objects in
+            the <code>themeConfig</code> object contain a <code>css</code>{' '}
+            property of type{' '}
+            <code>string | FlattenSimpleInterpolation | undefined</code>{' '}
             (default value is undefined). This property can be used to pass raw
             CSS styles as a string or wrapped in{' '}
             <PackageLink {...STYLED_COMPONENTS_PACKAGE} /> exported{' '}
             <code>css</code> function. Those objects are: select, control, icon,
             menu, noOptions, multiValue, and input.
           </Content>
+          <Content>
+            Starting in <strong>v2.7.0</strong>, the control object in{' '}
+            <code>themeConfig</code> has the property <code>focusedCss</code> -
+            which is similar to the <code>css</code> property, except that it is
+            only applied when the select control is focused (and removed when
+            blurred).
+          </Content>
         </Column>
         <Column widthPercent={60}>
           <CodeMarkup
-            language='javascript'
+            language="javascript"
             data={THEME_DEFAULTS}
-            header='Theme Defaults'
+            header="Theme Defaults"
             formatFn={stringifyJavascriptObj}
           />
         </Column>
@@ -165,7 +173,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             <code>className</code> attributes for that specific instance of the
             component. These are the classes that are available:
           </Content>
-          <ListWrapper className='is-class-list'>
+          <ListWrapper className="is-class-list">
             <List>
               <ListItem>{SELECT_CONTAINER_CLS}</ListItem>
               <ListItem>{CONTROL_CONTAINER_CLS}</ListItem>
@@ -204,8 +212,8 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             <Column widthPercent={60}>
               <CodeMarkup
                 data={themeConfig}
-                language='javascript'
-                header='theme-config'
+                language="javascript"
+                header="theme-config"
                 formatFn={stringifyJavascriptObj}
               />
             </Column>
