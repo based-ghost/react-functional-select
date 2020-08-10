@@ -98,10 +98,7 @@ storiesOf('React Functional Select', module).add('Windowing', () => {
         </CardHeader>
         <CardBody>
           <SelectContainer>
-            <Select
-              ref={selectRef}
-              options={options}
-            />
+            <Select ref={selectRef} options={options} />
           </SelectContainer>
         </CardBody>
       </Card>

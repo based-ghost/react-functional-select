@@ -6,7 +6,7 @@ import { RfsTheme } from '../src/theme';
 import { storiesOf } from '@storybook/react';
 import { useCallbackState } from './helpers/hooks';
 import { CodeMarkup, PackageLink } from './helpers/components';
-import { createThemeOptions, stringifyJavascriptObj } from './helpers/utils';
+import { createThemeOptions, stringifyJavaScriptObj } from './helpers/utils';
 import { CLASS_NAME_HTML, STYLED_COMPONENTS_PACKAGE } from './helpers/constants';
 import { Hr, Columns, Column, Title, SubTitle, ListWrapper, List, ListItem, Content, LabelHeader, Container, Card, CardHeader, CardBody } from './helpers/styled';
 import {
@@ -160,7 +160,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
             language="javascript"
             data={THEME_DEFAULTS}
             header="Theme Defaults"
-            formatFn={stringifyJavascriptObj}
+            formatFn={stringifyJavaScriptObj}
           />
         </Column>
       </Columns>
@@ -214,7 +214,7 @@ storiesOf('React Functional Select', module).add('Styling', () => {
                 data={themeConfig}
                 language="javascript"
                 header="theme-config"
-                formatFn={stringifyJavascriptObj}
+                formatFn={stringifyJavaScriptObj}
               />
             </Column>
           </Columns>

@@ -13,7 +13,7 @@ export const getRandomInt = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const stringifyJavascriptObj = (data: any): string => {
+export const stringifyJavaScriptObj = (data: any): string => {
   return JSON.stringify(data || {}, null, 2)
     .replace(/"(\w+)"\s*:/g, '$1:')
     .replace(/"/g, "'");

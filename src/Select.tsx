@@ -5,7 +5,6 @@ import React, {
   useCallback,
   useRef,
   useImperativeHandle,
-  KeyboardEventHandler,
   FocusEventHandler,
   FocusEvent,
   FormEvent,
@@ -116,7 +115,6 @@ export type SelectProps = {
   readonly initialValue?: OptionData | OptionData[];
   readonly onSearchChange?: (value?: string) => void;
   readonly onOptionChange?: (data: OptionData) => void;
-  readonly onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
   readonly getOptionLabel?: (data: OptionData) => ReactText;
   readonly getOptionValue?: (data: OptionData) => ReactText;
   readonly onInputBlur?: FocusEventHandler<HTMLInputElement>;
@@ -127,6 +125,7 @@ export type SelectProps = {
   readonly renderMultiOptions?: (params: MultiParams) => ReactNode;
   readonly clearIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
   readonly caretIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
+  readonly onKeyDown?: (e: KeyboardEvent<HTMLDivElement>, input?: string, focusedOption?: FocusedOption) => void;
 };
 
 const SelectWrapper = styled.div`
@@ -448,29 +447,29 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   }, [onSearchChange, debouncedInputValue]);
 
   useUpdateEffect(() => {
-    if (onOptionChange) {
-      const normalizedOptionValue = isMulti
-        ? selectedOption.map(({ data }) => data)
-        : isArrayWithLength(selectedOption)
-          ? selectedOption[0].data
-          : ON_CHANGE_SINGLE_VALUE_DEFAULT;
+    if (!onOptionChange) return;
 
-      onOptionChange(normalizedOptionValue);
-    }
+    const normalizedOptionValue = isMulti
+      ? selectedOption.map(({ data }) => data)
+      : isArrayWithLength(selectedOption)
+        ? selectedOption[0].data
+        : ON_CHANGE_SINGLE_VALUE_DEFAULT;
+
+    onOptionChange(normalizedOptionValue);
   }, [isMulti, selectedOption, onOptionChange]);
 
   useUpdateEffect(() => {
-    const curLength = menuOptions.length;
-    const inputChanged = curLength > 0 && (async || (curLength !== options.length || prevMenuOptionsLength.current === 0));
+    const { length } = menuOptions;
+    const inputChanged = length > 0 && (async || (length !== options.length || prevMenuOptionsLength.current === 0));
 
-    if (curLength === 0) {
+    if (length === 0) {
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    } else if (curLength === 1 || inputChanged) {
+    } else if (length === 1 || inputChanged) {
       setFocusedOption({ index: 0, ...menuOptions[0] });
       scrollToItemIndex(0);
     }
 
-    prevMenuOptionsLength.current = curLength;
+    prevMenuOptionsLength.current = length;
   }, [async, options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
@@ -490,18 +489,20 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     const curFocusedIndex = focusedMultiValue ? selectedOption.findIndex(({ value }) => value === focusedMultiValue) : -1;
 
     switch (direction) {
-      case ValueIndexEnum.NEXT:
+      case ValueIndexEnum.NEXT: {
         nextFocusedIndex = (curFocusedIndex > -1 && curFocusedIndex < lastValueIndex)
           ? (curFocusedIndex + 1)
           : -1;
 
         break;
-      case ValueIndexEnum.PREVIOUS:
+      }
+      case ValueIndexEnum.PREVIOUS: {
         nextFocusedIndex = (curFocusedIndex !== 0)
           ? (curFocusedIndex === -1) ? lastValueIndex : (curFocusedIndex - 1)
           : 0;
 
         break;
+      }
     }
 
     const nextFocusedVal: ReactText | null = (nextFocusedIndex >= 0)
@@ -532,7 +533,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     if (isDisabled) return;
 
     if (onKeyDown) {
-      onKeyDown(e);
+      onKeyDown(e, inputValue, focusedOption);
       if (e.defaultPrevented) return;
     }
 

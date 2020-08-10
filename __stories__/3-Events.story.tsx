@@ -55,16 +55,16 @@ storiesOf('React Functional Select', module).add('Events', () => {
             executed after the input control's value changes
           </ListItem>
           <ListItem>
-            <TextHeader>onKeyDown(e: KeyboardEvent&lt;HTMLDivElement&gt;): void</TextHeader> -
-            executed after the onKeyDown event
-          </ListItem>
-          <ListItem>
             <TextHeader>onInputBlur(e: FocusEvent&lt;HTMLInputElement&gt;): void</TextHeader> -
             executed after the input control is blurred
           </ListItem>
           <ListItem>
             <TextHeader>onInputFocus(e: FocusEvent&lt;HTMLInputElement&gt;): void</TextHeader> -
             executed after the input control is focused
+          </ListItem>
+          <ListItem>
+            <TextHeader>onKeyDown(e: KeyboardEvent&lt;HTMLDivElement&gt;, input?: string, focusedOption?: any): void</TextHeader> -
+            executed after the onKeyDown event
           </ListItem>
           <ListItem>
             <TextHeader>onSearchChange(value: string): void</TextHeader> -

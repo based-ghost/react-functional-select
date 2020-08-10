@@ -36,7 +36,7 @@ const styledComponentsTransformer = createStyledComponentsTransformer({
 // This takes care of \n (search actual string by escaping \n so to not target line-breaks)
 // ...followed by spaces created by functions nested within styled-components that return template literals ``
 const modifyReplacePlugin = modify({
-  find: /\\n\s*/g,
+  find: /\\n\s*/gu,
   replace: '',
 });
 

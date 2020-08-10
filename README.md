@@ -156,7 +156,7 @@ All properties are technically optional (with a few having default values). Very
 |`onMenuOpen`| (...args: any[]): void | `undefined` | Callback function executed after the menu is opened
 |`onMenuClose`| (...args: any[]): void | `undefined` | Callback function executed after the menu is closed
 |`onOptionChange`| (data: any): void | `undefined` | Callback function executed after a new option is selected
-|`onKeyDown`| (e: KeyboardEvent\<HTMLDivElement\>): void | `undefined` | Callback function executed `onKeyDown` event
+|`onKeyDown`| (e: KeyboardEvent\<HTMLDivElement\>, input?: string, focusedOption?: any): void | `undefined` | Callback function executed `onKeyDown` event
 |`getOptionLabel`| (data: any): ReactText | `undefined` | Resolves option data to React.ReactText to be displayed as the label by components (by default will use option.label)
 |`getOptionValue`| (data: any): ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
 |`onInputBlur`| (e: FocusEvent\<HTMLInputElement\>): void | `undefined` | Handle blur events on the search input
