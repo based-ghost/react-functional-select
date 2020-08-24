@@ -1,11 +1,12 @@
 import React from 'react';
+import { FocusedOption } from '../src';
 import { RfsTheme } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import { AriaLiveRegion } from '../src/components';
 import { ARIA_LIVE_TESTID } from '../src/constants/dom';
 import { getSelectedOptionMulti } from './helpers/utils';
 import { render, RenderResult } from '@testing-library/react';
-import { AriaLiveRegionProps, SelectedOption, FocusedOption } from '../src/types';
+import { AriaLiveRegionProps, SelectedOption } from '../src/types';
 
 // ============================================
 // Helper functions for AriaLiveRegion component

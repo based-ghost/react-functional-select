@@ -1,4 +1,5 @@
-import { SelectedOption, FocusedOption, OptionData } from '../types';
+import { FocusedOption } from '../Select';
+import { SelectedOption, OptionData } from '../types';
 
 export const MENU_ITEM_SIZE_DEFAULT = 35;
 export const MENU_MAX_HEIGHT_DEFAULT = 300;

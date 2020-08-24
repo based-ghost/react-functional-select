@@ -27,17 +27,15 @@ const Link = styled.a`
   }
 `;
 
-const PackageLink: React.FC<PackageLinkProps> = React.memo(({ name, href }) => {
-  return (
-    <Link
-      href={href}
-      target='_blank'
-      aria-label={name}
-      rel='noopener noreferrer'
-    >
-      {name}
-    </Link>
-  );
-});
+const PackageLink: React.FC<PackageLinkProps> = React.memo(({ name, href }) => (
+  <Link
+    href={href}
+    target='_blank'
+    aria-label={name}
+    rel='noopener noreferrer'
+  >
+    {name}
+  </Link>
+));
 
 export default PackageLink;

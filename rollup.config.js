@@ -13,6 +13,7 @@ import createStyledComponentsTransformer from 'typescript-plugin-styled-componen
 /*************************************************
  - CONFIG DATA
  *************************************************/
+
 const globals = {
   'react': 'React',
   'styled-components': 'styled',
@@ -33,6 +34,7 @@ const styledComponentsTransformer = createStyledComponentsTransformer({
 /*************************************************
  - PLUGIN DEFINITIONS (INDIVIDUAL)
  *************************************************/
+
 // This takes care of \n (search actual string by escaping \n so to not target line-breaks)
 // ...followed by spaces created by functions nested within styled-components that return template literals ``
 const modifyReplacePlugin = modify({
@@ -63,14 +65,14 @@ const babelPlugin = (useESModules = false) => babel({
 - PLUGIN DEFINITIONS (GROUP)
  *************************************************/
 
-const cjsAndEsPlugins = () => ([
+const cjsPlugins = () => ([
   typescriptPlugin,
   babelPlugin(),
   resolve(),
   modifyReplacePlugin,
 ]);
 
-const browserEnvPlugins = (env) => ([
+const umdPlugins = (env) => ([
   typescriptPlugin,
   babelPlugin(true),
   resolve(),
@@ -88,7 +90,7 @@ export default [
       file: pkg.main,
       format: 'cjs',
     },
-    plugins: cjsAndEsPlugins(),
+    plugins: cjsPlugins(),
   },
 
   /*** MODULE ***/
@@ -99,7 +101,7 @@ export default [
       file: pkg.module,
       format: 'esm',
     },
-    plugins: cjsAndEsPlugins(),
+    plugins: cjsPlugins(),
   },
 
   /*** BROWSER (DEVELOPMENT) ***/
@@ -112,7 +114,7 @@ export default [
       globals,
       name,
     },
-    plugins: browserEnvPlugins('development'),
+    plugins: umdPlugins('development'),
   },
 
   /*** BROWSER (PRODUCTION) ***/
@@ -125,6 +127,6 @@ export default [
       globals,
       name,
     },
-    plugins: browserEnvPlugins('production'),
+    plugins: umdPlugins('production'),
   },
 ];

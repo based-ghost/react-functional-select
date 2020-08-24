@@ -10,15 +10,13 @@ import {
   InputHTMLAttributes
 } from 'react';
 
-import { MultiParams } from '../Select';
+import { FocusedOption, MultiParams } from '../Select';
 
 // ============================================
 // Shared / Object / Param / Misc types
 // ============================================
 
 export type OptionData = any;
-export type ValueIndex = 0 | 1;
-export type OptionIndex = 0 | 1 | 2 | 3;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
 export type AutosizeInputHTMLAttributes = InputHTMLAttributes<HTMLElement> & { 'data-testid'?: string };
@@ -27,12 +25,6 @@ export type SelectedOption = {
   data?: OptionData;
   value?: ReactText;
   label?: ReactText;
-};
-
-export type FocusedOption = SelectedOption & {
-  index: number;
-  isDisabled?: boolean;
-  isSelected?: boolean;
 };
 
 export type MenuOption = {

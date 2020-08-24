@@ -52,7 +52,9 @@ const MultiValue: React.FC<MultiValueProps> = ({
   removeSelectedOption
 }) => (
   <MultiValueWrapper>
-    <Label>{renderOptionLabel(data)}</Label>
+    <Label>
+      {renderOptionLabel(data)}
+    </Label>
     <Clear
       isFocused={isFocused}
       data-testid={CLEAR_ICON_MV_TESTID}

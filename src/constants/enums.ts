@@ -1,5 +1,3 @@
-import { OptionIndex, ValueIndex } from '../types';
-
 /**
  * Menu position in relation to the control.
  * Defaults to 'auto' - meaning, if not enough space below control, then place above.
@@ -22,17 +20,17 @@ export enum FilterMatchEnum {
 /**
  * Arrow key direction for cycling through multi-values.
  */
-export const ValueIndexEnum: Record<string, ValueIndex> = {
-  NEXT: 0,
-  PREVIOUS: 1
-};
+export enum ValueIndexEnum {
+  NEXT = 'next',
+  PREVIOUS = 'prev'
+}
 
 /**
  * Arrow key direction OR position for cycling through menu options.
  */
-export const OptionIndexEnum: Record<string, OptionIndex> = {
-  UP: 0,
-  DOWN: 1,
-  FIRST: 2,
-  LAST: 3
-};
+export enum OptionIndexEnum {
+  UP = 'up',
+  DOWN = 'down',
+  LAST = 'last',
+  FIRST = 'first'
+}

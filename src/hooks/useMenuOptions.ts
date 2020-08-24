@@ -47,7 +47,7 @@ export const useMenuOptions = (
     };
 
     const parseMenuOption = (data: OptionData): MenuOption | undefined => {
-      const value: ReactText = getOptionValue(data);
+      const value = getOptionValue(data);
 
       const menuOption: MenuOption = {
         data,

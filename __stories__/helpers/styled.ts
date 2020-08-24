@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 export const MEDIA_QUERY_IS_DESKTOP = '@media screen and (min-width: 1024px)';
 export const MEDIA_QUERY_IS_MOBILE = '@media only screen and (max-width: 768px)';
@@ -330,4 +330,56 @@ export const CardBody = styled.div`
   ${MEDIA_QUERY_IS_MOBILE} {
     padding: 0.75rem 0;
   }
+`;
+
+export const OtherSpan = styled.span`
+  opacity: 0.75;
+  font-size: 0.75em;
+  margin-top: 0.05em;
+  margin-left: 0.45em;
+`;
+
+// =======================================
+// Advanced story specific
+// =======================================
+
+const SPIN_LOGO = keyframes`
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+`;
+
+const SPIN_ANIMATION_CSS = css`animation: ${SPIN_LOGO} infinite 8s linear;`;
+
+export const OptionContainer = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+`;
+
+export const OptionName = styled.span`
+  color: #515151;
+  font-size: 1em;
+  font-weight: 600;
+  margin-left: 2px;
+  margin-bottom: 1px;
+  letter-spacing: .01em;
+`;
+
+export const OptionImg = styled.img<{ isDisabled?: boolean }>`
+  height: 30px;
+  border-style: none;
+  display: inline-block;
+  ${({ isDisabled }) => (!isDisabled && SPIN_ANIMATION_CSS)}
+`;
+
+export const ChevronDownSvg = styled.svg<{ menuOpen: boolean }>`
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  transition: transform 0.25s ease-in-out;
+  ${({ menuOpen }) => menuOpen && 'transform: rotate(180deg);'}
 `;

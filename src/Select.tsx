@@ -18,8 +18,8 @@ import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
 import { MenuPositionEnum, FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { useDebounce, useMenuPositioner, useMenuOptions, useIsTouchDevice, useUpdateEffect } from './hooks';
-import { calculateMenuTop, mergeDeep, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
-import { FocusedOption, SelectedOption, MouseOrTouchEvent, OptionIndex, IndicatorIconsProps, ValueIndex, MenuWrapperProps, ControlWrapperProps } from './types';
+import { mergeDeep, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
+import { SelectedOption, MouseOrTouchEvent, IndicatorIconsProps, OptionData, MenuWrapperProps, ControlWrapperProps } from './types';
 import {
   OPTIONS_DEFAULT,
   LOADING_MSG_DEFAULT,
@@ -45,9 +45,13 @@ import {
   CONTROL_CONTAINER_TESTID
 } from './constants/dom';
 
-type OptionData = any;
-
 export type Theme = Partial<DefaultTheme>;
+
+export type FocusedOption = SelectedOption & {
+  index: number;
+  isDisabled?: boolean;
+  isSelected?: boolean;
+};
 
 export type MenuOption = {
   readonly label: ReactText;
@@ -310,19 +314,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   // If initialValue is specified attempt to initialize, otherwise default to []
   const [selectedOption, setSelectedOption] = useState<SelectedOption[]>(() => normalizeValue(initialValue, getOptionValueFn, getOptionLabelFn));
 
-  // Custom hook abstraction that handles calculating menuHeight (defaults to menuMaxHeight)
-  // ...and handles executing callbacks/logic on menuOpen state change.
-  const [menuHeight, isMenuTopPosition]: [number, boolean] = useMenuPositioner(
-    menuRef,
-    menuOpen,
-    menuPosition,
-    menuMaxHeight,
-    menuScrollDuration,
-    scrollMenuIntoView,
-    onMenuOpen,
-    onMenuClose
-  );
-
   // Custom hook abstraction that handles the creation of menuOptions
   const menuOptions: MenuOption[] = useMenuOptions(
     options,
@@ -338,6 +329,21 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     isMulti,
     hideSelectedOptions,
     async
+  );
+
+  // Custom hook abstraction that handles calculating menuHeightCalc (defaults to menuMaxHeight) / handles executing callbacks/logic on menuOpen state change.
+  const [menuStyleTop, menuHeightCalc] = useMenuPositioner(
+    menuRef,
+    controlRef,
+    menuOpen,
+    menuPosition,
+    menuItemSize,
+    menuMaxHeight,
+    menuOptions.length,
+    menuScrollDuration,
+    scrollMenuIntoView,
+    onMenuOpen,
+    onMenuClose
   );
 
   const blurInput = (): void => {
@@ -361,7 +367,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     setSelectedOption((prevSelectedOption) => prevSelectedOption.filter(({ value }) => value !== removeValue));
   }, []);
 
-  const openMenuAndFocusOption = useCallback((position: OptionIndex): void => {
+  const openMenuAndFocusOption = useCallback((position: OptionIndexEnum): void => {
     if (!isArrayWithLength(menuOptions)) {
       setMenuOpen(true);
       return;
@@ -384,7 +390,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     if (isSelected) {
       isMulti && removeSelectedOption(option.value);
     } else {
-      setSelectedOption((prevSelectedOption) => (!isMulti ? [option] : [...prevSelectedOption, option]));
+      setSelectedOption((prevSelectedOption) => !isMulti ? [option] : [...prevSelectedOption, option]);
     }
 
     if (blurInputOnSelectOrTouch) {
@@ -473,15 +479,15 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   }, [async, options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
-    const { data, value, label, isSelected, isDisabled: focOptionDisabled } = focusedOption;
+    const { data, value, label, isSelected, isDisabled: isOptionDisabled } = focusedOption;
 
-    if (data && !focOptionDisabled) {
+    if (data && !isOptionDisabled) {
       selectOption({ data, value, label }, isSelected);
     }
   };
 
   // Only Multiselect mode supports value focusing
-  const focusValueOnArrowKey = (direction: ValueIndex): void => {
+  const focusValueOnArrowKey = (direction: ValueIndexEnum): void => {
     if (!isArrayWithLength(selectedOption)) return;
 
     let nextFocusedIndex = -1;
@@ -489,33 +495,29 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     const curFocusedIndex = focusedMultiValue ? selectedOption.findIndex(({ value }) => value === focusedMultiValue) : -1;
 
     switch (direction) {
-      case ValueIndexEnum.NEXT: {
+      case ValueIndexEnum.NEXT:
         nextFocusedIndex = (curFocusedIndex > -1 && curFocusedIndex < lastValueIndex)
           ? (curFocusedIndex + 1)
           : -1;
 
         break;
-      }
-      case ValueIndexEnum.PREVIOUS: {
+      case ValueIndexEnum.PREVIOUS:
         nextFocusedIndex = (curFocusedIndex !== 0)
           ? (curFocusedIndex === -1) ? lastValueIndex : (curFocusedIndex - 1)
           : 0;
 
         break;
-      }
     }
 
     const nextFocusedVal: ReactText | null = (nextFocusedIndex >= 0)
       ? selectedOption[nextFocusedIndex].value!
       : FOCUSED_MULTI_DEFAULT;
 
-    if (focusedOption.data)
-      setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    if (nextFocusedVal !== focusedMultiValue)
-      setFocusedMultiValue(nextFocusedVal);
+    if (focusedOption.data) setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    if (nextFocusedVal !== focusedMultiValue) setFocusedMultiValue(nextFocusedVal);
   };
 
-  const focusOptionOnArrowKey = (direction: OptionIndex): void => {
+  const focusOptionOnArrowKey = (direction: OptionIndexEnum): void => {
     if (!isArrayWithLength(menuOptions)) return;
 
     const index = (direction === OptionIndexEnum.DOWN)
@@ -624,16 +626,14 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     if (isDisabled) return;
     if (!isFocused) focusInput();
 
-    const tagNameNotInput = (e.currentTarget.tagName !== 'INPUT');
-
     if (!menuOpen) {
       openMenuOnClick && openMenuAndFocusOption(OptionIndexEnum.FIRST);
-    } else if (tagNameNotInput) {
+    } else if (e.currentTarget.tagName !== 'INPUT') {
       setMenuOpen(false);
       inputValue && setInputValue('');
     }
 
-    if (tagNameNotInput) {
+    if (e.currentTarget.tagName !== 'INPUT') {
       e.preventDefault();
     }
   };
@@ -676,15 +676,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     focusInput();
     menuOpen ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
   }, [menuOpen, openMenuAndFocusOption]);
-
-  /**
-   * Calculated menu height passed react-window.
-   * Also used to calculate MenuWrapper <div /> 'top' style prop if menu is positioned above control.
-   */
-  const calcMenuHeight = Math.min(menuHeight, menuOptions.length * menuItemSize);
-  const menuStyleTop = isMenuTopPosition
-    ? calculateMenuTop(calcMenuHeight, menuRef.current, controlRef.current)
-    : undefined;
 
   return (
     <ThemeProvider theme={theme}>
@@ -759,7 +750,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
           <Menu
             ref={listRef}
             isLoading={isLoading}
-            height={calcMenuHeight}
+            height={menuHeightCalc}
             itemSize={menuItemSize}
             loadingMsg={loadingMsg}
             menuOptions={menuOptions}

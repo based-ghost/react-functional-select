@@ -58,12 +58,12 @@ type CityOption = {
   readonly state: string;
 };
 
-const CITY_OPTIONS: CityOption[] = [
+const _cityOptions: CityOption[] = [
   { id: 1, city: 'Austin', state: 'TX' },
   { id: 2, city: 'Denver', state: 'CO' },
   { id: 3, city: 'Chicago', state: 'IL' },
   { id: 4, city: 'Phoenix', state: 'AZ' },
-  { id: 5, city: 'Houston', state: 'TX' },
+  { id: 5, city: 'Houston', state: 'TX' }
 ];
 
 const SingleSelectDemo: React.FC = () => {
@@ -90,7 +90,7 @@ const SingleSelectDemo: React.FC = () => {
           <SelectContainer>
             <Select
               isInvalid={isInvalid}
-              options={CITY_OPTIONS}
+              options={_cityOptions}
               isDisabled={isDisabled}
               isClearable={isClearable}
               onOptionChange={onOptionChange}
@@ -156,7 +156,7 @@ All properties are technically optional (with a few having default values). Very
 |`onMenuOpen`| (...args: any[]): void | `undefined` | Callback function executed after the menu is opened
 |`onMenuClose`| (...args: any[]): void | `undefined` | Callback function executed after the menu is closed
 |`onOptionChange`| (data: any): void | `undefined` | Callback function executed after a new option is selected
-|`onKeyDown`| (e: KeyboardEvent\<HTMLDivElement\>, input?: string, focusedOption?: any): void | `undefined` | Callback function executed `onKeyDown` event
+|`onKeyDown`| (e: KeyboardEvent\<HTMLDivElement\>, input?: string, focusedOption?: FocusedOption): void | `undefined` | Callback function executed `onKeyDown` event
 |`getOptionLabel`| (data: any): ReactText | `undefined` | Resolves option data to React.ReactText to be displayed as the label by components (by default will use option.label)
 |`getOptionValue`| (data: any): ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
 |`onInputBlur`| (e: FocusEvent\<HTMLInputElement\>): void | `undefined` | Handle blur events on the search input
