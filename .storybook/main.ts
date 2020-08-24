@@ -9,6 +9,9 @@ module.exports = {
     '@storybook/preset-create-react-app',
     '@storybook/addon-storysource',
   ],
+  typescript: {
+    reactDocgen: 'none'
+  },
   webpackFinal: (config: Configuration) => {
     config.module.rules.push({
       test: /\.stories\.tsx?$/,
@@ -27,7 +30,7 @@ module.exports = {
       test: /\.(ts|tsx)$/,
       loader: require.resolve('babel-loader'),
       options: {
-        presets: ['@babel/preset-env'],
+        presets: [['react-app', { flow: false, typescript: true }]],
       },
     });
 
