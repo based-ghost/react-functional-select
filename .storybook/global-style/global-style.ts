@@ -49,7 +49,7 @@ export const GlobalStyle = createGlobalStyle`
     word-break: break-word;
     padding: .15em .2em .05em;
     color: rgba(0, 0, 0, 0.87);
-    background-color: rgba(30, 167, 253, 0.15);
+    background-color: rgba(30, 167, 253, 0.12);
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 
     @media only screen and (max-width: 525px) {
