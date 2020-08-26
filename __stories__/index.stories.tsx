@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState, useEffect, useCallback, Fragment, FocusEvent, KeyboardEvent, ReactNode } from 'react';
 import { CityOption, Option, PackageOption } from './helpers/types';
 import { useCallbackState, useClearToastsOnUnmount } from './helpers/hooks';
-import { Select, MultiParams, Theme, MenuOption, SelectRef, FilterMatchEnum } from '../src';
+import { Select, MultiParams, MenuOption, SelectRef, FilterMatchEnum } from '../src';
 import { Checkbox, CodeMarkup, PackageLink, OptionsCountButton } from './helpers/components';
 import { mockHttpRequest, getRandomInt, createAsyncOptions, createSelectOptions, stringifyJavaScriptObj, renderInfoToast } from './helpers/utils';
 import { CITY_OPTIONS, PACKAGE_OPTIONS, REACT_WINDOW_PACKAGE, CLASS_NAME_HTML, STYLED_COMPONENTS_PACKAGE, ThemeEnum, ThemeConfigMap, THEME_DEFAULTS, OPTIONS, SELECT_CONTAINER_STYLE, THEME_CONFIG } from './helpers/constants';
@@ -247,9 +247,9 @@ export const MultiSelect = () => {
 };
 
 export const Styling = () => {
-  const [themeConfig, setThemeConfig] = useState<Theme | undefined>(undefined);
-  const [selectedOption, setSelectedOption] = useCallbackState<Option | null>(null);
-  const menuItemSize = (selectedOption && selectedOption.value === ThemeEnum.LARGE_TEXT) ? 44 : 35;
+  const [themeConfig, setThemeConfig] = useState();
+  const [selectedOption, setSelectedOption] = useCallbackState(null);
+  const menuItemSize: number = (selectedOption && selectedOption.value === ThemeEnum.LARGE_TEXT) ? 44 : 35;
 
   const memoizedMarkupNode = useMemo<ReactNode>(() => (
     <CodeMarkup

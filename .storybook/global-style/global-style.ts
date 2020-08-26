@@ -26,6 +26,7 @@ export const GlobalStyle = createGlobalStyle`
     text-align: left;
     line-height: 1.5;
     min-height: 120vh;
+    padding: 1rem 0.25rem !important;
     flex-direction: column;
     background-color: #fff;
     color: rgba(0, 0, 0, 0.87);

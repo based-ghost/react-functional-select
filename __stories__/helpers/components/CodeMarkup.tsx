@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import dark from 'react-syntax-highlighter/dist/esm/styles/prism/dark';
 import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
@@ -76,16 +75,12 @@ const PreContainer = styled.div<{ $color: string }>`
         display: inherit;
         color: ${({ $color }) => $color} !important;
 
-        .tag, .string, .number, .operator {
+        .tag, .string, .number {
           color: #fc929e;
         }
 
-        .attr-value {
+        .attr-value, .operator, .punctuation {
           color: #8dc891;
-        }
-
-        .punctuation {
-          color: #88c6be;
         }
 
         .attr-name {
