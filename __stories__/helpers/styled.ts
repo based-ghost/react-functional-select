@@ -8,7 +8,7 @@ export const MEDIA_QUERY_IS_TABLET = '@media only screen and (max-width: 991px) 
 
 // Need to implement a div version of Paragraph since PrettyPrintJson contains an <pre> element
 // ...which cannot be a child of a <p> element
-const PARAGRAPH_CSS = css`
+const _paragraphCSS = css`
   margin-top: 0;
   display: block;
   margin-bottom: 1rem;
@@ -19,11 +19,11 @@ const PARAGRAPH_CSS = css`
 `;
 
 export const Content = styled.p`
-  ${PARAGRAPH_CSS}
+  ${_paragraphCSS}
 `;
 
 export const Paragraph = styled.p`
-  ${PARAGRAPH_CSS}
+  ${_paragraphCSS}
   ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
     max-width: 85%;
   }
@@ -92,7 +92,7 @@ export const Column = styled.div<{ widthPercent?: number }>`
 `;
 
 export const ListWrapper = styled.div`
-  ${PARAGRAPH_CSS}
+  ${_paragraphCSS}
 
   ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
     max-width: 85%;
@@ -129,7 +129,7 @@ export const List = styled.ul`
   }
 `;
 
-export const ListItem = styled.li`
+export const Li = styled.li`
   display: list-item;
   text-align: match-parent;
 `;

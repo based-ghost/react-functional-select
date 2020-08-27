@@ -20,7 +20,7 @@ import {
   Content,
   Container,
   List,
-  ListItem,
+  Li,
   ListWrapper,
   SelectContainer,
   Paragraph,
@@ -164,31 +164,29 @@ export const MultiSelect = () => {
         While in multi-select mode, some properties are now applicable and
         others become more pertinent.
         <List>
-          <ListItem>
+          <Li>
             <TextHeader>hideSelectedOptions?: boolean</TextHeader> - Hide the
             selected option from the menu. Default value is false, however, if
             undefined and <code>isMulti === true</code>, then its value defaults
             to true.
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>closeMenuOnSelect?: boolean</TextHeader> - Close the
             menu of options when the user selects an option. Default value is
             false, however, it may be benefical to set this property to true for
             convenience in multi-select scenarios.
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>renderMultiOptions(params: MultiParams): ReactNode</TextHeader> -
-            Optional callback function that can be used to further customize
-            the selection label in multi-select scenarios . <code>params</code>{' '}
-            is an object that contains the <code>selected</code> and{' '}
-            <code>renderOptionLabel</code> properties (array of selected options
-            and function used to render individual option labels, respectively).
-            When this function is defined, left and right arrow navigation of
-            individual options is disabled. When using this property, it may be
-            be a good idea to set the property <code>backspaceClearsValue</code>{' '}
-            to <em>false</em> in order to avoid accidentally clearing all
-            selections when searching.
-          </ListItem>
+            Optional callback function that can be used to further customize the selection label
+            in multi-select scenarios. <code>params</code> is an object that contains
+            the <code>selected</code> and <code>renderOptionLabel</code> properties (array
+            of selected options and function used to render individual option labels, respectively).
+            When this function is defined, left and right arrow navigation of individual options is
+            disabled. When using this property, it may be be a good idea to set the
+            property <code>backspaceClearsValue</code> to <em>false</em> in order to avoid accidentally
+            clearing all selections when searching.
+          </Li>
         </List>
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
@@ -274,40 +272,34 @@ export const Styling = () => {
       <Columns>
         <Column widthPercent={40}>
           <Content>
-            react-functional-select uses{' '}
-            <PackageLink {...STYLED_COMPONENTS_PACKAGE} /> to handle its
-            styling. The root node is wrapped in styled-component's{' '}
-            <code>ThemeProvider</code> wrapper component which gives all child
-            styled-components access to the provided theme via React's context
-            API. To override react-functional-select's default theme, pass an
-            object to the <code>themeConfig</code> property - any matching
-            properties will replace those in the default theme.
+            react-functional-select uses <PackageLink {...STYLED_COMPONENTS_PACKAGE} /> to
+            handle its styling. The root node is wrapped in
+            styled-component's <code>ThemeProvider</code> wrapper component which gives all
+            child styled-components access to the provided theme via React's context API.
+            To override react-functional-select's default theme, pass an object to
+            the <code>themeConfig</code> property - any matching properties will replace
+            those in the default theme.
           </Content>
           <Content>
             Starting in <strong>v2.0.0</strong>, some of the nested objects in
-            the <code>themeConfig</code> object contain a <code>css</code>{' '}
-            property of type{' '}
-            <code>string | FlattenSimpleInterpolation | undefined</code>{' '}
-            (default value is undefined). This property can be used to pass raw
-            CSS styles as a string or wrapped in{' '}
-            <PackageLink {...STYLED_COMPONENTS_PACKAGE} /> exported{' '}
-            <code>css</code> function. Those objects are: select, control, icon,
-            menu, noOptions, multiValue, and input.
+            the <code>themeConfig</code> object contain a <code>css</code> property
+            of type <code>string | FlattenSimpleInterpolation | undefined</code> (default value
+            is undefined). This property can be used to pass raw CSS styles as a string or wrapped
+            in <PackageLink {...STYLED_COMPONENTS_PACKAGE} /> exported <code>css</code> function.
+            Those objects are: select, control, icon, menu, noOptions, multiValue, and input.
           </Content>
           <Content>
-            Starting in <strong>v2.7.0</strong>, the control object in{' '}
-            <code>themeConfig</code> has the property <code>focusedCss</code> -
-            which is similar to the <code>css</code> property, except that it is
-            only applied when the select control is focused (and removed when
-            blurred).
+            Starting in <strong>v2.7.0</strong>, the control object in <code>themeConfig</code> has
+            the property <code>focusedCss</code> - which is similar to the <code>css</code> property,
+            except that it is only applied when the select control is focused (and removed when blurred).
           </Content>
         </Column>
         <Column widthPercent={60}>
           <CodeMarkup
-            textColor="#79b6f2"
-            language="javascript"
+            textColor='#79b6f2'
+            language='javascript'
             data={THEME_DEFAULTS}
-            header="Theme Defaults"
+            header='Theme Defaults'
             formatFn={stringifyJavaScriptObj}
           />
         </Column>
@@ -316,21 +308,20 @@ export const Styling = () => {
       <Columns>
         <Column widthPercent={40}>
           <Content>
-            If you want to style the component using CSS classes, set the{' '}
-            <code>addClassNames</code> prop to true and it will then generate{' '}
-            <code>className</code> attributes for that specific instance of the
-            component. These are the classes that are available:
+            If you want to style the component using CSS classes, set the <code>addClassNames</code> prop
+            to true and it will then generate <code>className</code> attributes for that specific instance
+            of the component. These are the classes that are available:
           </Content>
-          <ListWrapper className="is-class-list">
+          <ListWrapper className='is-class-list'>
             <List>
-              <ListItem>{SELECT_CONTAINER_CLS}</ListItem>
-              <ListItem>{CONTROL_CONTAINER_CLS}</ListItem>
-              <ListItem>{MENU_CONTAINER_CLS}</ListItem>
-              <ListItem>{AUTOSIZE_INPUT_CLS}</ListItem>
-              <ListItem>{CARET_ICON_CLS}</ListItem>
-              <ListItem>{CLEAR_ICON_CLS}</ListItem>
-              <ListItem>{LOADING_DOTS_CLS}</ListItem>
-              <ListItem>{`${OPTION_CLS}, ${OPTION_FOCUSED_CLS}, ${OPTION_SELECTED_CLS}, ${OPTION_DISABLED_CLS}`}</ListItem>
+              <Li>{SELECT_CONTAINER_CLS}</Li>
+              <Li>{CONTROL_CONTAINER_CLS}</Li>
+              <Li>{MENU_CONTAINER_CLS}</Li>
+              <Li>{AUTOSIZE_INPUT_CLS}</Li>
+              <Li>{CARET_ICON_CLS}</Li>
+              <Li>{CLEAR_ICON_CLS}</Li>
+              <Li>{LOADING_DOTS_CLS}</Li>
+              <Li>{`${OPTION_CLS}, ${OPTION_FOCUSED_CLS}, ${OPTION_SELECTED_CLS}, ${OPTION_DISABLED_CLS}`}</Li>
             </List>
           </ListWrapper>
         </Column>
@@ -360,9 +351,9 @@ export const Styling = () => {
             <Column widthPercent={60}>
               <CodeMarkup
                 data={themeConfig}
-                textColor="#79b6f2"
-                language="javascript"
-                header="theme-config"
+                textColor='#79b6f2'
+                language='javascript'
+                header='theme-config'
                 formatFn={stringifyJavaScriptObj}
               />
             </Column>
@@ -404,41 +395,41 @@ export const Events = () => {
         There are various callback function properties that are executed following
         their associated events:
         <List>
-          <ListItem>
+          <Li>
             <TextHeader>onOptionChange(data: any): void</TextHeader> -
             executed after an option is selected or removed
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>onMenuOpen(...args: any[]): void</TextHeader> -
             executed after the menu is opened
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>onMenuClose(...args: any[]): void</TextHeader> -
             executed after the menu is closed
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>onInputChange(value: string): void</TextHeader> -
             executed after the input control's value changes
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>onInputBlur(e: FocusEvent&lt;HTMLInputElement&gt;): void</TextHeader> -
             executed after the input control is blurred
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>onInputFocus(e: FocusEvent&lt;HTMLInputElement&gt;): void</TextHeader> -
             executed after the input control is focused
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>onKeyDown(e: KeyboardEvent&lt;HTMLDivElement&gt;, input?: string, focusedOption?: FocusedOption): void</TextHeader> -
             executed after the onKeyDown event
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>onSearchChange(value: string): void</TextHeader> -
             executed after the input value is persisted to state; this value also evaluates
             the <code>inputDelay</code> property for debouncing - this callback is really only
             useful when <code>inputDelay</code> is defined, and if not, it probably makes more
             sense to use the <code>onInputChange</code> callback
-          </ListItem>
+          </Li>
         </List>
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
@@ -529,26 +520,26 @@ export const Methods = () => {
         Five public methods are exposed to wrapping components and are
         accessible via a forwarded <code>ref</code>.
         <List>
-          <ListItem>
+          <Li>
             <TextHeader>blur(): void</TextHeader> - blur the control
             programatically
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>focus(): void</TextHeader> - focus the control
             programatically
-          </ListItem>
-          <ListItem>
-            <TextHeader>toggleMenu(state?: boolean): void</TextHeader> - toggle
-            the menu programatically
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
+            <TextHeader>toggleMenu(state?: boolean): void</TextHeader> -
+            toggle the menu programatically
+          </Li>
+          <Li>
             <TextHeader>clearValue(): void</TextHeader> - clear the current
             value programatically <em>(if an option is selected)</em>
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>setValue(option?: any): void</TextHeader> - set the
             value programatically <em>(option will be validated)</em>
-          </ListItem>
+          </Li>
         </List>
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
@@ -595,31 +586,29 @@ export const Filtering = () => {
       <Title>Filter Customization</Title>
       <Hr />
       <ListWrapper>
-        The default filtering functionality can be customized via the following
-        properties:
+        The default filtering functionality can be customized via the following properties:
         <List>
-          <ListItem>
+          <Li>
             <TextHeader>filterIgnoreCase?: boolean</TextHeader> - Filter ignores
             case when matching strings. Default value is <code>true</code>.
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>filterIgnoreAccents?: boolean</TextHeader> - Filter
             ignores accents when matching strings. Default value is <code>false</code>.
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>filterMatchFrom?: 'any' | 'start'</TextHeader> -
             Position in source string to perform match. Default value is <code>'any'</code>.
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>getFilterOptionString(option: MenuOption): string</TextHeader> -
             When defined will take each option and generate a string used in
-            the filtering process. By default, the stringified version of what
-            is generated by <code>getOptionLabel</code>, if definded, or the
-            option's label as a fallback. The <code>MenuOption</code> typed
-            parameter that <code>getFilterOptionString</code> accepts contains a{' '}
-            <code>data</code> property that represents the objects that comprise
-            your <code>options</code> property.
-          </ListItem>
+            the filtering process. By default, the stringified version of what is
+            generated by <code>getOptionLabel</code>, if definded, or the option's label
+            as a fallback. The <code>MenuOption</code> typed parameter
+            that <code>getFilterOptionString</code> accepts contains a <code>data</code> property
+            that represents the objects that comprise your <code>options</code> property.
+          </Li>
         </List>
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
@@ -628,22 +617,22 @@ export const Filtering = () => {
         <CardHeader>
           <CheckboxGroup>
             <Checkbox
-              label="Ignore Case"
+              label='Ignore Case'
               checked={filterIgnoreCase}
               onCheck={setFilterIgnoreCase}
             />
             <Checkbox
-              label="Ignore Accents"
+              label='Ignore Accents'
               checked={filterIgnoreAccents}
               onCheck={setFilterIgnoreAccents}
             />
             <Checkbox
-              label="Match from the start"
+              label='Match from the start'
               checked={filterMatchFromStart}
               onCheck={setFilterMatchFromStart}
             />
             <Checkbox
-              label="Use custom filter function (by state only)"
+              label='Use custom filter function (by state only)'
               checked={useCustomFilterFunc}
               onCheck={setUseCustomFilterFunc}
             />
@@ -707,7 +696,7 @@ export const Windowing = () => {
         enumerable data (rather than bloating the DOM with an excessive amount of nodes),
         'windowing' can also assist with:
         <List>
-          <ListItem>
+          <Li>
             <strong>Efficient memory allocation</strong>. 'Windowing' naturally
             lends itself to the dynamic generation of attributes/values as each
             object comes into your renderer's scope (as opposed to allocating
@@ -717,8 +706,8 @@ export const Windowing = () => {
             generating the <code>onClick</code>, <code>id</code>,
             and <code>className</code> attributes for each <code>menuOption</code> as
             they get passed to the <code>&lt;Option /&gt;</code> renderer component.
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <strong>Functional architecture</strong>. The flexibility provided
             through only having to manage subsets of your list allows for a more
             dynamic application. By breaking your code out into smaller, 'pure'
@@ -727,7 +716,7 @@ export const Windowing = () => {
             Simple components that rely on the props passed to it (rather than
             its own managed state) to generate its JSX are likely candidates for
             memoization (testing &amp; debugging becomes much easier as well).
-          </ListItem>
+          </Li>
         </List>
         <em>Note: </em>The only time any noticeable performance degradation will be observed
         is during search input updates when the <code>options</code> count reaches the high
@@ -803,7 +792,7 @@ export const Advanced = () => {
       <ListWrapper>
         Implementation using a couple of the more specialized properties.
         <List>
-          <ListItem>
+          <Li>
             <TextHeader>renderOptionLabel(option: any): React.ReactNode</TextHeader> - Callback
             function with a return type of <code>ReactNode</code>. Use this property in cases
             where the standard <code>getOptionLabel</code> property won't meet your needs (for
@@ -813,21 +802,21 @@ export const Advanced = () => {
             this, the <code>menuOverscanCount</code> property can be increased to render additional
             rows outside of the visible area. The default value for this property is 1 and it is
             important to note that increasing this value can negatively impact performance.
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>getIsOptionDisabled(option: any): boolean</TextHeader> - Callback
             function with a return type of <code>Boolean</code>. When it evaluates to a value of
             true, that option iteration will be rendered <em>disabled</em>. As an alternative, you
             can also pass a property of <code>isDisabled</code> with each option. Use of these two
             options - they cannot both be specified.
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>caretIcon: ReactNode | (...args: any[]) =&gt; ReactNode</TextHeader> - A custom
             node or a function that returns a node can used for the <code>caretIcon</code> property.
             When using a function, an object containing stateful data is forwarded and can be used to style
             your custom node accordingly. The state is <code>{'{ menuOpen, isLoading, isInvalid, isDisabled }'}</code> of
-            type <code>{'Record<string, boolean>'}</code>. The <code>clearIcon</code> property has an identical definition.
-          </ListItem>
+            type <code>Record&lt;string, boolean&gt;</code>. The <code>clearIcon</code> property has an identical definition.
+          </Li>
         </List>
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
@@ -881,33 +870,33 @@ export const Async = () => {
         achieved using some combination of the properties found below
         . <em>Properties onInputChange and onSearchChange should be memoized.</em>
         <List>
-          <ListItem>
+          <Li>
             <TextHeader>onInputChange(value: string): void</TextHeader> -
             callback executed directly following the input control's <code>onChange</code> event.
             This callback is not debounced, so it fires immediately. This is a good
             place to set a stateful loading property in your parent component that is mapped to
             react-functional-select's <code>isLoading</code> property.
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>onSearchChange(value: string): void</TextHeader> -
             callback executed following component state updates for
             the <code>debouncedInputValue</code>. The debounce is set using
             the <code>inputDelay</code> property. This callback is a good place for your
             http fetch request and post-request logic (i.e. setting isLoading false).
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>inputDelay?: number</TextHeader> - As mentioned above, this can be
             set to a positive integer in order to debounce updates to the search input value
             following input change events. This property directly maps to the <code>delay</code> in
             milliconds passed to the <code>setTimeout</code> method.
-          </ListItem>
-          <ListItem>
+          </Li>
+          <Li>
             <TextHeader>isLoading?: boolean</TextHeader> - When true, a loading animation will
             appear in the far-right of the control and take the place of the clear icon (if shown).
             Additionally, it will hide options in the menu and instead, display a loading message.
             The loading message text defaults to 'Loading...', but can be overriden via
             the <code>loadingMsg</code> property.
-          </ListItem>
+          </Li>
         </List>
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
