@@ -1,6 +1,6 @@
 import { ReactText } from 'react';
+import { OptionData, SelectedOption } from './types';
 import { SELECTED_OPTION_DEFAULT } from './constants/defaults';
-import { MenuOption, OptionData, SelectedOption } from './types';
 import { OVERFLOW_REGEXP, DIACRITICS_REGEXP, IE_EDGE_BROWSER_REGEXP } from './constants/regexp';
 import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from './constants/dom';
 
@@ -85,14 +85,14 @@ function smoothScrollTo(
 export const isEdgeOrIE = (): boolean => (typeof navigator !== 'undefined') && IE_EDGE_BROWSER_REGEXP.test(navigator.userAgent);
 
 /**
- * Tests object for type of array with a length of at least 1.
+ * Tests if object is an array with at least 1 item.
  */
 export function isArrayWithLength(test: any): boolean {
   return Array.isArray(test) && !!test.length;
 }
 
 /**
- * Tests for a non-array object - 'a plain object'.
+ * Tests for a non-array object - 'plain object'.
  */
 export function isPlainObject(test: any): boolean {
   return test && (typeof test === 'object') && !Array.isArray(test);
@@ -228,66 +228,24 @@ export function scrollMenuIntoViewOnOpen(
 }
 
 /**
- * Validates the 'option' parameter passed to the public instance method 'setValue' that is exposed
- * ...to wrapping parent components.
- */
-export function validateSetValueParam(
-  values: any,
-  menuOptions: MenuOption[],
-  getOptionValue: (data: OptionData) => ReactText
-): SelectedOption[] {
-  if (values === null || values === undefined) {
-    return SELECTED_OPTION_DEFAULT;
-  }
-
-  // Get array of valid MenuOption values (ReactText[]) and use to check against menuOptions
-  const validValues = normalizeValue(values).reduce(
-    (acc: ReactText[], x: SelectedOption) => {
-      isPlainObject(x) && acc.push(getOptionValue(x));
-      return acc;
-    },
-    []
-  );
-
-  if (!isArrayWithLength(validValues)) {
-    return SELECTED_OPTION_DEFAULT;
-  }
-
-  return (menuOptions || []).reduce(
-    (acc: SelectedOption[], option: MenuOption) => {
-      if (!acc.includes(option) && validValues.includes(getOptionValue(option))) {
-        acc.push(option);
-      }
-      return acc;
-    },
-    []
-  );
-}
-
-/**
- * Ensures that the value is returned as an array type (with fallback default of []).
+ * Parses an object or an array of objects into output of SelectedOption[].
  */
 export function normalizeValue(
   value: any,
-  getOptionValue?: (data: OptionData) => ReactText,
-  getOptionLabel?: (data: OptionData) => ReactText
+  getOptionValue: (data: OptionData) => ReactText,
+  getOptionLabel: (data: OptionData) => ReactText
 ): SelectedOption[] {
-  // Cast to array of type SelectedOption[]
   const initialValues = Array.isArray(value)
     ? value
     : isPlainObject(value)
-      ? [value]
-      : SELECTED_OPTION_DEFAULT;
+    ? [value]
+    : SELECTED_OPTION_DEFAULT;
 
-  // Return default of []
-  if (!getOptionValue || !getOptionLabel || !isArrayWithLength(initialValues)) {
-    return initialValues;
-  }
-
-  // Array has initial values - cast to typeof SelectedOption and return SelectedOption[]
-  return initialValues.map((val: any) => ({
-    data: val,
-    value: getOptionValue(val),
-    label: getOptionLabel(val)
-  }));
+  return isArrayWithLength(initialValues)
+    ? initialValues.map((x: any) => ({
+        data: x,
+        value: getOptionValue(x),
+        label: getOptionLabel(x)
+      }))
+    : initialValues;
 }

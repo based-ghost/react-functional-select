@@ -15,10 +15,10 @@ import React, {
 import { RfsTheme } from './theme';
 import { FixedSizeList } from 'react-window';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
+import { mergeDeep, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
 import { MenuPositionEnum, FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { useDebounce, useMenuPositioner, useMenuOptions, useIsTouchDevice, useUpdateEffect } from './hooks';
-import { mergeDeep, isPlainObject, normalizeValue, isArrayWithLength, validateSetValueParam } from './utils';
 import { SelectedOption, MouseOrTouchEvent, IndicatorIconsProps, OptionData, MenuWrapperProps, ControlWrapperProps } from './types';
 import {
   OPTIONS_DEFAULT,
@@ -409,8 +409,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
     },
     setValue: (option?: OptionData) => {
-      const validatedSelectedOption = validateSetValueParam(option, menuOptions, getOptionValueFn);
-      setSelectedOption(validatedSelectedOption);
+      const normalizedOptions = normalizeValue(option, getOptionValueFn, getOptionLabelFn);
+      setSelectedOption(normalizedOptions);
     },
     toggleMenu: (state?: boolean) => {
       if (state === true || (state === undefined && !menuOpen)) {
@@ -596,6 +596,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
         if (focusedMultiValue) {
           const clearFocusedIndex = selectedOption.findIndex(({ value }) => value === focusedMultiValue);
+
           const nexFocusedMultiValue = (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
             ? selectedOption[clearFocusedIndex + 1].value!
             : FOCUSED_MULTI_DEFAULT;

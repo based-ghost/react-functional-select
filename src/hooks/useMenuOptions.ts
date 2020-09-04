@@ -48,13 +48,14 @@ export const useMenuOptions = (
 
     const parseMenuOption = (data: OptionData): MenuOption | undefined => {
       const value = getOptionValue(data);
+      const label = getOptionLabel(data);
 
       const menuOption: MenuOption = {
         data,
         value,
-        label: getOptionLabel(data),
+        label,
         ...(getIsOptionDisabledOrDefault(data) && { isDisabled: true }),
-        ...(selectedValues && selectedValues.includes(value) && { isSelected: true })
+        ...(selectedValues && selectedValues.some((x) => x === value) && { isSelected: true })
       };
 
       if (

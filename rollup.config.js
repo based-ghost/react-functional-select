@@ -65,12 +65,12 @@ const babelPlugin = (useESModules = false) => babel({
 - PLUGIN DEFINITIONS (GROUP)
  *************************************************/
 
-const cjsPlugins = () => ([
+const cjsPlugins = [
   typescriptPlugin,
   babelPlugin(),
   resolve(),
   modifyReplacePlugin,
-]);
+];
 
 const umdPlugins = (env) => ([
   typescriptPlugin,
@@ -90,7 +90,7 @@ export default [
       file: pkg.main,
       format: 'cjs',
     },
-    plugins: cjsPlugins(),
+    plugins: [...cjsPlugins],
   },
 
   /*** MODULE ***/
@@ -101,7 +101,7 @@ export default [
       file: pkg.module,
       format: 'esm',
     },
-    plugins: cjsPlugins(),
+    plugins: [...cjsPlugins],
   },
 
   /*** BROWSER (DEVELOPMENT) ***/
