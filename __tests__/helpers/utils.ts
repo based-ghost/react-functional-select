@@ -6,34 +6,36 @@ import { MenuOption, OptionData, SelectedOption } from '../../src/types';
 // Basic "options" & "selectedOption" data
 // ============================================
 
-type Option = {
+export type Option = {
   readonly label: ReactText;
   readonly value: ReactText;
 };
 
-const OPTIONS: Option[] = [
+export const OPTIONS: Option[] = [
   { value: 1, label: 'Option 1' },
   { value: 2, label: 'Option 2' }
 ];
 
-const getSelectedOptionSingle = (): SelectedOption[] => {
+export const getSelectedOptionSingle = (): SelectedOption[] => {
   const data = { ...OPTIONS[0] };
+
   const selectedOption: SelectedOption = {
     data,
     value: data.value,
     label: data.label
   };
+
   return [selectedOption];
 };
 
-const getOptionSingle = (): Option => ({ ...OPTIONS[0] });
-const getSelectedOptionMulti = (): SelectedOption[] => [...OPTIONS];
+export const getOptionSingle = (): Option => ({ ...OPTIONS[0] });
+export const getSelectedOptionMulti = (): SelectedOption[] => [...OPTIONS];
 
 // ============================================
 // "menuOptions" data
 // ============================================
 
-const MENU_OPTION_SELECTED: MenuOption = {
+export const MENU_OPTION_SELECTED: MenuOption = {
   isSelected: true,
   value: 1,
   label: 'Option 1',
@@ -43,7 +45,7 @@ const MENU_OPTION_SELECTED: MenuOption = {
   }
 };
 
-const MENU_OPTION_DISABLED: MenuOption = {
+export const MENU_OPTION_DISABLED: MenuOption = {
   isDisabled: true,
   value: 2,
   label: 'Option 2',
@@ -53,7 +55,7 @@ const MENU_OPTION_DISABLED: MenuOption = {
   }
 };
 
-const MENU_OPTIONS: MenuOption[] = [
+export const MENU_OPTIONS: MenuOption[] = [
   MENU_OPTION_SELECTED,
   MENU_OPTION_DISABLED
 ];
@@ -62,27 +64,12 @@ const MENU_OPTIONS: MenuOption[] = [
 // Generic utils & data
 // ============================================
 
-const stringifyCSSProperties = (obj: CSSProperties): string => {
-  let value = '';
-  Object.keys(obj).forEach((key) => {
-    value += `${key}: ${obj[key]}; `;
-  });
-  return value.trim();
+export const stringifyCSSProperties = (obj: CSSProperties = {}): string => {
+  const props = [];
+  Object.keys(obj).forEach((key) => props.push(`${key}: ${obj[key]};`));
+
+  return props.join(' ');
 };
 
-const RENDER_OPTION_LABEL_MOCK = jest.fn((data: OptionData): ReactNode => data.label);
-const RENDER_MULTI_OPTIONS_MOCK = jest.fn(({ selected, renderOptionLabel }: MultiParams): ReactNode => selected.map((option) => renderOptionLabel(option.data)).join(', '));
-
-export {
-  Option,
-  OPTIONS,
-  MENU_OPTIONS,
-  getOptionSingle,
-  MENU_OPTION_SELECTED,
-  MENU_OPTION_DISABLED,
-  stringifyCSSProperties,
-  getSelectedOptionMulti,
-  getSelectedOptionSingle,
-  RENDER_OPTION_LABEL_MOCK,
-  RENDER_MULTI_OPTIONS_MOCK
-};
+export const RENDER_OPTION_LABEL_MOCK = jest.fn((data: OptionData): ReactNode => data.label);
+export const RENDER_MULTI_OPTIONS_MOCK = jest.fn(({ selected, renderOptionLabel }: MultiParams): ReactNode => selected.map((option) => renderOptionLabel(option.data)).join(', '));

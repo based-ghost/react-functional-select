@@ -19,7 +19,10 @@ const renderValue = (props: ValueProps): RenderResult => {
   );
 };
 
-const rerenderValue = (props: ValueProps, rerender: (...args: any[]) => void): void => {
+const rerenderValue = (
+  props: ValueProps,
+  rerender: (...args: any[]) => void
+): void => {
   rerender(
     <ThemeProvider theme={RfsTheme}>
       <Value {...props} />
@@ -58,6 +61,7 @@ const createValueProps = () => {
 test('"placeholder" text displays when no option is selected', async () => {
   const { props } = createValueProps();
   const { getByText } = renderValue(props);
+
   expect(getByText(PLACEHOLDER_DEFAULT)).toBeInTheDocument();
 });
 
@@ -69,7 +73,9 @@ test('component renders NULL if "inputValue" is truthy AND ("isMulti" != true OR
     ...props,
     inputValue: 'test search',
   };
+
   const { container, rerender } = renderValue(singleProps);
+
   expect(container.hasChildNodes()).toBeFalsy();
 
   // Re-render with truthy "inputValue" and "isMulti" = true
@@ -77,6 +83,7 @@ test('component renders NULL if "inputValue" is truthy AND ("isMulti" != true OR
     ...singleProps,
     isMulti: true,
   };
+
   rerenderValue(multiProps, rerender);
   expect(container.hasChildNodes()).toBeFalsy();
 });
@@ -91,9 +98,10 @@ test('"renderOptionLabel" callback should be executed when an option is selected
   };
 
   const { getByText } = renderValue(propsWithSelectedOption);
+
   expect(renderOptionLabelSpy).toHaveBeenCalledTimes(1);
 
-  selectedOption.forEach((option: SelectedOption): void => {
+  selectedOption.forEach((option: SelectedOption) => {
     const { label } = option;
     expect(getByText(String(label))).toBeInTheDocument();
   });

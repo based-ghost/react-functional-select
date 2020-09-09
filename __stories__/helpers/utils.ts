@@ -5,14 +5,6 @@ export const renderInfoToast = (message: string): void => {
   toast.info(message);
 };
 
-export const numberWithCommas = (value: number): string => {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-};
-
-export const getRandomInt = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
 export const stringifyJavaScriptObj = (data: any): string => {
   return JSON.stringify(data || {}, null, 2)
     .replace(/"(\w+)"\s*:/g, '$1:')
@@ -40,7 +32,7 @@ export const createAsyncOptions = (optionCount: number, labelSuffix: string): Op
 };
 
 export const createThemeOptions = (ThemeEnum: any): Option[] => {
-  return Object.keys(ThemeEnum).map((key: string) => ({
+  return Object.keys(ThemeEnum).map((key) => ({
     value: ThemeEnum[key],
     label: ThemeEnum[key]
   }));
@@ -67,3 +59,7 @@ export async function mockHttpRequest(delay: number = 500): Promise<void> {
   // tslint:disable-next-line: no-string-based-set-timeout
   await new Promise(resolve => setTimeout(resolve, delay));
 }
+
+export const numberWithCommas = (value: number): string => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+export const getRandomInt = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min;

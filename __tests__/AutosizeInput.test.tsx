@@ -49,7 +49,9 @@ test('input element has a static className (enables styling via classic CSS) whe
     ...props,
     addClassNames: true,
   };
+
   const { getByTestId } = renderAutosizeInput(mergedProps);
+
   expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveClass(AUTOSIZE_INPUT_CLS);
 });
 
@@ -65,7 +67,7 @@ test('input has functional, optional ARIA attributes', async () => {
   const { getByTestId } = renderAutosizeInput(mergedProps);
   const verifyAriaAttributes = ['aria-label', 'aria-labelledby', 'aria-autocomplete'];
 
-  verifyAriaAttributes.forEach((attr: string): void => {
+  verifyAriaAttributes.forEach((attr: string) => {
     expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute(attr);
   });
 });
@@ -80,6 +82,7 @@ test('when "id" has a non-empty string value, input element should get an "id" a
   };
 
   const { getByTestId } = renderAutosizeInput(mergedProps);
+
   expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute('id', inputId);
 });
 

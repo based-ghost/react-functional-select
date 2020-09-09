@@ -47,7 +47,7 @@ test('Menu component mounts and renders successfully when "menuOptions" array ha
   const { menuOptions } = props;
 
   // Assert react-window + Option.tsx renders each menuOption correctly
-  menuOptions.forEach((option: MenuOption): void => {
+  menuOptions.forEach((option: MenuOption) => {
     const { label } = option;
     expect(getByText(String(label))).toBeInTheDocument();
   });
@@ -56,18 +56,21 @@ test('Menu component mounts and renders successfully when "menuOptions" array ha
 test('The "No Options" message element is NOT rendered when "menuOptions" length > 0', async () => {
   const props = createMenuProps(MENU_OPTIONS);
   const { queryByText } = renderMenu(props);
+
   expect(queryByText(props.noOptionsMsg)).toBeNull();
 });
 
 test('The "No Options" message element is rendered when "menuOptions" length = 0', async () => {
   const props = createMenuProps();
   const { getByText } = renderMenu(props);
+
   expect(getByText(props.noOptionsMsg)).toBeInTheDocument();
 });
 
 test('The "Loading" message element is NOT rendered when "isLoading" != true', async () => {
   const props = createMenuProps();
   const { queryByText } = renderMenu(props);
+
   expect(queryByText(props.loadingMsg)).toBeNull();
 });
 
@@ -78,5 +81,6 @@ test('The "Loading" message element is rendered when "isLoading" = true', async 
   };
 
   const { getByText } = renderMenu(props);
+
   expect(getByText(props.loadingMsg)).toBeInTheDocument();
 });

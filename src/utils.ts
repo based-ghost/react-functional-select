@@ -8,15 +8,19 @@ import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CL
 // Private utility functions
 // ============================================
 
+function isDocumentElement(el: HTMLElement | Window): boolean {
+  return (
+    el === document.documentElement ||
+    el === document.body ||
+    el === window
+  );
+}
+
 /**
  * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).
  */
 function stripDiacritics(value: string): string {
   return value.normalize('NFD').replace(DIACRITICS_REGEXP, '');
-}
-
-function isDocumentElement(el: HTMLElement | Window): boolean {
-  return (el === document.documentElement || el === document.body || el === window);
 }
 
 function easeOutCubic(t: number, s: number, c: number, d: number): number {

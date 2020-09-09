@@ -55,8 +55,8 @@ test('clear icon has a static className (enables styling via classic CSS) when "
   const { props } = createIndicatorIconsProps();
   const mergedProps = { ...props, addClassNames: true };
   const { getByTestId } = renderIndicatorIcons(mergedProps);
-
   const firstChildOfClearIconElement = getByTestId(CLEAR_ICON_TESTID!).firstChild;
+
   expect(firstChildOfClearIconElement).toHaveClass(CLEAR_ICON_CLS);
 });
 
@@ -102,6 +102,7 @@ test('loading can render as a custom node (instead of default LoadingDots.tsx co
   };
 
   const { getByText } = renderIndicatorIcons(mergedProps);
+
   expect(getByText(loadingNodeText)).toBeInTheDocument();
 });
 
@@ -109,18 +110,20 @@ test('clear icon can render as a ReactNode', async () => {
   const clearIconText = 'clear-icon-node';
   const clearIcon = (<span>{clearIconText}</span>);
   const { props } = createIndicatorIconsProps();
-  const mergedProps = { ...props, clearIcon };
 
+  const mergedProps = { ...props, clearIcon };
   const { getByText } = renderIndicatorIcons(mergedProps);
+
   expect(getByText(clearIconText)).toBeInTheDocument();
 });
 
 test('clear icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', async () => {
   const customIconTestIdText = 'true_false_false_false';
   const { props } = createIndicatorIconsProps();
-  const mergedProps = { ...props, menuOpen: true, clearIcon: customIconFn };
 
+  const mergedProps = { ...props, menuOpen: true, clearIcon: customIconFn };
   const { getByTestId } = renderIndicatorIcons(mergedProps);
+
   expect(getByTestId(customIconTestIdText)).toBeInTheDocument();
 });
 
@@ -128,17 +131,19 @@ test('caret icon can render as a ReactNode', async () => {
   const caretIconText = 'caret-icon-node';
   const caretIcon = (<span>{caretIconText}</span>);
   const { props } = createIndicatorIconsProps();
-  const mergedProps = { ...props, caretIcon };
 
+  const mergedProps = { ...props, caretIcon };
   const { getByText } = renderIndicatorIcons(mergedProps);
+
   expect(getByText(caretIconText)).toBeInTheDocument();
 });
 
 test('caret icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', async () => {
   const customIconTestIdText = 'true_false_false_false';
   const { props } = createIndicatorIconsProps();
-  const mergedProps = { ...props, menuOpen: true, caretIcon: customIconFn };
 
+  const mergedProps = { ...props, menuOpen: true, caretIcon: customIconFn };
   const { getByTestId } = renderIndicatorIcons(mergedProps);
+
   expect(getByTestId(customIconTestIdText)).toBeInTheDocument();
 });
