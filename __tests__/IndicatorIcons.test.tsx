@@ -25,7 +25,6 @@ const createIndicatorIconsProps = () => {
   const props: IndicatorIconsProps = {
     menuOpen: false,
     showClear: true,
-    isTouchDevice: true,
     onClearMouseDown: onClearMouseDownSpy,
     onCaretMouseDown: onCaretMouseDownSpy
   };

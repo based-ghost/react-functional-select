@@ -77,7 +77,7 @@ test('option with "isDisabled" = FALSE should have a functioning onClick handler
   const { container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
 
-  fireEvent.click(optionParentEl);
+  fireEvent.click(optionParentEl!);
   expect(onClickSelectOptionSpy).toBeCalled();
 });
 
@@ -88,7 +88,7 @@ test(`option with "isDisabled" = TRUE should not have an onClick handler attache
   const { container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
 
-  fireEvent.click(optionParentEl);
+  fireEvent.click(optionParentEl!);
 
   expect(onClickSelectOptionSpy).not.toBeCalled();
   expect(optionParentEl).toHaveClass(OPTION_DISABLED_CLS);

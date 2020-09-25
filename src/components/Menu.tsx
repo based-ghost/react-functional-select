@@ -1,7 +1,7 @@
 import React, { useMemo, Fragment } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
-import { FixedSizeList } from 'react-window';
+import { FixedSizeList, ListItemKeySelector } from 'react-window';
 import { isArrayWithLength } from '../utils';
 import { MenuProps, ItemData } from '../types';
 
@@ -28,10 +28,17 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     noOptionsMsg,
     overscanCount,
     renderOptionLabel,
-    focusedOptionIndex
+    focusedOptionIndex,
+    useItemKeySelector
   },
   ref: React.Ref<FixedSizeList>
 ) => {
+  const itemKey = useMemo<ListItemKeySelector | undefined>(() => {
+    return useItemKeySelector
+      ? (idx, data) => data.menuOptions[idx].value
+      : undefined;
+  }, [useItemKeySelector]);
+
   const itemData = useMemo<ItemData>(() => ({
     menuOptions,
     selectOption,
@@ -49,6 +56,7 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
         ref={ref}
         width={width}
         height={height}
+        itemKey={itemKey}
         itemSize={itemSize}
         itemData={itemData}
         overscanCount={overscanCount}

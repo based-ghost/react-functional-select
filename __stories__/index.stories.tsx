@@ -35,6 +35,7 @@ import {
   OptionImg,
   ChevronDownSvg
 } from './helpers/styled';
+import { SelectedOption } from '../src/types';
 
 const REACT_LOGO_SVG = require('./assets/react-logo.svg') as string;
 const CHEVRON_SVG_PATH = 'M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z';
@@ -246,7 +247,7 @@ export const MultiSelect = () => {
 
 export const Styling = () => {
   const [themeConfig, setThemeConfig] = useState();
-  const [selectedOption, setSelectedOption] = useCallbackState(null);
+  const [selectedOption, setSelectedOption] = useCallbackState<SelectedOption | null>(null);
   const menuItemSize: number = (selectedOption && selectedOption.value === ThemeEnum.LARGE_TEXT) ? 44 : 35;
 
   const memoizedMarkupNode = useMemo<ReactNode>(() => (
@@ -664,26 +665,19 @@ export const Filtering = () => {
 };
 
 export const Windowing = () => {
-  const selectRef = useRef<SelectRef | null>(null);
+  const optionCountList: number[] = [100, 1000, 5000, 25000, 50000];
 
+  const selectRef = useRef<SelectRef | null>(null);
   const [options, setOptions] = useState<Option[]>([]);
   const [optionsCount, setOptionsCount] = useState<number>(100);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      const nextOptions = createSelectOptions(optionsCount);
-      setOptions(nextOptions);
-    }, 115);
-
-    return () => {
-      clearTimeout(handler);
-    };
+    const nextSelectOptions = createSelectOptions(optionsCount);
+    setOptions(nextSelectOptions);
   }, [optionsCount]);
 
   useEffect(() => {
-    if (selectRef.current) {
-      selectRef.current.clearValue();
-    }
+    selectRef.current && selectRef.current.clearValue();
   }, [options]);
 
   return (
@@ -691,10 +685,11 @@ export const Windowing = () => {
       <Title>Integrated Windowing</Title>
       <Hr />
       <ListWrapper>
-        Option data is 'windowed' using the <PackageLink {...REACT_WINDOW_PACKAGE} /> package.
-        Aside from the obvious benefits provided by only rendering a small subset of your
-        enumerable data (rather than bloating the DOM with an excessive amount of nodes),
-        'windowing' can also assist with:
+        Option data is 'windowed' using the{' '}
+        <PackageLink {...REACT_WINDOW_PACKAGE} /> package. Aside from the
+        obvious benefits provided by only rendering a small subset of your
+        enumerable data (rather than bloating the DOM with an excessive amount
+        of nodes), 'windowing' can also assist with:
         <List>
           <Li>
             <strong>Efficient memory allocation</strong>. 'Windowing' naturally
@@ -703,9 +698,10 @@ export const Windowing = () => {
             this data upfront for each object in your list). This way you can
             perform this work just when you absolutely need to and then can
             immediately release it for the GC to cleanup. As an example I am
-            generating the <code>onClick</code>, <code>id</code>,
-            and <code>className</code> attributes for each <code>menuOption</code> as
-            they get passed to the <code>&lt;Option /&gt;</code> renderer component.
+            generating the <code>onClick</code>, <code>id</code>, and{' '}
+            <code>className</code> attributes for each <code>menuOption</code>{' '}
+            as they get passed to the <code>&lt;Option /&gt;</code> renderer
+            component.
           </Li>
           <Li>
             <strong>Functional architecture</strong>. The flexibility provided
@@ -718,10 +714,11 @@ export const Windowing = () => {
             memoization (testing &amp; debugging becomes much easier as well).
           </Li>
         </List>
-        <em>Note: </em>The only time any noticeable performance degradation will be observed
-        is during search input updates when the <code>options</code> count reaches the high
-        tens of thousands. To work around this, the <code>inputDelay</code> (number in milliseconds)
-        can be set to debounce the input value. That way, the <code>menuOptions</code> will not be
+        <em>Note: </em>The only time any noticeable performance degradation will
+        be observed is during search input updates when the <code>options</code>{' '}
+        count reaches the high tens of thousands. To work around this, the{' '}
+        <code>inputDelay</code> (number in milliseconds) can be set to debounce
+        the input value. That way, the <code>menuOptions</code> will not be
         recalculated on every keystroke.
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
@@ -730,26 +727,14 @@ export const Windowing = () => {
         <CardHeader supportMobile>
           <ButtonGroup>
             <Label>Options Count</Label>
-            <OptionsCountButton
-              count={100}
-              optionsCount={optionsCount}
-              setOptionsCount={setOptionsCount}
-            />
-            <OptionsCountButton
-              count={1000}
-              optionsCount={optionsCount}
-              setOptionsCount={setOptionsCount}
-            />
-            <OptionsCountButton
-              count={5000}
-              optionsCount={optionsCount}
-              setOptionsCount={setOptionsCount}
-            />
-            <OptionsCountButton
-              count={25000}
-              optionsCount={optionsCount}
-              setOptionsCount={setOptionsCount}
-            />
+            {optionCountList.map((count: number) => (
+              <OptionsCountButton
+                key={count}
+                count={count}
+                optionsCount={optionsCount}
+                setOptionsCount={setOptionsCount}
+              />
+            ))}
           </ButtonGroup>
         </CardHeader>
         <CardBody>
@@ -848,7 +833,7 @@ export const Async = () => {
   const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5, 'Initial'));
   const onInputChange = useCallback((): void => setIsLoading(true), []);
 
-  const onSearchChange = useCallback((value: string): void => {
+  const onSearchChange = useCallback((value?: string): void => {
     mockHttpRequest()
       .then(() => {
         const count = getRandomInt(1, 5);
@@ -903,14 +888,14 @@ export const Async = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <LabelNote>Search debounced 375ms and mock HTTP call resolves after 500ms</LabelNote>
+          <LabelNote>Search debounced 500ms and mock HTTP call resolves after 500ms</LabelNote>
         </CardHeader>
         <CardBody>
           <SelectContainer>
             <Select
               async
               isClearable
-              inputDelay={375}
+              inputDelay={500}
               options={options}
               isLoading={isLoading}
               onInputChange={onInputChange}

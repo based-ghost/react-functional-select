@@ -77,7 +77,7 @@ export const SELECT_CONTAINER_STYLE = {
 export const OPTIONS = createThemeOptions(ThemeEnum);
 export const THEME_DEFAULTS = mergeDeep(RfsTheme, KEYFRAMES_SOURCE_OBJ);
 
-export const THEME_CONFIG = {
+export const THEME_CONFIG: any = {
   menu: {
     option: {
       selectedColor: '#515151',

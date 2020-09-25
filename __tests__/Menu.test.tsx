@@ -19,7 +19,7 @@ const renderMenu = (props: MenuProps): RenderResult => {
   );
 };
 
-const createMenuProps = (menuOptions = []): MenuProps => {
+const createMenuProps = (menuOptions: MenuOption[] = []): MenuProps => {
   const selectOption = jest.fn();
   const renderOptionLabel = RENDER_OPTION_LABEL_MOCK;
   const { index: focusedOptionIndex } = FOCUSED_OPTION_DEFAULT;

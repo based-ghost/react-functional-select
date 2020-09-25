@@ -55,6 +55,7 @@ declare module 'styled-components' {
     },
     input: {
       css?: string | FlattenSimpleInterpolation;
+      cssRequired?: string | FlattenSimpleInterpolation;
     }
     menu: {
       margin: string;

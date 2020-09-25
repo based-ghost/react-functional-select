@@ -3,6 +3,7 @@ import { RfsTheme } from '../src/theme';
 import { AutosizeInputProps } from '../src/types';
 import { ThemeProvider } from 'styled-components';
 import { AutosizeInput } from '../src/components';
+import { SELECTED_OPTION_DEFAULT } from '../src/constants/defaults';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants/dom';
 
@@ -28,7 +29,8 @@ const createAutosizeInputProps = () => {
     readOnly: false,
     onBlur: onBlurSpy,
     onFocus: onFocusSpy,
-    onChange: onChangeSpy
+    onChange: onChangeSpy,
+    selectedOption: SELECTED_OPTION_DEFAULT
   };
 
   return {

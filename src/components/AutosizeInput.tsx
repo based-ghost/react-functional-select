@@ -1,5 +1,5 @@
 import React, { useState, useRef, Fragment } from 'react';
-import { isEdgeOrIE } from '../utils';
+import { isArrayWithLength, isEdgeOrIE } from '../utils';
 import styled from 'styled-components';
 import { useUpdateEffect } from '../hooks';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
@@ -21,7 +21,7 @@ const SizerDiv = styled.div`
   ${({ theme }) => theme.input.css}
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ isInvalid?: boolean }>`
   border: 0;
   outline: 0;
   padding: 0;
@@ -38,6 +38,10 @@ const Input = styled.input`
     cursor: default;
   }
 
+  :required {
+    ${({ theme, isInvalid }) => isInvalid && theme.input.cssRequired}
+  }
+
   ${({ theme }) => theme.input.css}
   ${isEdgeOrIE() && '::-ms-clear{display:none;}'}
 `;
@@ -49,18 +53,23 @@ const AutosizeInput = React.memo(
       onBlur,
       onFocus,
       readOnly,
+      required,
       onChange,
       ariaLabel,
       inputValue,
       addClassNames,
-      ariaLabelledBy
+      ariaLabelledBy,
+      selectedOption
     },
     ref: React.Ref<HTMLInputElement>
   ) => {
     const sizerRef = useRef<HTMLDivElement | null>(null);
     const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH);
+    const isInvalid = required && !isArrayWithLength(selectedOption);
 
     const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
+      isInvalid,
+      tabIndex: -1,
       type: 'text',
       spellCheck: false,
       autoCorrect: 'off',
@@ -88,6 +97,7 @@ const AutosizeInput = React.memo(
           onFocus={onFocus}
           value={inputValue}
           readOnly={readOnly}
+          required={isInvalid}
           {...autosizeInputAttrs}
           onChange={!readOnly ? onChange : undefined}
           className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}

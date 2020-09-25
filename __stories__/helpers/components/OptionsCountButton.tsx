@@ -15,7 +15,7 @@ type OptionsCountButtonProps = {
 
 const StyledButton = styled(Button)<StyledButtonProps>`
   width: 6.25rem;
-  transition: color 0.115s ease, background-color 0.115s ease;
+  transition: none;
 
   ${({ isActive }) =>
     isActive

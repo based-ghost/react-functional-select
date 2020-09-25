@@ -1,15 +1,11 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "outDir": "./dist",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "declarationDir": "./dist",
     "strict": true,
     "allowJs": false,
-    "sourceMap": true,
-    "declaration": true,
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "removeComments": true,
@@ -17,10 +13,9 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "src"
+    "src/**/*"
   ],
   "exclude": [
-    "dist",
     "node_modules"
   ]
 }

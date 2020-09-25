@@ -17,8 +17,8 @@ import { FixedSizeList } from 'react-window';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { mergeDeep, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
+import { useDebounce, useMenuPositioner, useMenuOptions, useUpdateEffect } from './hooks';
 import { MenuPositionEnum, FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
-import { useDebounce, useMenuPositioner, useMenuOptions, useIsTouchDevice, useUpdateEffect } from './hooks';
 import { SelectedOption, MouseOrTouchEvent, IndicatorIconsProps, OptionData, MenuWrapperProps, ControlWrapperProps } from './types';
 import {
   OPTIONS_DEFAULT,
@@ -80,6 +80,7 @@ export type SelectProps = {
   readonly selectId?: string;
   readonly isMulti?: boolean;
   readonly ariaLabel?: string;
+  readonly required?: boolean;
   readonly loadingMsg?: string;
   readonly autoFocus?: boolean;
   readonly isLoading?: boolean;
@@ -108,6 +109,7 @@ export type SelectProps = {
   readonly closeMenuOnSelect?: boolean;
   readonly isAriaLiveEnabled?: boolean;
   readonly scrollMenuIntoView?: boolean;
+  readonly useItemKeySelector?: boolean;
   readonly hideSelectedOptions?: boolean;
   readonly filterIgnoreAccents?: boolean;
   readonly backspaceClearsValue?: boolean;
@@ -226,6 +228,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     isMulti,
     inputId,
     selectId,
+    required,
     autoFocus,
     isLoading,
     onKeyDown,
@@ -258,6 +261,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     renderOptionLabel,
     renderMultiOptions,
     menuScrollDuration,
+    useItemKeySelector,
     filterIgnoreAccents,
     hideSelectedOptions,
     getIsOptionDisabled,
@@ -281,6 +285,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   ref: React.Ref<SelectRef>
 ) => {
   // Instance prop & DOM node refs
+  const menuOpenRef = useRef<boolean>(false);
   const prevMenuOptionsLength = useRef<number>();
   const onChangeEventValue = useRef<boolean>(false);
 
@@ -288,10 +293,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const controlRef = useRef<HTMLDivElement | null>(null);
-
-  // Is current device touch-enabled? Adds various touch events to elements if true.
-  const isTouchDevice = useIsTouchDevice();
-  const blurInputOnSelectOrTouch = (typeof blurInputOnSelect === 'boolean') ? blurInputOnSelect : isTouchDevice;
 
   // Stateful values
   const [inputValue, setInputValue] = useState<string>('');
@@ -301,7 +302,11 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const [focusedMultiValue, setFocusedMultiValue] = useState<ReactText | null>(FOCUSED_MULTI_DEFAULT);
 
   // Memoized DefaultTheme object for styled-components ThemeProvider
-  const theme = useMemo<DefaultTheme>(() => isPlainObject(themeConfig) ? mergeDeep(RfsTheme, themeConfig) : RfsTheme, [themeConfig]);
+  const theme = useMemo<DefaultTheme>(() => {
+    return isPlainObject(themeConfig)
+      ? mergeDeep(RfsTheme, themeConfig)
+      : RfsTheme;
+  }, [themeConfig]);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
   const getOptionLabelFn = useMemo<((data: OptionData) => ReactText)>(() => getOptionLabel || ((data) => data.label), [getOptionLabel]);
@@ -332,7 +337,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   );
 
   // Custom hook abstraction that handles calculating menuHeightCalc (defaults to menuMaxHeight) / handles executing callbacks/logic on menuOpen state change.
-  const [menuStyleTop, menuHeightCalc] = useMenuPositioner(
+  const { menuStyleTop, menuHeightCalc } = useMenuPositioner(
     menuRef,
     controlRef,
     menuOpen,
@@ -347,11 +352,11 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   );
 
   const blurInput = (): void => {
-    inputRef.current!.blur();
+    inputRef.current && inputRef.current.blur();
   };
 
   const focusInput = (): void => {
-    inputRef.current!.focus();
+    inputRef.current && inputRef.current.focus();
   };
 
   const scrollToItemIndex = (index: number): void => {
@@ -393,14 +398,23 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setSelectedOption((prevSelectedOption) => !isMulti ? [option] : [...prevSelectedOption, option]);
     }
 
-    if (blurInputOnSelectOrTouch) {
+    // Use 'blurInputOnSelect' if defined, otherwise evaluate to true if device is touch capable
+    const blurControl = (typeof blurInputOnSelect === 'boolean')
+      ? blurInputOnSelect
+      : ('ontouchstart' in window || !!navigator.maxTouchPoints);
+
+    if (blurControl) {
       blurInput();
     } else if (closeMenuOnSelect) {
       setMenuOpen(false);
       setInputValue('');
     }
-  }, [isMulti, closeMenuOnSelect, removeSelectedOption, blurInputOnSelectOrTouch]);
+  }, [isMulti, closeMenuOnSelect, removeSelectedOption, blurInputOnSelect]);
 
+  /**
+   * useImperativeHandle
+   * Exposed API methods available on a ref instance of this Select.tsx component
+   */
   useImperativeHandle(ref, () => ({
     blur: blurInput,
     focus: focusInput,
@@ -423,28 +437,32 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   }));
 
   /**
-   * useEffects/useUpdateEffects
-   *
-   * 1: If autoFocus = true, focus the control following initial mount
-   * 2: If control recieves focus & openMenuOnFocus = true, open menu
-   * 3: If 'onSearchChange' function is defined, run as callback when the stateful debouncedInputValue updates
-   *    check if onChangeEventValue ref is set true, which indicates the inputValue change was triggered by input change event
-   * 4: (useUpdateEffect) Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
-   * 5: (useUpdateEffect) Handle clearing focused option if menuOptions array has 0 length;
-   *    Handle menuOptions changes - conditionally focus first option and do scroll to first option;
-   *    Handle reseting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
+   * If autoFocus = true, focus the control following initial mount
    */
-
   useEffect(() => {
     autoFocus && focusInput();
   }, [autoFocus]);
 
+  /**
+   * Write current value of 'menuOpen' to ref object (use to prevent extraneous state update calls)
+   */
+  useEffect(() => {
+    menuOpenRef.current = menuOpen;
+  }, [menuOpen]);
+
+  /**
+   * If control recieves focus & openMenuOnFocus = true, open menu
+   */
   useEffect(() => {
     if (isFocused && openMenuOnFocus) {
       openMenuAndFocusOption(OptionIndexEnum.FIRST);
     }
   }, [isFocused, openMenuOnFocus, openMenuAndFocusOption]);
 
+  /**
+   * If 'onSearchChange' function is defined, run as callback when the stateful debouncedInputValue
+   * updates check if onChangeEventValue ref is set true, which indicates the inputValue change was triggered by input change event
+   */
   useEffect(() => {
     if (onSearchChange && onChangeEventValue.current) {
       onChangeEventValue.current = false;
@@ -452,6 +470,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     }
   }, [onSearchChange, debouncedInputValue]);
 
+  /**
+   * (useUpdateEffect) Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
+   */
   useUpdateEffect(() => {
     if (!onOptionChange) return;
 
@@ -464,6 +485,11 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     onOptionChange(normalizedOptionValue);
   }, [isMulti, selectedOption, onOptionChange]);
 
+  /**
+   * (useUpdateEffect) Handle clearing focused option if menuOptions array has 0 length;
+   * Handle menuOptions changes - conditionally focus first option and do scroll to first option;
+   * Handle reseting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
+   */
   useUpdateEffect(() => {
     const { length } = menuOptions;
     const inputChanged = length > 0 && (async || (length !== options.length || prevMenuOptionsLength.current === 0));
@@ -660,7 +686,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const handleOnInputChange = useCallback((e: FormEvent<HTMLInputElement>): void => {
     onChangeEventValue.current = true;
     onInputChange && onInputChange(e.currentTarget.value || '');
-    setMenuOpen(true);
+    !menuOpenRef.current && setMenuOpen(true);
     setInputValue(e.currentTarget.value || '');
   }, [onInputChange]);
 
@@ -695,17 +721,16 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
           isInvalid={isInvalid}
           isFocused={isFocused}
           isDisabled={isDisabled}
+          onTouchEnd={handleOnControlMouseDown}
           onMouseDown={handleOnControlMouseDown}
           data-testid={CONTROL_CONTAINER_TESTID}
           className={addClassNames ? CONTROL_CONTAINER_CLS : undefined}
-          onTouchEnd={isTouchDevice ? handleOnControlMouseDown : undefined}
         >
           <ValueWrapper>
             <Value
               isMulti={isMulti}
               inputValue={inputValue}
               placeholder={placeholder}
-              isTouchDevice={isTouchDevice}
               selectedOption={selectedOption}
               focusedMultiValue={focusedMultiValue}
               renderOptionLabel={renderOptionLabelFn}
@@ -715,6 +740,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             <AutosizeInput
               id={inputId}
               ref={inputRef}
+              required={required}
               ariaLabel={ariaLabel}
               inputValue={inputValue}
               onBlur={handleOnInputBlur}
@@ -722,6 +748,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
               addClassNames={addClassNames}
               onChange={handleOnInputChange}
               ariaLabelledBy={ariaLabelledBy}
+              selectedOption={selectedOption}
               readOnly={isDisabled || !isSearchable || !!focusedMultiValue}
             />
           </ValueWrapper>
@@ -734,7 +761,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             isDisabled={isDisabled}
             loadingNode={loadingNode}
             addClassNames={addClassNames}
-            isTouchDevice={isTouchDevice}
             onClearMouseDown={handleOnClearMouseDown}
             showClear={!!(isClearable && !isDisabled && isArrayWithLength(selectedOption))}
             onCaretMouseDown={(!isDisabled && !openMenuOnClick) ? handleOnCaretMouseDown : undefined}
@@ -760,6 +786,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             overscanCount={menuOverscanCount}
             width={menuWidth || theme.menu.width}
             renderOptionLabel={renderOptionLabelFn}
+            useItemKeySelector={useItemKeySelector}
             focusedOptionIndex={focusedOption.index}
           />
         </MenuWrapper>

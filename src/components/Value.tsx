@@ -30,7 +30,6 @@ const Value = React.memo<ValueProps>(({
   isMulti,
   inputValue,
   placeholder,
-  isTouchDevice,
   selectedOption,
   focusedMultiValue,
   renderOptionLabel,
@@ -65,7 +64,6 @@ const Value = React.memo<ValueProps>(({
               key={value}
               data={data}
               value={value}
-              isTouchDevice={isTouchDevice}
               renderOptionLabel={renderOptionLabel}
               isFocused={value === focusedMultiValue}
               removeSelectedOption={removeSelectedOption}

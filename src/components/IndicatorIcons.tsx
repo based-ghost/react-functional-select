@@ -1,10 +1,8 @@
 import React, { ReactNode } from 'react';
 import LoadingDots from './LoadingDots';
 import styled, { css } from 'styled-components';
-import { CaretProps, IndicatorIconsProps } from '../types';
+import { CaretProps, IconRenderer, IndicatorIconsProps } from '../types';
 import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/dom';
-
-type CustomIcon = IndicatorIconsProps['caretIcon' | 'clearIcon'];
 
 const IndicatorIconsWrapper = styled.div`
   display: flex;
@@ -72,7 +70,6 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
   isLoading,
   isDisabled,
   loadingNode,
-  isTouchDevice,
   addClassNames,
   onCaretMouseDown,
   onClearMouseDown
@@ -87,17 +84,20 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
         }
       : undefined;
 
-  const renderCustomIcon = (ico: CustomIcon): ReactNode => (typeof ico === 'function') ? ico(forwardState) : ico;
+  const iconRenderer = (renderer: IconRenderer): ReactNode =>
+    (typeof renderer === 'function')
+      ? renderer(forwardState)
+      : renderer;
 
   return (
     <IndicatorIconsWrapper>
       {(showClear && !isLoading) && (
         <IndicatorIcon
+          onTouchEnd={onClearMouseDown}
           onMouseDown={onClearMouseDown}
           data-testid={CLEAR_ICON_TESTID}
-          onTouchEnd={isTouchDevice ? onClearMouseDown : undefined}
         >
-          {renderCustomIcon(clearIcon) || (
+          {iconRenderer(clearIcon) || (
             <ClearSvg
               aria-hidden='true'
               viewBox='0 0 14 16'
@@ -114,11 +114,11 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
       {isLoading && (loadingNode || <LoadingDots addClassNames={addClassNames} />)}
       <Separator />
       <IndicatorIcon
+        onTouchEnd={onCaretMouseDown}
         onMouseDown={onCaretMouseDown}
         data-testid={CARET_ICON_TESTID}
-        onTouchEnd={isTouchDevice ? onCaretMouseDown : undefined}
       >
-        {renderCustomIcon(caretIcon) || (
+        {iconRenderer(caretIcon) || (
           <Caret
             aria-hidden='true'
             menuOpen={menuOpen}

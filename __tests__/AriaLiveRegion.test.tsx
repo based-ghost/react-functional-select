@@ -42,7 +42,7 @@ const createAriaLiveRegionProps = (): AriaLiveRegionProps => {
 test('AriaLiveRegion component mounts and renders without error', async () => {
   const props = createAriaLiveRegionProps();
   const { getByTestId } = renderAriaLiveRegion(props);
-  const ariaLiveEl = getByTestId(ARIA_LIVE_TESTID);
+  const ariaLiveEl = getByTestId(ARIA_LIVE_TESTID!);
 
   expect(ariaLiveEl).toBeInTheDocument();
   expect(ariaLiveEl.hasChildNodes()).toBeTruthy();

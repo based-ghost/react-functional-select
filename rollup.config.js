@@ -7,8 +7,26 @@ import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import resolve from '@rollup/plugin-node-resolve';
-import typescript from 'rollup-plugin-typescript2';
-import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
+import commonjs from '@rollup/plugin-commonjs';
+import typescriptPlugin from '@rollup/plugin-typescript';
+// import typescript from 'rollup-plugin-typescript2';
+// import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
+
+/*
+const styledComponentsTransformer = createStyledComponentsTransformer({
+  ssr: true,
+  minify: true,
+  displayName: false,
+});
+
+const typescriptPlugin = typescript({
+  transformers: [
+    () => ({
+      before: [styledComponentsTransformer],
+    }),
+  ],
+});
+*/
 
 /*************************************************
  - CONFIG DATA
@@ -25,12 +43,6 @@ const name = 'ReactFunctionalSelect';
 const external = id => !id.startsWith('.') && !path.isAbsolute(id);
 const externalUmd = Object.keys(globals);
 
-const styledComponentsTransformer = createStyledComponentsTransformer({
-  ssr: true,
-  minify: true,
-  displayName: false,
-});
-
 /*************************************************
  - PLUGIN DEFINITIONS (INDIVIDUAL)
  *************************************************/
@@ -42,44 +54,60 @@ const modifyReplacePlugin = modify({
   replace: '',
 });
 
-const typescriptPlugin = typescript({
-  transformers: [
-    () => ({
-      before: [styledComponentsTransformer],
-    }),
-  ],
-});
-
-const babelPlugin = (useESModules = false) => babel({
-  babelrc: false,
-  babelHelpers: 'runtime',
-  exclude: 'node_modules/**',
-  extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
-  plugins: [
-    ['@babel/plugin-transform-runtime', { useESModules }],
-    ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
-  ],
-});
+const babelPlugin = (useESModules = true) =>
+  babel({
+    babelrc: false,
+    babelHelpers: 'runtime',
+    exclude: 'node_modules/**',
+    extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
+    presets: [
+      [
+        '@babel/preset-env',
+        {
+          loose: true,
+          targets: { browsers: ['>0.2%', 'not dead', 'not op_mini all'] },
+        },
+      ],
+      '@babel/preset-react',
+    ],
+    plugins: [
+      ['@babel/plugin-transform-runtime', { useESModules }],
+      ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
+    ],
+  });
 
 /*************************************************
 - PLUGIN DEFINITIONS (GROUP)
  *************************************************/
 
 const cjsPlugins = [
-  typescriptPlugin,
-  babelPlugin(),
   resolve(),
+  commonjs({ include: 'node_modules/**' }),
+  typescriptPlugin(),
+  // typescriptPlugin,
+  babelPlugin(false),
   modifyReplacePlugin,
 ];
 
-const umdPlugins = (env) => ([
-  typescriptPlugin,
-  babelPlugin(true),
+const esmPlugins = [
   resolve(),
+  commonjs({ include: 'node_modules/**' }),
+  typescriptPlugin(),
+  // typescriptPlugin,
+  babelPlugin(),
+  modifyReplacePlugin,
+];
+
+const umdPlugins = (env) => [
+  resolve(),
+  commonjs({ include: 'node_modules/**' }),
+  typescriptPlugin(),
+  // typescriptPlugin,
+  babelPlugin(),
   replace({ 'process.env.NODE_ENV': JSON.stringify(env) }),
   modifyReplacePlugin,
   terser(),
-]);
+];
 
 export default [
   /*** COMMONJS ***/
@@ -89,8 +117,9 @@ export default [
     output: {
       file: pkg.main,
       format: 'cjs',
+      exports: 'named',
     },
-    plugins: [...cjsPlugins],
+    plugins: cjsPlugins,
   },
 
   /*** MODULE ***/
@@ -100,8 +129,9 @@ export default [
     output: {
       file: pkg.module,
       format: 'esm',
+      exports: 'named',
     },
-    plugins: [...cjsPlugins],
+    plugins: esmPlugins,
   },
 
   /*** BROWSER (DEVELOPMENT) ***/
@@ -113,6 +143,7 @@ export default [
       format: 'umd',
       globals,
       name,
+      exports: 'named',
     },
     plugins: umdPlugins('development'),
   },
@@ -126,6 +157,7 @@ export default [
       format: 'umd',
       globals,
       name,
+      exports: 'named',
     },
     plugins: umdPlugins('production'),
   },

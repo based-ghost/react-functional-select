@@ -204,7 +204,7 @@ export const Button = styled.button`
 
   ${MEDIA_QUERY_IS_MOBILE} {
     display: block;
-    width: 100%;
+    width: 100% !important;
   }
 
   ${MEDIA_QUERY_IS_MOBILE_XS} {

@@ -22,7 +22,7 @@ export const useMenuPositioner = (
   scrollMenuIntoView?: boolean,
   onMenuOpen?: (...args: any[]) => void,
   onMenuClose?: (...args: any[]) => void
-): [string | undefined, number] => {
+): { menuStyleTop: string | undefined, menuHeightCalc: number } => {
   const resetMenuHeightRef = useRef<boolean>(false);
   const isMenuTopPositionRef = useRef<boolean>(false);
 
@@ -34,12 +34,11 @@ export const useMenuPositioner = (
   }, [isMenuTopPosition]);
 
   useEffect(() => {
-    const isTopPos =
+    const isTopPosition =
       menuPosition === MenuPositionEnum.TOP ||
-      (menuPosition === MenuPositionEnum.AUTO &&
-        !menuFitsBelowControl(menuRef.current));
+      (menuPosition === MenuPositionEnum.AUTO && !menuFitsBelowControl(menuRef.current));
 
-    setIsMenuTopPosition(isTopPos);
+    setIsMenuTopPosition(isTopPosition);
   }, [menuRef, menuPosition]);
 
   useUpdateEffect(() => {
@@ -68,5 +67,8 @@ export const useMenuPositioner = (
   const menuHeightCalc = Math.min(menuHeight, menuOptionsLength * menuItemSize);
   const menuStyleTop = isMenuTopPosition ? calculateMenuTop(menuHeightCalc, menuRef.current, controlRef.current) : undefined;
 
-  return [menuStyleTop, menuHeightCalc];
+  return {
+    menuStyleTop,
+    menuHeightCalc
+  };
 };

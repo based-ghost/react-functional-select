@@ -44,13 +44,12 @@ export const hexToRgba = (hex: string, alpha: number = 1): string => {
     (m, r, g, b): string => `#${r}${r}${g}${g}${b}${b}`
   );
 
-  const alphaValid = Math.min(1, Math.max(0, alpha));
-  const rgbaParts: number[] = hexReplacer
-    .substring(1)
-    .match(/.{2}/g)
-    .map((x: string): number => parseInt(x, 16));
+  const alphaValid: number = Math.min(1, Math.max(0, alpha));
 
-  rgbaParts.push(alphaValid);
+  const rgbaParts: number[] = [
+    ...hexReplacer.substring(1).match(/.{2}/g)!.map((x: string): number => parseInt(x, 16)),
+    alphaValid
+  ];
 
   return `rgba(${rgbaParts.join(',')})`;
 };

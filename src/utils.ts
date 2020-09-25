@@ -144,7 +144,7 @@ export function trimAndFormatFilterStr(
 export function mergeDeep(target: any, source: any): any {
   const output = { ...target };
 
-  Object.keys(source).forEach(key => {
+  Object.keys(source).forEach((key) => {
     output[key] =
       (isPlainObject(source[key]) && key !== 'animation')
         ? (key in target)

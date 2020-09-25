@@ -30,9 +30,8 @@ export const useMenuOptions = (
   const hideSelectedOptionsOrDefault = (typeof hideSelectedOptions !== 'boolean') ? !!isMulti : hideSelectedOptions;
 
   useEffect(() => {
-    const matchAny = (filterMatchFrom === FilterMatchEnum.ANY);
     const normalizedInput = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
-    const selectedValues = selectedOption.length ? selectedOption.map(({ value }) => value) : undefined;
+    const selectedHash = new Set(selectedOption.map(({ value }) => value));
 
     const getIsOptionDisabledOrDefault: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
     const getFilterOptionStringOrDefault: (option: MenuOption) => string = getFilterOptionString || ((option) => (typeof option.label === 'string') ? option.label : `${option.label}`);
@@ -41,7 +40,7 @@ export const useMenuOptions = (
       const optionStr = getFilterOptionStringOrDefault(menuOption);
       const normalizedOptionLabel = trimAndFormatFilterStr(optionStr, filterIgnoreCase, filterIgnoreAccents);
 
-      return matchAny
+      return (filterMatchFrom === FilterMatchEnum.ANY)
         ? normalizedOptionLabel.indexOf(normalizedInput) > -1
         : normalizedOptionLabel.substr(0, normalizedInput.length) === normalizedInput;
     };
@@ -55,7 +54,7 @@ export const useMenuOptions = (
         value,
         label,
         ...(getIsOptionDisabledOrDefault(data) && { isDisabled: true }),
-        ...(selectedValues && selectedValues.some((x) => x === value) && { isSelected: true })
+        ...(selectedHash.has(value) && { isSelected: true })
       };
 
       if (
@@ -68,14 +67,11 @@ export const useMenuOptions = (
       return menuOption;
     };
 
-    const menuOptionsOrDefault = options.reduce(
-      (acc: MenuOption[], data: OptionData) => {
-        const option = parseMenuOption(data);
-        option && acc.push(option);
-        return acc;
-      },
-      []
-    );
+    const menuOptionsOrDefault = options.reduce((acc, data) => {
+      const option = parseMenuOption(data);
+      option && acc.push(option);
+      return acc;
+    }, [] as MenuOption[]);
 
     setMenuOptions(menuOptionsOrDefault);
   }, [options, selectedOption, searchValue, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, getFilterOptionString, getIsOptionDisabled, getOptionValue, getOptionLabel]);

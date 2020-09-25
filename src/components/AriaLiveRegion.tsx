@@ -27,9 +27,7 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
   focusedOption,
   selectedOption
 }) => {
-  if (!isFocused) {
-    return null;
-  }
+  if (!isFocused) return null;
 
   const {
     value: focusedOptionValue,
@@ -42,8 +40,9 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
     ? selectedOption.map(({ label }) => label).join(' ')
     : 'N/A';
 
-  const selectedOptionMsg = `Selected option: ${selectedOptionLabel}`;
-  const optionsMsg = `${optionCount} result(s) available${inputValue ? ` for search input ${inputValue}` : ''}.`;
+  const optionsMsg = `${optionCount} result(s) available${
+    inputValue ? ` for search input ${inputValue}` : ''
+  }.`;
 
   const focusedMsg = focusedOptionValue
     ? `Focused option: ${focusedOptionLabel}${isFocusedOptionDisabled ? ' - disabled' : ''}, ${focusedOptionIndex + 1} of ${optionCount}.`
@@ -53,13 +52,16 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
     ? 'Use Up and Down arrow keys to choose options, press Enter or Tab to select the currently focused option, press Escape to close the menu.'
     : `${ariaLabel || 'Select'} is focused${isSearchable ? ', type to filter options' : ''}, press Down arrow key to open the menu.`;
 
+  const selectedOptionMsg = `Selected option: ${selectedOptionLabel}`;
+  const extendedFeedbackMsg = `${focusedMsg} ${optionsMsg} ${menuMsg}`;
+
   return (
     <A11yText
       aria-live='polite'
       data-testid={ARIA_LIVE_TESTID}
     >
-      <p>{selectedOptionMsg}</p>
-      <p>{`${focusedMsg} ${optionsMsg} ${menuMsg}`}</p>
+      <span>&nbsp;{selectedOptionMsg}</span>
+      <span>&nbsp;{extendedFeedbackMsg}</span>
     </A11yText>
   );
 };
