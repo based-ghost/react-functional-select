@@ -36,6 +36,7 @@ import {
   ChevronDownSvg
 } from './helpers/styled';
 import { SelectedOption } from '../src/types';
+import { useUpdateEffect } from '../src/hooks';
 
 const REACT_LOGO_SVG = require('./assets/react-logo.svg') as string;
 const CHEVRON_SVG_PATH = 'M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z';
@@ -671,14 +672,14 @@ export const Windowing = () => {
   const [options, setOptions] = useState<Option[]>([]);
   const [optionsCount, setOptionsCount] = useState<number>(100);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
+    selectRef.current && selectRef.current.clearValue();
+  }, [options]);
+
+  useUpdateEffect(() => {
     const nextSelectOptions = createSelectOptions(optionsCount);
     setOptions(nextSelectOptions);
   }, [optionsCount]);
-
-  useEffect(() => {
-    selectRef.current && selectRef.current.clearValue();
-  }, [options]);
 
   return (
     <Container>
@@ -831,16 +832,20 @@ export const Advanced = () => {
 export const Async = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5, 'Initial'));
+
   const onInputChange = useCallback((): void => setIsLoading(true), []);
 
   const onSearchChange = useCallback((value?: string): void => {
     mockHttpRequest()
       .then(() => {
-        const count = getRandomInt(1, 5);
-        const nextOptions = createAsyncOptions(count, `Search text: ${value || 'Initial'}`);
+        const nextOptions = createAsyncOptions(
+          getRandomInt(1, 5),
+          `Search text: ${value || 'Initial'}`
+        );
+
         setOptions(nextOptions);
       })
-      .catch((e) => console.error(e))
+      .catch((err) => console.error(err))
       .then(() => setIsLoading(false));
   }, []);
 

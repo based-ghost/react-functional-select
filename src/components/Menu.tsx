@@ -27,17 +27,17 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     selectOption,
     noOptionsMsg,
     overscanCount,
+    itemKeySelector,
     renderOptionLabel,
-    focusedOptionIndex,
-    useItemKeySelector
+    focusedOptionIndex
   },
   ref: React.Ref<FixedSizeList>
 ) => {
   const itemKey = useMemo<ListItemKeySelector | undefined>(() => {
-    return useItemKeySelector
-      ? (idx, data) => data.menuOptions[idx].value
+    return itemKeySelector
+      ? (idx, data) => data.menuOptions[idx][itemKeySelector]
       : undefined;
-  }, [useItemKeySelector]);
+  }, [itemKeySelector]);
 
   const itemData = useMemo<ItemData>(() => ({
     menuOptions,

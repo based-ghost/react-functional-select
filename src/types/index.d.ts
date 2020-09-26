@@ -105,7 +105,7 @@ export type MenuProps = {
   readonly width: string | number;
   readonly menuOptions: MenuOption[];
   readonly focusedOptionIndex: number;
-  readonly useItemKeySelector?: boolean;
+  readonly itemKeySelector?: ReactText;
   readonly renderOptionLabel: (data: OptionData) => ReactNode;
   readonly selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 };

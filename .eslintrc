@@ -12,6 +12,7 @@
     "sort-keys": "off",
     "global-require": "off",
     "spaced-comment": "off",
+    "capitalized-comments": "off",
     "padding-line-between-statements": "off"
   }
 }

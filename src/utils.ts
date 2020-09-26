@@ -89,6 +89,11 @@ function smoothScrollTo(
 export const isEdgeOrIE = (): boolean => (typeof navigator !== 'undefined') && IE_EDGE_BROWSER_REGEXP.test(navigator.userAgent);
 
 /**
+ * Determines if the current device is touch-enabled (touch-screen device).
+ */
+export const isTouchDevice = (): boolean => (typeof window !== 'undefined' && 'ontouchstart' in window) || (typeof navigator !== 'undefined' && !!navigator.maxTouchPoints);
+
+/**
  * Tests if object is an array with at least 1 item.
  */
 export function isArrayWithLength(test: any): boolean {

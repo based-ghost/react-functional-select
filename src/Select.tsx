@@ -15,9 +15,9 @@ import React, {
 import { RfsTheme } from './theme';
 import { FixedSizeList } from 'react-window';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
-import { mergeDeep, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
 import { useDebounce, useMenuPositioner, useMenuOptions, useUpdateEffect } from './hooks';
+import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
 import { MenuPositionEnum, FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
 import { SelectedOption, MouseOrTouchEvent, IndicatorIconsProps, OptionData, MenuWrapperProps, ControlWrapperProps } from './types';
 import {
@@ -104,12 +104,12 @@ export type SelectProps = {
   readonly menuOverscanCount?: number;
   readonly tabSelectsOption?: boolean;
   readonly filterIgnoreCase?: boolean;
+  readonly itemKeySelector?: ReactText;
   readonly menuScrollDuration?: number;
   readonly blurInputOnSelect?: boolean;
   readonly closeMenuOnSelect?: boolean;
   readonly isAriaLiveEnabled?: boolean;
   readonly scrollMenuIntoView?: boolean;
-  readonly useItemKeySelector?: boolean;
   readonly hideSelectedOptions?: boolean;
   readonly filterIgnoreAccents?: boolean;
   readonly backspaceClearsValue?: boolean;
@@ -254,6 +254,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     onSearchChange,
     getOptionLabel,
     getOptionValue,
+    itemKeySelector,
     openMenuOnFocus,
     isAriaLiveEnabled,
     menuOverscanCount,
@@ -261,7 +262,6 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     renderOptionLabel,
     renderMultiOptions,
     menuScrollDuration,
-    useItemKeySelector,
     filterIgnoreAccents,
     hideSelectedOptions,
     getIsOptionDisabled,
@@ -398,10 +398,10 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       setSelectedOption((prevSelectedOption) => !isMulti ? [option] : [...prevSelectedOption, option]);
     }
 
-    // Use 'blurInputOnSelect' if defined, otherwise evaluate to true if device is touch capable
+    // Use 'blurInputOnSelect' if defined, otherwise evaluate to true if current device is touch-device
     const blurControl = (typeof blurInputOnSelect === 'boolean')
       ? blurInputOnSelect
-      : ('ontouchstart' in window || !!navigator.maxTouchPoints);
+      : isTouchDevice();
 
     if (blurControl) {
       blurInput();
@@ -783,10 +783,10 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             menuOptions={menuOptions}
             noOptionsMsg={noOptionsMsg}
             selectOption={selectOption}
+            itemKeySelector={itemKeySelector}
             overscanCount={menuOverscanCount}
             width={menuWidth || theme.menu.width}
             renderOptionLabel={renderOptionLabelFn}
-            useItemKeySelector={useItemKeySelector}
             focusedOptionIndex={focusedOption.index}
           />
         </MenuWrapper>

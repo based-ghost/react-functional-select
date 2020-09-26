@@ -6,7 +6,7 @@ module.exports = (api) => {
 
   const envOpts = {
     targets,
-    loose: true,
+    loose: false,
   };
 
   const presets = [
@@ -16,8 +16,7 @@ module.exports = (api) => {
   ];
 
   const plugins = [
-    ['@babel/proposal-class-properties', { loose: true }],
-    ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
+    ['@babel/proposal-object-rest-spread', { loose: false, useBuiltIns: true }],
   ];
 
   return {

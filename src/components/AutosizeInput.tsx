@@ -65,6 +65,13 @@ const AutosizeInput = React.memo(
   ) => {
     const sizerRef = useRef<HTMLDivElement | null>(null);
     const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH);
+
+    useUpdateEffect(() => {
+      if (sizerRef.current) {
+        setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH);
+      }
+    }, [inputValue]);
+
     const isInvalid = required && !isArrayWithLength(selectedOption);
 
     const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
@@ -81,12 +88,6 @@ const AutosizeInput = React.memo(
       'data-testid': AUTOSIZE_INPUT_TESTID,
       style: { width: inputWidth }
     };
-
-    useUpdateEffect(() => {
-      if (sizerRef.current) {
-        setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH);
-      }
-    }, [inputValue]);
 
     return (
       <Fragment>

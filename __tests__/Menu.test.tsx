@@ -30,6 +30,7 @@ const createMenuProps = (menuOptions: MenuOption[] = []): MenuProps => {
     width: '100%',
     renderOptionLabel,
     focusedOptionIndex,
+    itemKeySelector: undefined,
     height: MENU_MAX_HEIGHT_DEFAULT,
     loadingMsg: LOADING_MSG_DEFAULT,
     itemSize: MENU_ITEM_SIZE_DEFAULT,
@@ -44,10 +45,24 @@ const createMenuProps = (menuOptions: MenuOption[] = []): MenuProps => {
 test('Menu component mounts and renders successfully when "menuOptions" array has items', async () => {
   const props = createMenuProps(MENU_OPTIONS);
   const { getByText } = renderMenu(props);
-  const { menuOptions } = props;
 
   // Assert react-window + Option.tsx renders each menuOption correctly
-  menuOptions.forEach((option: MenuOption) => {
+  MENU_OPTIONS.forEach((option: MenuOption) => {
+    const { label } = option;
+    expect(getByText(String(label))).toBeInTheDocument();
+  });
+});
+
+test('The "itemKeySelector" property is used in "react-window" function property "itemKey" to select unqiue key based on property value rather than using default index for each option', async () => {
+  const props = {
+    ...createMenuProps(MENU_OPTIONS),
+    itemKeySelector: 'value'
+  };
+
+  const { getByText } = renderMenu(props);
+
+  // Assert react-window + Option.tsx renders each menuOption correctly
+  MENU_OPTIONS.forEach((option: MenuOption) => {
     const { label } = option;
     expect(getByText(String(label))).toBeInTheDocument();
   });

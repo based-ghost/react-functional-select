@@ -6,15 +6,15 @@ import modify from 'rollup-plugin-modify';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import typescriptPlugin from '@rollup/plugin-typescript';
-// import typescript from 'rollup-plugin-typescript2';
-// import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
+// import resolve from '@rollup/plugin-node-resolve';
+// import commonjs from '@rollup/plugin-commonjs';
+// import typescriptPlugin from '@rollup/plugin-typescript';
+import typescript from 'rollup-plugin-typescript2';
+import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
 
-/*
+
 const styledComponentsTransformer = createStyledComponentsTransformer({
-  ssr: true,
+  ssr: false,
   minify: true,
   displayName: false,
 });
@@ -26,7 +26,7 @@ const typescriptPlugin = typescript({
     }),
   ],
 });
-*/
+
 
 /*************************************************
  - CONFIG DATA
@@ -64,7 +64,7 @@ const babelPlugin = (useESModules = true) =>
       [
         '@babel/preset-env',
         {
-          loose: true,
+          loose: false,
           targets: { browsers: ['>0.2%', 'not dead', 'not op_mini all'] },
         },
       ],
@@ -72,7 +72,7 @@ const babelPlugin = (useESModules = true) =>
     ],
     plugins: [
       ['@babel/plugin-transform-runtime', { useESModules }],
-      ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
+      ['@babel/proposal-object-rest-spread', { loose: false, useBuiltIns: true }],
     ],
   });
 
@@ -81,28 +81,28 @@ const babelPlugin = (useESModules = true) =>
  *************************************************/
 
 const cjsPlugins = [
-  resolve(),
-  commonjs({ include: 'node_modules/**' }),
-  typescriptPlugin(),
-  // typescriptPlugin,
+  // resolve(),
+  // commonjs({ include: 'node_modules/**' }),
+  // typescriptPlugin(),
+  typescriptPlugin,
   babelPlugin(false),
   modifyReplacePlugin,
 ];
 
 const esmPlugins = [
-  resolve(),
-  commonjs({ include: 'node_modules/**' }),
-  typescriptPlugin(),
-  // typescriptPlugin,
+  // resolve(),
+  // commonjs({ include: 'node_modules/**' }),
+  // typescriptPlugin(),
+  typescriptPlugin,
   babelPlugin(),
   modifyReplacePlugin,
 ];
 
 const umdPlugins = (env) => [
-  resolve(),
-  commonjs({ include: 'node_modules/**' }),
-  typescriptPlugin(),
-  // typescriptPlugin,
+  // resolve(),
+  // commonjs({ include: 'node_modules/**' }),
+  // typescriptPlugin(),
+  typescriptPlugin,
   babelPlugin(),
   replace({ 'process.env.NODE_ENV': JSON.stringify(env) }),
   modifyReplacePlugin,
@@ -128,7 +128,7 @@ export default [
     input,
     output: {
       file: pkg.module,
-      format: 'esm',
+      format: 'es',
       exports: 'named',
     },
     plugins: esmPlugins,

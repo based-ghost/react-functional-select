@@ -1,7 +1,7 @@
 import { Configuration } from 'webpack';
+import { merge } from 'webpack-merge';
 
 const _maxAssetSize = 512000;
-const { merge } = require('webpack-merge');
 
 module.exports = {
   stories: ['../__stories__/**/*.stories.tsx'],
