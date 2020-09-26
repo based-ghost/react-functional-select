@@ -1,6 +1,6 @@
 {
   "name": "react-functional-select",
-  "version": "2.7.2",
+  "version": "2.8.0",
   "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)",
   "description": "Miro-sized and micro-optimized select component for React.js",
   "main": "./dist/index.cjs.js",
