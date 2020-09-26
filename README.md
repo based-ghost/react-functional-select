@@ -12,7 +12,7 @@
 - Fully-featured package that is truly lightweight: 8 KB (gzipped)!
 - Extensible styling API with [`styled-components`](https://github.com/styled-components/styled-components)
 - Opt-in properties to make the component fully accessible
-- Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [`react-window`](https://github.com/bvaughn/react-window) + performance conscious code
+- Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [`react-window`](https://github.com/bvaughn/react-window) + performance-first code. ['Check out how it handles 50k options!'](https://based-ghost.github.io/react-functional-select/?path=/story/react-functional-select--windowing)
 - Async mode for fetching dynamic options from a remote server using the search input value (starting in `v2.1.0`)
 
 <strong>Peer dependencies:</strong>
@@ -123,6 +123,7 @@ All properties are technically optional (with a few having default values). Very
 |`isInvalid`| bool | `false` | Is the current value invalid - control recieves invalid styling
 |`inputDelay`| number | `undefined` | The debounce delay in for the input search (milliseconds)
 |`isDisabled`| bool | `false` | Is the select control disabled - recieves disabled styling
+|`required`| bool | `false` | Is the select control required - applied to the `input` element. When `true`, the optionally specified CSS from the `themeConfig.input.cssRequired` field will be applied to the `input` element.
 |`placeholder`| string | `Select option..` | Placeholder text for the select value
 |`menuWidth`| ReactText | `100%` | Width of the menu
 |`menuItemSize`| number | `35` | The height of each option in the menu (px)
@@ -136,13 +137,14 @@ All properties are technically optional (with a few having default values). Very
 |`isSearchable`| bool | `true` | Whether to enable search functionality or not
 |`hideSelectedOptions`| bool | `false` | Hide the selected option from the menu (if undefined and isMulti = true, then defaults to true)
 |`openMenuOnClick`| bool | `true` | If true, the menu can be toggled by clicking anywhere on the select control; if false, the menu can only be toggled by clicking the 'caret' icon on the far right of the control
-|`menuMaxHeight`| number | `300` | Max height of the menu element - this effects how many options `react-window` will render.
+|`menuMaxHeight`| number | `300` | Max height of the menu element - this effects how many options `react-window` will render
+|`menuOverscanCount`| number | `1` | correlates to `react-window` property `overscanCount`: The number of items (options) to render outside of the visible area. Increasing the number can impact performance, but is useful if the option label is complex and the `renderOptionLabel` prop is defined
+|`itemKeySelector`| ReactText | `undefined` | If defined, will use the property in your original options as each option's key, rather than the parsed stateful value `menuOptions` index (this needs to be a uniqeue property - so properties such as `id` or `value`). This relates to the `itemKey` property in dependency `react-window` - more info here: https://react-window.now.sh/#/api/FixedSizeList
 |`menuScrollDuration`| number | `300` | Duration of scroll menu into view animation
 |`addClassNames`| bool | `false` | Should static classNames be generated for container elements (enable if styling using CSS stylesheets)
 |`ariaLabelledBy`| string | `undefined` | HTML ID of an element that should be used as the label (for assistive tech)
 |`openMenuOnFocus`| bool | `false` | Open the menu when the select control recieves focus
 |`initialValue`| any | `undefined` | Initial select value
-|`menuOverscanCount`| number | `1` | correlates to `react-window` property `overscanCount`: The number of items (options) to render outside of the visible area. Increasing the number can impact performance, but is useful if the option label is complex and the `renderOptionLabel` prop is defined
 |`tabSelectsOption`| bool | `true` | Select the currently focused option when the user presses tab
 |`blurInputOnSelect`| bool | `false` | Remove focus from the input when the user selects an option (useful for dismissing the keyboard on touch devices)
 |`closeMenuOnSelect`| bool | `true` | Close the select menu when the user selects an option
