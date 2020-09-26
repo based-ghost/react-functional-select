@@ -103,7 +103,7 @@ const CodeMarkup = React.memo<CodeMarkupProps>(({
   header,
   language,
   formatFn,
-  textColor = 'rgba(255,255,255,0.975)'
+  textColor = 'rgba(255, 255, 255, 0.975)'
 }) => (
   <CodeMarkupContainer>
     <Header>{header}</Header>

@@ -48,9 +48,9 @@ export const RfsTheme: DefaultTheme = {
     transition: 'box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out'
   },
   menu: {
+    padding: '0',
     width: '100%',
     margin: '0.5rem 0',
-    padding: '0.15rem 0',
     borderRadius: '0.25rem',
     backgroundColor: '#fff',
     animation: FADE_IN_ANIMATION_CSS,

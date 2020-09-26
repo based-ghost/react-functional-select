@@ -1,10 +1,11 @@
 import React, { useMemo, useRef, useState, useEffect, useCallback, Fragment, FocusEvent, KeyboardEvent, ReactNode } from 'react';
+import { toast } from 'react-toastify';
+import { useCallbackState } from './helpers/hooks';
 import { CityOption, Option, PackageOption } from './helpers/types';
-import { useCallbackState, useClearToastsOnUnmount } from './helpers/hooks';
 import { Select, MultiParams, MenuOption, SelectRef, FilterMatchEnum } from '../src';
 import { Checkbox, CodeMarkup, PackageLink, OptionsCountButton } from './helpers/components';
 import { mockHttpRequest, getRandomInt, createAsyncOptions, createSelectOptions, stringifyJavaScriptObj, renderInfoToast } from './helpers/utils';
-import { CITY_OPTIONS, PACKAGE_OPTIONS, REACT_WINDOW_PACKAGE, CLASS_NAME_HTML, STYLED_COMPONENTS_PACKAGE, ThemeEnum, ThemeConfigMap, THEME_DEFAULTS, OPTIONS, SELECT_CONTAINER_STYLE, THEME_CONFIG } from './helpers/constants';
+import { TOAST_CONTAINER_PROPS, CITY_OPTIONS, PACKAGE_OPTIONS, REACT_WINDOW_PACKAGE, CLASS_NAME_HTML, STYLED_COMPONENTS_PACKAGE, ThemeEnum, ThemeConfigMap, THEME_DEFAULTS, OPTIONS, SELECT_CONTAINER_STYLE, THEME_CONFIG } from './helpers/constants';
 import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_DISABLED_CLS, OPTION_SELECTED_CLS, CARET_ICON_CLS, CLEAR_ICON_CLS, LOADING_DOTS_CLS, AUTOSIZE_INPUT_CLS, MENU_CONTAINER_CLS, SELECT_CONTAINER_CLS, CONTROL_CONTAINER_CLS } from '../src/constants/dom';
 import {
   Button,
@@ -39,7 +40,6 @@ import { SelectedOption } from '../src/types';
 import { useUpdateEffect } from '../src/hooks';
 
 const REACT_LOGO_SVG = require('./assets/react-logo.svg') as string;
-const CHEVRON_SVG_PATH = 'M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z';
 
 export default {
   title: 'React Functional Select'
@@ -387,7 +387,14 @@ export const Events = () => {
   const onInputFocus = useCallback((e: FocusEvent<HTMLInputElement>): void => renderInfoToast('Control focused!'), []);
   const onKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>): void => renderInfoToast('keydown event executed!'), []);
 
-  useClearToastsOnUnmount();
+  // Configure reat-toastify onMount and cleanup active toasts on beforeDismount
+  useEffect(() => {
+    toast.configure(TOAST_CONTAINER_PROPS);
+
+    return () => {
+      toast.dismiss();
+    };
+  }, []);
 
   return (
     <Container>
@@ -765,7 +772,7 @@ export const Advanced = () => {
   const customCaretIcon = useCallback(
     ({ menuOpen }): ReactNode => (
       <ChevronDownSvg menuOpen={menuOpen} aria-hidden='true' viewBox='0 0 448 512'>
-        <path d={CHEVRON_SVG_PATH} />
+        <path d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z' />
       </ChevronDownSvg>
     ),
     []

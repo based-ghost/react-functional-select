@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { toast } from 'react-toastify';
 import { GlobalStyle } from './global-style';
 
 // Configure createGlobalStyle for styled-components
@@ -13,15 +12,8 @@ const _globalStyleEl: HTMLElement =
     return el;
   })();
 
-// Callback to configure react-toastify and remove node used to mount GlobalStyle to
+// Callback to remove node used to mount GlobalStyle to
 const completeSetupDOM = (): void => {
-  toast.configure({
-    autoClose: 2500,
-    draggable: false,
-    newestOnTop: true,
-    position: 'top-right'
-  });
-
   if (_globalStyleEl) {
     document.head.removeChild(_globalStyleEl);
   }
