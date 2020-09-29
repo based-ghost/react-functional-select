@@ -675,13 +675,13 @@ export const Windowing = () => {
 
   const selectRef = useRef<SelectRef | null>(null);
   const [options, setOptions] = useState<Option[]>([]);
-  const [optionsCount, setOptionsCount] = useState<number>(100);
+  const [optionsCount, setOptionsCount] = useState<number>(optionCountList[0]);
 
   useUpdateEffect(() => {
     selectRef.current && selectRef.current.clearValue();
   }, [options]);
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     const nextSelectOptions = createSelectOptions(optionsCount);
     setOptions(nextSelectOptions);
   }, [optionsCount]);
