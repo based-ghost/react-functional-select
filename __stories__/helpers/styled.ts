@@ -104,7 +104,7 @@ export const ListWrapper = styled.div`
 
     ul {
       li + li {
-        margin-top: 0.75em !important;
+        margin-top: 0.8em !important;
       }
     }
   }

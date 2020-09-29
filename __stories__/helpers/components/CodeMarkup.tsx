@@ -34,7 +34,7 @@ const Header = styled.div`
   color: #999;
   padding: 0 .9rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   background-color: #20232a;
 `;
@@ -43,7 +43,7 @@ const PreContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  border-radius: 8px;
+  border-radius: 6px;
   min-height: 385px !important;
   max-height: 385px !important;
 
@@ -65,11 +65,12 @@ const PreContainer = styled.div`
 
       > code {
         color: #ddd !important;
+        padding-right: 20px !important;
       }
 
       .block-comment,
       .comment {
-        color: #999;
+        color: rgb(178, 178, 178);
       }
 
       .boolean,
@@ -79,7 +80,7 @@ const PreContainer = styled.div`
       }
 
       .tag {
-        color: #e2777a;
+        color: rgb(252, 146, 158);
       }
 
       .attr-name {
@@ -100,12 +101,12 @@ const PreContainer = styled.div`
       .operator {
         color: rgb(215, 222, 234);
       }
-    }
 
-    ${MEDIA_QUERY_IS_MOBILE_XS} {
-      font-size: 12px;
-      > code:first-of-type {
-        padding-right: 10px !important;
+      ${MEDIA_QUERY_IS_MOBILE_XS} {
+        font-size: 12px;
+        > code {
+          padding-right: 10px !important;
+        }
       }
     }
   }
