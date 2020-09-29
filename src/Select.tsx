@@ -351,13 +351,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     onMenuClose
   );
 
-  const blurInput = (): void => {
-    inputRef.current && inputRef.current.blur();
-  };
-
-  const focusInput = (): void => {
-    inputRef.current && inputRef.current.focus();
-  };
+  const blurInput = (): void => inputRef.current!.blur();
+  const focusInput = (): void => inputRef.current!.focus();
 
   const scrollToItemIndex = (index: number): void => {
     listRef.current && listRef.current.scrollToItem(index);
@@ -579,13 +574,11 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
         break;
       case 'ArrowLeft':
-        if (!isMulti || inputValue || renderMultiOptions) return;
-        focusValueOnArrowKey(ValueIndexEnum.PREVIOUS);
-
-        break;
       case 'ArrowRight':
         if (!isMulti || inputValue || renderMultiOptions) return;
-        focusValueOnArrowKey(ValueIndexEnum.NEXT);
+        focusValueOnArrowKey(
+          (e.key === 'ArrowLeft') ? ValueIndexEnum.PREVIOUS : ValueIndexEnum.NEXT
+        );
 
         break;
       case ' ': // Handle spacebar keydown events
@@ -598,11 +591,13 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
           return;
         }
         selectOptionFromFocused();
+
         break;
       case 'Enter': // Check e.keyCode !== 229 (Input Method Editor)
         if (menuOpen && e.keyCode !== 229) {
           selectOptionFromFocused();
         }
+
         break;
       case 'Escape':
         if (menuOpen) {
@@ -611,10 +606,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         }
         break;
       case 'Tab':
-        if (!menuOpen || !tabSelectsOption || !focusedOption.data || e.shiftKey) {
-          return;
-        }
+        if (!menuOpen || !tabSelectsOption || !focusedOption.data || e.shiftKey) return;
         selectOptionFromFocused();
+
         break;
       case 'Delete':
       case 'Backspace':
@@ -653,14 +647,16 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     if (isDisabled) return;
     if (!isFocused) focusInput();
 
+    const tagIsNotInput = (e.currentTarget.tagName !== 'INPUT');
+
     if (!menuOpen) {
       openMenuOnClick && openMenuAndFocusOption(OptionIndexEnum.FIRST);
-    } else if (e.currentTarget.tagName !== 'INPUT') {
+    } else if (tagIsNotInput) {
       setMenuOpen(false);
       inputValue && setInputValue('');
     }
 
-    if (e.currentTarget.tagName !== 'INPUT') {
+    if (tagIsNotInput) {
       e.preventDefault();
     }
   };
