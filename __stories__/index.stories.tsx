@@ -298,7 +298,6 @@ export const Styling = () => {
         </Column>
         <Column widthPercent={60}>
           <CodeMarkup
-            textColor='#79b6f2'
             language='javascript'
             data={THEME_DEFAULTS}
             header='Theme Defaults'
@@ -353,7 +352,6 @@ export const Styling = () => {
             <Column widthPercent={60}>
               <CodeMarkup
                 data={themeConfig}
-                textColor='#79b6f2'
                 language='javascript'
                 header='theme-config'
                 formatFn={stringifyJavaScriptObj}

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
 import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
 import javascript from 'react-syntax-highlighter/dist/esm/languages/prism/javascript';
 
@@ -14,14 +14,13 @@ type CodeMarkupProps = {
   readonly data: any;
   readonly header: string;
   readonly language: string;
-  readonly textColor?: string;
   readonly formatFn?: (data: any) => string;
 };
 
 const CodeMarkupContainer = styled.div`
   font-size: 1rem;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 6px;
   margin: 1rem 1.5rem;
   background-color: #282c34;
 
@@ -32,7 +31,7 @@ const CodeMarkupContainer = styled.div`
 
 const Header = styled.div`
   line-height: 3;
-  color: #9E9E9E;
+  color: #999;
   padding: 0 .9rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -40,7 +39,7 @@ const Header = styled.div`
   background-color: #20232a;
 `;
 
-const PreContainer = styled.div<{ $color: string }>`
+const PreContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -61,31 +60,45 @@ const PreContainer = styled.div<{ $color: string }>`
       background: none !important;
       text-shadow: none !important;
       font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace !important;
+      display: inherit;
+      color: #fff;
 
       > code {
-        color: rgba(255,255,255,0.975) !important;
+        color: #ddd !important;
       }
 
-      &:first-of-type {
-        color: #94A7A7 !important;
-        padding-right: 20px !important;
+      .block-comment,
+      .comment {
+        color: #999;
       }
 
-      &:last-of-type {
-        display: inherit;
-        color: ${({ $color }) => $color} !important;
+      .boolean,
+      .function,
+      .number {
+        color: rgb(121, 182, 242);
+      }
 
-        .tag, .string, .number {
-          color: #fc929e;
-        }
+      .tag {
+        color: #e2777a;
+      }
 
-        .attr-value, .operator, .punctuation {
-          color: #8dc891;
-        }
+      .attr-name {
+        color: rgb(197, 165, 197);
+      }
 
-        .attr-name {
-          color: #79b6f2;
-        }
+      .string,
+      .tag.attr-value {
+        color: rgb(141, 200, 145);
+      }
+
+      .token.punctuation,
+      .tag.punctuation,
+      .tag.attr-value.punctuation {
+        color: rgb(136, 198, 190);
+      }
+
+      .operator {
+        color: rgb(215, 222, 234);
       }
     }
 
@@ -102,12 +115,11 @@ const CodeMarkup = React.memo<CodeMarkupProps>(({
   data,
   header,
   language,
-  formatFn,
-  textColor = 'rgba(255, 255, 255, 0.975)'
+  formatFn
 }) => (
   <CodeMarkupContainer>
     <Header>{header}</Header>
-    <PreContainer $color={textColor}>
+    <PreContainer>
       <SyntaxHighlighter
         wrapLines
         style={dark}

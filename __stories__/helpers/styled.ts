@@ -99,12 +99,12 @@ export const ListWrapper = styled.div`
   }
 
   &.is-class-list {
-    font-weight: 600;
+    font-weight: 500;
     max-width: 100% !important;
 
     ul {
       li + li {
-        margin-top: 0.5em !important;
+        margin-top: 0.75em !important;
       }
     }
   }

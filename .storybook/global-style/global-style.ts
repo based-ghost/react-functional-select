@@ -44,13 +44,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   code {
-    font-size: 87%;
+    font-size: 88%;
     border-radius: 3px;
     word-break: break-word;
     padding: .15em .2em .15em;
     color: rgba(0, 0, 0, 0.87);
     background-color: rgba(30, 167, 253, 0.135);
-    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
     @media only screen and (max-width: 525px) {
       padding: .1em .25em .1em;

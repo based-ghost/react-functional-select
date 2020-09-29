@@ -23,10 +23,6 @@ function stripDiacritics(value: string): string {
   return value.normalize('NFD').replace(DIACRITICS_REGEXP, '');
 }
 
-function easeOutCubic(t: number, s: number, c: number, d: number): number {
-  return c * ((t = t / d - 1) * t * t + 1) + s;
-}
-
 function getScrollTop(el: HTMLElement): number {
   return isDocumentElement(el) ? window.pageYOffset : el.scrollTop;
 }
@@ -60,15 +56,17 @@ function smoothScrollTo(
   element: HTMLElement,
   to: number,
   duration: number = 300,
-  callback?: (...args: any[]) => void
+  callback?: (...args: any[]) => any
 ): void {
   let currentTime = 0;
+
   const start = getScrollTop(element);
   const change = (to - start);
+  const easeOutCubic = (t: number): number => change * ((t = t / duration - 1) * t * t + 1) + start;
 
   function smoothScroller(): void {
     currentTime += 5;
-    scrollTo(element, easeOutCubic(currentTime, start, change, duration));
+    scrollTo(element, easeOutCubic(currentTime));
     if (currentTime < duration) {
       window.requestAnimationFrame(smoothScroller);
     } else {
