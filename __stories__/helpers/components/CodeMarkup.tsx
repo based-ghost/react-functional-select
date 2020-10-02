@@ -63,14 +63,10 @@ const PreContainer = styled.div`
       display: inherit;
       color: #fff;
 
-      > code {
-        color: #ddd !important;
-        padding-right: 20px !important;
-      }
-
       .block-comment,
       .comment {
-        color: rgb(178, 178, 178);
+        color: #ddd;
+        padding-right: 1.75em !important;
       }
 
       .boolean,

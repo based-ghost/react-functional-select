@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { ReactToastifyCSS } from './react-toastify-css';
+import ReactToastifyCss from './react-toastify-css';
 
 export const GlobalStyle = createGlobalStyle`
   *,
@@ -57,5 +57,5 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  ${ReactToastifyCSS}
+  ${ReactToastifyCss}
 `;

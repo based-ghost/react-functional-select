@@ -1,6 +1,6 @@
 import { css, keyframes } from 'styled-components';
 
-const TOASTIFY_TRACK_PROGRESS = keyframes`
+const _toastify_trackProgress = keyframes`
   0% {
     transform: scaleX(1);
   } 100% {
@@ -8,7 +8,7 @@ const TOASTIFY_TRACK_PROGRESS = keyframes`
   }
 `;
 
-const TOASTIFY_BOUCE_OUT_RIGHT = keyframes`
+const _toastify_bounceOutRight = keyframes`
   20% {
     opacity: 1;
     transform: translate3d(-20px, 0, 0);
@@ -18,7 +18,7 @@ const TOASTIFY_BOUCE_OUT_RIGHT = keyframes`
   }
 `;
 
-const TOASTIFY_BOUNCE_IN_RIGHT = keyframes`
+const _toastify_bounceInRight = keyframes`
   from,
   60%,
   75%,
@@ -40,7 +40,7 @@ const TOASTIFY_BOUNCE_IN_RIGHT = keyframes`
   }
 `;
 
-export const ReactToastifyCSS = css`
+const ReactToastifyCss = css`
   .Toastify__toast-container {
     z-index: 9999;
     position: fixed;
@@ -137,7 +137,7 @@ export const ReactToastifyCSS = css`
       background-color: rgba(255, 255, 255, 0.7);
       transform-origin: left;
       &--animated {
-        animation: ${TOASTIFY_TRACK_PROGRESS} linear 1 forwards;
+        animation: ${_toastify_trackProgress} linear 1 forwards;
       }
       &--controlled {
         transition: transform 0.2s;
@@ -158,13 +158,15 @@ export const ReactToastifyCSS = css`
 
   .Toastify__bounce-enter {
     &--top-right {
-      animation-name: ${TOASTIFY_BOUNCE_IN_RIGHT};
+      animation-name: ${_toastify_bounceInRight};
     }
   }
 
   .Toastify__bounce-exit {
     &--top-right {
-      animation-name: ${TOASTIFY_BOUCE_OUT_RIGHT};
+      animation-name: ${_toastify_bounceOutRight};
     }
   }
 `;
+
+export default ReactToastifyCss;

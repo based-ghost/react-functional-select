@@ -38,12 +38,9 @@ export function optionClassName(
 ): string {
   let className = OPTION_CLS;
 
-  if (isDisabled)
-    className += (' ' + OPTION_DISABLED_CLS);
-  if (isSelected)
-    className += (' ' + OPTION_SELECTED_CLS);
-  if (isFocused)
-    className += (' ' + OPTION_FOCUSED_CLS);
+  if (isDisabled) className += (' ' + OPTION_DISABLED_CLS);
+  if (isSelected) className += (' ' + OPTION_SELECTED_CLS);
+  if (isFocused) className += (' ' + OPTION_FOCUSED_CLS);
 
   return className;
 }
@@ -59,14 +56,14 @@ export function normalizeValue(
   const initialValues = Array.isArray(value)
     ? value
     : isPlainObject(value)
-      ? [value]
-      : SELECTED_OPTION_DEFAULT;
+    ? [value]
+    : SELECTED_OPTION_DEFAULT;
 
   return isArrayWithLength(initialValues)
     ? initialValues.map((x: any) => ({
-      data: x,
-      value: getOptionValue(x),
-      label: getOptionLabel(x)
-    }))
+        data: x,
+        value: getOptionValue(x),
+        label: getOptionLabel(x),
+      }))
     : initialValues;
 }

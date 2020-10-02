@@ -42,7 +42,6 @@ function smoothScrollTo(
   callback?: (...args: any[]) => any
 ): void {
   let currentTime = 0;
-
   const start = getScrollTop(element);
   const change = (to - start);
   const easeOutCubic = (t: number): number => change * ((t = t / duration - 1) * t * t + 1) + start;
