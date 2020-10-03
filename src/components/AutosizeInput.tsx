@@ -1,7 +1,7 @@
 import React, { useState, useRef, Fragment } from 'react';
-import { isArrayWithLength, isEdgeOrIE } from '../utils';
 import styled from 'styled-components';
 import { useUpdateEffect } from '../hooks';
+import { isArrayWithLength, isEdgeOrIE } from '../utils';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
 

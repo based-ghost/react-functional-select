@@ -1,9 +1,9 @@
 import React, { useMemo, Fragment } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
-import { FixedSizeList, ListItemKeySelector } from 'react-window';
 import { isArrayWithLength } from '../utils';
 import { MenuProps, ItemData } from '../types';
+import { FixedSizeList, ListItemKeySelector } from 'react-window';
 
 const NoOptionsMsg = styled.div`
   text-align: center;
