@@ -99,7 +99,7 @@ const PreContainer = styled.div`
       }
 
       ${MEDIA_QUERY_IS_MOBILE_XS} {
-        font-size: 12.5px !important;
+        font-size: 12px !important;
 
         .block-comment,
         .comment {
