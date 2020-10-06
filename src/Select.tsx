@@ -562,23 +562,16 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
     switch (e.key) {
       case 'ArrowDown':
-        menuOpen
-          ? focusOptionOnArrowKey(OptionIndexEnum.DOWN)
-          : openMenuAndFocusOption(OptionIndexEnum.FIRST);
-
-        break;
       case 'ArrowUp':
         menuOpen
-          ? focusOptionOnArrowKey(OptionIndexEnum.UP)
-          : openMenuAndFocusOption(OptionIndexEnum.LAST);
+          ? focusOptionOnArrowKey((e.key === 'ArrowDown') ? OptionIndexEnum.DOWN : OptionIndexEnum.UP)
+          : openMenuAndFocusOption((e.key === 'ArrowDown') ? OptionIndexEnum.FIRST : OptionIndexEnum.LAST);
 
         break;
       case 'ArrowLeft':
       case 'ArrowRight':
         if (!isMulti || inputValue || renderMultiOptions) return;
-        focusValueOnArrowKey(
-          (e.key === 'ArrowLeft') ? ValueIndexEnum.PREVIOUS : ValueIndexEnum.NEXT
-        );
+        focusValueOnArrowKey((e.key === 'ArrowLeft') ? ValueIndexEnum.PREVIOUS : ValueIndexEnum.NEXT);
 
         break;
       case ' ': // Handle spacebar keydown events
