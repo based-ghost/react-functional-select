@@ -583,6 +583,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         } else if (!focusedOption.data) {
           return;
         }
+
         selectOptionFromFocused();
 
         break;

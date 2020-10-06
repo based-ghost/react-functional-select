@@ -99,9 +99,12 @@ const PreContainer = styled.div`
       }
 
       ${MEDIA_QUERY_IS_MOBILE_XS} {
-        font-size: 12px;
-        > code {
-          padding-right: 10px !important;
+        font-size: 12.5px !important;
+
+        .block-comment,
+        .comment {
+          min-width: 2.25em !important;
+          padding-right: 1.25em !important;
         }
       }
     }
