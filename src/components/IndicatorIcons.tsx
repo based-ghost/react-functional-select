@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import LoadingDots from './LoadingDots';
 import styled, { css } from 'styled-components';
 import { CaretProps, IconRenderer, IndicatorIconsProps } from '../types';
@@ -75,7 +75,7 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
   onClearMouseDown
 }) => {
   const forwardState =
-    (typeof caretIcon === 'function') || (typeof clearIcon === 'function')
+    (typeof caretIcon === 'function' || typeof clearIcon === 'function')
       ? {
           menuOpen,
           isLoading: !!isLoading,
@@ -84,10 +84,8 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
         }
       : undefined;
 
-  const iconRenderer = (renderer: IconRenderer): ReactNode =>
-    (typeof renderer === 'function')
-      ? renderer(forwardState)
-      : renderer;
+  const iconRenderer = (renderer: IconRenderer) =>
+    (typeof renderer === 'function') ? renderer(forwardState) : renderer;
 
   return (
     <IndicatorIconsWrapper>

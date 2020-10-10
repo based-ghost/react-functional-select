@@ -5,7 +5,7 @@ import { isArrayWithLength, isEdgeOrIE } from '../utils';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
 
-const INPUT_MIN_WIDTH = 2;
+const _inputMinWidth = 2;
 
 const SizerDiv = styled.div`
   top: 0;
@@ -64,11 +64,11 @@ const AutosizeInput = React.memo(
     ref: React.Ref<HTMLInputElement>
   ) => {
     const sizerRef = useRef<HTMLDivElement | null>(null);
-    const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH);
+    const [inputWidth, setInputWidth] = useState<number>(_inputMinWidth);
 
     useUpdateEffect(() => {
       if (sizerRef.current) {
-        setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH);
+        setInputWidth(sizerRef.current.scrollWidth + _inputMinWidth);
       }
     }, [inputValue]);
 

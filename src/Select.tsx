@@ -369,7 +369,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
 
   const openMenuAndFocusOption = useCallback((position: OptionIndexEnum): void => {
     if (!isArrayWithLength(menuOptions)) {
-      setMenuOpen(true);
+      !menuOpenRef.current && setMenuOpen(true);
       return;
     }
 
@@ -381,7 +381,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       ? selectedIndex
       : ((position === OptionIndexEnum.FIRST) ? 0 : (menuOptions.length - 1));
 
-    setMenuOpen(true);
+    !menuOpenRef.current && setMenuOpen(true);
     setFocusedOption({ index, ...menuOptions[index] });
     scrollToItemIndex(index);
   }, [isMulti, menuOptions]);
@@ -598,6 +598,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
           setMenuOpen(false);
           setInputValue('');
         }
+
         break;
       case 'Tab':
         if (!menuOpen || !tabSelectsOption || !focusedOption.data || e.shiftKey) return;
@@ -691,8 +692,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     e.stopPropagation();
     (e.type === 'mousedown') && e.preventDefault();
     focusInput();
-    menuOpen ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
-  }, [menuOpen, openMenuAndFocusOption]);
+    menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
+  }, [openMenuAndFocusOption]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -701,9 +702,9 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
         role='combobox'
         aria-haspopup='listbox'
         aria-controls={inputId}
+        aria-expanded={menuOpen}
         onKeyDown={handleOnKeyDown}
         data-testid={SELECT_CONTAINER_TESTID}
-        aria-expanded={menuOpen ? 'true' : 'false'}
         className={addClassNames ? SELECT_CONTAINER_CLS : undefined}
       >
         <ControlWrapper

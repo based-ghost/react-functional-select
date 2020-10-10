@@ -6,27 +6,8 @@ import modify from 'rollup-plugin-modify';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
-// import resolve from '@rollup/plugin-node-resolve';
-// import commonjs from '@rollup/plugin-commonjs';
-// import typescriptPlugin from '@rollup/plugin-typescript';
 import typescript from 'rollup-plugin-typescript2';
 import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
-
-
-const styledComponentsTransformer = createStyledComponentsTransformer({
-  ssr: false,
-  minify: true,
-  displayName: false,
-});
-
-const typescriptPlugin = typescript({
-  transformers: [
-    () => ({
-      before: [styledComponentsTransformer],
-    }),
-  ],
-});
-
 
 /*************************************************
  - CONFIG DATA
@@ -47,6 +28,21 @@ const externalUmd = Object.keys(globals);
  - PLUGIN DEFINITIONS (INDIVIDUAL)
  *************************************************/
 
+const styledComponentsTransformer = createStyledComponentsTransformer({
+  ssr: false,
+  minify: true,
+  displayName: false,
+});
+
+const typescriptPlugin = typescript({
+  clean: true,
+  transformers: [
+    () => ({
+      before: [styledComponentsTransformer],
+    }),
+  ],
+});
+
 // This takes care of \n (search actual string by escaping \n so to not target line-breaks)
 // ...followed by spaces created by functions nested within styled-components that return template literals ``
 const modifyReplacePlugin = modify({
@@ -54,8 +50,8 @@ const modifyReplacePlugin = modify({
   replace: '',
 });
 
-const babelPlugin = (useESModules = true) =>
-  babel({
+const babelPlugin = (useESModules = true) => {
+  return babel({
     babelrc: false,
     babelHelpers: 'runtime',
     exclude: 'node_modules/**',
@@ -75,33 +71,25 @@ const babelPlugin = (useESModules = true) =>
       ['@babel/proposal-object-rest-spread', { loose: false, useBuiltIns: true }],
     ],
   });
+};
 
 /*************************************************
 - PLUGIN DEFINITIONS (GROUP)
  *************************************************/
 
 const cjsPlugins = [
-  // resolve(),
-  // commonjs({ include: 'node_modules/**' }),
-  // typescriptPlugin(),
   typescriptPlugin,
   babelPlugin(false),
   modifyReplacePlugin,
 ];
 
 const esmPlugins = [
-  // resolve(),
-  // commonjs({ include: 'node_modules/**' }),
-  // typescriptPlugin(),
   typescriptPlugin,
   babelPlugin(),
   modifyReplacePlugin,
 ];
 
-const umdPlugins = (env) => [
-  // resolve(),
-  // commonjs({ include: 'node_modules/**' }),
-  // typescriptPlugin(),
+const getUmdPlugins = (env) => [
   typescriptPlugin,
   babelPlugin(),
   replace({ 'process.env.NODE_ENV': JSON.stringify(env) }),
@@ -145,7 +133,7 @@ export default [
       name,
       exports: 'named',
     },
-    plugins: umdPlugins('development'),
+    plugins: getUmdPlugins('development'),
   },
 
   /*** BROWSER (PRODUCTION) ***/
@@ -159,6 +147,6 @@ export default [
       name,
       exports: 'named',
     },
-    plugins: umdPlugins('production'),
+    plugins: getUmdPlugins('production'),
   },
 ];

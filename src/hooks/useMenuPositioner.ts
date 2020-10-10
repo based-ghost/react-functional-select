@@ -65,10 +65,9 @@ export const useMenuPositioner = (
 
   // Calculated menu height passed react-window; calculate MenuWrapper <div /> 'top' style prop if menu is positioned above control
   const menuHeightCalc = Math.min(menuHeight, menuOptionsLength * menuItemSize);
-  const menuStyleTop = isMenuTopPosition ? calculateMenuTop(menuHeightCalc, menuRef.current, controlRef.current) : undefined;
+  const menuStyleTop = isMenuTopPosition
+    ? calculateMenuTop(menuHeightCalc, menuRef.current, controlRef.current)
+    : undefined;
 
-  return {
-    menuStyleTop,
-    menuHeightCalc
-  };
+  return { menuStyleTop, menuHeightCalc };
 };

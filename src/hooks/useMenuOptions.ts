@@ -30,8 +30,8 @@ export const useMenuOptions = (
   const hideSelectedOptionsOrDefault = (typeof hideSelectedOptions !== 'boolean') ? !!isMulti : hideSelectedOptions;
 
   useEffect(() => {
-    const normalizedInput = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
     const selectedHash = new Set(selectedOption.map(({ value }) => value));
+    const normalizedInput = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
 
     const getIsOptionDisabledOrDefault: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
     const getFilterOptionStringOrDefault: (option: MenuOption) => string = getFilterOptionString || ((option) => (typeof option.label === 'string') ? option.label : `${option.label}`);
@@ -67,13 +67,14 @@ export const useMenuOptions = (
       return menuOption;
     };
 
-    const menuOptionsOrDefault = options.reduce((acc, data) => {
-      const option = parseMenuOption(data);
-      option && acc.push(option);
-      return acc;
-    }, [] as MenuOption[]);
+    const nextMenuOptions: MenuOption[] = [];
 
-    setMenuOptions(menuOptionsOrDefault);
+    for (let i = 0; i < options.length; i++) {
+      const option = parseMenuOption(options[i]);
+      option && nextMenuOptions.push(option);
+    }
+
+    setMenuOptions(nextMenuOptions);
   }, [options, selectedOption, searchValue, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, getFilterOptionString, getIsOptionDisabled, getOptionValue, getOptionLabel]);
 
   return menuOptions;

@@ -3,14 +3,21 @@
     "jsx": "react",
     "target": "esnext",
     "module": "esnext",
+    "resolveJsonModule": true,
     "moduleResolution": "node",
     "strict": true,
-    "allowJs": false,
+    "allowJs": true,
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "removeComments": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
   },
   "include": [
     "src/**/*"
