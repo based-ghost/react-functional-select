@@ -12,7 +12,7 @@
 - Fully-featured package that is truly lightweight: 8 KB (gzipped)!
 - Extensible styling API with [`styled-components`](https://github.com/styled-components/styled-components)
 - Opt-in properties to make the component fully accessible
-- Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [`react-window`](https://github.com/bvaughn/react-window) + performance-first code. [Check out how it handles 50k options!](https://based-ghost.github.io/react-functional-select/?path=/story/react-functional-select--windowing)
+- Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [`react-window`](https://github.com/bvaughn/react-window) + performance-first code. [See in memory load tests from 100 to 50,000 options here!](https://based-ghost.github.io/react-functional-select/?path=/story/react-functional-select--windowing)
 - Async mode for fetching dynamic options from a remote server using the search input value (starting in `v2.1.0`)
 
 <strong>Peer dependencies:</strong>
