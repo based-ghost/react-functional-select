@@ -65,10 +65,9 @@ export const MENU_OPTIONS: MenuOption[] = [
 // ============================================
 
 export const stringifyCSSProperties = (obj: CSSProperties = {}): string => {
-  const props = [];
-  Object.keys(obj).forEach((key) => props.push(`${key}: ${obj[key]};`));
+  const cssProps = Object.keys(obj).map((key) => `${key}: ${obj[key]};`);
 
-  return props.join(' ');
+  return cssProps.join(' ');
 };
 
 export const RENDER_OPTION_LABEL_MOCK = jest.fn((data: OptionData): ReactNode => data.label);

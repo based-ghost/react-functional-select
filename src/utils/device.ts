@@ -1,3 +1,4 @@
+/* tslint:disable: strict-type-predicates */
 const IE_EDGE_BROWSER_REGEXP = /(MSIE|Trident\/|Edge\/|Edg\/)/i;
 
 /**

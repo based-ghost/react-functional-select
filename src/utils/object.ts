@@ -20,14 +20,14 @@ export function mergeDeep(target: any, source: any): any {
   const output = { ...target };
 
   Object.keys(source).forEach((key) => {
-    const sourceKey = source[key];
+    const sourceProp = source[key];
 
     output[key] =
-      (isPlainObject(sourceKey) && key !== 'animation')
+      (isPlainObject(sourceProp) && key !== 'animation')
         ? (key in target)
-          ? mergeDeep(target[key], sourceKey)
-          : sourceKey
-        : sourceKey || '';
+          ? mergeDeep(target[key], sourceProp)
+          : sourceProp
+        : sourceProp || '';
   });
 
   return output;

@@ -377,9 +377,12 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
       ? menuOptions.findIndex(({ isSelected }) => isSelected)
       : -1;
 
-    const index = (selectedIndex > -1)
-      ? selectedIndex
-      : ((position === OptionIndexEnum.FIRST) ? 0 : (menuOptions.length - 1));
+    const index =
+      (selectedIndex > -1)
+        ? selectedIndex
+        : (position === OptionIndexEnum.FIRST)
+        ? 0
+        : menuOptions.length - 1;
 
     !menuOpenRef.current && setMenuOpen(true);
     setFocusedOption({ index, ...menuOptions[index] });
@@ -474,8 +477,8 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     const normalizedOptionValue = isMulti
       ? selectedOption.map(({ data }) => data)
       : isArrayWithLength(selectedOption)
-        ? selectedOption[0].data
-        : ON_CHANGE_SINGLE_VALUE_DEFAULT;
+      ? selectedOption[0].data
+      : ON_CHANGE_SINGLE_VALUE_DEFAULT;
 
     onOptionChange(normalizedOptionValue);
   }, [isMulti, selectedOption, onOptionChange]);
@@ -511,27 +514,26 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const focusValueOnArrowKey = (direction: ValueIndexEnum): void => {
     if (!isArrayWithLength(selectedOption)) return;
 
-    let nextFocusedIndex = -1;
-    const lastValueIndex = (selectedOption.length - 1);
-    const curFocusedIndex = focusedMultiValue ? selectedOption.findIndex(({ value }) => value === focusedMultiValue) : -1;
+    let nextFocusedIdx = -1;
+    const lastValueIdx = (selectedOption.length - 1);
+    const curFocusedIdx = focusedMultiValue ? selectedOption.findIndex(({ value }) => value === focusedMultiValue) : -1;
 
     switch (direction) {
       case ValueIndexEnum.NEXT:
-        nextFocusedIndex = (curFocusedIndex > -1 && curFocusedIndex < lastValueIndex)
-          ? (curFocusedIndex + 1)
-          : -1;
-
+        nextFocusedIdx = (curFocusedIdx > -1 && curFocusedIdx < lastValueIdx) ? (curFocusedIdx + 1) : -1;
         break;
       case ValueIndexEnum.PREVIOUS:
-        nextFocusedIndex = (curFocusedIndex !== 0)
-          ? (curFocusedIndex === -1) ? lastValueIndex : (curFocusedIndex - 1)
-          : 0;
-
+        nextFocusedIdx =
+          curFocusedIdx !== 0
+            ? curFocusedIdx === -1
+              ? lastValueIdx
+              : curFocusedIdx - 1
+            : 0;
         break;
     }
 
-    const nextFocusedVal: ReactText | null = (nextFocusedIndex >= 0)
-      ? selectedOption[nextFocusedIndex].value!
+    const nextFocusedVal: ReactText | null = (nextFocusedIdx >= 0)
+      ? selectedOption[nextFocusedIdx].value!
       : FOCUSED_MULTI_DEFAULT;
 
     if (focusedOption.data) setFocusedOption(FOCUSED_OPTION_DEFAULT);
@@ -541,11 +543,12 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
   const focusOptionOnArrowKey = (direction: OptionIndexEnum): void => {
     if (!isArrayWithLength(menuOptions)) return;
 
-    const index = (direction === OptionIndexEnum.DOWN)
-      ? ((focusedOption.index + 1) % menuOptions.length)
-      : (focusedOption.index > 0)
-        ? (focusedOption.index - 1)
-        : (menuOptions.length - 1);
+    const index =
+      direction === OptionIndexEnum.DOWN
+        ? ((focusedOption.index + 1) % menuOptions.length)
+        : focusedOption.index > 0
+        ? focusedOption.index - 1
+        : menuOptions.length - 1;
 
     focusedMultiValue && setFocusedMultiValue(FOCUSED_MULTI_DEFAULT);
     setFocusedOption({ index, ...menuOptions[index] });
