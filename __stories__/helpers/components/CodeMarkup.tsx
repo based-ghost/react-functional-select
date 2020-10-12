@@ -53,7 +53,7 @@ const PreContainer = styled.div`
     border: none !important;
     box-shadow: none !important;
     text-shadow: none !important;
-    padding: 1em 1.25em !important;
+    padding: 1em !important;
     background-color: #282c34 !important;
 
     > code {
@@ -103,8 +103,7 @@ const PreContainer = styled.div`
 
         .block-comment,
         .comment {
-          min-width: 2.25em !important;
-          padding-right: 1.25em !important;
+          display: none !important;
         }
       }
     }
