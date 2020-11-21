@@ -234,7 +234,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   }
 `;
 
-export const Select = React.forwardRef<SelectRef, SelectProps>((
+const Select = React.forwardRef<SelectRef, SelectProps>((
   {
     async,
     isMulti,
@@ -812,3 +812,7 @@ export const Select = React.forwardRef<SelectRef, SelectProps>((
     </ThemeProvider>
   );
 });
+
+Select.displayName = 'Select';
+
+export { Select };
