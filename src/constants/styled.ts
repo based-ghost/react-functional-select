@@ -1,6 +1,6 @@
 import { css, keyframes } from 'styled-components';
 
-const _bounce_keyframes = keyframes`
+const _bounceKeyframes = keyframes`
   0%, 80%, 100% {
     transform: scale(0);
   } 40% {
@@ -8,7 +8,7 @@ const _bounce_keyframes = keyframes`
   }
 `;
 
-const _fade_in_keyframes = keyframes`
+const _fadeInKeyframes = keyframes`
   from {
     opacity: 0;
   } to {
@@ -16,5 +16,5 @@ const _fade_in_keyframes = keyframes`
   }
 `;
 
-export const BOUNCE_ANIMATION_CSS = css`${_bounce_keyframes} 1.19s ease-in-out infinite`;
-export const FADE_IN_ANIMATION_CSS = css`${_fade_in_keyframes} 0.225s ease-in-out forwards`;
+export const BOUNCE_ANIMATION_CSS = css`${_bounceKeyframes} 1.19s ease-in-out infinite`;
+export const FADE_IN_ANIMATION_CSS = css`${_fadeInKeyframes} 0.225s ease-in-out forwards`;

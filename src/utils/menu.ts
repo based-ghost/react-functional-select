@@ -1,5 +1,4 @@
 const NOOP = () => {};
-const OVERFLOW_REGEXP = /(auto|scroll)/;
 
 function getScrollTop(el: HTMLElement): number {
   return isDocumentElement(el) ? window.pageYOffset : el.scrollTop;
@@ -15,6 +14,19 @@ function isDocumentElement(el: HTMLElement | Window): boolean {
   );
 }
 
+function styleHasOverlfow(style: CSSStyleDeclaration): boolean {
+  const { overflow, overflowX, overflowY } = style;
+
+  return (
+    overflow === 'auto' ||
+    overflowX === 'auto' ||
+    overflowY === 'auto' ||
+    overflow === 'scroll' ||
+    overflowX === 'scroll' ||
+    overflowY === 'scroll'
+  );
+}
+
 function getScrollParent(el: HTMLElement): HTMLElement {
   let style = getComputedStyle(el);
   const excludeStaticParent = (style.position === 'absolute');
@@ -25,8 +37,7 @@ function getScrollParent(el: HTMLElement): HTMLElement {
 
   for (let parent = el as HTMLElement | null; (parent = parent ? parent.parentElement : null);) {
     style = getComputedStyle(parent);
-    if (!(excludeStaticParent && style.position === 'static') &&
-      OVERFLOW_REGEXP.test(`${style.overflow}${style.overflowY}${style.overflowX}`)) {
+    if (!(excludeStaticParent && style.position === 'static') && styleHasOverlfow(style)) {
       return parent;
     }
   }
@@ -100,19 +111,19 @@ export const scrollMenuIntoViewOnOpen = (
   }
 
   const viewInner = window.innerHeight;
-  const menuRect = menuEl.getBoundingClientRect();
-  const viewSpaceBelow = viewInner - menuRect.top;
+  const { top, height, bottom } = menuEl.getBoundingClientRect();
+  const viewSpaceBelow = viewInner - top;
 
   // Menu will fit in available space - no need to do scroll
-  if (viewSpaceBelow >= menuRect.height) {
+  if (viewSpaceBelow >= height) {
     handleOnMenuOpen();
     return;
   }
 
   const scrollParent = getScrollParent(menuEl);
   const scrollTop = getScrollTop(scrollParent);
-  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - scrollTop - menuRect.top);
-  const notEnoughSpaceBelow = scrollSpaceBelow < menuRect.height;
+  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - scrollTop - top);
+  const notEnoughSpaceBelow = scrollSpaceBelow < height;
 
   // Sufficient space does not exist to scroll menu fully into view
   // ...Calculate available space and use that as the the new menuHeight (use scrollSpaceBelow for now).
@@ -124,7 +135,7 @@ export const scrollMenuIntoViewOnOpen = (
   }
 
   // Do scroll and upon scroll animation completion, execute the callback if defined
-  const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom || '0', 10);
-  const scrollDown = (menuRect.bottom - viewInner + scrollTop + marginBottom);
+  const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom, 10);
+  const scrollDown = (bottom - viewInner + scrollTop + marginBottom);
   smoothScrollTo(scrollParent, scrollDown, menuScrollDuration, handleOnMenuOpen);
 };

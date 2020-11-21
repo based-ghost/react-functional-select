@@ -1,6 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
 
-export const MEDIA_QUERY_IS_DESKTOP = '@media screen and (min-width: 1024px)';
 export const MEDIA_QUERY_IS_MOBILE = '@media only screen and (max-width: 768px)';
 export const MEDIA_QUERY_IS_MOBILE_XS = '@media only screen and (max-width: 525px)';
 export const MEDIA_QUERY_IS_TABLET_OR_DESKTOP = '@media only screen and (min-width: 992px)';
@@ -140,7 +139,6 @@ export const TextHeader = styled.span`
   font-weight: 600;
   line-height: 1.6;
   font-size: 1.025em;
-  letter-spacing: 0.01em;
   word-break: break-word;
   padding: 3px 0 3px 6.4px;
 
@@ -166,17 +164,6 @@ export const SubTitle = styled.h4`
   letter-spacing: 0.00735em;
 `;
 
-export const ButtonGroup = styled.div`
-  > button {
-    min-width: 4.5rem;
-    margin-top: 0.5rem;
-
-    :not(:last-of-type) {
-      margin-right: 0.5rem;
-    }
-  }
-`;
-
 export const Button = styled.button`
   border: 0;
   color: #212428;
@@ -199,8 +186,8 @@ export const Button = styled.button`
     outline: 0;
   }
 
-  :hover {
-    background-color: rgba(9, 30, 66, 0.115);
+  :hover, :focus {
+    background-color: rgba(9, 30, 66, 0.125);
   }
 
   ${MEDIA_QUERY_IS_MOBILE} {
@@ -210,6 +197,17 @@ export const Button = styled.button`
 
   ${MEDIA_QUERY_IS_MOBILE_XS} {
     font-size: 0.9em;
+  }
+`;
+
+export const Buttons = styled.div`
+  > button {
+    min-width: 4.5rem;
+    margin-top: 0.5rem;
+
+    :not(:last-of-type) {
+      margin-right: 0.5rem;
+    }
   }
 `;
 
@@ -228,7 +226,7 @@ export const Label = styled.label`
   }
 `;
 
-export const CheckboxGroup = styled.div`
+export const Checkboxes = styled.div`
   font-size: 1rem;
 
   > label {

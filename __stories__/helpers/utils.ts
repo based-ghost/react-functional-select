@@ -59,5 +59,4 @@ export async function mockHttpRequest(delay: number = 500): Promise<void> {
 }
 
 export const numberWithCommas = (value: number): string => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
 export const getRandomInt = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min;

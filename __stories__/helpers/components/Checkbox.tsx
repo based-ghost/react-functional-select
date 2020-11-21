@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { hexToRgba } from '../utils';
 import styled from 'styled-components';
 

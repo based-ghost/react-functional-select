@@ -6,7 +6,15 @@ import { useCallbackState } from './helpers/hooks';
 import { CityOption, Option, PackageOption } from './helpers/types';
 import { Select, MultiParams, MenuOption, SelectRef, FilterMatchEnum, Theme } from '../src';
 import { Checkbox, CodeMarkup, PackageLink, OptionsCountButton } from './helpers/components';
-import { mockHttpRequest, getRandomInt, createAsyncOptions, createSelectOptions, stringifyJavaScriptObj, renderInfoToast } from './helpers/utils';
+
+import {
+  mockHttpRequest,
+  getRandomInt,
+  createAsyncOptions,
+  createSelectOptions,
+  stringifyJavaScriptObj,
+  renderInfoToast
+} from './helpers/utils';
 
 import {
   ThemeEnum,
@@ -38,7 +46,7 @@ import {
 
 import {
   Button,
-  ButtonGroup,
+  Buttons,
   Hr,
   Title,
   SubTitle,
@@ -53,7 +61,7 @@ import {
   SelectContainer,
   Paragraph,
   TextHeader,
-  CheckboxGroup,
+  Checkboxes,
   Card,
   CardHeader,
   CardBody,
@@ -107,7 +115,7 @@ export const SingleSelect = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <CheckboxGroup>
+          <Checkboxes>
             <Checkbox
               label='Searchable'
               checked={isSearchable}
@@ -134,7 +142,7 @@ export const SingleSelect = () => {
               checked={isLoading}
               onCheck={setIsLoading}
             />
-          </CheckboxGroup>
+          </Checkboxes>
         </CardHeader>
         <CardBody>
           <SelectContainer>
@@ -218,7 +226,7 @@ export const MultiSelect = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <CheckboxGroup>
+          <Checkboxes>
             <Checkbox
               label='closeMenuOnSelect'
               checked={closeMenuOnSelect}
@@ -244,7 +252,7 @@ export const MultiSelect = () => {
               checked={useRenderMultiOptions}
               onCheck={setUseRenderMultiOptions}
             />
-          </CheckboxGroup>
+          </Checkboxes>
         </CardHeader>
         <CardBody>
           <SelectContainer>
@@ -467,7 +475,7 @@ export const Events = () => {
       <Card>
         <CardHeader>
           <Label>Events trigger a toast notification</Label>
-          <CheckboxGroup>
+          <Checkboxes>
             <Checkbox
               label='onOptionChange'
               checked={addOnOptionChange}
@@ -498,7 +506,7 @@ export const Events = () => {
               checked={addOnKeyDown}
               onCheck={setAddOnKeyDown}
             />
-          </CheckboxGroup>
+          </Checkboxes>
         </CardHeader>
         <CardBody>
           <SelectContainer>
@@ -577,13 +585,13 @@ export const Methods = () => {
       <Card>
         <CardHeader>
           <Label>Methods</Label>
-          <ButtonGroup>
+          <Buttons>
             <Button onClick={focusSelect}>Focus</Button>
             <Button onClick={blurSelect}>Blur</Button>
             <Button onClick={toggleMenuOpen}>Open Menu</Button>
             <Button onClick={clearValue}>Clear Value</Button>
             <Button onClick={updateSelectedOption}>Set Value (1st Option)</Button>
-          </ButtonGroup>
+          </Buttons>
         </CardHeader>
         <CardBody>
           <SelectContainer>
@@ -645,7 +653,7 @@ export const Filtering = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <CheckboxGroup>
+          <Checkboxes>
             <Checkbox
               label='Ignore Case'
               checked={filterIgnoreCase}
@@ -666,7 +674,7 @@ export const Filtering = () => {
               checked={useCustomFilterFunc}
               onCheck={setUseCustomFilterFunc}
             />
-          </CheckboxGroup>
+          </Checkboxes>
         </CardHeader>
         <CardBody>
           <SelectContainer>
@@ -749,7 +757,7 @@ export const Windowing = () => {
       <Card>
         <CardHeader>
           <Label>Options Count</Label>
-          <ButtonGroup>
+          <Buttons>
             {optionCountList.map((count) => (
               <OptionsCountButton
                 key={count}
@@ -758,7 +766,7 @@ export const Windowing = () => {
                 setOptionsCount={setOptionsCount}
               />
             ))}
-          </ButtonGroup>
+          </Buttons>
         </CardHeader>
         <CardBody>
           <SelectContainer>
