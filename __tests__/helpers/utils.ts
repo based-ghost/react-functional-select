@@ -6,10 +6,10 @@ import { MenuOption, OptionData, SelectedOption } from '../../src/types';
 // Basic "options" & "selectedOption" data
 // ============================================
 
-export type Option = {
-  readonly label: ReactText;
-  readonly value: ReactText;
-};
+export type Option = Readonly<{
+  label: ReactText;
+  value: ReactText;
+}>;
 
 export const OPTIONS: Option[] = [
   { value: 1, label: 'Option 1' },
@@ -55,10 +55,7 @@ export const MENU_OPTION_DISABLED: MenuOption = {
   }
 };
 
-export const MENU_OPTIONS: MenuOption[] = [
-  MENU_OPTION_SELECTED,
-  MENU_OPTION_DISABLED
-];
+export const MENU_OPTIONS: MenuOption[] = [MENU_OPTION_SELECTED, MENU_OPTION_DISABLED];
 
 // ============================================
 // Generic utils & data

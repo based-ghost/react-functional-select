@@ -1,3 +1,4 @@
+const NOOP = () => {};
 const OVERFLOW_REGEXP = /(auto|scroll)/;
 
 function getScrollTop(el: HTMLElement): number {
@@ -24,10 +25,8 @@ function getScrollParent(el: HTMLElement): HTMLElement {
 
   for (let parent = el as HTMLElement | null; (parent = parent ? parent.parentElement : null);) {
     style = getComputedStyle(parent);
-    if (
-      !(excludeStaticParent && style.position === 'static') &&
-      OVERFLOW_REGEXP.test(`${style.overflow}${style.overflowY}${style.overflowX}`)
-    ) {
+    if (!(excludeStaticParent && style.position === 'static') &&
+      OVERFLOW_REGEXP.test(`${style.overflow}${style.overflowY}${style.overflowX}`)) {
       return parent;
     }
   }
@@ -35,29 +34,26 @@ function getScrollParent(el: HTMLElement): HTMLElement {
   return document.documentElement;
 }
 
-function smoothScrollTo(
-  element: HTMLElement,
+const smoothScrollTo = (
+  el: HTMLElement,
   to: number,
   duration: number = 300,
-  callback?: (...args: any[]) => any
-): void {
+  callback: (...args: any[]) => any = NOOP
+): void => {
   let currentTime = 0;
-  const start = getScrollTop(element);
+
+  const start = getScrollTop(el);
   const change = (to - start);
   const easeOutCubic = (t: number): number => change * ((t = t / duration - 1) * t * t + 1) + start;
 
-  function smoothScroller(): void {
+  const smoothScroller = () => {
     currentTime += 5;
-    scrollTo(element, easeOutCubic(currentTime));
-    if (currentTime < duration) {
-      window.requestAnimationFrame(smoothScroller);
-    } else {
-      callback && callback();
-    }
-  }
+    scrollTo(el, easeOutCubic(currentTime));
+    (currentTime < duration) ? window.requestAnimationFrame(smoothScroller) : callback();
+  };
 
   window.requestAnimationFrame(smoothScroller);
-}
+};
 
 /**
  * Calculates the top property value for the MenuWrapper <div />.
@@ -72,33 +68,32 @@ export const calculateMenuTop = (
   const controlHeight = controlEl ? controlEl.getBoundingClientRect().height : 0;
 
   const menuElStyle = menuEl && getComputedStyle(menuEl);
-  const marginBottom = menuElStyle ? parseInt(menuElStyle.marginBottom || '0', 10) : 0;
-  const marginTop = menuElStyle ? parseInt(menuElStyle.marginTop || '0', 10) : 0;
+  const marginBottom = menuElStyle ? parseInt(menuElStyle.marginBottom, 10) : 0;
+  const marginTop = menuElStyle ? parseInt(menuElStyle.marginTop, 10) : 0;
 
   return `calc(${-Math.abs(menuHeightOrDefault + controlHeight)}px + ${marginBottom + marginTop}px)`;
 };
 
-export function menuFitsBelowControl(menuEl: HTMLElement | null): boolean {
-  if (!menuEl) return true;
+export const menuFitsBelowControl = (el: HTMLElement | null): boolean => {
+  if (!el) return true;
 
-  const menuRect = menuEl.getBoundingClientRect();
-  const scrollParent = getScrollParent(menuEl);
-  const scrollTop = getScrollTop(scrollParent);
-  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - scrollTop - menuRect.top);
+  const { top, height } = el.getBoundingClientRect();
+  const scrollParent = getScrollParent(el);
+  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - getScrollTop(scrollParent) - top);
 
-  return (scrollSpaceBelow >= menuRect.height);
-}
+  return (scrollSpaceBelow >= height);
+};
 
 /**
  * Calculate space around the control and menu to determine if an animated
  * scroll can performed to show the menu in full view. Also, execute a callback if defined.
  */
-export function scrollMenuIntoViewOnOpen(
+export const scrollMenuIntoViewOnOpen = (
   menuEl: HTMLElement | null,
   menuScrollDuration: number | undefined,
   scrollMenuIntoView: boolean | undefined,
   handleOnMenuOpen: (availableSpace?: number) => void
-): void {
+): void => {
   if (!menuEl) {
     handleOnMenuOpen();
     return;
@@ -132,4 +127,4 @@ export function scrollMenuIntoViewOnOpen(
   const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom || '0', 10);
   const scrollDown = (menuRect.bottom - viewInner + scrollTop + marginBottom);
   smoothScrollTo(scrollParent, scrollDown, menuScrollDuration, handleOnMenuOpen);
-}
+};

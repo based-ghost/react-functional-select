@@ -75,7 +75,7 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
   onClearMouseDown
 }) => {
   const forwardState =
-    (typeof caretIcon === 'function' || typeof clearIcon === 'function')
+    typeof caretIcon === 'function' || typeof clearIcon === 'function'
       ? {
           menuOpen,
           isLoading: !!isLoading,
@@ -84,8 +84,9 @@ const IndicatorIcons = React.memo<IndicatorIconsProps>(({
         }
       : undefined;
 
-  const iconRenderer = (renderer: IconRenderer) =>
-    (typeof renderer === 'function') ? renderer(forwardState) : renderer;
+  const iconRenderer = (renderer: IconRenderer): any => {
+    return (typeof renderer === 'function') ? renderer(forwardState) : renderer;
+  };
 
   return (
     <IndicatorIconsWrapper>

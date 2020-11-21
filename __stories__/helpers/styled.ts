@@ -24,6 +24,7 @@ export const Content = styled.p`
 
 export const Paragraph = styled.p`
   ${_paragraphCSS}
+
   ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
     max-width: 85%;
   }
@@ -213,32 +214,17 @@ export const Button = styled.button`
 `;
 
 export const Label = styled.label`
+  width: 100%;
+  font-weight: 600;
+  text-align: left;
   user-select: none;
   display: inline-block;
   vertical-align: middle;
   color: rgba(0, 0, 0, 0.54);
-  margin: 0.4rem 1.15rem 0rem 0.4rem;
+  margin: 0.5rem auto 0.25rem 0;
 
   ${MEDIA_QUERY_IS_MOBILE} {
-    margin: 0 auto .25rem auto;
-  }
-`;
-
-export const LabelHeader = styled(Label)`
-  margin-bottom: 0.4rem;
-
-  ${MEDIA_QUERY_IS_MOBILE} {
-    text-align: left;
-    margin: 0 auto 0.4rem 0;
-  }
-`;
-
-export const LabelNote = styled(Label)`
-  margin: 0.5rem auto 0.5rem 0;
-
-  ${MEDIA_QUERY_IS_MOBILE} {
-    text-align: left;
-    margin: 0 auto 0.4rem 0;
+    margin: 0 auto 0.15rem 0;
   }
 `;
 
@@ -258,13 +244,10 @@ export const CheckboxGroup = styled.div`
     text-align: left;
 
     > label {
+      width: 100%;
       margin-left: auto;
       margin-top: 0.5rem;
       margin-bottom: 0.5rem;
-
-      :not(:last-of-type) {
-        margin-right: 1.25rem;
-      }
     }
   }
 `;
@@ -290,7 +273,7 @@ export const Card = styled.div`
   }
 `;
 
-export const CardHeader = styled.div<{ supportMobile?: boolean }>`
+export const CardHeader = styled.div`
   display: flex;
   font-size: 1.15rem;
   flex-flow: row wrap;
@@ -301,25 +284,11 @@ export const CardHeader = styled.div<{ supportMobile?: boolean }>`
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
   ${MEDIA_QUERY_IS_MOBILE} {
+    font-size: 1.1rem;
     text-align: center;
-    padding: 0 0 1rem 0;
+    display: inline-block;
+    padding: 0 1.3rem 1rem;
   }
-
-  ${({ supportMobile }) =>
-    supportMobile
-    && (`
-      > * {
-        ${MEDIA_QUERY_IS_MOBILE} {
-          width: 100%;
-          display: block;
-          margin: 0 3.25rem 0.5rem;
-        }
-
-        ${MEDIA_QUERY_IS_MOBILE_XS} {
-          margin: 0 1.25rem 0.5rem;
-        }
-      }
-    `)}
 `;
 
 export const CardBody = styled.div`
@@ -343,7 +312,7 @@ export const OtherSpan = styled.span`
 // Advanced story specific
 // =======================================
 
-const SPIN_LOGO = keyframes`
+const _spinKeyframes = keyframes`
   from {
     transform: rotate(0deg);
   } to {
@@ -351,7 +320,24 @@ const SPIN_LOGO = keyframes`
   }
 `;
 
-const SPIN_ANIMATION_CSS = css`animation: ${SPIN_LOGO} infinite 8s linear;`;
+const _spinAnimationCss = css`animation: ${_spinKeyframes} infinite 8s linear;`;
+
+export const ReactSvg = styled.svg<{ isDisabled?: boolean }>`
+  width: 34px;
+  height: 34px;
+  color: #1ea7fd;
+  fill: currentColor;
+  display: inline-block;
+  ${({ isDisabled }) => (!isDisabled && _spinAnimationCss)}
+`;
+
+export const ChevronDownSvg = styled.svg<{ menuOpen: boolean }>`
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  transition: transform 0.25s ease-in-out;
+  ${({ menuOpen }) => menuOpen && 'transform: rotate(180deg);'}
+`;
 
 export const OptionContainer = styled.div`
   height: 100%;
@@ -364,22 +350,6 @@ export const OptionName = styled.span`
   color: #515151;
   font-size: 1em;
   font-weight: 600;
-  margin-left: 2px;
-  margin-bottom: 1px;
-  letter-spacing: .01em;
-`;
-
-export const OptionImg = styled.img<{ isDisabled?: boolean }>`
-  height: 30px;
-  border-style: none;
-  display: inline-block;
-  ${({ isDisabled }) => (!isDisabled && SPIN_ANIMATION_CSS)}
-`;
-
-export const ChevronDownSvg = styled.svg<{ menuOpen: boolean }>`
-  width: 14px;
-  height: 14px;
-  fill: currentColor;
-  transition: transform 0.25s ease-in-out;
-  ${({ menuOpen }) => menuOpen && 'transform: rotate(180deg);'}
+  margin-left: 1px;
+  margin-bottom: 1.5px;
 `;

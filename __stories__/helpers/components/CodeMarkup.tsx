@@ -10,12 +10,12 @@ import javascript from 'react-syntax-highlighter/dist/esm/languages/prism/javasc
 SyntaxHighlighter.registerLanguage('markup', markup);
 SyntaxHighlighter.registerLanguage('javascript', javascript);
 
-type CodeMarkupProps = {
-  readonly data: any;
-  readonly header: string;
-  readonly language: string;
-  readonly formatFn?: (data: any) => string;
-};
+type CodeMarkupProps = Readonly<{
+  data: any;
+  header: string;
+  language: string;
+  formatFn?: (data: any) => string;
+}>;
 
 const CodeMarkupContainer = styled.div`
   font-size: 1rem;

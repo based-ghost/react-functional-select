@@ -1,37 +1,38 @@
+import { Theme } from '../../../src/Select';
 import { createThemeOptions } from '../utils';
 import { RfsTheme } from '../../../src/theme';
 import { mergeDeep } from '../../../src/utils';
 
 // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
-const BOUNCE_KEYFRAMES = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
-const FADE_IN_KEYFRAMES = 'FADE_IN_KEYFRAMES 0.225s ease-in-out forwards';
+const _bounceKeyframes = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
+const _fadeInKeyframes = 'FADE_IN_KEYFRAMES 0.225s ease-in-out forwards';
 
-const KEYFRAMES_SOURCE_OBJ = {
+const _themeAnimations: Theme = {
   loader: {
-    animation: BOUNCE_KEYFRAMES
+    animation: _bounceKeyframes
   },
   menu: {
-    animation: FADE_IN_KEYFRAMES
+    animation: _fadeInKeyframes
   },
   multiValue: {
-    animation: FADE_IN_KEYFRAMES
+    animation: _fadeInKeyframes
   },
   icon: {
     clear: {
-      animation: FADE_IN_KEYFRAMES
+      animation: _fadeInKeyframes
     }
   }
 };
 
-export const ThemeEnum = Object.freeze({
+export const ThemeEnum = {
   DEFAULT: 'Default',
   LARGE_TEXT: 'Large text',
   DARK_COLORS: 'Dark colors',
   ZERO_BORDER_RADIUS: 'No border-radius'
-});
+};
 
-export const ThemeConfigMap = Object.freeze<{ [key: string]: any }>({
-  [ThemeEnum.DEFAULT]: undefined,
+export const ThemeConfigMap: Theme = {
+  [ThemeEnum.DEFAULT]: undefined as any,
   [ThemeEnum.DARK_COLORS]: {
     color: {
       border: '#A8AEB4',
@@ -68,16 +69,12 @@ export const ThemeConfigMap = Object.freeze<{ [key: string]: any }>({
       borderRadius: '0'
     }
   }
-});
-
-export const SELECT_CONTAINER_STYLE = {
-  marginTop: '1rem'
 };
 
-export const OPTIONS = createThemeOptions(ThemeEnum);
-export const THEME_DEFAULTS = mergeDeep(RfsTheme, KEYFRAMES_SOURCE_OBJ);
+export const THEME_OPTIONS = createThemeOptions(ThemeEnum);
+export const THEME_DEFAULTS = mergeDeep(RfsTheme, _themeAnimations);
 
-export const THEME_CONFIG: any = {
+export const THEME_CONFIG: Theme = {
   menu: {
     option: {
       selectedColor: '#515151',

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-type PackageLinkProps = {
-  readonly name: string;
-  readonly href: string;
-};
+type PackageLinkProps = Readonly<{
+  name: string;
+  href: string;
+}>;
 
 const Link = styled.a`
   color: #149DF3;

@@ -16,12 +16,18 @@ import { FocusedOption, MultiParams } from '../Select';
 // Shared / Object / Param / Misc types
 // ============================================
 
+export type PartialDeep<T> = {
+  [P in keyof T]?: PartialDeep<T[P]>;
+};
+
 export type OptionData = any;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
 
-export type AutosizeInputHTMLAttributes = InputHTMLAttributes<HTMLElement>
-  & { isInvalid?: boolean; 'data-testid'?: string };
+export type AutosizeInputHTMLAttributes = InputHTMLAttributes<HTMLElement> & {
+  isInvalid?: boolean;
+  'data-testid'?: string;
+};
 
 export type SelectedOption = {
   data?: OptionData;
@@ -48,105 +54,105 @@ export type ItemData = {
 // styled-component property types
 // ============================================
 
-export type CaretProps = {
-  readonly menuOpen: boolean;
-  readonly isInvalid?: boolean;
-};
+export type CaretProps = Readonly<{
+  menuOpen: boolean;
+  isInvalid?: boolean;
+}>;
 
-export type MenuWrapperProps = {
-  readonly menuTop?: string;
-  readonly hideMenu: boolean;
-};
+export type MenuWrapperProps = Readonly<{
+  menuTop?: string;
+  hideMenu: boolean;
+}>;
 
-export type ControlWrapperProps = {
-  readonly isFocused: boolean;
-  readonly isInvalid?: boolean;
-  readonly isDisabled?: boolean;
-};
+export type ControlWrapperProps = Readonly<{
+  isFocused: boolean;
+  isInvalid?: boolean;
+  isDisabled?: boolean;
+}>;
 
 // ============================================
 // FunctionalComponent property types
 // ============================================
 
-export type LoadingDotsProps = {
-  readonly addClassNames?: boolean;
-}
+export type LoadingDotsProps = Readonly<{
+  addClassNames?: boolean;
+}>;
 
-export type OptionProps = {
-  readonly index: number;
-  readonly data: ItemData;
-  readonly style: CSSProperties;
-};
+export type OptionProps = Readonly<{
+  index: number;
+  data: ItemData;
+  style: CSSProperties;
+}>;
 
-export type ValueProps = {
-  readonly isMulti?: boolean;
-  readonly inputValue: string;
-  readonly placeholder: string;
-  readonly selectedOption: SelectedOption[];
-  readonly focusedMultiValue: ReactText | null;
-  readonly renderOptionLabel: (data: OptionData) => ReactNode;
-  readonly renderMultiOptions?: (params: MultiParams) => ReactNode;
-  readonly removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
-};
+export type ValueProps = Readonly<{
+  isMulti?: boolean;
+  inputValue: string;
+  placeholder: string;
+  selectedOption: SelectedOption[];
+  focusedMultiValue: ReactText | null;
+  renderOptionLabel: (data: OptionData) => ReactNode;
+  renderMultiOptions?: (params: MultiParams) => ReactNode;
+  removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
+}>;
 
-export type MultiValueProps = SelectedOption & {
-  readonly isFocused: boolean;
-  readonly renderOptionLabel: (data: OptionData) => ReactNode;
-  readonly removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
-};
+export type MultiValueProps = SelectedOption & Readonly<{
+  isFocused: boolean;
+  renderOptionLabel: (data: OptionData) => ReactNode;
+  removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
+}>;
 
-export type MenuProps = {
-  readonly height: number;
-  readonly itemSize: number;
-  readonly loadingMsg: string;
-  readonly isLoading?: boolean;
-  readonly noOptionsMsg: string;
-  readonly overscanCount?: number;
-  readonly width: string | number;
-  readonly menuOptions: MenuOption[];
-  readonly focusedOptionIndex: number;
-  readonly itemKeySelector?: ReactText;
-  readonly renderOptionLabel: (data: OptionData) => ReactNode;
-  readonly selectOption: (option: SelectedOption, isSelected?: boolean) => void;
-};
+export type MenuProps = Readonly<{
+  height: number;
+  itemSize: number;
+  loadingMsg: string;
+  isLoading?: boolean;
+  noOptionsMsg: string;
+  overscanCount?: number;
+  width: string | number;
+  menuOptions: MenuOption[];
+  focusedOptionIndex: number;
+  itemKeySelector?: ReactText;
+  renderOptionLabel: (data: OptionData) => ReactNode;
+  selectOption: (option: SelectedOption, isSelected?: boolean) => void;
+}>;
 
-export type AriaLiveRegionProps = {
-  readonly menuOpen: boolean;
-  readonly isFocused: boolean;
-  readonly ariaLabel?: string;
-  readonly inputValue: string;
-  readonly optionCount: number;
-  readonly isSearchable: boolean;
-  readonly focusedOption: FocusedOption;
-  readonly selectedOption: SelectedOption[];
-};
+export type AriaLiveRegionProps = Readonly<{
+  menuOpen: boolean;
+  isFocused: boolean;
+  ariaLabel?: string;
+  inputValue: string;
+  optionCount: number;
+  isSearchable: boolean;
+  focusedOption: FocusedOption;
+  selectedOption: SelectedOption[];
+}>;
 
-export type AutosizeInputProps = {
-  readonly id?: string;
-  readonly readOnly: boolean;
-  readonly ariaLabel?: string;
-  readonly inputValue: string;
-  readonly required?: boolean;
-  readonly addClassNames?: boolean;
-  readonly ariaLabelledBy?: string;
-  readonly selectedOption: SelectedOption[];
-  readonly onBlur: FocusEventHandler<HTMLInputElement>;
-  readonly onFocus: FocusEventHandler<HTMLInputElement>;
-  readonly onChange: FormEventHandler<HTMLInputElement>;
-};
+export type AutosizeInputProps = Readonly<{
+  id?: string;
+  readOnly: boolean;
+  ariaLabel?: string;
+  inputValue: string;
+  required?: boolean;
+  addClassNames?: boolean;
+  ariaLabelledBy?: string;
+  selectedOption: SelectedOption[];
+  onBlur: FocusEventHandler<HTMLInputElement>;
+  onFocus: FocusEventHandler<HTMLInputElement>;
+  onChange: FormEventHandler<HTMLInputElement>;
+}>;
 
 export type IconRenderer = ReactNode | ((...args: any[]) => ReactNode);
 
-export type IndicatorIconsProps = {
-  readonly menuOpen: boolean;
-  readonly showClear: boolean;
-  readonly isLoading?: boolean;
-  readonly isInvalid?: boolean;
-  readonly isDisabled?: boolean;
-  readonly loadingNode?: ReactNode;
-  readonly addClassNames?: boolean;
-  readonly clearIcon?: IconRenderer;
-  readonly caretIcon?: IconRenderer;
-  readonly onClearMouseDown: MouseOrTouchEventHandler<HTMLDivElement>;
-  readonly onCaretMouseDown?: MouseOrTouchEventHandler<HTMLDivElement>;
-};
+export type IndicatorIconsProps = Readonly<{
+  menuOpen: boolean;
+  showClear: boolean;
+  isLoading?: boolean;
+  isInvalid?: boolean;
+  isDisabled?: boolean;
+  loadingNode?: ReactNode;
+  addClassNames?: boolean;
+  clearIcon?: IconRenderer;
+  caretIcon?: IconRenderer;
+  onClearMouseDown: MouseOrTouchEventHandler<HTMLDivElement>;
+  onCaretMouseDown?: MouseOrTouchEventHandler<HTMLDivElement>;
+}>;

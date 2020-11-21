@@ -1,17 +1,17 @@
 import { ReactText } from 'react';
 
-export type Option = {
-  readonly label: ReactText;
-  readonly value: ReactText;
-};
+export type Option = Readonly<{
+  label: ReactText;
+  value: ReactText;
+}>;
 
-export type CityOption = {
-  readonly id: number;
-  readonly city: string;
-  readonly state: string;
-};
+export type CityOption = Readonly<{
+  id: number;
+  city: string;
+  state: string;
+}>;
 
-export type PackageOption = {
-  readonly id: number;
-  readonly name: string;
-};
+export type PackageOption = Readonly<{
+  id: number;
+  name: string;
+}>;

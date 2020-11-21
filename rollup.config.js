@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import path from 'path';
 import pkg from './package.json';
 import babel from '@rollup/plugin-babel';

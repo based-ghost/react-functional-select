@@ -2,19 +2,19 @@ import React, { ChangeEvent } from 'react';
 import { hexToRgba } from '../utils';
 import styled from 'styled-components';
 
-type CheckboxWrapperProps = {
-  readonly isReadOnly?: boolean;
-};
+type CheckboxWrapperProps = Readonly<{
+  isReadOnly?: boolean;
+}>;
 
-type CheckboxProps = {
-  readonly label?: string;
-  readonly checked: boolean;
-  readonly readOnly?: boolean;
-  readonly onCheck: (checked: boolean) => void;
-};
+type CheckboxProps = Readonly<{
+  label?: string;
+  checked: boolean;
+  readOnly?: boolean;
+  onCheck: (checked: boolean) => void;
+}>;
 
-const COLOR_CHECK_MARK = '#149DF3';
-const COLOR_BORDER_CHECKED = hexToRgba(COLOR_CHECK_MARK, 0.8);
+const _colorCheckMark = '#149DF3';
+const _colorBorderChecked = hexToRgba(_colorCheckMark, 0.78);
 
 const Label = styled.span`
   user-select: none;
@@ -30,7 +30,7 @@ const Input = styled.input`
   position: absolute;
 
   :checked ~ i {
-    border-color: ${COLOR_BORDER_CHECKED};
+    border-color: ${_colorBorderChecked};
 
     :after,
     :before {
@@ -90,7 +90,7 @@ const CheckIcon = styled.i`
     position: absolute;
     border-radius: 0.25rem;
     transform-origin: left top;
-    background-color: ${COLOR_CHECK_MARK};
+    background-color: ${_colorCheckMark};
     transition: opacity 0.365s ease, height 0s linear 0.365s;
   }
 
@@ -117,7 +117,7 @@ const Checkbox = React.memo<CheckboxProps>(({
     <Input
       type='checkbox'
       checked={checked}
-      onChange={(e: ChangeEvent<HTMLInputElement>): void => onCheck(e.target.checked)}
+      onChange={(e) => onCheck(e.target.checked)}
     />
     <CheckIcon />
     {label && <Label>{label}</Label>}

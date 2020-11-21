@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 module.exports = {
   setupFilesAfterEnv: ['<rootDir>/.test/setupTests.ts'],
   testMatch: ['<rootDir>/__tests__/*?(*.)test.{ts,tsx}'],

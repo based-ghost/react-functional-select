@@ -15,10 +15,7 @@ const Option = React.memo<OptionProps>(({
 }) => {
   const { data, value, label, isDisabled, isSelected } = menuOptions[index];
   const className = optionClassName(isDisabled, isSelected, (index === focusedOptionIndex));
-
-  const onClickHandler = !isDisabled
-    ? () => selectOption({ data, value, label }, isSelected)
-    : undefined;
+  const onClickHandler = !isDisabled ? () => selectOption({ data, value, label }, isSelected) : undefined;
 
   return (
     <div

@@ -12,6 +12,7 @@ import React, {
   ReactNode,
   ReactText
 } from 'react';
+
 import { RfsTheme } from './theme';
 import { FixedSizeList } from 'react-window';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
@@ -19,7 +20,17 @@ import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './co
 import { useDebounce, useMenuPositioner, useMenuOptions, useUpdateEffect } from './hooks';
 import { mergeDeep, isTouchDevice, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
 import { MenuPositionEnum, FilterMatchEnum, ValueIndexEnum, OptionIndexEnum } from './constants/enums';
-import { SelectedOption, MouseOrTouchEvent, IndicatorIconsProps, OptionData, MenuWrapperProps, ControlWrapperProps } from './types';
+
+import {
+  OptionData,
+  PartialDeep,
+  SelectedOption,
+  MenuWrapperProps,
+  MouseOrTouchEvent,
+  IndicatorIconsProps,
+  ControlWrapperProps
+} from './types';
+
 import {
   OPTIONS_DEFAULT,
   LOADING_MSG_DEFAULT,
@@ -32,6 +43,7 @@ import {
   SELECTED_OPTION_DEFAULT,
   ON_CHANGE_SINGLE_VALUE_DEFAULT
 } from './constants/defaults';
+
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -45,7 +57,7 @@ import {
   CONTROL_CONTAINER_TESTID
 } from './constants/dom';
 
-export type Theme = Partial<DefaultTheme>;
+export type Theme = PartialDeep<DefaultTheme>;
 
 export type FocusedOption = SelectedOption & {
   index: number;
@@ -53,86 +65,86 @@ export type FocusedOption = SelectedOption & {
   isSelected?: boolean;
 };
 
-export type MenuOption = {
-  readonly label: ReactText;
-  readonly value: ReactText;
-  readonly data: OptionData;
-  readonly isDisabled?: boolean;
-  readonly isSelected?: boolean;
-};
+export type MenuOption = Readonly<{
+  label: ReactText;
+  value: ReactText;
+  data: OptionData;
+  isDisabled?: boolean;
+  isSelected?: boolean;
+}>;
 
-export type SelectRef = {
-  readonly blur: () => void;
-  readonly focus: () => void;
-  readonly clearValue: () => void;
-  readonly toggleMenu: (state?: boolean) => void;
-  readonly setValue: (option?: OptionData) => void;
-};
+export type SelectRef = Readonly<{
+  blur: () => void;
+  focus: () => void;
+  clearValue: () => void;
+  toggleMenu: (state?: boolean) => void;
+  setValue: (option?: OptionData) => void;
+}>;
 
-export type MultiParams = {
-  readonly selected: SelectedOption[];
-  readonly renderOptionLabel: (data: OptionData) => ReactNode;
-};
+export type MultiParams = Readonly<{
+  selected: SelectedOption[];
+  renderOptionLabel: (data: OptionData) => ReactNode;
+}>;
 
-export type SelectProps = {
-  readonly async?: boolean;
-  readonly inputId?: string;
-  readonly selectId?: string;
-  readonly isMulti?: boolean;
-  readonly ariaLabel?: string;
-  readonly required?: boolean;
-  readonly loadingMsg?: string;
-  readonly autoFocus?: boolean;
-  readonly isLoading?: boolean;
-  readonly isInvalid?: boolean;
-  readonly inputDelay?: number;
-  readonly themeConfig?: Theme;
-  readonly isDisabled?: boolean;
-  readonly placeholder?: string;
-  readonly menuWidth?: ReactText;
-  readonly menuItemSize?: number;
-  readonly isClearable?: boolean;
-  readonly noOptionsMsg?: string;
-  readonly options?: OptionData[];
-  readonly isSearchable?: boolean;
-  readonly menuMaxHeight?: number;
-  readonly loadingNode?: ReactNode;
-  readonly addClassNames?: boolean;
-  readonly ariaLabelledBy?: string;
-  readonly openMenuOnClick?: boolean;
-  readonly openMenuOnFocus?: boolean;
-  readonly menuOverscanCount?: number;
-  readonly tabSelectsOption?: boolean;
-  readonly filterIgnoreCase?: boolean;
-  readonly itemKeySelector?: ReactText;
-  readonly menuScrollDuration?: number;
-  readonly blurInputOnSelect?: boolean;
-  readonly closeMenuOnSelect?: boolean;
-  readonly isAriaLiveEnabled?: boolean;
-  readonly scrollMenuIntoView?: boolean;
-  readonly hideSelectedOptions?: boolean;
-  readonly filterIgnoreAccents?: boolean;
-  readonly backspaceClearsValue?: boolean;
-  readonly filterMatchFrom?: 'any' | 'start';
-  readonly onMenuOpen?: (...args: any[]) => void;
-  readonly onMenuClose?: (...args: any[]) => void;
-  readonly onInputChange?: (value?: string) => void;
-  readonly menuPosition?: 'top' | 'auto' | 'bottom';
-  readonly initialValue?: OptionData | OptionData[];
-  readonly onSearchChange?: (value?: string) => void;
-  readonly onOptionChange?: (data: OptionData) => void;
-  readonly getOptionLabel?: (data: OptionData) => ReactText;
-  readonly getOptionValue?: (data: OptionData) => ReactText;
-  readonly onInputBlur?: FocusEventHandler<HTMLInputElement>;
-  readonly onInputFocus?: FocusEventHandler<HTMLInputElement>;
-  readonly renderOptionLabel?: (data: OptionData) => ReactNode;
-  readonly getIsOptionDisabled?: (data: OptionData) => boolean;
-  readonly getFilterOptionString?: (option: MenuOption) => string;
-  readonly renderMultiOptions?: (params: MultiParams) => ReactNode;
-  readonly clearIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
-  readonly caretIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
-  readonly onKeyDown?: (e: KeyboardEvent<HTMLDivElement>, input?: string, focusedOption?: FocusedOption) => void;
-};
+export type SelectProps = Readonly<{
+  async?: boolean;
+  inputId?: string;
+  selectId?: string;
+  isMulti?: boolean;
+  ariaLabel?: string;
+  required?: boolean;
+  loadingMsg?: string;
+  autoFocus?: boolean;
+  isLoading?: boolean;
+  isInvalid?: boolean;
+  inputDelay?: number;
+  themeConfig?: Theme;
+  isDisabled?: boolean;
+  placeholder?: string;
+  menuWidth?: ReactText;
+  menuItemSize?: number;
+  isClearable?: boolean;
+  noOptionsMsg?: string;
+  options?: OptionData[];
+  isSearchable?: boolean;
+  menuMaxHeight?: number;
+  loadingNode?: ReactNode;
+  addClassNames?: boolean;
+  ariaLabelledBy?: string;
+  openMenuOnClick?: boolean;
+  openMenuOnFocus?: boolean;
+  menuOverscanCount?: number;
+  tabSelectsOption?: boolean;
+  filterIgnoreCase?: boolean;
+  itemKeySelector?: ReactText;
+  menuScrollDuration?: number;
+  blurInputOnSelect?: boolean;
+  closeMenuOnSelect?: boolean;
+  isAriaLiveEnabled?: boolean;
+  scrollMenuIntoView?: boolean;
+  hideSelectedOptions?: boolean;
+  filterIgnoreAccents?: boolean;
+  backspaceClearsValue?: boolean;
+  filterMatchFrom?: 'any' | 'start';
+  onMenuOpen?: (...args: any[]) => any;
+  onMenuClose?: (...args: any[]) => any;
+  onInputChange?: (value?: string) => any;
+  menuPosition?: 'top' | 'auto' | 'bottom';
+  initialValue?: OptionData | OptionData[];
+  onSearchChange?: (value?: string) => any;
+  onOptionChange?: (data: OptionData) => any;
+  getOptionLabel?: (data: OptionData) => ReactText;
+  getOptionValue?: (data: OptionData) => ReactText;
+  onInputBlur?: FocusEventHandler<HTMLInputElement>;
+  onInputFocus?: FocusEventHandler<HTMLInputElement>;
+  renderOptionLabel?: (data: OptionData) => ReactNode;
+  getIsOptionDisabled?: (data: OptionData) => boolean;
+  getFilterOptionString?: (option: MenuOption) => string;
+  renderMultiOptions?: (params: MultiParams) => ReactNode;
+  clearIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
+  caretIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
+  onKeyDown?: (e: KeyboardEvent<HTMLDivElement>, input?: string, focusedOption?: FocusedOption) => any;
+}>;
 
 const SelectWrapper = styled.div`
   position: relative;
@@ -222,7 +234,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   }
 `;
 
-const Select = React.forwardRef<SelectRef, SelectProps>((
+export const Select = React.forwardRef<SelectRef, SelectProps>((
   {
     async,
     isMulti,
@@ -582,12 +594,11 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
           return;
         } else if (!menuOpen) {
           openMenuAndFocusOption(OptionIndexEnum.FIRST);
-          break;
         } else if (!focusedOption.data) {
           return;
+        } else {
+          selectOptionFromFocused();
         }
-
-        selectOptionFromFocused();
 
         break;
       case 'Enter': // Check e.keyCode !== 229 (Input Method Editor)
@@ -633,6 +644,7 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
             }
           }
         }
+
         break;
       default:
         return;
@@ -800,7 +812,3 @@ const Select = React.forwardRef<SelectRef, SelectProps>((
     </ThemeProvider>
   );
 });
-
-Select.displayName = 'Select';
-
-export default Select;

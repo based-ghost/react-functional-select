@@ -76,7 +76,7 @@ const AutosizeInput = React.memo(
 
     const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
       isInvalid,
-      tabIndex: -1,
+      tabIndex: 0,
       type: 'text',
       spellCheck: false,
       autoCorrect: 'off',

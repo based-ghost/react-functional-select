@@ -3,15 +3,15 @@ import { Button } from '../styled';
 import styled from 'styled-components';
 import { numberWithCommas } from '../utils';
 
-type StyledButtonProps = {
-  readonly isActive?: boolean;
-};
+type StyledButtonProps = Readonly<{
+  isActive?: boolean;
+}>;
 
-type OptionsCountButtonProps = {
-  readonly count: number;
-  readonly optionsCount: number;
-  readonly setOptionsCount: (count: number) => void;
-};
+type OptionsCountButtonProps = Readonly<{
+  count: number;
+  optionsCount: number;
+  setOptionsCount: (count: number) => void;
+}>;
 
 const StyledButton = styled(Button)<StyledButtonProps>`
   width: 6.25rem;

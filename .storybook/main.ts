@@ -12,7 +12,7 @@ module.exports = {
   typescript: {
     reactDocgen: 'none'
   },
-  webpackFinal: (config: Configuration) => {
+  webpackFinal: async (config: Configuration) => {
     config.module.rules.push({
       test: /\.stories\.tsx?$/,
       loaders: [

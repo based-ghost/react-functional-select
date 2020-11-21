@@ -63,7 +63,7 @@ export function normalizeValue(
     ? initialValues.map((x: any) => ({
         data: x,
         value: getOptionValue(x),
-        label: getOptionLabel(x),
+        label: getOptionLabel(x)
       }))
     : initialValues;
 }

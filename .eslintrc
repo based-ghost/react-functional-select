@@ -1,11 +1,15 @@
 {
   "extends": [
-    "eslint-config-poetez",
+    "eslint-config-poetez/typescript-react",
+    "eslint-config-prettier/@typescript-eslint",
+    "react-app",
     "plugin:prettier/recommended"
   ],
   "env": {
+    "browser": true,
+    "node": true,
     "es6": true,
-    "browser": true
+    "jest": true
   },
   "rules": {
     "semi": "off",

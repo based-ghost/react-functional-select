@@ -1,4 +1,3 @@
-/* tslint:disable: strict-type-predicates */
 const IE_EDGE_BROWSER_REGEXP = /(MSIE|Trident\/|Edge\/|Edg\/)/i;
 
 /**
@@ -6,7 +5,7 @@ const IE_EDGE_BROWSER_REGEXP = /(MSIE|Trident\/|Edge\/|Edg\/)/i;
  */
 export const isEdgeOrIE = (): boolean => {
   return (
-    (typeof navigator !== 'undefined') &&
+    typeof navigator !== 'undefined' &&
     IE_EDGE_BROWSER_REGEXP.test(navigator.userAgent)
   );
 };

@@ -55,7 +55,6 @@ export const hexToRgba = (hex: string, alpha: number = 1): string => {
 };
 
 export async function mockHttpRequest(delay: number = 500): Promise<void> {
-  // tslint:disable-next-line: no-string-based-set-timeout
   await new Promise(resolve => setTimeout(resolve, delay));
 }
 

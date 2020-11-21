@@ -1,8 +1,6 @@
-/* eslint-disable prettier/prettier */
 module.exports = (api) => {
-  const targets = !api.env('test')
-    ? { browsers: ['>0.2%', 'not dead', 'not op_mini all'] }
-    : { node: 'current' };
+  const envNotTest = !api.env('test');
+  const targets = envNotTest ? { browsers: ['>0.2%', 'not dead', 'not op_mini all'] } : { node: 'current' };
 
   const envOpts = {
     targets,
@@ -16,8 +14,9 @@ module.exports = (api) => {
   ];
 
   const plugins = [
+    envNotTest && '@babel/transform-runtime',
     ['@babel/proposal-object-rest-spread', { loose: false, useBuiltIns: true }],
-  ];
+  ].filter(Boolean);
 
   return {
     presets,

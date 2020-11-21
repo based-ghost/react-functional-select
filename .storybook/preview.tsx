@@ -14,9 +14,7 @@ const _globalStyleEl: HTMLElement =
 
 // Callback to remove node used to mount GlobalStyle to
 const completeSetupDOM = (): void => {
-  if (_globalStyleEl) {
-    document.head.removeChild(_globalStyleEl);
-  }
+  _globalStyleEl && document.head.removeChild(_globalStyleEl);
 };
 
 // Mount GlobalStyle to _globalStyleEl and then execute callback completeSetupDOM()
