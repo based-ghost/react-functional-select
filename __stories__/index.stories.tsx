@@ -891,11 +891,11 @@ export const Async = () => {
       <Title>Async Mode</Title>
       <Hr />
       <ListWrapper>
-        Add the <code>async</code> property to enable async mode. There is one key difference
-        in core functionality with async mode - changes to search input value will not cause
-        the <code>useMenuOptions</code> effect to run. The rest of hooking into async mode is
-        achieved using some combination of the properties found below
-        . <em>Properties onInputChange and onSearchChange should be memoized.</em>
+        Add the <code>async</code> property to enable async mode. There is one key
+        difference in core functionality with async mode - changes to search input
+        value will not cause the <code>useMenuOptions</code> effect to run. The rest
+        of hooking into async mode is achieved using some combination of the properties
+        found below. <em>Properties onInputChange and onSearchChange should be memoized.</em>
         <List>
           <Li>
             <TextHeader>onInputChange(value: string): void</TextHeader> -
