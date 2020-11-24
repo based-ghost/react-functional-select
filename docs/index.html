@@ -17,7 +17,18 @@
   } catch (e) {
     // eslint-disable-next-line no-console
     console.warn('unable to connect to top frame for connecting dev tools');
-  }</script><style lang="css">#storybook-panel-root > div:first-of-type {
+  }
+
+  window.onerror = function onerror(message, source, line, column, err) {
+    if (window.CONFIG_TYPE !== 'DEVELOPMENT') return;
+    // eslint-disable-next-line no-var, vars-on-top
+    var error = { message: err.message, name: err.name, stack: err.stack };
+    window.fetch('/runtime-error', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, source, line, column, error, origin: 'manager' }),
+    });
+  };</script><style lang="css">#storybook-panel-root > div:first-of-type {
     box-shadow: inset 0 -1px 0 0 rgba(148, 167, 167, .35) !important;
   }
 
@@ -105,4 +116,4 @@
             
         
             
-              window['DOCS_MODE'] = false;</script><script src="runtime~main.870e8ee0658e83d05c6b.bundle.js"></script><script src="vendors~main.37af07a17acc8edacf33.bundle.js"></script><script src="main.62ac173f1fd3d78d3f25.bundle.js"></script></body></html>
+              window['DOCS_MODE'] = false;</script><script src="runtime~main.870e8ee0658e83d05c6b.bundle.js"></script><script src="vendors~main.ea261de94e713466eb50.bundle.js"></script><script src="main.62ac173f1fd3d78d3f25.bundle.js"></script></body></html>
