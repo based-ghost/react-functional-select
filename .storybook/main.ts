@@ -7,7 +7,14 @@ module.exports = {
   stories: ['../__stories__/**/*.stories.tsx'],
   addons: [
     '@storybook/preset-create-react-app',
-    '@storybook/addon-storysource',
+    {
+      name: '@storybook/addon-storysource',
+      options: {
+        loaderOptions: {
+          injectStoryParameters: false,
+        },
+      },
+    },
   ],
   typescript: {
     reactDocgen: 'none'
