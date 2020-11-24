@@ -1,4 +1,5 @@
 import React, {
+  forwardRef,
   useEffect,
   useMemo,
   useState,
@@ -234,7 +235,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   }
 `;
 
-const Select = React.forwardRef<SelectRef, SelectProps>((
+const Select = forwardRef<SelectRef, SelectProps>((
   {
     async,
     isMulti,

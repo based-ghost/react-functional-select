@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, useEffect, useCallback, Fragment, ReactNode } from 'react';
+import { useMemo, useRef, useState, useEffect, useCallback, Fragment, ReactNode } from 'react';
 import { toast } from 'react-toastify';
 import { SelectedOption } from '../src/types';
 import { useUpdateEffect } from '../src/hooks';

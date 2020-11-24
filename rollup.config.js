@@ -63,7 +63,7 @@ const babelPlugin = (useESModules = true) => {
           targets: { browsers: ['>0.2%', 'not dead', 'not op_mini all'] },
         },
       ],
-      '@babel/preset-react',
+      ['@babel/preset-react', { runtime: 'automatic' }],
     ],
     plugins: [
       ['@babel/plugin-transform-runtime', { useESModules }],

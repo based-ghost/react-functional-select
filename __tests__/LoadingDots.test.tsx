@@ -1,4 +1,3 @@
-import React from 'react';
 import { RfsTheme } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import LoadingDots from '../src/components/LoadingDots';

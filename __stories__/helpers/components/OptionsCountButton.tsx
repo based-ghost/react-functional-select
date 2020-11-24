@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { Button } from '../styled';
 import styled from 'styled-components';
 import { numberWithCommas } from '../utils';
@@ -33,7 +33,7 @@ const StyledButton = styled(Button)<StyledButtonProps>`
   }
 `;
 
-const OptionsCountButton: React.FC<OptionsCountButtonProps> = ({
+const OptionsCountButton: FC<OptionsCountButtonProps> = ({
   count,
   optionsCount,
   setOptionsCount

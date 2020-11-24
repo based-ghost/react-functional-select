@@ -1,4 +1,3 @@
-import React from 'react';
 import { RfsTheme } from '../src/theme';
 import { AutosizeInputProps } from '../src/types';
 import { ThemeProvider } from 'styled-components';

@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -110,7 +110,7 @@ const PreContainer = styled.div`
   }
 `;
 
-const CodeMarkup = React.memo<CodeMarkupProps>(({
+const CodeMarkup = memo<CodeMarkupProps>(({
   data,
   header,
   language,

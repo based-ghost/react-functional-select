@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { RfsTheme } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import { IndicatorIcons } from '../src/components';

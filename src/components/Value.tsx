@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { memo, Fragment } from 'react';
 import { ValueProps } from '../types';
 import MultiValue from './MultiValue';
 import styled from 'styled-components';
@@ -26,7 +26,7 @@ const Placeholder = styled.div`
   color: ${({ theme }) => theme.color.placeholder};
 `;
 
-const Value = React.memo<ValueProps>(({
+const Value = memo<ValueProps>(({
   isMulti,
   inputValue,
   placeholder,

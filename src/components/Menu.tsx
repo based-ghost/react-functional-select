@@ -1,4 +1,4 @@
-import React, { useMemo, Fragment } from 'react';
+import React, { useMemo, forwardRef, Ref, Fragment } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../utils';
@@ -16,7 +16,7 @@ const NoOptionsMsg = styled.div`
   ${({ theme }) => theme.noOptions.css}
 `;
 
-const Menu = React.forwardRef<FixedSizeList, MenuProps>((
+const Menu = forwardRef<FixedSizeList, MenuProps>((
   {
     width,
     height,
@@ -31,7 +31,7 @@ const Menu = React.forwardRef<FixedSizeList, MenuProps>((
     renderOptionLabel,
     focusedOptionIndex
   },
-  ref: React.Ref<FixedSizeList>
+  ref: Ref<FixedSizeList>
 ) => {
   const itemKey = useMemo<ListItemKeySelector | undefined>(() => {
     return itemKeySelector ? (idx, data) => data.menuOptions[idx][itemKeySelector] : undefined;

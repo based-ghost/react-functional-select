@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { LoadingDotsProps } from '../types';
 import styled, { css } from 'styled-components';
 import { LOADING_DOTS_CLS } from '../constants/dom';
@@ -30,7 +30,7 @@ const StyledLoadingDots = styled.div`
   }
 `;
 
-const LoadingDots: React.FC<LoadingDotsProps> = ({ addClassNames }) => (
+const LoadingDots: FC<LoadingDotsProps> = ({ addClassNames }) => (
   <StyledLoadingDots
     aria-hidden='true'
     className={addClassNames ? LOADING_DOTS_CLS : undefined}

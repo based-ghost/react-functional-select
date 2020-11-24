@@ -1,4 +1,3 @@
-import React from 'react';
 import { Select, SelectProps } from '../src';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import {

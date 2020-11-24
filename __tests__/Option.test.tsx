@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 import { RfsTheme } from '../src/theme';
 import { OptionProps } from '../src/types';
 import Option from '../src/components/Option';

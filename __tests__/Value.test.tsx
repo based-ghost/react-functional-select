@@ -1,4 +1,3 @@
-import React from 'react';
 import { RfsTheme } from '../src/theme';
 import { Value } from '../src/components';
 import { ThemeProvider } from 'styled-components';

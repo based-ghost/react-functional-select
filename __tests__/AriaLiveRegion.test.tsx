@@ -1,4 +1,3 @@
-import React from 'react';
 import { FocusedOption } from '../src';
 import { RfsTheme } from '../src/theme';
 import { ThemeProvider } from 'styled-components';

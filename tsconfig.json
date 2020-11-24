@@ -4,7 +4,11 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["esnext", "dom", "dom.iterable"],
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
     "strict": true,
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,6 +18,7 @@
     "resolveJsonModule": true,
     "skipDefaultLibCheck": true,
     "experimentalDecorators": true,
+    "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true
   },
   "include": [

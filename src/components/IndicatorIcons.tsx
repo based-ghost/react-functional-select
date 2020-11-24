@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import LoadingDots from './LoadingDots';
 import styled, { css } from 'styled-components';
 import { CaretProps, IconRenderer, IndicatorIconsProps } from '../types';
@@ -61,7 +61,7 @@ const Separator = styled.div`
   background-color: ${({ theme }) => theme.color.iconSeparator || theme.color.border};
 `;
 
-const IndicatorIcons = React.memo<IndicatorIconsProps>(({
+const IndicatorIcons = memo<IndicatorIconsProps>(({
   menuOpen,
   clearIcon,
   caretIcon,

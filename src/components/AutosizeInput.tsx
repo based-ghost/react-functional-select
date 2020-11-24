@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment } from 'react';
+import React, { forwardRef, memo, useState, useRef, Fragment, Ref } from 'react';
 import styled from 'styled-components';
 import { useUpdateEffect } from '../hooks';
 import { isArrayWithLength, isEdgeOrIE } from '../utils';
@@ -46,8 +46,8 @@ const Input = styled.input<{ isInvalid?: boolean }>`
   ${isEdgeOrIE() && '::-ms-clear{display:none;}'}
 `;
 
-const AutosizeInput = React.memo(
-  React.forwardRef<HTMLInputElement, AutosizeInputProps>((
+const AutosizeInput = memo(
+  forwardRef<HTMLInputElement, AutosizeInputProps>((
     {
       id,
       onBlur,
@@ -61,7 +61,7 @@ const AutosizeInput = React.memo(
       ariaLabelledBy,
       selectedOption
     },
-    ref: React.Ref<HTMLInputElement>
+    ref: Ref<HTMLInputElement>
   ) => {
     const sizerRef = useRef<HTMLDivElement | null>(null);
     const [inputWidth, setInputWidth] = useState<number>(_inputMinWidth);

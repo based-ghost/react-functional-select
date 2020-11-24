@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { hexToRgba } from '../utils';
 import styled from 'styled-components';
 
@@ -107,7 +107,7 @@ const CheckIcon = styled.i`
   }
 `;
 
-const Checkbox = React.memo<CheckboxProps>(({
+const Checkbox = memo<CheckboxProps>(({
   label,
   onCheck,
   checked,

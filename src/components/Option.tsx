@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { OptionProps } from '../types';
 import { areEqual } from 'react-window';
 import { optionClassName } from '../utils';
 
-const Option = React.memo<OptionProps>(({
+const Option = memo<OptionProps>(({
   index,
   style,
   data: {
