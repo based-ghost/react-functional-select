@@ -50,6 +50,8 @@ const modifyReplacePlugin = modify({
 });
 
 const babelPlugin = (useESModules = true) => {
+  const targets = useESModules ? { esmodules: true } : '> 1%, last 2 versions, not dead';
+
   return babel({
     babelrc: false,
     babelHelpers: 'runtime',
@@ -59,15 +61,16 @@ const babelPlugin = (useESModules = true) => {
       [
         '@babel/preset-env',
         {
+          targets,
           loose: false,
-          targets: { browsers: ['>0.2%', 'not dead', 'not op_mini all'] },
+          bugfixes: useESModules,
         },
       ],
-      ['@babel/preset-react', { runtime: 'automatic' }],
+      ['@babel/preset-react', { runtime: 'classic' }],
     ],
     plugins: [
       ['@babel/plugin-transform-runtime', { useESModules }],
-      ['@babel/proposal-object-rest-spread', { loose: false, useBuiltIns: true }],
+      ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
     ],
   });
 };

@@ -16,15 +16,9 @@ function isDocumentElement(el: HTMLElement | Window): boolean {
 
 function styleHasOverlfow(style: CSSStyleDeclaration): boolean {
   const { overflow, overflowX, overflowY } = style;
+  const isOverflow = (x: string): boolean => x === 'auto' || x === 'scroll';
 
-  return (
-    overflow === 'auto' ||
-    overflowX === 'auto' ||
-    overflowY === 'auto' ||
-    overflow === 'scroll' ||
-    overflowX === 'scroll' ||
-    overflowY === 'scroll'
-  );
+  return isOverflow(overflow) || isOverflow(overflowX) || isOverflow(overflowY);
 }
 
 function getScrollParent(el: HTMLElement): HTMLElement {
