@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FunctionComponent } from 'react';
 import { MultiValueProps } from '../types';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../constants/dom';
@@ -43,7 +43,7 @@ const Clear = styled.div<{ isFocused: boolean }>`
   `}
 `;
 
-const MultiValue: FC<MultiValueProps> = ({
+const MultiValue: FunctionComponent<MultiValueProps> = ({
   data,
   value,
   isFocused,

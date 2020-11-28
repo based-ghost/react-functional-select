@@ -1,4 +1,4 @@
-import { memo, FC } from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
 
 type PackageLinkProps = Readonly<{
@@ -27,7 +27,7 @@ const Link = styled.a`
   }
 `;
 
-const PackageLink: FC<PackageLinkProps> = memo(({ name, href }) => (
+const PackageLink = memo<PackageLinkProps>(({ name, href }) => (
   <Link
     href={href}
     target='_blank'

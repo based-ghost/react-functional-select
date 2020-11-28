@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../utils';
 import { AriaLiveRegionProps } from '../types';
@@ -17,7 +17,7 @@ const A11yText = styled.span`
   clip-path: inset(50%);
 `;
 
-const AriaLiveRegion: FC<AriaLiveRegionProps> = ({
+const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
   menuOpen,
   isFocused,
   ariaLabel,

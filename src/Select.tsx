@@ -11,7 +11,8 @@ import React, {
   FormEvent,
   KeyboardEvent,
   ReactNode,
-  ReactText
+  ReactText,
+  Ref
 } from 'react';
 
 import { RfsTheme } from './theme';
@@ -295,7 +296,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     menuItemSize = MENU_ITEM_SIZE_DEFAULT,
     menuMaxHeight = MENU_MAX_HEIGHT_DEFAULT
   },
-  ref: React.Ref<SelectRef>
+  ref: Ref<SelectRef>
 ) => {
   // Instance prop & DOM node refs
   const menuOpenRef = useRef<boolean>(false);
@@ -316,9 +317,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   // Memoized DefaultTheme object for styled-components ThemeProvider
   const theme = useMemo<DefaultTheme>(() => {
-    return isPlainObject(themeConfig)
-      ? mergeDeep(RfsTheme, themeConfig)
-      : RfsTheme;
+    return isPlainObject(themeConfig) ? mergeDeep(RfsTheme, themeConfig) : RfsTheme;
   }, [themeConfig]);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
