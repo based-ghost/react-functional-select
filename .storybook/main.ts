@@ -1,7 +1,6 @@
 import { Configuration } from 'webpack';
-import { merge } from 'webpack-merge';
-
-const _maxAssetSize = 512000;
+// import { merge } from 'webpack-merge';
+// const _maxAssetSize = 512000;
 
 module.exports = {
   stories: ['../__stories__/**/*.stories.tsx'],
@@ -43,7 +42,8 @@ module.exports = {
 
     config.resolve.extensions.push('.ts', '.tsx');
 
-    return merge(config, {
+    return config;
+    /* return merge(config, {
       optimization: {
         splitChunks: {
           chunks: 'all',
@@ -54,6 +54,6 @@ module.exports = {
       performance: {
         maxAssetSize: _maxAssetSize,
       },
-    });
+    }); */
   },
 };

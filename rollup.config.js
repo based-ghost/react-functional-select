@@ -58,14 +58,7 @@ const babelPlugin = (useESModules = true) => {
     exclude: 'node_modules/**',
     extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
     presets: [
-      [
-        '@babel/preset-env',
-        {
-          targets,
-          loose: false,
-          bugfixes: useESModules,
-        },
-      ],
+      ['@babel/preset-env', { targets, loose: false, bugfixes: useESModules }],
       ['@babel/preset-react', { runtime: 'classic' }],
     ],
     plugins: [
