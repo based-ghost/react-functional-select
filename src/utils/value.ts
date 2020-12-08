@@ -22,9 +22,11 @@ export function trimAndFormatFilterStr(
   filterIgnoreAccents?: boolean
 ): string {
   let trimVal = value.trim();
+
   if (filterIgnoreCase) {
     trimVal = trimVal.toLowerCase();
   }
+
   return !filterIgnoreAccents ? trimVal : stripDiacritics(trimVal);
 }
 

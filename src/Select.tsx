@@ -389,12 +389,11 @@ const Select = forwardRef<SelectRef, SelectProps>((
       ? menuOptions.findIndex(({ isSelected }) => isSelected)
       : -1;
 
-    const index =
-      (selectedIndex > -1)
-        ? selectedIndex
-        : (position === OptionIndexEnum.FIRST)
-        ? 0
-        : menuOptions.length - 1;
+    const index = (selectedIndex > -1)
+      ? selectedIndex
+      : (position === OptionIndexEnum.FIRST)
+      ? 0
+      : menuOptions.length - 1;
 
     !menuOpenRef.current && setMenuOpen(true);
     setFocusedOption({ index, ...menuOptions[index] });

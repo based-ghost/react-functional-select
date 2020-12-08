@@ -86,7 +86,7 @@ export const menuFitsBelowControl = (el: HTMLElement | null): boolean => {
   const scrollParent = getScrollParent(el);
   const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - getScrollTop(scrollParent) - top);
 
-  return (scrollSpaceBelow >= height);
+  return scrollSpaceBelow >= height;
 };
 
 /**
