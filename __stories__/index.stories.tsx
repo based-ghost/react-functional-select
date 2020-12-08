@@ -211,14 +211,14 @@ export const MultiSelect = () => {
           </Li>
           <Li>
             <TextHeader>renderMultiOptions(params: MultiParams): ReactNode</TextHeader> -
-            Optional callback function that can be used to further customize the selection label
-            in multi-select scenarios. <code>params</code> is an object that contains
+            Optional callback function that can be used to further customize the selection
+            label in multi-select scenarios. <code>params</code> is an object that contains
             the <code>selected</code> and <code>renderOptionLabel</code> properties (array
-            of selected options and function used to render individual option labels, respectively).
-            When this function is defined, left and right arrow navigation of individual options is
-            disabled. When using this property, it may be be a good idea to set the
-            property <code>backspaceClearsValue</code> to <em>false</em> in order to avoid accidentally
-            clearing all selections when searching.
+            of selected options and function used to render individual option labels,
+            respectively). When this function is defined, left and right arrow navigation
+            of individual options is disabled. When using this property, it may be be a good
+            idea to set the property <code>backspaceClearsValue</code> to <em>false</em> in
+            order to avoid accidentally clearing all selections when searching.
           </Li>
         </List>
       </ListWrapper>
@@ -875,11 +875,7 @@ export const Async = () => {
   const onSearchChange = useCallback((value?: string): void => {
     mockHttpRequest()
       .then(() => {
-        const nextOptions = createAsyncOptions(
-          getRandomInt(1, 5),
-          `Search text: ${value || 'Initial'}`
-        );
-
+        const nextOptions = createAsyncOptions(getRandomInt(1, 5), `Search text: ${value || 'Initial'}`);
         setOptions(nextOptions);
       })
       .catch((err) => console.error(err))
