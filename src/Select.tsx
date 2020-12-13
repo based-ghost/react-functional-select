@@ -34,7 +34,7 @@ import {
 } from './types';
 
 import {
-  OPTIONS_DEFAULT,
+  EMPTY_ARRAY,
   LOADING_MSG_DEFAULT,
   PLACEHOLDER_DEFAULT,
   FOCUSED_MULTI_DEFAULT,
@@ -42,7 +42,6 @@ import {
   NO_OPTIONS_MSG_DEFAULT,
   MENU_ITEM_SIZE_DEFAULT,
   MENU_MAX_HEIGHT_DEFAULT,
-  SELECTED_OPTION_DEFAULT,
   ON_CHANGE_SINGLE_VALUE_DEFAULT
 } from './constants/defaults';
 
@@ -289,7 +288,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     backspaceClearsValue = true,
     filterMatchFrom = FilterMatchEnum.ANY,
     menuPosition = MenuPositionEnum.BOTTOM,
-    options = OPTIONS_DEFAULT,
+    options = EMPTY_ARRAY,
     loadingMsg = LOADING_MSG_DEFAULT,
     placeholder = PLACEHOLDER_DEFAULT,
     noOptionsMsg = NO_OPTIONS_MSG_DEFAULT,
@@ -428,7 +427,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     blur: blurInput,
     focus: focusInput,
     clearValue: () => {
-      setSelectedOption(SELECTED_OPTION_DEFAULT);
+      setSelectedOption(EMPTY_ARRAY);
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
     },
     setValue: (option?: OptionData) => {
@@ -639,7 +638,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
               const { value } = selectedOption[selectedOption.length - 1];
               removeSelectedOption(value);
             } else if (isClearable) {
-              setSelectedOption(SELECTED_OPTION_DEFAULT);
+              setSelectedOption(EMPTY_ARRAY);
             }
           }
         }
@@ -698,7 +697,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
     e.stopPropagation();
     (e.type === 'mousedown') && e.preventDefault();
-    setSelectedOption(SELECTED_OPTION_DEFAULT);
+    setSelectedOption(EMPTY_ARRAY);
     focusInput();
   }, []);
 

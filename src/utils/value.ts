@@ -1,7 +1,7 @@
 import { ReactText } from 'react';
+import { EMPTY_ARRAY } from '../constants/defaults';
 import { OptionData, SelectedOption } from '../types';
 import { isPlainObject, isArrayWithLength } from './object';
-import { SELECTED_OPTION_DEFAULT } from '../constants/defaults';
 import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants/dom';
 
 const DIACRITICS_REGEXP = /[\u0300-\u036f]/g;
@@ -59,7 +59,7 @@ export function normalizeValue(
     ? value
     : isPlainObject(value)
     ? [value]
-    : SELECTED_OPTION_DEFAULT;
+    : EMPTY_ARRAY;
 
   return isArrayWithLength(initialValues)
     ? initialValues.map((x: any) => ({

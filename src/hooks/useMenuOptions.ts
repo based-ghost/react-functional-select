@@ -1,7 +1,7 @@
 import { useEffect, useState, ReactText } from 'react';
 import { trimAndFormatFilterStr } from '../utils';
+import { EMPTY_ARRAY } from '../constants/defaults';
 import { FilterMatchEnum } from '../constants/enums';
-import { OPTIONS_DEFAULT } from '../constants/defaults';
 import { OptionData, MenuOption, SelectedOption } from '../types';
 
 /**
@@ -23,7 +23,7 @@ export const useMenuOptions = (
   hideSelectedOptions?: boolean,
   async?: boolean
 ): MenuOption[] => {
-  const [menuOptions, setMenuOptions] = useState<MenuOption[]>(OPTIONS_DEFAULT);
+  const [menuOptions, setMenuOptions] = useState<MenuOption[]>(EMPTY_ARRAY);
 
   // Prevent effect from executing on search input mutations in 'async' mode (also prevents filtering from executing)
   const searchValue = !async ? debouncedInputValue : '';

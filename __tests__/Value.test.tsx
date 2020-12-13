@@ -3,8 +3,8 @@ import { Value } from '../src/components';
 import { ThemeProvider } from 'styled-components';
 import { ValueProps, SelectedOption } from '../src/types';
 import { render, RenderResult } from '@testing-library/react';
+import { PLACEHOLDER_DEFAULT, EMPTY_ARRAY, FOCUSED_MULTI_DEFAULT } from '../src/constants/defaults';
 import { RENDER_OPTION_LABEL_MOCK, RENDER_MULTI_OPTIONS_MOCK, getSelectedOptionSingle } from './helpers/utils';
-import { PLACEHOLDER_DEFAULT, SELECTED_OPTION_DEFAULT, FOCUSED_MULTI_DEFAULT } from '../src/constants/defaults';
 
 // ============================================
 // Helper functions for Value component
@@ -37,9 +37,9 @@ const createValueProps = () => {
   const props: ValueProps = {
     isMulti: false,
     inputValue: '',
+    selectedOption: EMPTY_ARRAY,
     renderMultiOptions: undefined,
     placeholder: PLACEHOLDER_DEFAULT,
-    selectedOption: SELECTED_OPTION_DEFAULT,
     renderOptionLabel: renderOptionLabelSpy,
     focusedMultiValue: FOCUSED_MULTI_DEFAULT,
     removeSelectedOption: removeSelectedOptionSpy
