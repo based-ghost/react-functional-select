@@ -1,4 +1,4 @@
-const IE_EDGE_BROWSER_REGEXP = /(MSIE|Trident\/|Edge\/|Edg\/)/i;
+import { IE_EDGE_BROWSER_REGEXP } from '../constants/regexp';
 
 /**
  * Determines if the current browser is IE or Edge (standard/chromium).

@@ -1,10 +1,9 @@
 import { ReactText } from 'react';
 import { EMPTY_ARRAY } from '../constants/defaults';
 import { OptionData, SelectedOption } from '../types';
+import { DIACRITICS_REGEXP } from '../constants/regexp';
 import { isPlainObject, isArrayWithLength } from './object';
 import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants/dom';
-
-const DIACRITICS_REGEXP = /[\u0300-\u036f]/g;
 
 /**
  * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).
