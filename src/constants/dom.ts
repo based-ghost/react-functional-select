@@ -1,4 +1,4 @@
-const _isTest = (process.env.NODE_ENV === 'test');
+const _isTest = process.env.NODE_ENV === 'test';
 
 // classNames (menu options)
 export const OPTION_CLS = 'rfs-option';

@@ -1,5 +1,3 @@
-const NOOP = () => {};
-
 function getScrollTop(el: HTMLElement): number {
   return isDocumentElement(el) ? window.pageYOffset : el.scrollTop;
 }
@@ -9,9 +7,7 @@ function scrollTo(el: HTMLElement, top: number): void {
 }
 
 function isDocumentElement(el: HTMLElement | Window): boolean {
-  return (
-    el === document.documentElement || el === document.body || el === window
-  );
+  return el === document.documentElement || el === document.body || el === window;
 }
 
 function styleHasOverlfow(style: CSSStyleDeclaration): boolean {
@@ -23,7 +19,7 @@ function styleHasOverlfow(style: CSSStyleDeclaration): boolean {
 
 function getScrollParent(el: HTMLElement): HTMLElement {
   let style = getComputedStyle(el);
-  const excludeStaticParent = (style.position === 'absolute');
+  const excludeStaticParent = style.position === 'absolute';
 
   if (style.position === 'fixed') {
     return document.documentElement;
@@ -43,18 +39,21 @@ const smoothScrollTo = (
   el: HTMLElement,
   to: number,
   duration: number = 300,
-  callback: (...args: any[]) => any = NOOP
+  callback?: (...args: any[]) => any
 ): void => {
   let currentTime = 0;
 
   const start = getScrollTop(el);
-  const change = (to - start);
+  const change = to - start;
   const easeOutCubic = (t: number): number => change * ((t = t / duration - 1) * t * t + 1) + start;
 
-  const smoothScroller = () => {
+  const smoothScroller = (): void => {
     currentTime += 5;
     scrollTo(el, easeOutCubic(currentTime));
-    (currentTime < duration) ? window.requestAnimationFrame(smoothScroller) : callback();
+
+    (currentTime < duration)
+      ? window.requestAnimationFrame(smoothScroller)
+      : callback?.();
   };
 
   window.requestAnimationFrame(smoothScroller);
@@ -69,22 +68,27 @@ export const calculateMenuTop = (
   menuEl: HTMLElement | null,
   controlEl: HTMLElement | null
 ): string => {
-  const menuHeightOrDefault = (menuHeight > 0 || !menuEl) ? menuHeight : menuEl.getBoundingClientRect().height;
-  const controlHeight = controlEl ? controlEl.getBoundingClientRect().height : 0;
+  const menuHeightOrDefault = (menuHeight > 0 || !menuEl)
+    ? menuHeight
+    : menuEl.getBoundingClientRect().height;
 
+  const controlHeight = controlEl ? controlEl.getBoundingClientRect().height : 0;
   const menuElStyle = menuEl && getComputedStyle(menuEl);
   const marginBottom = menuElStyle ? parseInt(menuElStyle.marginBottom, 10) : 0;
   const marginTop = menuElStyle ? parseInt(menuElStyle.marginTop, 10) : 0;
 
-  return `calc(${-Math.abs(menuHeightOrDefault + controlHeight)}px + ${marginBottom + marginTop}px)`;
+  const basePx = -Math.abs(menuHeightOrDefault + controlHeight);
+  const adjustPx = marginBottom + marginTop;
+
+  return 'calc(' + basePx + 'px' + adjustPx + 'px)';
 };
 
 export const menuFitsBelowControl = (el: HTMLElement | null): boolean => {
   if (!el) return true;
 
-  const { top, height } = el.getBoundingClientRect();
   const scrollParent = getScrollParent(el);
-  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - getScrollTop(scrollParent) - top);
+  const { top, height } = el.getBoundingClientRect();
+  const scrollSpaceBelow = scrollParent.getBoundingClientRect().height - getScrollTop(scrollParent) - top;
 
   return scrollSpaceBelow >= height;
 };
@@ -104,8 +108,8 @@ export const scrollMenuIntoViewOnOpen = (
     return;
   }
 
-  const viewInner = window.innerHeight;
   const { top, height, bottom } = menuEl.getBoundingClientRect();
+  const viewInner = window.innerHeight;
   const viewSpaceBelow = viewInner - top;
 
   // Menu will fit in available space - no need to do scroll
@@ -116,7 +120,7 @@ export const scrollMenuIntoViewOnOpen = (
 
   const scrollParent = getScrollParent(menuEl);
   const scrollTop = getScrollTop(scrollParent);
-  const scrollSpaceBelow = (scrollParent.getBoundingClientRect().height - scrollTop - top);
+  const scrollSpaceBelow = scrollParent.getBoundingClientRect().height - scrollTop - top;
   const notEnoughSpaceBelow = scrollSpaceBelow < height;
 
   // Sufficient space does not exist to scroll menu fully into view
@@ -130,6 +134,7 @@ export const scrollMenuIntoViewOnOpen = (
 
   // Do scroll and upon scroll animation completion, execute the callback if defined
   const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom, 10);
-  const scrollDown = (bottom - viewInner + scrollTop + marginBottom);
+  const scrollDown = bottom - viewInner + scrollTop + marginBottom;
+
   smoothScrollTo(scrollParent, scrollDown, menuScrollDuration, handleOnMenuOpen);
 };

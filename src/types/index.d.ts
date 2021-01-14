@@ -24,7 +24,7 @@ export type OptionData = any;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
 
-export type AutosizeInputHTMLAttributes = InputHTMLAttributes<HTMLElement> & {
+export interface AutosizeInputHTMLAttributes extends InputHTMLAttributes<HTMLElement> {
   isInvalid?: boolean;
   'data-testid'?: string;
 };
@@ -49,26 +49,6 @@ export type ItemData = {
   renderOptionLabel: (data: OptionData) => ReactNode;
   selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 };
-
-// ============================================
-// styled-component property types
-// ============================================
-
-export type CaretProps = Readonly<{
-  menuOpen: boolean;
-  isInvalid?: boolean;
-}>;
-
-export type MenuWrapperProps = Readonly<{
-  menuTop?: string;
-  hideMenu: boolean;
-}>;
-
-export type ControlWrapperProps = Readonly<{
-  isFocused: boolean;
-  isInvalid?: boolean;
-  isDisabled?: boolean;
-}>;
 
 // ============================================
 // FunctionalComponent property types

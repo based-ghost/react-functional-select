@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { OptionProps } from '../types';
 import { areEqual } from 'react-window';
-import { optionClassName } from '../utils';
+import { buildOptionClassName } from '../utils';
 
 const Option = memo<OptionProps>(({
   index,
@@ -14,14 +14,14 @@ const Option = memo<OptionProps>(({
   }
 }) => {
   const { data, value, label, isDisabled, isSelected } = menuOptions[index];
-  const className = optionClassName(isDisabled, isSelected, (index === focusedOptionIndex));
-  const onClickHandler = !isDisabled ? () => selectOption({ data, value, label }, isSelected) : undefined;
+  const className = buildOptionClassName(isDisabled, isSelected, (index === focusedOptionIndex));
+  const onClick = !isDisabled ? () => selectOption({ data, value, label }, isSelected) : undefined;
 
   return (
     <div
       style={style}
+      onClick={onClick}
       className={className}
-      onClick={onClickHandler}
     >
       {renderOptionLabel(data)}
     </div>

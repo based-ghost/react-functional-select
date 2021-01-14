@@ -30,8 +30,8 @@ export const useMenuOptions = (
   const hideSelectedOptionsOrDefault = (typeof hideSelectedOptions !== 'boolean') ? !!isMulti : hideSelectedOptions;
 
   useEffect(() => {
-    const selectedHash = new Set(selectedOption.map(({ value }) => value));
     const normalizedInput = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
+    const selectedHash = !!selectedOption.length ? new Set(selectedOption.map((x) => x.value)) : undefined;
 
     const getIsOptionDisabledOrDefault: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
     const getFilterOptionStringOrDefault: (option: MenuOption) => string = getFilterOptionString || ((option) => (typeof option.label === 'string') ? option.label : `${option.label}`);
@@ -54,7 +54,7 @@ export const useMenuOptions = (
         value,
         label,
         ...(getIsOptionDisabledOrDefault(data) && { isDisabled: true }),
-        ...(selectedHash.has(value) && { isSelected: true })
+        ...(selectedHash?.has(value) && { isSelected: true })
       };
 
       if (

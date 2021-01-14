@@ -18,3 +18,13 @@ const _fadeInKeyframes = keyframes`
 
 export const BOUNCE_ANIMATION_CSS = css`${_bounceKeyframes} 1.19s ease-in-out infinite`;
 export const FADE_IN_ANIMATION_CSS = css`${_fadeInKeyframes} 0.225s ease-in-out forwards`;
+
+export const SINGLE_VALUE_BASE_STYLE = css`
+  top: 50%;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  transform: translateY(-50%);
+`;

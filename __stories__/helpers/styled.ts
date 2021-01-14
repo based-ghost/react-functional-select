@@ -285,7 +285,7 @@ export const CardHeader = styled.div`
     font-size: 1.1rem;
     text-align: center;
     display: inline-block;
-    padding: 0 1.3rem 1rem;
+    padding: 0 1.15rem 1rem;
   }
 `;
 
@@ -326,7 +326,7 @@ export const ReactSvg = styled.svg<{ isDisabled?: boolean }>`
   color: #1ea7fd;
   fill: currentColor;
   display: inline-block;
-  ${({ isDisabled }) => (!isDisabled && _spinAnimationCss)}
+  ${({ isDisabled }) => !isDisabled && _spinAnimationCss}
 `;
 
 export const ChevronDownSvg = styled.svg<{ menuOpen: boolean }>`

@@ -1,7 +1,7 @@
-import React, { memo } from 'react';
+import React, { memo, FunctionComponent } from 'react';
 import LoadingDots from './LoadingDots';
 import styled, { css } from 'styled-components';
-import { CaretProps, IconRenderer, IndicatorIconsProps } from '../types';
+import { IconRenderer, IndicatorIconsProps } from '../types';
 import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/dom';
 
 const IndicatorIconsWrapper = styled.div`
@@ -17,39 +17,37 @@ const IndicatorIcon = styled.div`
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  ${({ theme: { icon }}) => `
-    color: ${icon.color};
-    padding: ${icon.padding};
-    :hover {
-      color: ${icon.hoverColor};
-    }
-  `}
+  color: ${({ theme }) => theme.icon.color};
+  padding: ${({ theme }) => theme.icon.padding};
+
+  :hover {
+    color: ${({ theme }) => theme.icon.hoverColor};
+  }
+
   ${({ theme }) => theme.icon.css}
 `;
 
 const ClearSvg = styled.svg`
   fill: currentColor;
-  animation: ${({ theme }) => css`${theme.icon.clear.animation}`};
-  ${({ theme: { icon: { clear }}}) => `
+  ${({ theme: { icon: { clear } } }) => css`
     width: ${clear.width};
     height: ${clear.height};
+    animation: ${clear.animation};
     transition: ${clear.transition};
   `}
 `;
 
-const Caret = styled.div<CaretProps>`
-  ${({ theme: { icon: { caret }}}) => `
-    transition: ${caret.transition};
-    border-top: ${caret.size} dashed;
-    border-left: ${caret.size} solid transparent;
-    border-right: ${caret.size} solid transparent;
-  `}
+const Caret = styled.div<Pick<IndicatorIconsProps, 'menuOpen' | 'isInvalid'>>`
+  transition: ${({ theme }) => theme.icon.caret.transition};
+  border-top: ${({ theme }) => theme.icon.caret.size} dashed;
+  border-left: ${({ theme }) => theme.icon.caret.size} solid transparent;
+  border-right: ${({ theme }) => theme.icon.caret.size} solid transparent;
 
-  ${({ menuOpen, isInvalid, theme: { color }}) =>
-    menuOpen
-    && `
+  ${({ menuOpen, isInvalid, theme: { color } }) =>
+    menuOpen &&
+    css`
       transform: rotate(180deg);
-      color: ${(isInvalid ? color.danger : (color.caretActive || color.primary))};
+      color: ${isInvalid ? color.danger : color.caretActive || color.primary};
     `}
 `;
 
@@ -60,6 +58,19 @@ const Separator = styled.div`
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.color.iconSeparator || theme.color.border};
 `;
+
+const ClearIcon: FunctionComponent<{ addClassNames?: boolean }> = ({ addClassNames }) => (
+  <ClearSvg
+    aria-hidden='true'
+    viewBox='0 0 14 16'
+    className={addClassNames ? CLEAR_ICON_CLS : undefined}
+  >
+    <path
+      fillRule='evenodd'
+      d='M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z'
+    />
+  </ClearSvg>
+);
 
 const IndicatorIcons = memo<IndicatorIconsProps>(({
   menuOpen,
@@ -75,7 +86,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
   onClearMouseDown
 }) => {
   const forwardState =
-    typeof caretIcon === 'function' || typeof clearIcon === 'function'
+    (typeof caretIcon === 'function' || typeof clearIcon === 'function')
       ? {
           menuOpen,
           isLoading: !!isLoading,
@@ -84,7 +95,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
         }
       : undefined;
 
-  const iconRenderer = (renderer: IconRenderer): any => {
+  const renderIconFn = (renderer: IconRenderer) => {
     return (typeof renderer === 'function') ? renderer(forwardState) : renderer;
   };
 
@@ -96,18 +107,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
           onMouseDown={onClearMouseDown}
           data-testid={CLEAR_ICON_TESTID}
         >
-          {iconRenderer(clearIcon) || (
-            <ClearSvg
-              aria-hidden='true'
-              viewBox='0 0 14 16'
-              className={addClassNames ? CLEAR_ICON_CLS : undefined}
-            >
-              <path
-                fillRule='evenodd'
-                d='M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z'
-              />
-            </ClearSvg>
-          )}
+          {renderIconFn(clearIcon) || <ClearIcon addClassNames={addClassNames} />}
         </IndicatorIcon>
       )}
       {isLoading && (loadingNode || <LoadingDots addClassNames={addClassNames} />)}
@@ -117,7 +117,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
         onMouseDown={onCaretMouseDown}
         data-testid={CARET_ICON_TESTID}
       >
-        {iconRenderer(caretIcon) || (
+        {renderIconFn(caretIcon) || (
           <Caret
             aria-hidden='true'
             menuOpen={menuOpen}

@@ -3,26 +3,15 @@ import { ValueProps } from '../types';
 import MultiValue from './MultiValue';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../utils';
+import { SINGLE_VALUE_BASE_STYLE } from '../constants/styled';
 
 const SingleValue = styled.div`
-  top: 50%;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  box-sizing: border-box;
-  text-overflow: ellipsis;
-  transform: translateY(-50%);
+  ${SINGLE_VALUE_BASE_STYLE}
   max-width: calc(100% - 0.5rem);
 `;
 
 const Placeholder = styled.div`
-  top: 50%;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  box-sizing: border-box;
-  text-overflow: ellipsis;
-  transform: translateY(-50%);
+  ${SINGLE_VALUE_BASE_STYLE}
   color: ${({ theme }) => theme.color.placeholder};
 `;
 
@@ -48,8 +37,7 @@ const Value = memo<ValueProps>(({
   }
 
   if (!isMulti) {
-    const singleVal = renderOptionLabel(selectedOption[0].data);
-    return <SingleValue>{singleVal}</SingleValue>;
+    return <SingleValue>{renderOptionLabel(selectedOption[0].data)}</SingleValue>;
   }
 
   return (

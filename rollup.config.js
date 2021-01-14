@@ -1,12 +1,9 @@
-import path from 'path';
 import pkg from './package.json';
 import babel from '@rollup/plugin-babel';
-import modify from 'rollup-plugin-modify';
-import replace from 'rollup-plugin-replace';
+import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
-import typescript from 'rollup-plugin-typescript2';
-import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
+import typescript from '@rollup/plugin-typescript';
 
 /*************************************************
  - CONFIG DATA
@@ -14,43 +11,30 @@ import createStyledComponentsTransformer from 'typescript-plugin-styled-componen
 
 const globals = {
   'react': 'React',
+  'react-dom': 'ReactDOM',
   'styled-components': 'styled',
-  'react-window': 'ReactWindow'
+  'react-window': 'ReactWindow',
 };
 
 const input = './src/index.ts';
 const name = 'ReactFunctionalSelect';
-const external = id => !id.startsWith('.') && !path.isAbsolute(id);
-const externalUmd = Object.keys(globals);
+
+const external = (id) => /^react|react-dom|styled-components|react-window|@babel\/runtime/.test(id);
 
 /*************************************************
  - PLUGIN DEFINITIONS (INDIVIDUAL)
  *************************************************/
 
-const styledComponentsTransformer = createStyledComponentsTransformer({
-  ssr: false,
-  minify: true,
-  displayName: false,
-});
-
-const typescriptPlugin = typescript({
-  clean: true,
-  transformers: [
-    () => ({
-      before: [styledComponentsTransformer],
-    }),
-  ],
-});
-
-// This takes care of \n (search actual string by escaping \n so to not target line-breaks)
-// ...followed by spaces created by functions nested within styled-components that return template literals ``
-const modifyReplacePlugin = modify({
-  find: /\\n\s*/gu,
-  replace: '',
-});
+ const minifierPlugin = terser({
+   format: {
+     preserve_annotations: true,
+   },
+ });
 
 const babelPlugin = (useESModules = true) => {
-  const targets = useESModules ? { esmodules: true } : '> 1%, last 2 versions, not dead';
+  const targets = useESModules
+    ? { esmodules: true }
+    : '>1%, not dead, not ie 11, not op_mini all';
 
   return babel({
     babelrc: false,
@@ -58,12 +42,23 @@ const babelPlugin = (useESModules = true) => {
     exclude: 'node_modules/**',
     extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
     presets: [
-      ['@babel/preset-env', { targets, loose: false, bugfixes: useESModules }],
+      ['@babel/preset-env', { targets, loose: false, bugfixes: true }],
       ['@babel/preset-react', { runtime: 'classic' }],
     ],
     plugins: [
       ['@babel/plugin-transform-runtime', { useESModules }],
-      ['@babel/proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
+      '@babel/plugin-proposal-optional-chaining',
+      [
+        'babel-plugin-styled-components',
+        {
+          ssr: true,
+          pure: true,
+          minify: true,
+          fileName: false,
+          displayName: true,
+          transpileTemplateLiterals: true,
+        },
+      ],
     ],
   });
 };
@@ -73,23 +68,22 @@ const babelPlugin = (useESModules = true) => {
  *************************************************/
 
 const cjsPlugins = [
-  typescriptPlugin,
+  typescript(),
   babelPlugin(false),
-  modifyReplacePlugin,
+  // minifierPlugin,
 ];
 
 const esmPlugins = [
-  typescriptPlugin,
+  typescript(),
   babelPlugin(),
-  modifyReplacePlugin,
+  // minifierPlugin,
 ];
 
-const getUmdPlugins = (env) => [
-  typescriptPlugin,
+const umdPlugins = [
+  typescript(),
   babelPlugin(),
-  replace({ 'process.env.NODE_ENV': JSON.stringify(env) }),
-  modifyReplacePlugin,
-  terser(),
+  replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+  minifierPlugin,
 ];
 
 export default [
@@ -117,31 +111,17 @@ export default [
     plugins: esmPlugins,
   },
 
-  /*** BROWSER (DEVELOPMENT) ***/
+  /*** BROWSER/UMD (PRODUCTION) ***/
   {
-    external: externalUmd,
+    external: Object.keys(globals),
     input,
     output: {
-      file: 'dist/index-dev.umd.js',
+      file: pkg.umd,
       format: 'umd',
       globals,
       name,
       exports: 'named',
     },
-    plugins: getUmdPlugins('development'),
-  },
-
-  /*** BROWSER (PRODUCTION) ***/
-  {
-    external: externalUmd,
-    input,
-    output: {
-      file: 'dist/index-prod.umd.js',
-      format: 'umd',
-      globals,
-      name,
-      exports: 'named',
-    },
-    plugins: getUmdPlugins('production'),
+    plugins: umdPlugins,
   },
 ];

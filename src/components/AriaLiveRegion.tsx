@@ -27,25 +27,29 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
   focusedOption,
   selectedOption
 }) => {
-  if (!isFocused) return null;
+  if (!isFocused) {
+    return null;
+  }
 
-  const {
-    value: focusedOptionValue,
-    label: focusedOptionLabel,
-    index: focusedOptionIndex,
-    isDisabled: isFocusedOptionDisabled
-  } = focusedOption;
+  const optionsMsg = `${optionCount} result(s) available${
+    inputValue ? (' for search input ' + inputValue) : ''
+  }.`;
 
-  const selectedOptionLabel = isArrayWithLength(selectedOption) ? selectedOption.map(({ label }) => label).join(' ') : 'N/A';
-  const optionsMsg = `${optionCount} result(s) available${inputValue ? ` for search input ${inputValue}` : ''}.`;
-
-  const focusedMsg = focusedOptionValue
-    ? `Focused option: ${focusedOptionLabel}${isFocusedOptionDisabled ? ' - disabled' : ''}, ${focusedOptionIndex + 1} of ${optionCount}.`
+  const focusedMsg = focusedOption.value
+    ? `Focused option: ${focusedOption.label}${focusedOption.isDisabled ? ' - disabled' : ''}, ${
+        focusedOption.index + 1
+      } of ${optionCount}.`
     : '';
 
   const menuMsg = menuOpen
     ? 'Use Up and Down arrow keys to choose options, press Enter or Tab to select the currently focused option, press Escape to close the menu.'
-    : `${ariaLabel || 'Select'} is focused${isSearchable ? ', type to filter options' : ''}, press Down arrow key to open the menu.`;
+    : `${ariaLabel || 'Select'} is focused${
+        isSearchable ? ', type to filter options' : ''
+      }, press Down arrow key to open the menu.`;
+
+  const selectedOptionLabel = isArrayWithLength(selectedOption)
+    ? selectedOption.map(({ label }) => label).join(' ')
+    : 'N/A';
 
   const selectedOptionMsg = `Selected option: ${selectedOptionLabel}`;
   const extendedFeedbackMsg = `${focusedMsg} ${optionsMsg} ${menuMsg}`;

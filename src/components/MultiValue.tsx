@@ -6,12 +6,14 @@ import { CLEAR_ICON_MV_TESTID } from '../constants/dom';
 const MultiValueWrapper = styled.div`
   min-width: 0;
   display: flex;
-  animation: ${({ theme }) => css`${theme.multiValue.animation}`};
-  ${({ theme: { multiValue }}) => `
+
+  ${({ theme: { multiValue } }) => css`
     margin: ${multiValue.margin};
+    animation: ${multiValue.animation};
     border-radius: ${multiValue.borderRadius};
     background-color: ${multiValue.backgroundColor};
   `}
+
   ${({ theme }) => theme.multiValue.css}
 `;
 
@@ -19,16 +21,21 @@ const Label = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  ${({ theme: { multiValue: { label }}}) => `
-    padding: ${label.padding};
-    font-size: ${label.fontSize};
-    border-radius: ${label.borderRadius};
-  `}
+  padding: ${({ theme }) => theme.multiValue.label.padding};
+  font-size: ${({ theme }) => theme.multiValue.label.fontSize};
+  border-radius: ${({ theme }) => theme.multiValue.label.borderRadius};
 `;
 
-const Clear = styled.div<{ isFocused: boolean }>`
+const Clear = styled.div<Pick<MultiValueProps, 'isFocused'>>`
   display: flex;
-  ${({ isFocused, theme: { color, multiValue: { clear }}}) => `
+
+  ${({
+    isFocused,
+    theme: {
+      color,
+      multiValue: { clear }
+    }
+  }) => css`
     padding: ${clear.padding};
     font-size: ${clear.fontSize};
     transition: ${clear.transition};

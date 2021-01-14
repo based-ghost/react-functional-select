@@ -7,12 +7,10 @@ import { FixedSizeList, ListItemKeySelector } from 'react-window';
 
 const NoOptionsMsg = styled.div`
   text-align: center;
-  ${({ theme: { noOptions }}) => `
-    color: ${noOptions.color};
-    margin: ${noOptions.margin};
-    padding: ${noOptions.padding};
-    font-size: ${noOptions.fontSize};
-  `}
+  color: ${({ theme }) => theme.noOptions.color};
+  margin: ${({ theme }) => theme.noOptions.margin};
+  padding: ${({ theme }) => theme.noOptions.padding};
+  font-size: ${({ theme }) => theme.noOptions.fontSize};
   ${({ theme }) => theme.noOptions.css}
 `;
 

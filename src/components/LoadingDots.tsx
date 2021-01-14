@@ -13,11 +13,12 @@ const StyledLoadingDots = styled.div`
   > div {
     border-radius: 100%;
     display: inline-block;
-    animation: ${({ theme }) => css`${theme.loader.animation}`};
-    ${({ theme: { loader }}) => `
+
+    ${({ theme: { loader } }) => css`
       width: ${loader.size};
       height: ${loader.size};
       background-color: ${loader.color};
+      animation: ${loader.animation};
     `}
 
     :nth-of-type(1) {

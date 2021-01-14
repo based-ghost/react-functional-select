@@ -63,7 +63,6 @@ export const MENU_OPTIONS: MenuOption[] = [MENU_OPTION_SELECTED, MENU_OPTION_DIS
 
 export const stringifyCSSProperties = (obj: CSSProperties = {}): string => {
   const cssProps = Object.keys(obj).map((key) => `${key}: ${obj[key]};`);
-
   return cssProps.join(' ');
 };
 

@@ -1,11 +1,10 @@
 import React, { forwardRef, memo, useState, useRef, Fragment, Ref } from 'react';
 import styled from 'styled-components';
 import { useUpdateEffect } from '../hooks';
-import { isArrayWithLength, isEdgeOrIE } from '../utils';
+import { INPUT_MIN_WIDTH_PX } from '../constants/defaults';
+import { isArrayWithLength, isMicrosoftBrowser } from '../utils';
 import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
-
-const _inputMinWidth = 2;
 
 const SizerDiv = styled.div`
   top: 0;
@@ -21,7 +20,7 @@ const SizerDiv = styled.div`
   ${({ theme }) => theme.input.css}
 `;
 
-const Input = styled.input<{ isInvalid?: boolean }>`
+const Input = styled.input<Pick<AutosizeInputHTMLAttributes, 'isInvalid'>>`
   border: 0;
   outline: 0;
   padding: 0;
@@ -43,70 +42,71 @@ const Input = styled.input<{ isInvalid?: boolean }>`
   }
 
   ${({ theme }) => theme.input.css}
-  ${isEdgeOrIE() && '::-ms-clear{display:none;}'}
+  ${isMicrosoftBrowser() && '::-ms-clear{display:none;}'}
 `;
 
 const AutosizeInput = memo(
-  forwardRef<HTMLInputElement, AutosizeInputProps>((
-    {
-      id,
-      onBlur,
-      onFocus,
-      readOnly,
-      required,
-      onChange,
-      ariaLabel,
-      inputValue,
-      addClassNames,
-      ariaLabelledBy,
-      selectedOption
-    },
-    ref: Ref<HTMLInputElement>
-  ) => {
-    const sizerRef = useRef<HTMLDivElement | null>(null);
-    const [inputWidth, setInputWidth] = useState<number>(_inputMinWidth);
+  forwardRef<HTMLInputElement, AutosizeInputProps>(
+    (
+      {
+        id,
+        onBlur,
+        onFocus,
+        readOnly,
+        required,
+        onChange,
+        ariaLabel,
+        inputValue,
+        addClassNames,
+        ariaLabelledBy,
+        selectedOption
+      },
+      ref: Ref<HTMLInputElement>
+    ) => {
+      const sizerRef = useRef<HTMLDivElement | null>(null);
+      const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
+      const isInvalid = required && !isArrayWithLength(selectedOption);
 
-    useUpdateEffect(() => {
-      if (sizerRef.current) {
-        setInputWidth(sizerRef.current.scrollWidth + _inputMinWidth);
-      }
-    }, [inputValue]);
+      const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
+        isInvalid,
+        tabIndex: 0,
+        type: 'text',
+        spellCheck: false,
+        autoCorrect: 'off',
+        autoComplete: 'off',
+        autoCapitalize: 'none',
+        'aria-label': ariaLabel,
+        'aria-autocomplete': 'list',
+        'aria-labelledby': ariaLabelledBy,
+        'data-testid': AUTOSIZE_INPUT_TESTID,
+        style: { width: inputWidth }
+      };
 
-    const isInvalid = required && !isArrayWithLength(selectedOption);
+      useUpdateEffect(() => {
+        if (sizerRef.current) {
+          setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
+        }
+      }, [inputValue]);
 
-    const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
-      isInvalid,
-      tabIndex: 0,
-      type: 'text',
-      spellCheck: false,
-      autoCorrect: 'off',
-      autoComplete: 'off',
-      autoCapitalize: 'none',
-      'aria-label': ariaLabel,
-      'aria-autocomplete': 'list',
-      'aria-labelledby': ariaLabelledBy,
-      'data-testid': AUTOSIZE_INPUT_TESTID,
-      style: { width: inputWidth }
-    };
-
-    return (
-      <Fragment>
-        <Input
-          id={id}
-          ref={ref}
-          onBlur={onBlur}
-          onFocus={onFocus}
-          value={inputValue}
-          readOnly={readOnly}
-          required={isInvalid}
-          {...autosizeInputAttrs}
-          onChange={!readOnly ? onChange : undefined}
-          className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
-        />
-        <SizerDiv ref={sizerRef}>{inputValue}</SizerDiv>
-      </Fragment>
-    );
-  })
+      return (
+        <Fragment>
+          <Input
+            id={id}
+            ref={ref}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            value={inputValue}
+            readOnly={readOnly}
+            required={isInvalid}
+            {...autosizeInputAttrs}
+            onChange={!readOnly ? onChange : undefined}
+            className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
+          />
+          <SizerDiv ref={sizerRef}>{inputValue}</SizerDiv>
+        </Fragment>
+      );
+    }
+  )
 );
 
 AutosizeInput.displayName = 'AutosizeInput';
