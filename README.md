@@ -174,4 +174,4 @@ This project was inspired by [`react-select`](https://github.com/JedWatson/react
 
 ## License
 
-MIT licensed. [Matt Areddia](https://github.com/based-ghost) &copy; 2019.
+MIT licensed. [Matt Areddia](https://github.com/based-ghost) &copy; 2021.
