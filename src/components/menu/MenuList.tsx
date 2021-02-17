@@ -1,8 +1,8 @@
-import React, { useMemo, forwardRef, Ref, Fragment } from 'react';
+import React, { useMemo, Fragment, FunctionComponent } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
-import { isArrayWithLength } from '../utils';
-import { MenuProps, ItemData } from '../types';
+import { isArrayWithLength } from '../../utils';
+import { MenuListProps, ItemData } from '../../types';
 import { FixedSizeList, ListItemKeySelector } from 'react-window';
 
 const NoOptionsMsg = styled.div`
@@ -14,27 +14,21 @@ const NoOptionsMsg = styled.div`
   ${({ theme }) => theme.noOptions.css}
 `;
 
-const Menu = forwardRef<FixedSizeList, MenuProps>((
-  {
-    width,
-    height,
-    itemSize,
-    isLoading,
-    loadingMsg,
-    menuOptions,
-    selectOption,
-    noOptionsMsg,
-    overscanCount,
-    itemKeySelector,
-    renderOptionLabel,
-    focusedOptionIndex
-  },
-  ref: Ref<FixedSizeList>
-) => {
-  const itemKey = useMemo<ListItemKeySelector | undefined>(() => {
-    return itemKeySelector ? (idx, data) => data.menuOptions[idx][itemKeySelector] : undefined;
-  }, [itemKeySelector]);
-
+const MenuList: FunctionComponent<MenuListProps> = ({
+  width,
+  height,
+  itemSize,
+  isLoading,
+  loadingMsg,
+  menuOptions,
+  selectOption,
+  noOptionsMsg,
+  overscanCount,
+  itemKeySelector,
+  fixedSizeListRef,
+  renderOptionLabel,
+  focusedOptionIndex
+}) => {
   const itemData = useMemo<ItemData>(() => ({
     menuOptions,
     selectOption,
@@ -46,15 +40,19 @@ const Menu = forwardRef<FixedSizeList, MenuProps>((
     return <NoOptionsMsg>{loadingMsg}</NoOptionsMsg>;
   }
 
+  const itemKey: ListItemKeySelector | undefined = itemKeySelector
+    ? (idx, data) => data.menuOptions[idx][itemKeySelector]
+    : undefined;
+
   return (
     <Fragment>
       <FixedSizeList
-        ref={ref}
         width={width}
         height={height}
         itemKey={itemKey}
         itemSize={itemSize}
         itemData={itemData}
+        ref={fixedSizeListRef}
         overscanCount={overscanCount}
         itemCount={menuOptions.length}
       >
@@ -63,8 +61,6 @@ const Menu = forwardRef<FixedSizeList, MenuProps>((
       {!isArrayWithLength(menuOptions) && <NoOptionsMsg>{noOptionsMsg}</NoOptionsMsg>}
     </Fragment>
   );
-});
+};
 
-Menu.displayName = 'Menu';
-
-export default Menu;
+export default MenuList;

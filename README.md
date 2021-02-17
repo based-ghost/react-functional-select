@@ -10,6 +10,7 @@
 <strong>Key features:</strong>
 
 - Fully-featured package that is truly lightweight: <8 KB (gzipped)!
+- Offers nearly all customization features found in [`react-select`](https://github.com/JedWatson/react-select), in a modern, functional design (inspired by react-select, you will find much of the API similar)
 - Extensible styling API with [`styled-components`](https://github.com/styled-components/styled-components)
 - Opt-in properties to make the component fully accessible
 - Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [`react-window`](https://github.com/bvaughn/react-window) + performance-first code. [See in memory load tests from 100 to 50,000 options here!](https://based-ghost.github.io/react-functional-select/?path=/story/react-functional-select--windowing)
@@ -18,18 +19,13 @@
 <strong>Peer dependencies:</strong>
 
 - [`styled-components`](https://github.com/styled-components/styled-components) for dynamic styling/theming via CSS-in-JS
-- [`react-window`](https://github.com/bvaughn/react-window) for integrated menu option data virtualization/windowing
+- [`react-window`](https://github.com/bvaughn/react-window) for integrated menu option data virtualization
 
 ## Overview
 
-Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely using `React Hooks` and `FunctionComponents`.  The primary design principal revolves around weighing the cost/benefits of adding a feature against the impact to performance & # of lines of code its addition would have.
+Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely using `React Hooks` and `FunctionComponents`. The primary design principal revolves around weighing the cost/benefits of adding a feature against the impact to performance & # of lines of code its addition would have.
 
-I opted to exclude less "in-demand" features such as:
-
-- Preventing scroll events on the app's body if the menu is open <strong><em>TODO: add code example</em></strong>
-- Closing an open menu if the app's body is scrolled <strong><em>TODO: add code example</em></strong>
-
-These feature would have added significant overhead to the package. In addition, if we expose the right public methods and/or callback properties, this feature should be trivial to add to wrapping components - proper decoupling and abstraction of code is key to keeping such channels open for similar customizations that can be kept out of this package.
+Any expected features not in the current API is likely due to the reason that such features would have added significant overhead to the package. In addition, if we expose the right public methods and/or callback properties, this feature should be trivial to add to wrapping components - proper decoupling and abstraction of code is key to keeping such channels open for similar customizations that can be kept out of this package. Please, feel free to offer enhancement ideas with/without technical solutions.
 
 ## Installation
 
@@ -47,18 +43,18 @@ $ yarn add react-window styled-components react-functional-select
 
 <em>You can find a similar example, along with others, in the storybook..</em>
 
-```tsx
+```jsx
 import { Select } from 'react-functional-select';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardHeader, CardBody, Container, SelectContainer } from './helpers/styled';
 
-type CityOption = {
-  readonly id: number;
-  readonly city: string;
-  readonly state: string;
-};
+type Option = Readonly<{
+  id: number;
+  city: string;
+  state: string;
+}>;
 
-const _cityOptions: CityOption[] = [
+const _cityOptions: Option[] = [
   { id: 1, city: 'Austin', state: 'TX' },
   { id: 2, city: 'Denver', state: 'CO' },
   { id: 3, city: 'Chicago', state: 'IL' },
@@ -70,11 +66,11 @@ const SingleSelectDemo: React.FC = () => {
   const [isInvalid, setIsInvalid] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isClearable, setIsClearable] = useState<boolean>(true);
-  const [selectedOption, setSelectedOption] = useState<CityOption | null>(null);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
-  const getOptionValue = useCallback((option: CityOption): number => option.id, []);
-  const onOptionChange = useCallback((option: CityOption | null): void => setSelectedOption(option), []);
-  const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
+  const getOptionValue = useCallback((option: Option): number => option.id, []);
+  const onOptionChange = useCallback((option: Option | null): void => setSelectedOption(option), []);
+  const getOptionLabel = useCallback((option: Option): string => `${option.city}, ${option.state}`, []);
 
   useEffect(() => {
     isDisabled && setIsInvalid(false);
@@ -119,6 +115,7 @@ All properties are technically optional (with a few having default values). Very
 |`isMulti`| bool | `false` | Does the control allow for multiple selections (defaults to single-value mode)
 |`async`| bool | `false` | Is the component in 'async' mode - when in 'async' mode, updates to the input search value will NOT cause the effect `useMenuOptions` to execute (this effect parses `options` into stateful value `menuOptions`)
 |`autoFocus`| bool | `false` | Focus the control following initial mount of component
+|`lazyLoadMenu`| bool | `false` | If `true`, the menu (wrapper & virtualized list components) will rendered in DOM only when `menuOpen` state is `true`
 |`isLoading`| bool | `false` | Is the select in a state of loading - shows loading dots animation
 |`isInvalid`| bool | `false` | Is the current value invalid - control recieves invalid styling
 |`inputDelay`| number | `undefined` | The debounce delay in for the input search (milliseconds)
@@ -130,8 +127,8 @@ All properties are technically optional (with a few having default values). Very
 |`isClearable`| bool | `false` | Is the select value clearable
 |`noOptionsMsg`| string | `No options` | The text displayed in the menu when there are no options available
 |`loadingMsg`| string | `Loading...` | The text displayed in the menu when `isLoading` === `true`
-|`clearIcon`| ReactNode OR ((state: Partial\<IndicatorIconsProps\>) => ReactNode) | `undefined` | Custom clear icon node - `state` forwarded to a function is `{ menuOpen, isLoading, isInvalid, isDisabled }`
-|`caretIcon`| ReactNode OR ((state: Partial\<IndicatorIconsProps\>) => ReactNode) | `undefined` | Custom caret icon node - `state` forwarded to a function is `{ menuOpen, isLoading, isInvalid, isDisabled }`
+|`clearIcon`| ReactNode OR ((state: any) => ReactNode) | `undefined` | Custom clear icon node - `state` forwarded to a function is `{ menuOpen, isLoading, isInvalid, isDisabled }`
+|`caretIcon`| ReactNode OR ((state: any) => ReactNode) | `undefined` | Custom caret icon node - `state` forwarded to a function is `{ menuOpen, isLoading, isInvalid, isDisabled }`
 |`loadingNode`| ReactNode | `undefined` | Custom loading node
 |`options`| array | `[]` | The menu options
 |`isSearchable`| bool | `true` | Whether to enable search functionality or not
@@ -141,7 +138,6 @@ All properties are technically optional (with a few having default values). Very
 |`menuOverscanCount`| number | `1` | correlates to `react-window` property `overscanCount`: The number of items (options) to render outside of the visible area. Increasing the number can impact performance, but is useful if the option label is complex and the `renderOptionLabel` prop is defined
 |`itemKeySelector`| ReactText | `undefined` | If defined, will use the property in your original options as each option's key, rather than the parsed stateful value `menuOptions` index (this needs to be a unique property - so properties such as `id` or `value`). This relates to the `itemKey` property in dependency `react-window` - [more info here](https://react-window.now.sh/#/api/FixedSizeList)
 |`menuScrollDuration`| number | `300` | Duration of scroll menu into view animation
-|`addClassNames`| bool | `false` | Should static classNames be generated for container elements (enable if styling using CSS stylesheets)
 |`ariaLabelledBy`| string | `undefined` | HTML ID of an element that should be used as the label (for assistive tech)
 |`openMenuOnFocus`| bool | `false` | Open the menu when the select control recieves focus
 |`initialValue`| any | `undefined` | Initial select value
@@ -155,21 +151,22 @@ All properties are technically optional (with a few having default values). Very
 |`menuPosition`| 'top' OR 'auto' OR 'bottom' | `'bottom'` | Determines where menu will be placed in relation to the control - `'auto'` will first check if menu has space to open below the control, otherwise it will open above the control.
 |`filterIgnoreCase`| bool | `true` | Search input ignores case of characters when comparing
 |`filterIgnoreAccents`| bool | `false` | Search input will strip diacritics from string before comparing
-|`onMenuOpen`| (...args: any[]): void | `undefined` | Callback function executed after the menu is opened
-|`onMenuClose`| (...args: any[]): void | `undefined` | Callback function executed after the menu is closed
-|`onOptionChange`| (data: any): void | `undefined` | Callback function executed after a new option is selected
-|`onKeyDown`| (e: KeyboardEvent\<HTMLDivElement\>, input?: string, focusedOption?: FocusedOption): void | `undefined` | Callback function executed `onKeyDown` event
-|`getOptionLabel`| (data: any): ReactText | `undefined` | Resolves option data to React.ReactText to be displayed as the label by components (by default will use option.label)
-|`getOptionValue`| (data: any): ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
-|`onInputBlur`| (e: FocusEvent\<HTMLInputElement\>): void | `undefined` | Handle blur events on the search input
-|`onInputFocus`| (e: FocusEvent\<HTMLInputElement\>): void | `undefined` | Handle focus events on the search input
-|`onInputChange`| (value: string): void | `undefined` | Handle change events on the search input
-|`onSearchChange`| (value: string): void | `undefined` | Callback executed after the debounced search input value is persisted to the component's state - if no debounce is defined via the `inputDelay` property, it probably makes more sense to use `onInputChange` instead.
-|`renderOptionLabel`| (data: any): ReactNode | `undefined` | Formats option labels in the menu and control as JSX.Elements or React Components (by default will use `getOptionLabel`)
-|`renderMultiOptions`| (params: MultiParams): ReactNode | `undefined` | Allows for customization as to how multi-select options should be formatted. The `MultiParams` contains the array of selected options `{ selected: Array<{ data: any, value: ReactText, label: ReactText}>, renderOptionLabel: (data: any): ReactNode }`. Left and right arrow key navigation will also be disabled when this property is defined.
-|`getIsOptionDisabled`| (data: any): boolean | `undefined` | When defined will evaluate each option to determine whether it is disabled or not (if not specified, each option will be evaluated as to whether or not it contains a property of `isDisabled` with a value of `true`)
-|`getFilterOptionString`| (option: any): string | `undefined` | When defined will take each option and generate a string used in the filtering process (by default, will use option.label)
+|`onMenuOpen`| (...args: any[]) => void | `undefined` | Callback function executed after the menu is opened
+|`onMenuClose`| (...args: any[]) => void | `undefined` | Callback function executed after the menu is closed
+|`onOptionChange`| (data: any) => void | `undefined` | Callback function executed after a new option is selected
+|`onKeyDown`| (e: KeyboardEvent, input?: string, focusedOption?: FocusedOption) => void | `undefined` | Callback function executed `onKeyDown` event
+|`getOptionLabel`| (data: any) => ReactText | `undefined` | Resolves option data to React.ReactText to be displayed as the label by components (by default will use option.label)
+|`getOptionValue`| (data: any) => ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
+|`onInputBlur`| (e: FocusEvent) => void | `undefined` | Handle blur events on the search input
+|`onInputFocus`| (e: FocusEvent) => void | `undefined` | Handle focus events on the search input
+|`onInputChange`| (value: string) => void | `undefined` | Handle change events on the search input
+|`onSearchChange`| (value: string) => void | `undefined` | Callback executed after the debounced search input value is persisted to the component's state - if no debounce is defined via the `inputDelay` property, it probably makes more sense to use `onInputChange` instead.
+|`renderOptionLabel`| (data: any) => ReactNode | `undefined` | Formats option labels in the menu and control as JSX.Elements or React Components (by default will use `getOptionLabel`)
+|`renderMultiOptions`| (params: any) => ReactNode | `undefined` | Allows for customization as to how multi-select options should be formatted. The `MultiParams` contains the array of selected options `{ selected: Array<{ data: any, value: ReactText, label: ReactText}>, renderOptionLabel: (data: any): ReactNode }`. Left and right arrow key navigation will also be disabled when this property is defined.
+|`getIsOptionDisabled`| (data: any) => boolean | `undefined` | When defined will evaluate each option to determine whether it is disabled or not (if not specified, each option will be evaluated as to whether or not it contains a property of `isDisabled` with a value of `true`)
+|`getFilterOptionString`| (option: any) => string | `undefined` | When defined will take each option and generate a string used in the filtering process (by default, will use option.label)
 |`themeConfig`| Partial\<DefaultTheme\> | `undefined` | Object that takes specified property key-value pairs and merges them into the theme object
+|`menuPortalTarget`| Element | `undefined` | Whether the menu should use a portal, and where it should attach
 
 ## Inspiration
 

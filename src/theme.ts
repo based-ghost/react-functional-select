@@ -1,10 +1,10 @@
 import { DefaultTheme } from 'styled-components';
-import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from './constants/styled';
+import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from './constants';
 
 /**
  * A contextual styled-components DefaultTheme object with default key-value pairs for CSS props.
  */
-export const RfsTheme: DefaultTheme = {
+export const RFS_DEFAULT_THEME: DefaultTheme = {
   color: {
     border: '#ced4da',
     danger: '#dc3545',
@@ -29,11 +29,11 @@ export const RfsTheme: DefaultTheme = {
       width: '14px',
       height: '16px',
       animation: FADE_IN_ANIMATION_CSS,
-      transition: 'color 0.15s ease-in-out'
+      transition: 'color 0.2s ease-out'
     },
     caret: {
       size: '7px',
-      transition: 'transform 0.25s ease-in-out, color 0.15s ease-in-out'
+      transition: 'transform 0.3s ease-in-out, color 0.2s ease-out'
     }
   },
   control: {
@@ -45,7 +45,7 @@ export const RfsTheme: DefaultTheme = {
     padding: '0.375rem 0.75rem',
     boxShadowColor: 'rgba(0, 123, 255, 0.25)',
     focusedBorderColor: 'rgba(0, 123, 255, 0.75)',
-    transition: 'box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out'
+    transition: 'box-shadow 0.2s ease-out, border-color 0.2s ease-out'
   },
   menu: {
     padding: '0',
@@ -82,10 +82,11 @@ export const RfsTheme: DefaultTheme = {
     clear: {
       fontWeight: 700,
       padding: '0 7px',
-      fontSize: '0.67em',
-      alignItems: 'center',
-      borderRadius: '0.25rem',
-      transition: 'color 0.15s ease-in-out, background-color 0.15s ease-in-out'
+      color: '#a6a6a6',
+      fontSize: '0.65em',
+      alignSelf: 'center',
+      focusColor: '#808080',
+      transition: 'color 0.2s ease-out, transform 0.2s ease-out, z-index 0.2s ease-out'
     }
   }
 };

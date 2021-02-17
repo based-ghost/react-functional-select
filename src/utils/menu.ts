@@ -10,8 +10,7 @@ function isDocumentElement(el: HTMLElement | Window): boolean {
   return el === document.documentElement || el === document.body || el === window;
 }
 
-function styleHasOverlfow(style: CSSStyleDeclaration): boolean {
-  const { overflow, overflowX, overflowY } = style;
+function styleHasOverlfow({ overflow, overflowX, overflowY }: CSSStyleDeclaration): boolean {
   const isOverflow = (x: string): boolean => x === 'auto' || x === 'scroll';
 
   return isOverflow(overflow) || isOverflow(overflowX) || isOverflow(overflowY);
@@ -35,29 +34,31 @@ function getScrollParent(el: HTMLElement): HTMLElement {
   return document.documentElement;
 }
 
-const smoothScrollTo = (
+function smoothScrollTo(
   el: HTMLElement,
   to: number,
   duration: number = 300,
   callback?: (...args: any[]) => any
-): void => {
+): void {
   let currentTime = 0;
-
   const start = getScrollTop(el);
   const change = to - start;
-  const easeOutCubic = (t: number): number => change * ((t = t / duration - 1) * t * t + 1) + start;
 
-  const smoothScroller = (): void => {
+  function easeOutCubic(t: number): number {
+    return change * ((t = t / duration - 1) * t * t + 1) + start;
+  }
+
+  function scrollFn(): void {
     currentTime += 5;
     scrollTo(el, easeOutCubic(currentTime));
 
     (currentTime < duration)
-      ? window.requestAnimationFrame(smoothScroller)
+      ? window.requestAnimationFrame(scrollFn)
       : callback?.();
-  };
+  }
 
-  window.requestAnimationFrame(smoothScroller);
-};
+  window.requestAnimationFrame(scrollFn);
+}
 
 /**
  * Calculates the top property value for the MenuWrapper <div />.
@@ -80,7 +81,7 @@ export const calculateMenuTop = (
   const basePx = -Math.abs(menuHeightOrDefault + controlHeight);
   const adjustPx = marginBottom + marginTop;
 
-  return 'calc(' + basePx + 'px' + adjustPx + 'px)';
+  return 'calc(' + basePx + 'px + ' + adjustPx + 'px)';
 };
 
 export const menuFitsBelowControl = (el: HTMLElement | null): boolean => {

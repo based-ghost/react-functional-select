@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
-import { RfsTheme } from '../src/theme';
+import { RFS_DEFAULT_THEME } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import { IndicatorIcons } from '../src/components';
 import { IndicatorIconsProps } from '../src/types';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
-import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/constants/dom';
+import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/constants';
 
 // ============================================
 // Helper functions for IndicatorIcons component
@@ -12,7 +12,7 @@ import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/con
 
 const renderIndicatorIcons = (props: IndicatorIconsProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RfsTheme}>
+    <ThemeProvider theme={RFS_DEFAULT_THEME}>
       <IndicatorIcons {...props} />
     </ThemeProvider>
   );
@@ -50,10 +50,9 @@ const customIconFn = ({ menuOpen, isLoading, isInvalid, isDisabled }: Partial<In
 // Test cases
 // ============================================
 
-test('clear icon has a static className (enables styling via classic CSS) when "addClassNames" = true', async () => {
+test('clear icon has a static className (enables styling via classic CSS)', async () => {
   const { props } = createIndicatorIconsProps();
-  const mergedProps = { ...props, addClassNames: true };
-  const { getByTestId } = renderIndicatorIcons(mergedProps);
+  const { getByTestId } = renderIndicatorIcons(props);
   const firstChildOfClearIconElement = getByTestId(CLEAR_ICON_TESTID!).firstChild;
 
   expect(firstChildOfClearIconElement).toHaveClass(CLEAR_ICON_CLS);

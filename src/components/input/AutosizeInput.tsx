@@ -1,10 +1,11 @@
 import React, { forwardRef, memo, useState, useRef, Fragment, Ref } from 'react';
 import styled from 'styled-components';
-import { useUpdateEffect } from '../hooks';
-import { INPUT_MIN_WIDTH_PX } from '../constants/defaults';
-import { isArrayWithLength, isMicrosoftBrowser } from '../utils';
-import { AutosizeInputProps, AutosizeInputHTMLAttributes } from '../types';
-import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../constants/dom';
+import { useUpdateEffect } from '../../hooks';
+import { AutosizeInputProps } from '../../types';
+import { AUTOSIZE_INPUT_ATTRIBUTES } from '../../constants';
+import { isArrayWithLength, IS_MICROSOFT_BROWSER } from '../../utils';
+
+const _inputMinWidthPx = 2;
 
 const SizerDiv = styled.div`
   top: 0;
@@ -20,7 +21,7 @@ const SizerDiv = styled.div`
   ${({ theme }) => theme.input.css}
 `;
 
-const Input = styled.input<Pick<AutosizeInputHTMLAttributes, 'isInvalid'>>`
+const Input = styled.input<{ isInvalid?: boolean }>`
   border: 0;
   outline: 0;
   padding: 0;
@@ -42,7 +43,7 @@ const Input = styled.input<Pick<AutosizeInputHTMLAttributes, 'isInvalid'>>`
   }
 
   ${({ theme }) => theme.input.css}
-  ${isMicrosoftBrowser() && '::-ms-clear{display:none;}'}
+  ${IS_MICROSOFT_BROWSER && '::-ms-clear{display:none;}'}
 `;
 
 const AutosizeInput = memo(
@@ -57,34 +58,18 @@ const AutosizeInput = memo(
         onChange,
         ariaLabel,
         inputValue,
-        addClassNames,
         ariaLabelledBy,
         selectedOption
       },
       ref: Ref<HTMLInputElement>
     ) => {
       const sizerRef = useRef<HTMLDivElement | null>(null);
-      const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
+      const [inputWidth, setInputWidth] = useState<number>(_inputMinWidthPx);
       const isInvalid = required && !isArrayWithLength(selectedOption);
-
-      const autosizeInputAttrs: AutosizeInputHTMLAttributes = {
-        isInvalid,
-        tabIndex: 0,
-        type: 'text',
-        spellCheck: false,
-        autoCorrect: 'off',
-        autoComplete: 'off',
-        autoCapitalize: 'none',
-        'aria-label': ariaLabel,
-        'aria-autocomplete': 'list',
-        'aria-labelledby': ariaLabelledBy,
-        'data-testid': AUTOSIZE_INPUT_TESTID,
-        style: { width: inputWidth }
-      };
 
       useUpdateEffect(() => {
         if (sizerRef.current) {
-          setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
+          setInputWidth(sizerRef.current.scrollWidth + _inputMinWidthPx);
         }
       }, [inputValue]);
 
@@ -93,16 +78,21 @@ const AutosizeInput = memo(
           <Input
             id={id}
             ref={ref}
+            isInvalid
             onBlur={onBlur}
             onFocus={onFocus}
             value={inputValue}
             readOnly={readOnly}
             required={isInvalid}
-            {...autosizeInputAttrs}
+            aria-label={ariaLabel}
+            style={{ width: inputWidth }}
+            {...AUTOSIZE_INPUT_ATTRIBUTES}
+            aria-labelledby={ariaLabelledBy}
             onChange={!readOnly ? onChange : undefined}
-            className={addClassNames ? AUTOSIZE_INPUT_CLS : undefined}
           />
-          <SizerDiv ref={sizerRef}>{inputValue}</SizerDiv>
+          <SizerDiv ref={sizerRef}>
+            {inputValue}
+          </SizerDiv>
         </Fragment>
       );
     }

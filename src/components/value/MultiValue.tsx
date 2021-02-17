@@ -1,7 +1,13 @@
-import React, { FunctionComponent } from 'react';
-import { MultiValueProps } from '../types';
+import React, { memo } from 'react';
+import { MultiValueProps } from '../../types';
 import styled, { css } from 'styled-components';
-import { CLEAR_ICON_MV_TESTID } from '../constants/dom';
+import { CLEAR_ICON_MV_TESTID } from '../../constants';
+
+const _clearIconFocusStyle  = css`
+  z-index: 5000;
+  transform: scale(1.26);
+  color: ${({ theme }) => theme.multiValue.clear.focusColor};
+`;
 
 const MultiValueWrapper = styled.div`
   min-width: 0;
@@ -26,31 +32,27 @@ const Label = styled.div`
   border-radius: ${({ theme }) => theme.multiValue.label.borderRadius};
 `;
 
-const Clear = styled.div<Pick<MultiValueProps, 'isFocused'>>`
+const Clear = styled.i<Pick<MultiValueProps, 'isFocused'>>`
   display: flex;
+  font-style: inherit;
 
-  ${({
-    isFocused,
-    theme: {
-      color,
-      multiValue: { clear }
-    }
-  }) => css`
+  ${({ theme: { multiValue: { clear } } }) => css`
+    color: ${clear.color};
     padding: ${clear.padding};
     font-size: ${clear.fontSize};
+    align-self: ${clear.alignSelf};
     transition: ${clear.transition};
-    align-items: ${clear.alignItems};
     font-weight: ${clear.fontWeight};
-    border-radius: ${clear.borderRadius};
-    background-color: ${isFocused ? color.dangerLight : 'transparent'};
+
     :hover {
-      color: ${color.danger};
-      background-color: ${color.dangerLight};
+      ${_clearIconFocusStyle}
     }
   `}
+
+   ${({ isFocused }) => isFocused && _clearIconFocusStyle}
 `;
 
-const MultiValue: FunctionComponent<MultiValueProps> = ({
+const MultiValue = memo<MultiValueProps>(({
   data,
   value,
   isFocused,
@@ -64,8 +66,12 @@ const MultiValue: FunctionComponent<MultiValueProps> = ({
       data-testid={CLEAR_ICON_MV_TESTID}
       onTouchEnd={(e) => removeSelectedOption(value, e)}
       onMouseDown={(e) => removeSelectedOption(value, e)}
-    >X</Clear>
+    >
+      &#10006;
+    </Clear>
   </MultiValueWrapper>
-);
+));
+
+MultiValue.displayName = 'MultiValue';
 
 export default MultiValue;

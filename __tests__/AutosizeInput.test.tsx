@@ -1,10 +1,9 @@
-import { RfsTheme } from '../src/theme';
+import { RFS_DEFAULT_THEME } from '../src/theme';
 import { AutosizeInputProps } from '../src/types';
 import { ThemeProvider } from 'styled-components';
 import { AutosizeInput } from '../src/components';
-import { EMPTY_ARRAY } from '../src/constants/defaults';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
-import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants/dom';
+import { EMPTY_ARRAY, AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants';
 
 // ============================================
 // Helper functions for AutosizeInput component
@@ -12,7 +11,7 @@ import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants/dom'
 
 const renderAutosizeInput = (props: AutosizeInputProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RfsTheme}>
+    <ThemeProvider theme={RFS_DEFAULT_THEME}>
       <AutosizeInput {...props} />
     </ThemeProvider>
   );
@@ -44,14 +43,9 @@ const createAutosizeInputProps = () => {
 // Test cases
 // ============================================
 
-test('input element has a static className (enables styling via classic CSS) when "addClassNames" = true', async () => {
+test('input element has a static className (enables styling via classic CSS)', async () => {
   const { props } = createAutosizeInputProps();
-  const mergedProps = {
-    ...props,
-    addClassNames: true,
-  };
-
-  const { getByTestId } = renderAutosizeInput(mergedProps);
+  const { getByTestId } = renderAutosizeInput(props);
 
   expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveClass(AUTOSIZE_INPUT_CLS);
 });
@@ -99,6 +93,7 @@ test('when "readOnly" = true, the onChange event handler should not be attached 
   const inputElement = getByTestId(AUTOSIZE_INPUT_TESTID!);
 
   fireEvent.change(inputElement);
+
   expect(onChangeSpy).not.toBeCalled();
   expect(inputElement).toHaveAttribute('readonly');
 });

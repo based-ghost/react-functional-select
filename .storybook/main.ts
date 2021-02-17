@@ -34,7 +34,9 @@ module.exports = {
       test: /\.(ts|tsx)$/,
       loader: require.resolve('babel-loader'),
       options: {
-        presets: [['react-app', { flow: false, typescript: true, runtime: 'automatic' }]],
+        presets: [
+          ['react-app', { flow: false, typescript: true, runtime: 'automatic' }]
+        ],
       },
     });
 

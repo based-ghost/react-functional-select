@@ -1,9 +1,9 @@
 import { CSSProperties } from 'react';
-import { RfsTheme } from '../src/theme';
 import { OptionProps } from '../src/types';
-import Option from '../src/components/Option';
+import { RFS_DEFAULT_THEME } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
-import { OPTION_DISABLED_CLS } from '../src/constants/dom';
+import Option from '../src/components/menu/Option';
+import { OPTION_DISABLED_CLS } from '../src/constants';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK, stringifyCSSProperties } from './helpers/utils';
 
@@ -21,7 +21,7 @@ const OPTION_STYLE: CSSProperties = {
 
 const renderOption = (props: OptionProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RfsTheme}>
+    <ThemeProvider theme={RFS_DEFAULT_THEME}>
       <Option {...props} />
     </ThemeProvider>
   );
@@ -78,6 +78,7 @@ test('option with "isDisabled" = FALSE should have a functioning onClick handler
   const optionParentEl = container.querySelector('div');
 
   fireEvent.click(optionParentEl!);
+
   expect(onClickSelectOptionSpy).toBeCalled();
 });
 

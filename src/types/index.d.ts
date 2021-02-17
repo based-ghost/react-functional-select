@@ -6,10 +6,10 @@ import {
   EventHandler,
   CSSProperties,
   FormEventHandler,
-  FocusEventHandler,
-  InputHTMLAttributes
+  FocusEventHandler
 } from 'react';
 
+import { FixedSizeList } from 'react-window';
 import { FocusedOption, MultiParams } from '../Select';
 
 // ============================================
@@ -23,11 +23,6 @@ export type PartialDeep<T> = {
 export type OptionData = any;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
-
-export interface AutosizeInputHTMLAttributes extends InputHTMLAttributes<HTMLElement> {
-  isInvalid?: boolean;
-  'data-testid'?: string;
-};
 
 export type SelectedOption = {
   data?: OptionData;
@@ -54,10 +49,6 @@ export type ItemData = {
 // FunctionalComponent property types
 // ============================================
 
-export type LoadingDotsProps = Readonly<{
-  addClassNames?: boolean;
-}>;
-
 export type OptionProps = Readonly<{
   index: number;
   data: ItemData;
@@ -72,16 +63,16 @@ export type ValueProps = Readonly<{
   focusedMultiValue: ReactText | null;
   renderOptionLabel: (data: OptionData) => ReactNode;
   renderMultiOptions?: (params: MultiParams) => ReactNode;
-  removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
+  removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLElement>) => void;
 }>;
 
 export type MultiValueProps = SelectedOption & Readonly<{
   isFocused: boolean;
   renderOptionLabel: (data: OptionData) => ReactNode;
-  removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLDivElement>) => void;
+  removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLElement>) => void;
 }>;
 
-export type MenuProps = Readonly<{
+export type MenuListProps = Readonly<{
   height: number;
   itemSize: number;
   loadingMsg: string;
@@ -93,8 +84,17 @@ export type MenuProps = Readonly<{
   focusedOptionIndex: number;
   itemKeySelector?: ReactText;
   renderOptionLabel: (data: OptionData) => ReactNode;
+  fixedSizeListRef: MutableRefObject<FixedSizeList | null>;
   selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 }>;
+
+export interface MenuProps extends MenuListProps {
+  menuTop?: string;
+  menuOpen: boolean;
+  menuPortalTarget?: Element;
+  menuRef: MutableRefObject<HTMLDivElement | null>;
+  onMenuMouseDown: (e: MouseOrTouchEvent<HTMLDivElement>) => void;
+}
 
 export type AriaLiveRegionProps = Readonly<{
   menuOpen: boolean;
@@ -113,7 +113,6 @@ export type AutosizeInputProps = Readonly<{
   ariaLabel?: string;
   inputValue: string;
   required?: boolean;
-  addClassNames?: boolean;
   ariaLabelledBy?: string;
   selectedOption: SelectedOption[];
   onBlur: FocusEventHandler<HTMLInputElement>;
@@ -130,9 +129,8 @@ export type IndicatorIconsProps = Readonly<{
   isInvalid?: boolean;
   isDisabled?: boolean;
   loadingNode?: ReactNode;
-  addClassNames?: boolean;
   clearIcon?: IconRenderer;
   caretIcon?: IconRenderer;
-  onClearMouseDown: MouseOrTouchEventHandler<HTMLDivElement>;
-  onCaretMouseDown?: MouseOrTouchEventHandler<HTMLDivElement>;
+  onClearMouseDown: MouseOrTouchEventHandler<HTMLElement>;
+  onCaretMouseDown?: MouseOrTouchEventHandler<HTMLElement>;
 }>;

@@ -1,5 +1,5 @@
 import { useUpdateEffect } from './useUpdateEffect';
-import { MenuPositionEnum } from '../constants/enums';
+import { MenuPositionEnum } from '../constants';
 import { useEffect, useState, useRef, MutableRefObject } from 'react';
 import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
 
@@ -11,8 +11,8 @@ import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from
  * Handle determining where to place the menu in relation to control - when menuPosition = 'top' or menuPosition = 'bottom' and there is not sufficient space below control, place on top.
  */
 export const useMenuPositioner = (
-  menuRef: MutableRefObject<HTMLDivElement | null>,
-  controlRef: MutableRefObject<HTMLDivElement | null>,
+  menuRef: MutableRefObject<HTMLElement | null>,
+  controlRef: MutableRefObject<HTMLElement | null>,
   menuOpen: boolean,
   menuPosition: 'top' | 'auto' | 'bottom',
   menuItemSize: number,
@@ -30,15 +30,12 @@ export const useMenuPositioner = (
   const [isMenuTopPosition, setIsMenuTopPosition] = useState<boolean>(menuPosition === MenuPositionEnum.TOP);
 
   useEffect(() => {
-    isMenuTopPositionRef.current = isMenuTopPosition;
-  }, [isMenuTopPosition]);
-
-  useEffect(() => {
     const isTopPosition =
       menuPosition === MenuPositionEnum.TOP ||
       (menuPosition === MenuPositionEnum.AUTO && !menuFitsBelowControl(menuRef.current));
 
     setIsMenuTopPosition(isTopPosition);
+    isMenuTopPositionRef.current = isMenuTopPosition;
   }, [menuRef, menuPosition]);
 
   useUpdateEffect(() => {

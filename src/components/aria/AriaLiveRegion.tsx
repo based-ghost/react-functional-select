@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { isArrayWithLength } from '../utils';
-import { AriaLiveRegionProps } from '../types';
-import { ARIA_LIVE_TESTID } from '../constants/dom';
+import { isArrayWithLength } from '../../utils';
+import { AriaLiveRegionProps } from '../../types';
+import { ARIA_LIVE_TESTID } from '../../constants';
 
 const A11yText = styled.span`
   border: 0;

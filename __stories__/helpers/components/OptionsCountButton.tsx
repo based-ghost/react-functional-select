@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { Button } from '../styled';
-import styled from 'styled-components';
 import { numberWithCommas } from '../utils';
+import styled, { css } from 'styled-components';
 
 type StyledButtonProps = Readonly<{
   isActive?: boolean;
@@ -19,13 +19,14 @@ const StyledButton = styled(Button)<StyledButtonProps>`
 
   ${({ isActive }) =>
     isActive
-    && (`
+    && css`
       color: #fff;
       background-color: #149DF3;
+
       :hover {
         background-color: #0A93E9;
       }
-    `)}
+    `}
 
   :focus {
     color: #fff !important;

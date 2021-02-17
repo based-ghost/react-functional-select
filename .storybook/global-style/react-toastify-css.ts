@@ -8,39 +8,56 @@ const _toastify_trackProgress = keyframes`
   }
 `;
 
-const _toastify_bounceOutRight = keyframes`
+const _toastify_bounceOut = keyframes`
   20% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  } 50%,
+    55% {
     opacity: 1;
-    transform: translate3d(-20px, 0, 0);
+    transform: scale3d(1.1, 1.1, 1.1);
   } to {
     opacity: 0;
-    transform: translate3d(2000px, 0, 0);
+    transform: scale3d(0.3, 0.3, 0.3);
   }
 `;
 
-const _toastify_bounceInRight = keyframes`
+const _toastify_bounceIn = keyframes`
   from,
+  20%,
+  40%,
   60%,
-  75%,
-  90%,
+  80%,
   to {
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-  } from {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
     opacity: 0;
-    transform: translate3d(3000px, 0, 0);
+    transform: scale3d(0.3, 0.3, 0.3);
+  } 20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  } 40% {
+    transform: scale3d(0.9, 0.9, 0.9);
   } 60% {
     opacity: 1;
-    transform: translate3d(-25px, 0, 0);
-  } 75% {
-    transform: translate3d(10px, 0, 0);
-  } 90% {
-    transform: translate3d(-5px, 0, 0);
+    transform: scale3d(1.03, 1.03, 1.03);
+  } 80% {
+    transform: scale3d(0.97, 0.97, 0.97);
   } to {
-    transform: none;
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
   }
 `;
 
 const ReactToastifyCss = css`
+  .Toastify__animate__bounceIn {
+    animation: ${_toastify_bounceIn} 1s both;
+  }
+
+  .Toastify__animate__bounceOut {
+    animation: ${_toastify_bounceOut} 0.75s both;
+  }
+
   .Toastify__toast-container {
     z-index: 9999;
     position: fixed;
@@ -48,6 +65,7 @@ const ReactToastifyCss = css`
     width: 320px;
     box-sizing: border-box;
     color: #fff;
+
     &--top-right {
       top: 1em;
       right: 1em;
@@ -58,6 +76,7 @@ const ReactToastifyCss = css`
       padding: 0;
       left: 0;
       margin: 0;
+
       &--top-right {
         top: 0;
       }
@@ -69,7 +88,7 @@ const ReactToastifyCss = css`
       box-sizing: border-box;
       margin-bottom: 1rem;
       padding: 8px;
-      border-radius: 3px;
+      border-radius: 4px;
       box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
       display: flex;
       justify-content: space-between;
@@ -80,14 +99,17 @@ const ReactToastifyCss = css`
       font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
       cursor: pointer;
       direction: ltr;
+
       &--default {
         background: #fff;
         color: #aaa;
       }
+
       &--info {
         color: #fff;
-        background: #149df3;
+        background: #20232a;
       }
+
       &-body {
         flex: 1;
         margin: auto 0 auto 0.75rem;
@@ -110,16 +132,19 @@ const ReactToastifyCss = css`
       opacity: 0.7;
       transition: 0.3s ease;
       align-self: flex-start;
+
       &--default {
         color: #000;
         opacity: 0.3;
       }
+
       & > svg {
         fill: currentColor;
         height: 16px;
         width: 14px;
         font-weight: 700;
       }
+
       &:hover,
       &:focus {
         opacity: 1;
@@ -134,14 +159,17 @@ const ReactToastifyCss = css`
       height: 5px;
       z-index: 9999;
       opacity: 0.7;
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: rgba(107, 244, 255, 0.7);
       transform-origin: left;
+
       &--animated {
         animation: ${_toastify_trackProgress} linear 1 forwards;
       }
+
       &--controlled {
         transition: transform 0.2s;
       }
+
       &--default {
         background: linear-gradient(
           to right,
@@ -153,18 +181,6 @@ const ReactToastifyCss = css`
           #ff2d55
         );
       }
-    }
-  }
-
-  .Toastify__bounce-enter {
-    &--top-right {
-      animation-name: ${_toastify_bounceInRight};
-    }
-  }
-
-  .Toastify__bounce-exit {
-    &--top-right {
-      animation-name: ${_toastify_bounceOutRight};
     }
   }
 `;

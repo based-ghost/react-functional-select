@@ -1,13 +1,10 @@
+import path from 'path';
 import pkg from './package.json';
 import babel from '@rollup/plugin-babel';
 import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import typescript from '@rollup/plugin-typescript';
-
-/*************************************************
- - CONFIG DATA
- *************************************************/
 
 const globals = {
   'react': 'React',
@@ -18,19 +15,27 @@ const globals = {
 
 const input = './src/index.ts';
 const name = 'ReactFunctionalSelect';
+const external = (id) => !id.startsWith('.') && !path.isAbsolute(id);
 
-const external = (id) => /^react|react-dom|styled-components|react-window|@babel\/runtime/.test(id);
+/**
+ * Terser Plugin config
+ */
+const minifierPlugin = terser({
+  format: {
+    preserve_annotations: true,
+  },
+});
 
-/*************************************************
- - PLUGIN DEFINITIONS (INDIVIDUAL)
- *************************************************/
+/**
+ * Replace Plugin config
+ */
+const replacePlugin = replace({
+  'process.env.NODE_ENV': JSON.stringify('production'),
+});
 
- const minifierPlugin = terser({
-   format: {
-     preserve_annotations: true,
-   },
- });
-
+/**
+ * Babel Plugin config (differs from project's babel.config.js)
+ */
 const babelPlugin = (useESModules = true) => {
   const targets = useESModules
     ? { esmodules: true }
@@ -63,31 +68,8 @@ const babelPlugin = (useESModules = true) => {
   });
 };
 
-/*************************************************
-- PLUGIN DEFINITIONS (GROUP)
- *************************************************/
-
-const cjsPlugins = [
-  typescript(),
-  babelPlugin(false),
-  // minifierPlugin,
-];
-
-const esmPlugins = [
-  typescript(),
-  babelPlugin(),
-  // minifierPlugin,
-];
-
-const umdPlugins = [
-  typescript(),
-  babelPlugin(),
-  replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-  minifierPlugin,
-];
-
 export default [
-  /*** COMMONJS ***/
+  // COMMONJS
   {
     external,
     input,
@@ -96,10 +78,15 @@ export default [
       format: 'cjs',
       exports: 'named',
     },
-    plugins: cjsPlugins,
+    plugins: [
+      replacePlugin,
+      typescript(),
+      babelPlugin(false),
+      minifierPlugin
+    ],
   },
 
-  /*** MODULE ***/
+  // MODULE
   {
     external,
     input,
@@ -108,10 +95,15 @@ export default [
       format: 'es',
       exports: 'named',
     },
-    plugins: esmPlugins,
+    plugins: [
+      replacePlugin,
+      typescript(),
+      babelPlugin(),
+      minifierPlugin
+    ],
   },
 
-  /*** BROWSER/UMD (PRODUCTION) ***/
+  // BROWSER/UMD
   {
     external: Object.keys(globals),
     input,
@@ -122,6 +114,11 @@ export default [
       name,
       exports: 'named',
     },
-    plugins: umdPlugins,
+    plugins: [
+      replacePlugin,
+      typescript(),
+      babelPlugin(),
+      minifierPlugin,
+    ],
   },
 ];

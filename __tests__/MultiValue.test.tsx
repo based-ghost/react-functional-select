@@ -1,8 +1,8 @@
-import { RfsTheme } from '../src/theme';
 import { MultiValueProps } from '../src/types';
+import { RFS_DEFAULT_THEME } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
-import MultiValue from '../src/components/MultiValue';
-import { CLEAR_ICON_MV_TESTID } from '../src/constants/dom';
+import { CLEAR_ICON_MV_TESTID } from '../src/constants';
+import MultiValue from '../src/components/value/MultiValue';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { Option, RENDER_OPTION_LABEL_MOCK, getOptionSingle } from './helpers/utils';
 
@@ -12,7 +12,7 @@ import { Option, RENDER_OPTION_LABEL_MOCK, getOptionSingle } from './helpers/uti
 
 const renderMultiValue = (props: MultiValueProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RfsTheme}>
+    <ThemeProvider theme={RFS_DEFAULT_THEME}>
       <MultiValue {...props} />
     </ThemeProvider>
   );
@@ -53,11 +53,11 @@ test('"renderOptionLabel" callback should be executed and should render the sele
 
 test('clear indicator has functioning "mouseDown" and "touchEnd" events', async () => {
   const { props, removeSelectedOptionSpy } = createMultiValueProps();
-  const { getByTestId } = renderMultiValue(props);
-  const clearIndicatorEl = getByTestId(CLEAR_ICON_MV_TESTID!);
+  const { getAllByTestId } = renderMultiValue(props);
+  const firstClearIconEl = getAllByTestId(CLEAR_ICON_MV_TESTID!)[0];
 
-  fireEvent.touchEnd(clearIndicatorEl);
-  fireEvent.mouseDown(clearIndicatorEl);
+  fireEvent.touchEnd(firstClearIconEl);
+  fireEvent.mouseDown(firstClearIconEl);
 
   expect(removeSelectedOptionSpy).toHaveBeenCalledTimes(2);
 });

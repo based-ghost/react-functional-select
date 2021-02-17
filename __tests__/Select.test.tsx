@@ -1,5 +1,6 @@
 import { Select, SelectProps } from '../src';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
+
 import {
   MENU_CONTAINER_CLS,
   SELECT_CONTAINER_CLS,
@@ -8,7 +9,7 @@ import {
   AUTOSIZE_INPUT_TESTID,
   SELECT_CONTAINER_TESTID,
   CONTROL_CONTAINER_TESTID
-} from '../src/constants/dom';
+} from '../src/constants';
 
 // ============================================
 // Helper functions for Select component
@@ -22,9 +23,8 @@ const renderSelect = (props?: SelectProps): RenderResult => {
 // Test cases
 // ============================================
 
-test('container elements have static className value (enables styling via classic CSS) when "addClassNames" = true', async () => {
-  const props = { addClassNames: true };
-  const { getByTestId } = renderSelect(props);
+test('container elements have static className value (enables styling via classic CSS)', async () => {
+  const { getByTestId } = renderSelect();
 
   expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveClass(SELECT_CONTAINER_CLS);
   expect(getByTestId(CONTROL_CONTAINER_TESTID!)).toHaveClass(CONTROL_CONTAINER_CLS);
@@ -120,4 +120,9 @@ test('toggling the menu to open/close fires corresponding callbacks "onMenuOpen"
 
   expect(onMenuOpenSpy).toBeCalled();
   expect(onMenuCloseSpy).toBeCalled();
+});
+
+test('When "lazyLoadMenu" property = true, then menu components are only rendered in DOM when "menuOpen" state = true', async () => {
+  const { queryByTestId } = renderSelect({ lazyLoadMenu: true });
+  expect(queryByTestId(MENU_CONTAINER_TESTID!)).toBeNull();
 });

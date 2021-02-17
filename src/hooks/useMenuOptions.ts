@@ -1,7 +1,6 @@
 import { useEffect, useState, ReactText } from 'react';
 import { trimAndFormatFilterStr } from '../utils';
-import { EMPTY_ARRAY } from '../constants/defaults';
-import { FilterMatchEnum } from '../constants/enums';
+import { EMPTY_ARRAY, FilterMatchEnum } from '../constants';
 import { OptionData, MenuOption, SelectedOption } from '../types';
 
 /**
@@ -36,8 +35,8 @@ export const useMenuOptions = (
     const getIsOptionDisabledOrDefault: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
     const getFilterOptionStringOrDefault: (option: MenuOption) => string = getFilterOptionString || ((option) => (typeof option.label === 'string') ? option.label : `${option.label}`);
 
-    const isOptionFilterMatch = (menuOption: MenuOption): boolean => {
-      const optionStr = getFilterOptionStringOrDefault(menuOption);
+    const isOptionFilterMatch = (option: MenuOption): boolean => {
+      const optionStr = getFilterOptionStringOrDefault(option);
       const normalizedOptionLabel = trimAndFormatFilterStr(optionStr, filterIgnoreCase, filterIgnoreAccents);
 
       return (filterMatchFrom === FilterMatchEnum.ANY)

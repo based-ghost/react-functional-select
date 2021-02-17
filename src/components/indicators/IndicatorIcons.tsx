@@ -1,8 +1,9 @@
-import React, { memo, FunctionComponent } from 'react';
+import React, { memo } from 'react';
 import LoadingDots from './LoadingDots';
+import ClearSvgIcon from './ClearSvgIcon';
 import styled, { css } from 'styled-components';
-import { IconRenderer, IndicatorIconsProps } from '../types';
-import { CLEAR_ICON_CLS, CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../constants/dom';
+import { IconRenderer, IndicatorIconsProps } from '../../types';
+import { CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../../constants';
 
 const IndicatorIconsWrapper = styled.div`
   display: flex;
@@ -27,27 +28,17 @@ const IndicatorIcon = styled.div`
   ${({ theme }) => theme.icon.css}
 `;
 
-const ClearSvg = styled.svg`
-  fill: currentColor;
-  ${({ theme: { icon: { clear } } }) => css`
-    width: ${clear.width};
-    height: ${clear.height};
-    animation: ${clear.animation};
-    transition: ${clear.transition};
-  `}
-`;
-
 const Caret = styled.div<Pick<IndicatorIconsProps, 'menuOpen' | 'isInvalid'>>`
   transition: ${({ theme }) => theme.icon.caret.transition};
   border-top: ${({ theme }) => theme.icon.caret.size} dashed;
   border-left: ${({ theme }) => theme.icon.caret.size} solid transparent;
   border-right: ${({ theme }) => theme.icon.caret.size} solid transparent;
 
-  ${({ menuOpen, isInvalid, theme: { color } }) =>
+  ${({ theme, menuOpen, isInvalid }) =>
     menuOpen &&
     css`
       transform: rotate(180deg);
-      color: ${isInvalid ? color.danger : color.caretActive || color.primary};
+      color: ${isInvalid ? theme.color.danger : theme.color.caretActive || theme.color.primary};
     `}
 `;
 
@@ -59,19 +50,6 @@ const Separator = styled.div`
   background-color: ${({ theme }) => theme.color.iconSeparator || theme.color.border};
 `;
 
-const ClearIcon: FunctionComponent<{ addClassNames?: boolean }> = ({ addClassNames }) => (
-  <ClearSvg
-    aria-hidden='true'
-    viewBox='0 0 14 16'
-    className={addClassNames ? CLEAR_ICON_CLS : undefined}
-  >
-    <path
-      fillRule='evenodd'
-      d='M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z'
-    />
-  </ClearSvg>
-);
-
 const IndicatorIcons = memo<IndicatorIconsProps>(({
   menuOpen,
   clearIcon,
@@ -81,22 +59,18 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
   isLoading,
   isDisabled,
   loadingNode,
-  addClassNames,
   onCaretMouseDown,
   onClearMouseDown
 }) => {
-  const forwardState =
+  const customIconContext =
     (typeof caretIcon === 'function' || typeof clearIcon === 'function')
-      ? {
-          menuOpen,
-          isLoading: !!isLoading,
-          isInvalid: !!isInvalid,
-          isDisabled: !!isDisabled
-        }
+      ? { menuOpen, isLoading: !!isLoading, isInvalid: !!isInvalid, isDisabled: !!isDisabled }
       : undefined;
 
   const renderIconFn = (renderer: IconRenderer) => {
-    return (typeof renderer === 'function') ? renderer(forwardState) : renderer;
+    return typeof renderer === 'function'
+      ? renderer(customIconContext)
+      : renderer;
   };
 
   return (
@@ -107,10 +81,10 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
           onMouseDown={onClearMouseDown}
           data-testid={CLEAR_ICON_TESTID}
         >
-          {renderIconFn(clearIcon) || <ClearIcon addClassNames={addClassNames} />}
+          {renderIconFn(clearIcon) || <ClearSvgIcon />}
         </IndicatorIcon>
       )}
-      {isLoading && (loadingNode || <LoadingDots addClassNames={addClassNames} />)}
+      {isLoading && (loadingNode || <LoadingDots />)}
       <Separator />
       <IndicatorIcon
         onTouchEnd={onCaretMouseDown}
@@ -122,7 +96,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
             aria-hidden='true'
             menuOpen={menuOpen}
             isInvalid={isInvalid}
-            className={addClassNames ? CARET_ICON_CLS : undefined}
+            className={CARET_ICON_CLS}
           />
         )}
       </IndicatorIcon>

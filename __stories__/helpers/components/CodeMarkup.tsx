@@ -30,11 +30,10 @@ const CodeMarkupContainer = styled.div`
 `;
 
 const Header = styled.div`
-  line-height: 3;
   color: #999;
+  line-height: 3;
   padding: 0 .9rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
   text-transform: uppercase;
   background-color: #20232a;
 `;
@@ -48,15 +47,15 @@ const PreContainer = styled.div`
   max-height: 385px !important;
 
   pre {
-    font-size: 14px;
     margin: 0 !important;
     border: none !important;
+    margin: 1rem !important;
     box-shadow: none !important;
     text-shadow: none !important;
-    padding: 1em !important;
-    background-color: #282c34 !important;
+    background: #282c34 !important;
 
     > code {
+      font-size: 14px !important;
       background: none !important;
       text-shadow: none !important;
       font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace !important;
@@ -117,12 +116,13 @@ const CodeMarkup = memo<CodeMarkupProps>(({
   formatFn
 }) => (
   <CodeMarkupContainer>
-    <Header>{header}</Header>
+    <Header>
+      {header}
+    </Header>
     <PreContainer>
       <SyntaxHighlighter
         wrapLines
         style={dark}
-        showLineNumbers
         language={language}
         useInlineStyles={false}
       >

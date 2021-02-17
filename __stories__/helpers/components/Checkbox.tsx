@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { hexToRgba } from '../utils';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 type CheckboxWrapperProps = Readonly<{
   isReadOnly?: boolean;
@@ -58,13 +58,14 @@ const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
 
   ${({ isReadOnly }) =>
     isReadOnly
-    && (`
+    && css`
       cursor: default;
       pointer-events: none;
+
       > i {
         opacity: 0.5;
       }
-    `)}
+    `}
 `;
 
 const CheckIcon = styled.i`

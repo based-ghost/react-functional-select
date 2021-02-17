@@ -93,11 +93,12 @@ declare module 'styled-components' {
         borderRadius: string;
       };
       clear: {
+        color: string;
         padding: string;
         fontSize: string;
-        alignItems: string;
+        alignSelf: string;
         transition: string;
-        borderRadius: string;
+        focusColor: string;
         fontWeight: string | number;
       }
     }

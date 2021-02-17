@@ -1,15 +1,14 @@
 import { ReactText } from 'react';
-import { EMPTY_ARRAY } from '../constants/defaults';
 import { OptionData, SelectedOption } from '../types';
-import { DIACRITICS_REGEXP } from '../constants/regexp';
-import { OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants/dom';
 
-/**
- * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).
- */
-function stripDiacritics(value: string): string {
-  return value.normalize('NFD').replace(DIACRITICS_REGEXP, '');
-}
+import {
+  EMPTY_ARRAY,
+  DIACRITICS_REGEXP,
+  OPTION_CLS,
+  OPTION_FOCUSED_CLS,
+  OPTION_SELECTED_CLS,
+  OPTION_DISABLED_CLS
+} from '../constants';
 
 /**
  * Tests if object is an array with at least 1 item.
@@ -19,10 +18,17 @@ export function isArrayWithLength(test: any): boolean {
 }
 
 /**
+ * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).
+ */
+function stripDiacritics(value: string): string {
+  return value.normalize('NFD').replace(DIACRITICS_REGEXP, '');
+}
+
+/**
  * Tests for a 'plain, classic' object (non-primitive type that is not an array).
  */
 export function isPlainObject(test: any): boolean {
-  return (test !== null) && (typeof test === 'object') && !Array.isArray(test);
+  return test !== null && typeof test === 'object' && !Array.isArray(test);
 }
 
 /**
@@ -73,13 +79,15 @@ export function normalizeValue(
       ? [value]
       : EMPTY_ARRAY;
 
-  return isArrayWithLength(initialValues)
-    ? initialValues.map((x: any) => ({
-      data: x,
-      value: getOptionValue(x),
-      label: getOptionLabel(x)
-    }))
-    : initialValues;
+  if (!isArrayWithLength(initialValues)) {
+    return initialValues;
+  }
+
+  return initialValues.map((x: any) => ({
+    data: x,
+    value: getOptionValue(x),
+    label: getOptionLabel(x)
+  }));
 }
 
 /**

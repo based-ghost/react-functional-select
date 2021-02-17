@@ -2,36 +2,19 @@ import { useMemo, useRef, useState, useEffect, useCallback, Fragment, ReactNode 
 import { toast } from 'react-toastify';
 import { SelectedOption } from '../src/types';
 import { useUpdateEffect } from '../src/hooks';
-import { useCallbackState } from './helpers/hooks';
-import { CityOption, Option, PackageOption } from './helpers/types';
-import { Select, MultiParams, MenuOption, SelectRef, FilterMatchEnum, Theme } from '../src';
-import { Checkbox, CodeMarkup, PackageLink, OptionsCountButton } from './helpers/components';
+import { CityOption, Option, PackageOption } from './types';
+import { Select, MultiParams, MenuOption, SelectRef, Theme } from '../src';
+
+import { useCallbackState } from './helpers';
+import { Checkbox, CodeMarkup, PackageLink, OptionsCountButton } from './helpers';
 
 import {
   mockHttpRequest,
   getRandomInt,
   createAsyncOptions,
   createSelectOptions,
-  stringifyJavaScriptObj,
-  renderInfoToast
-} from './helpers/utils';
-
-import {
-  ThemeEnum,
-  ThemeConfigMap,
-  THEME_DEFAULTS,
-  THEME_OPTIONS,
-  THEME_CONFIG,
-  CITY_OPTIONS,
-  PACKAGE_OPTIONS,
-  CLASS_NAME_HTML,
-  REACT_WINDOW_PACKAGE,
-  TOAST_CONTAINER_PROPS,
-  STYLED_COMPONENTS_PACKAGE,
-  REACT_SVG_CIRCLE_PROPS,
-  REACT_SVG_PATH_PROPS,
-  CHEVRON_DOWN_PATH_PROPS
-} from './helpers/constants';
+  stringifyJavaScriptObj
+} from './helpers';
 
 import {
   OPTION_CLS,
@@ -45,7 +28,26 @@ import {
   MENU_CONTAINER_CLS,
   SELECT_CONTAINER_CLS,
   CONTROL_CONTAINER_CLS,
-} from '../src/constants/dom';
+} from '../src/constants';
+
+import {
+  ThemeEnum,
+  ThemeConfigMap,
+  THEME_DEFAULTS,
+  THEME_OPTIONS,
+  THEME_CONFIG,
+  CITY_OPTIONS,
+  PACKAGE_OPTIONS,
+  CLASS_NAME_HTML,
+  REACT_WINDOW_PACKAGE,
+  TOAST_CONTAINER_PROPS,
+  STYLED_COMPONENTS_PACKAGE,
+  REACT_SVG_PROPS,
+  REACT_SVG_CIRCLE_PROPS,
+  REACT_SVG_PATH_PROPS,
+  CHEVRON_SVG_PROPS,
+  CHEVRON_DOWN_PATH_PROPS
+} from './helpers';
 
 import {
   Button,
@@ -72,8 +74,9 @@ import {
   OptionContainer,
   OptionName,
   ReactSvg,
-  ChevronDownSvg
-} from './helpers/styled';
+  ChevronDownSvg,
+  MenuPortalElement
+} from './helpers';
 
 export default {
   title: 'React Functional Select'
@@ -171,7 +174,6 @@ export const MultiSelect = () => {
   const [closeMenuOnSelect, setCloseMenuOnSelect] = useCallbackState(true);
   const [blurInputOnSelect, setBlurInputOnSelect] = useCallbackState(false);
   const [hideSelectedOptions, setHideSelectedOptions] = useCallbackState(true);
-  const [useRenderMultiOptions, setUseRenderMultiOptions] = useCallbackState(false);
 
   const getOptionValue = useCallback((option: CityOption): number => option.id, []);
   const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
@@ -213,7 +215,7 @@ export const MultiSelect = () => {
             convenience in multi-select scenarios.
           </Li>
           <Li>
-            <TextHeader>renderMultiOptions(params: MultiParams): ReactNode</TextHeader> -
+            <TextHeader>renderMultiOptions(params: MultiParams) {'=>'} ReactNode</TextHeader> -
             Optional callback function that can be used to further customize the selection
             label in multi-select scenarios. <code>params</code> is an object that contains
             the <code>selected</code> and <code>renderOptionLabel</code> properties (array
@@ -250,15 +252,27 @@ export const MultiSelect = () => {
               checked={openMenuOnClick}
               onCheck={setOpenMenuOnClick}
             />
-            <Checkbox
-              label='renderMultiOptions (custom renderer)'
-              checked={useRenderMultiOptions}
-              onCheck={setUseRenderMultiOptions}
-            />
           </Checkboxes>
         </CardHeader>
-        <CardBody>
+        <CardBody multiComponents>
           <SelectContainer>
+            <Label>Default</Label>
+            <Select
+              isMulti
+              isClearable
+              isSearchable
+              backspaceClearsValue
+              options={CITY_OPTIONS}
+              getOptionValue={getOptionValue}
+              getOptionLabel={getOptionLabel}
+              openMenuOnClick={openMenuOnClick}
+              blurInputOnSelect={blurInputOnSelect}
+              closeMenuOnSelect={closeMenuOnSelect}
+              hideSelectedOptions={hideSelectedOptions}
+            />
+          </SelectContainer>
+          <SelectContainer>
+            <Label>Custom "renderMultiOptions"</Label>
             <Select
               isMulti
               isClearable
@@ -270,8 +284,7 @@ export const MultiSelect = () => {
               blurInputOnSelect={blurInputOnSelect}
               closeMenuOnSelect={closeMenuOnSelect}
               hideSelectedOptions={hideSelectedOptions}
-              backspaceClearsValue={!useRenderMultiOptions}
-              renderMultiOptions={useRenderMultiOptions ? renderMultiOptions : undefined}
+              renderMultiOptions={renderMultiOptions}
             />
           </SelectContainer>
         </CardBody>
@@ -283,6 +296,9 @@ export const MultiSelect = () => {
 export const Styling = () => {
   const [themeConfig, setThemeConfig] = useState<Theme>();
   const [selectedOption, setSelectedOption] = useCallbackState<SelectedOption | null>(null);
+
+  const selectWrapperStyle = { marginTop: '1rem' };
+  const noteStyle = { color: '#F78D99', fontSize: 'inherit', fontWeight: 700 };
 
   const menuItemSize = selectedOption?.value === ThemeEnum.LARGE_TEXT ? 44 : 35;
 
@@ -344,9 +360,8 @@ export const Styling = () => {
       <Columns>
         <Column widthPercent={40}>
           <Content>
-            If you want to style the component using CSS classes, set the <code>addClassNames</code> prop
-            to true and it will then generate <code>className</code> attributes for that specific instance
-            of the component. These are the classes that are available:
+            There is also the option to handle styling via CSS classes.
+            These are the classes that are available:
           </Content>
           <ListWrapper className='is-class-list'>
             <List>
@@ -357,22 +372,27 @@ export const Styling = () => {
               <Li>{CARET_ICON_CLS}</Li>
               <Li>{CLEAR_ICON_CLS}</Li>
               <Li>{LOADING_DOTS_CLS}</Li>
-              <Li>{`${OPTION_CLS}, ${OPTION_FOCUSED_CLS}, ${OPTION_SELECTED_CLS}, ${OPTION_DISABLED_CLS}`}</Li>
+              <Li>{OPTION_CLS}, {OPTION_FOCUSED_CLS}, {OPTION_SELECTED_CLS}, {OPTION_DISABLED_CLS}</Li>
             </List>
           </ListWrapper>
         </Column>
-        <Column widthPercent={60}>{memoizedMarkupNode}</Column>
+        <Column widthPercent={60}>
+          {memoizedMarkupNode}
+        </Column>
       </Columns>
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>
         <CardHeader>
-          <Label>Try selecting different themes</Label>
+          <Label>
+            <strong style={noteStyle}>NOTE:</strong> the <code>themeConfig</code> property
+            value provided shoud be properly memoized!
+          </Label>
         </CardHeader>
         <CardBody>
           <Columns>
             <Column widthPercent={40}>
-              <div style={{ marginTop: '1rem' }}>
+              <div style={selectWrapperStyle}>
                 <Select
                   isClearable={false}
                   isSearchable={false}
@@ -409,23 +429,19 @@ export const Events = () => {
   const [addOnInputFocus, setAddOnInputFocus] = useCallbackState(false);
   const [addOnOptionChange, setAddOnOptionChange] = useCallbackState(true);
 
-  const onOptionChange = useCallback((option: Option | null): void => {
-    const optionJsonStr = JSON.stringify(option || {}).replace(/"/g, "'");
-    renderInfoToast(`Selected Option: ${optionJsonStr}`);
-  }, []);
-
-  const onMenuOpen = useCallback((): void => renderInfoToast('Menu opened!'), []);
-  const onMenuClose = useCallback((): void => renderInfoToast('Menu closed!'), []);
-  const onInputBlur = useCallback((): void => renderInfoToast('Control blurred!'), []);
-  const onInputFocus = useCallback((): void => renderInfoToast('Control focused!'), []);
-  const onKeyDown = useCallback((): void => renderInfoToast('keydown event executed!'), []);
+  const onMenuOpen = useCallback(() => toast.info('Menu opened!'), []);
+  const onMenuClose = useCallback(() => toast.info('Menu closed!'), []);
+  const onInputBlur = useCallback(() => toast.info('Control blurred!'), []);
+  const onInputFocus = useCallback(() => toast.info('Control focused!'), []);
+  const onKeyDown = useCallback(() => toast.info('keydown event executed!'), []);
+  const onOptionChange = useCallback((option: Option) => toast.info(`Selected Option: "${option?.value}"`), []);
 
   // Configure reat-toastify onMount and cleanup active toasts on beforeDismount
   useEffect(() => {
-    toast.configure(TOAST_CONTAINER_PROPS);
+    toast?.configure(TOAST_CONTAINER_PROPS);
 
     return () => {
-      toast.dismiss();
+      toast?.dismiss();
     };
   }, []);
 
@@ -438,37 +454,37 @@ export const Events = () => {
         their associated events:
         <List>
           <Li>
-            <TextHeader>onOptionChange(data: any): void</TextHeader> -
+            <TextHeader>onOptionChange(data: any) {'=>'} void</TextHeader> -
             executed after an option is selected or removed
           </Li>
           <Li>
-            <TextHeader>onMenuOpen(...args: any[]): void</TextHeader> -
+            <TextHeader>onMenuOpen(...args: any[]) {'=>'} void</TextHeader> -
             executed after the menu is opened
           </Li>
           <Li>
-            <TextHeader>onMenuClose(...args: any[]): void</TextHeader> -
+            <TextHeader>onMenuClose(...args: any[]) {'=>'} void</TextHeader> -
             executed after the menu is closed
           </Li>
           <Li>
-            <TextHeader>onInputChange(value: string): void</TextHeader> -
+            <TextHeader>onInputChange(value: string) {'=>'} void</TextHeader> -
             executed after the input control's value changes
           </Li>
           <Li>
-            <TextHeader>onInputBlur(e: FocusEvent&lt;HTMLInputElement&gt;): void</TextHeader> -
+            <TextHeader>onInputBlur(e: FocusEvent{'<'}HTMLInputElement{'>'}) {'=>'} void</TextHeader> -
             executed after the input control is blurred
           </Li>
           <Li>
-            <TextHeader>onInputFocus(e: FocusEvent&lt;HTMLInputElement&gt;): void</TextHeader> -
+            <TextHeader>onInputFocus(e: FocusEvent{'<'}HTMLInputElement{'>'}) {'=>'} void</TextHeader> -
             executed after the input control is focused
           </Li>
           <Li>
             <TextHeader>
-              onKeyDown(e: KeyboardEvent&lt;HTMLDivElement&gt;, input?: string, focusedOption?: FocusedOption): void
+              onKeyDown(e: KeyboardEvent{'<'}HTMLDivElement{'>'}, input?: string, focusedOption?: FocusedOption) {'=>'} void
             </TextHeader> -
             executed after the onKeyDown event
           </Li>
           <Li>
-            <TextHeader>onSearchChange(value: string): void</TextHeader> -
+            <TextHeader>onSearchChange(value: string) {'=>'} void</TextHeader> -
             executed after the input value is persisted to state; this value also evaluates
             the <code>inputDelay</code> property for debouncing - this callback is really
             only useful when <code>inputDelay</code> is defined, and if not, it probably
@@ -536,39 +552,46 @@ export const Methods = () => {
   const selectRef = useRef<SelectRef | null>(null);
   const options = useMemo<Option[]>(() => createSelectOptions(5), []);
 
-  const blurSelect = (): void => selectRef.current?.blur();
-  const focusSelect = (): void => selectRef.current?.focus();
-  const clearValue = (): void => selectRef.current?.clearValue();
-  const toggleMenuOpen = (): void => selectRef.current?.toggleMenu(true);
-  const updateSelectedOption = (): void => selectRef.current?.setValue(options[0]);
+  const blurSelect = () => selectRef.current?.blur();
+  const focusSelect = () => selectRef.current?.focus();
+  const clearValue = () => selectRef.current?.clearValue();
+  const toggleMenuOpen = () => selectRef.current?.toggleMenu(true);
+  const updateSelectedOption = () => selectRef.current?.setValue(options[0]);
 
   return (
     <Container>
-      <Title>Methods</Title>
+      <Title>Methods {'&'} Properties</Title>
       <Hr />
       <ListWrapper>
-        Five public methods are exposed to wrapping components and are
-        accessible via a forwarded <code>ref</code>.
+        <strong>5</strong> methods and <strong>2</strong> properties are exposed
+        to wrapping components and are accessible via a forwarded <code>ref</code>.
         <List>
           <Li>
-            <TextHeader>blur(): void</TextHeader> - blur the control
+            <TextHeader>blur() {'=>'} void</TextHeader> - blur the control
             programatically
           </Li>
           <Li>
-            <TextHeader>focus(): void</TextHeader> - focus the control
+            <TextHeader>focus() {'=>'} void</TextHeader> - focus the control
             programatically
           </Li>
           <Li>
-            <TextHeader>toggleMenu(state?: boolean): void</TextHeader> -
+            <TextHeader>toggleMenu(state?: boolean) {'=>'} void</TextHeader> -
             toggle the menu programatically
           </Li>
           <Li>
-            <TextHeader>clearValue(): void</TextHeader> - clear the current
+            <TextHeader>clearValue() {'=>'} void</TextHeader> - clear the current
             value programatically <em>(if an option is selected)</em>
           </Li>
           <Li>
-            <TextHeader>setValue(option?: any): void</TextHeader> - set the
+            <TextHeader>setValue(option?: any) {'=>'} void</TextHeader> - set the
             value programatically <em>(option will be validated)</em>
+          </Li>
+          <Hr />
+          <Li>
+            <TextHeader>empty: boolean</TextHeader> - Whether the select has a value
+          </Li>
+          <Li>
+            <TextHeader>menuOpen: boolean</TextHeader> - Whether or not the menu is open
           </Li>
         </List>
       </ListWrapper>
@@ -609,7 +632,10 @@ export const Filtering = () => {
   const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
   const getFilterOptionString = useCallback((menuOption: MenuOption): string => menuOption.data.state, []);
 
-  const options = useMemo<CityOption[]>(() => [...CITY_OPTIONS, { id: 11, city: 'São Paulo', state: 'BR' }], []);
+  const options = useMemo<CityOption[]>(() => [
+    ...CITY_OPTIONS,
+    { id: 11, city: 'São Paulo', state: 'BR' }
+  ], []);
 
   return (
     <Container>
@@ -631,7 +657,7 @@ export const Filtering = () => {
             Position in source string to perform match. Default value is <code>'any'</code>.
           </Li>
           <Li>
-            <TextHeader>getFilterOptionString(option: MenuOption): string</TextHeader> -
+            <TextHeader>getFilterOptionString(option: MenuOption) {'=>'} string</TextHeader> -
             When defined will take each option and generate a string used in
             the filtering process. By default, the stringified version of what is
             generated by <code>getOptionLabel</code>, if definded, or the option's label
@@ -677,8 +703,8 @@ export const Filtering = () => {
               getOptionLabel={getOptionLabel}
               filterIgnoreCase={filterIgnoreCase}
               filterIgnoreAccents={filterIgnoreAccents}
+              filterMatchFrom={filterMatchFromStart ? 'start' : 'any'}
               getFilterOptionString={useCustomFilterFunc ? getFilterOptionString : undefined}
-              filterMatchFrom={filterMatchFromStart ? FilterMatchEnum.START : FilterMatchEnum.ANY}
             />
           </SelectContainer>
         </CardBody>
@@ -687,7 +713,7 @@ export const Filtering = () => {
   );
 };
 
-export const Windowing = () => {
+export const Virtualization = () => {
   const optionCountList: number[] = [100, 1000, 5000, 25000, 50000];
 
   const selectRef = useRef<SelectRef | null>(null);
@@ -705,14 +731,14 @@ export const Windowing = () => {
 
   return (
     <Container>
-      <Title>Integrated Windowing</Title>
+      <Title>Menu List Virtualization</Title>
       <Hr />
       <ListWrapper>
-        Option data is 'windowed' using the{' '}
-        <PackageLink {...REACT_WINDOW_PACKAGE} /> package. Aside from the
+        Option list data is <em>virtualized</em> (or <em>windowed</em>) using
+        the <PackageLink {...REACT_WINDOW_PACKAGE} /> package. Aside from the
         obvious benefits provided by only rendering a small subset of your
         enumerable data (rather than bloating the DOM with an excessive amount
-        of nodes), 'windowing' can also assist with:
+        of nodes), list virtualization can also assist with:
         <List>
           <Li>
             <strong>Efficient memory allocation</strong>. 'Windowing' naturally
@@ -723,7 +749,7 @@ export const Windowing = () => {
             immediately release it for the GC to cleanup. As an example I am
             generating the <code>onClick</code>, <code>id</code>, and{' '}
             <code>className</code> attributes for each <code>menuOption</code>{' '}
-            as they get passed to the <code>&lt;Option /&gt;</code> renderer
+            as they get passed to the <code>{'<'}Option /{'>'}</code> renderer
             component.
           </Li>
           <Li>
@@ -734,7 +760,7 @@ export const Windowing = () => {
             open to performance optimizations - most notably, memoization.
             Simple components that rely on the props passed to it (rather than
             its own managed state) to generate its JSX are likely candidates for
-            memoization (testing &amp; debugging becomes much easier as well).
+            memoization (testing {'&'} debugging becomes much easier as well).
           </Li>
         </List>
         <em>Note: </em>The only time any noticeable performance degradation will
@@ -771,17 +797,13 @@ export const Windowing = () => {
 };
 
 export const Advanced = () => {
-  const getOptionValue = useCallback((option: PackageOption): number => option.id, []);
-  const getIsOptionDisabled = useCallback((option: PackageOption): boolean => option.name === PACKAGE_OPTIONS[3].name, []);
+  const getOptionValue = useCallback((x: PackageOption): number => x.id, []);
+  const getIsOptionDisabled = useCallback((x: PackageOption): boolean => x.name === PACKAGE_OPTIONS[3].name, []);
 
   const renderOptionLabel = useCallback(
     (option: PackageOption): ReactNode => (
       <OptionContainer>
-        <ReactSvg
-          aria-hidden='true'
-          viewBox='0 0 841.9 595.3'
-          isDisabled={getIsOptionDisabled(option)}
-        >
+        <ReactSvg {...REACT_SVG_PROPS} isDisabled={getIsOptionDisabled(option)}>
           <path {...REACT_SVG_PATH_PROPS} />
           <circle {...REACT_SVG_CIRCLE_PROPS} />
         </ReactSvg>
@@ -793,7 +815,7 @@ export const Advanced = () => {
 
   const customCaretIcon = useCallback(
     ({ menuOpen }): ReactNode => (
-      <ChevronDownSvg menuOpen={menuOpen} aria-hidden='true' viewBox='0 0 448 512'>
+      <ChevronDownSvg {...CHEVRON_SVG_PROPS} menuOpen={menuOpen}>
         <path {...CHEVRON_DOWN_PATH_PROPS} />
       </ChevronDownSvg>
     ),
@@ -808,7 +830,7 @@ export const Advanced = () => {
         Implementation using a couple of the more specialized properties.
         <List>
           <Li>
-            <TextHeader>renderOptionLabel(option: any): React.ReactNode</TextHeader> - Callback
+            <TextHeader>renderOptionLabel(option: any) {'=>'} ReactNode</TextHeader> - Callback
             function with a return type of <code>ReactNode</code>. Use this property in cases
             where the standard <code>getOptionLabel</code> property won't meet your needs (for
             instance, you want to render each option's label using custom JSX). More complex
@@ -819,18 +841,18 @@ export const Advanced = () => {
             important to note that increasing this value can negatively impact performance.
           </Li>
           <Li>
-            <TextHeader>getIsOptionDisabled(option: any): boolean</TextHeader> - Callback
+            <TextHeader>getIsOptionDisabled(option: any) {'=>'} boolean</TextHeader> - Callback
             function with a return type of <code>Boolean</code>. When it evaluates to a value of
             true, that option iteration will be rendered <em>disabled</em>. As an alternative, you
             can also pass a property of <code>isDisabled</code> with each option. Use of these two
             options - they cannot both be specified.
           </Li>
           <Li>
-            <TextHeader>caretIcon: ReactNode | (...args: any[]) =&gt; ReactNode</TextHeader> - A custom
+            <TextHeader>caretIcon: ReactNode | (...args: any[]) {'=>'} ReactNode</TextHeader> - A custom
             node or a function that returns a node can used for the <code>caretIcon</code> property.
             When using a function, an object containing stateful data is forwarded and can be used to style
             your custom node accordingly. The state is <code>{'{ menuOpen, isLoading, isInvalid, isDisabled }'}</code> of
-            type <code>Record&lt;string, boolean&gt;</code>. The <code>clearIcon</code> property has an identical definition.
+            type <code>Record{'<'}string, boolean{'>'}</code>. The <code>clearIcon</code> property has an identical definition.
           </Li>
         </List>
       </ListWrapper>
@@ -858,19 +880,73 @@ export const Advanced = () => {
   );
 };
 
+export const Portaling = () => {
+  const menuPortalElId = 'menu-portal-test';
+  const options = useMemo<Option[]>(() => createSelectOptions(3), []);
+
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [menuPortalTarget, setMenuPortalTarget] = useState<Element | undefined>();
+
+  const onMenuOpen = useCallback((): void => setMenuOpen(true), []);
+  const onMenuClose = useCallback((): void => setMenuOpen(false), []);
+
+  useEffect(() => {
+    const portalEl = document.getElementById(menuPortalElId);
+    setMenuPortalTarget(portalEl);
+  }, [menuPortalElId]);
+
+  return (
+    <Container>
+      <Title>Portaling</Title>
+      <Hr />
+      <Paragraph>
+        React-Functional-Select exposes a <code>menuPortalTarget</code> prop, that
+        allows you to portal the menu component to a dom node of your choosing. Styling
+        should be simple enough via normal theme overriding on the menu object and style
+        application to the wrapping portal element.
+      </Paragraph>
+      <SubTitle>Demo</SubTitle>
+      <Hr />
+      <Card>
+        <CardHeader>
+          <Label>
+            Menu component portaled to an element below this text.
+          </Label>
+          <MenuPortalElement
+            menuOpen={menuOpen}
+            id={menuPortalElId}
+          >
+            <span>Portal {'<'}div /{'>'}</span>
+          </MenuPortalElement>
+        </CardHeader>
+        <CardBody>
+          <SelectContainer>
+            <Select
+              options={options}
+              onMenuOpen={onMenuOpen}
+              onMenuClose={onMenuClose}
+              menuPortalTarget={menuPortalTarget}
+            />
+          </SelectContainer>
+        </CardBody>
+      </Card>
+    </Container>
+  );
+};
+
 export const Async = () => {
+  const delay = 500;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5, 'Initial'));
 
-  const onInputChange = useCallback((): void => setIsLoading(true), []);
+  const onInputChange = useCallback(() => setIsLoading(true), []);
 
-  const onSearchChange = useCallback((value?: string): void => {
+  const onSearchChange = useCallback((value?: string) => {
     mockHttpRequest()
       .then(() => {
-        const nextOptions = createAsyncOptions(
-          getRandomInt(1, 5),
-          `Search text: ${value || 'Initial'}`
-        );
+        const count = getRandomInt(1, 5);
+        const lblSuffix = `Search text: ${value || 'Initial'}`;
+        const nextOptions = createAsyncOptions(count, lblSuffix);
 
         setOptions(nextOptions);
       })
@@ -890,14 +966,14 @@ export const Async = () => {
         found below. <em>Properties onInputChange and onSearchChange should be memoized.</em>
         <List>
           <Li>
-            <TextHeader>onInputChange(value: string): void</TextHeader> -
+            <TextHeader>onInputChange(value: string) {'=>'} void</TextHeader> -
             callback executed directly following the input control's <code>onChange</code> event.
             This callback is not debounced, so it fires immediately. This is a good
             place to set a stateful loading property in your parent component that is mapped to
             react-functional-select's <code>isLoading</code> property.
           </Li>
           <Li>
-            <TextHeader>onSearchChange(value: string): void</TextHeader> -
+            <TextHeader>onSearchChange(value: string) {'=>'} void</TextHeader> -
             callback executed following component state updates for
             the <code>debouncedInputValue</code>. The debounce is set using
             the <code>inputDelay</code> property. This callback is a good place for your
@@ -922,15 +998,15 @@ export const Async = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>Search debounced 500ms and mock HTTP call resolves after 500ms</Label>
+          <Label>Search debounced 500ms and mock HTTP call resolves after {delay}ms</Label>
         </CardHeader>
         <CardBody>
           <SelectContainer>
             <Select
               async
               isClearable
-              inputDelay={500}
               options={options}
+              inputDelay={delay}
               isLoading={isLoading}
               onInputChange={onInputChange}
               onSearchChange={onSearchChange}

@@ -85,10 +85,10 @@ export const Column = styled.div<{ widthPercent?: number }>`
 
   ${({ widthPercent }) =>
     widthPercent
-    && (`
+    && css`
       flex: none;
       width: ${widthPercent}%;
-    `)}
+    `}
 `;
 
 export const ListWrapper = styled.div`
@@ -99,12 +99,11 @@ export const ListWrapper = styled.div`
   }
 
   &.is-class-list {
-    font-weight: 500;
     max-width: 100% !important;
 
     ul {
       li + li {
-        margin-top: 0.8em !important;
+        margin-top: 0.5em !important;
       }
     }
   }
@@ -174,12 +173,12 @@ export const Button = styled.button`
   overflow: visible;
   user-select: none;
   text-align: center;
-  border-radius: 3px;
   display: inline-block;
   vertical-align: middle;
+  border-radius: 0.25rem;
   padding: 0.375rem 0.75rem;
   -webkit-appearance: button;
-  background-color: rgba(9, 30, 66, 0.075);
+  background-color: rgba(9, 30, 66, 0.08);
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
 
   :focus {
@@ -187,7 +186,7 @@ export const Button = styled.button`
   }
 
   :hover, :focus {
-    background-color: rgba(9, 30, 66, 0.125);
+    background-color: rgba(9, 30, 66, 0.1275);
   }
 
   ${MEDIA_QUERY_IS_MOBILE} {
@@ -289,10 +288,27 @@ export const CardHeader = styled.div`
   }
 `;
 
-export const CardBody = styled.div`
+export const CardBody = styled.div<{ multiComponents?: boolean }>`
   flex: 1 1 auto;
   min-height: 32rem;
   padding: 0.75rem 1.25rem;
+
+  ${({ multiComponents }) =>
+    multiComponents &&
+    css`
+      > div {
+        margin-bottom: 1.5rem;
+
+        :first-of-type > label {
+          margin-top: 0;
+        }
+
+        > label {
+          font-size: 18px;
+          margin-bottom: 0.5rem;
+        }
+      }
+    `}
 
   ${MEDIA_QUERY_IS_MOBILE} {
     padding: 0.75rem 0;
@@ -304,6 +320,25 @@ export const OtherSpan = styled.span`
   font-size: 0.75em;
   margin-top: 0.05em;
   margin-left: 0.45em;
+`;
+
+export const MenuPortalElement = styled.div<{ menuOpen: boolean; }>`
+  width: 100%;
+  margin: 0.5rem 0;
+  min-height: 115px;
+  position: relative;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s ease-out;
+  background-color: ${({ menuOpen }) => menuOpen ? 'white' : 'whitesmoke'};
+
+  span {
+    font-weight: 700;
+    font-size: 1.5em;
+    text-align: center;
+    padding: 1.25em 1em;
+    color: rgba(0,0,0,0.6);
+    display: ${({ menuOpen }) => menuOpen ? 'none' : 'block'};
+  }
 `;
 
 // =======================================
@@ -334,7 +369,7 @@ export const ChevronDownSvg = styled.svg<{ menuOpen: boolean }>`
   height: 14px;
   fill: currentColor;
   transition: transform 0.25s ease-in-out;
-  ${({ menuOpen }) => menuOpen && 'transform: rotate(180deg);'}
+  ${({ menuOpen }) => menuOpen && css`transform: rotate(180deg);`}
 `;
 
 export const OptionContainer = styled.div`

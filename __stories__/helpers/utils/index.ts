@@ -1,38 +1,40 @@
-import { Option } from './types';
-import { toast } from 'react-toastify';
+import { Option } from '../../types';
 
-export const renderInfoToast = (message: string): void => {
-  toast.info(message);
-};
-
-export const stringifyJavaScriptObj = (data: any): string => {
-  return JSON.stringify(data || {}, null, 2)
-    .replace(/"(\w+)"\s*:/g, '$1:')
-    .replace(/"/g, "'");
+export const stringifyJavaScriptObj = (data: any = {}): string => {
+  return JSON.stringify(data, null, 2)
+    .replace(/"(\w+)"\s*:/g, '$1:');
 };
 
 export const createSelectOptions = (optionCount: number): Option[] => {
   const results: Option[] = [];
+
   for (let i = 0; i < optionCount; i += 1) {
+    const value = i + 1;
     results.push({
-      value: i + 1,
-      label: `Option ${i + 1}`
+      value,
+      label: 'Option ' + value
     });
   }
+
   return results;
 };
 
-export const createAsyncOptions = (optionCount: number, labelSuffix: string): Option[] => {
+export const createAsyncOptions = (
+  optionCount: number,
+  lblSuffix: string
+): Option[] => {
   const options = createSelectOptions(optionCount);
 
-  return options.map((option) => ({
-    value: `${option.value}${labelSuffix}`,
-    label: `${option.label} - ${labelSuffix}`
+  return options.map(({ value, label }: Option) => ({
+    value,
+    label: `${label} - ${lblSuffix}`
   }));
 };
 
 export const createThemeOptions = (ThemeEnum: any): Option[] => {
-  return Object.keys(ThemeEnum).map((key) => ({
+  const keys = Object.keys(ThemeEnum);
+
+  return keys.map((key) => ({
     value: ThemeEnum[key],
     label: ThemeEnum[key]
   }));
@@ -41,15 +43,13 @@ export const createThemeOptions = (ThemeEnum: any): Option[] => {
 export const hexToRgba = (hex: string, alpha: number = 1): string => {
   const hexReplacer: string = hex.replace(
     /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
-    (m, r, g, b): string => `#${r}${r}${g}${g}${b}${b}`
+    (_m, r, g, b): string => `#${r}${r}${g}${g}${b}${b}`
   );
 
   const alphaValid: number = Math.min(1, Math.max(0, alpha));
+  const rgbParts: number[] = hexReplacer.substring(1).match(/.{2}/g)!.map((x) => parseInt(x, 16));
 
-  const rgbaParts: number[] = [
-    ...hexReplacer.substring(1).match(/.{2}/g)!.map((x: string): number => parseInt(x, 16)),
-    alphaValid
-  ];
+  const rgbaParts: number[] = [...rgbParts, alphaValid];
 
   return `rgba(${rgbaParts.join(',')})`;
 };

@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { LoadingDotsProps } from '../types';
 import styled, { css } from 'styled-components';
-import { LOADING_DOTS_CLS } from '../constants/dom';
+import { LOADING_DOTS_CLS } from '../../constants';
 
 const StyledLoadingDots = styled.div`
   display: flex;
@@ -17,8 +16,8 @@ const StyledLoadingDots = styled.div`
     ${({ theme: { loader } }) => css`
       width: ${loader.size};
       height: ${loader.size};
-      background-color: ${loader.color};
       animation: ${loader.animation};
+      background-color: ${loader.color};
     `}
 
     :nth-of-type(1) {
@@ -31,10 +30,10 @@ const StyledLoadingDots = styled.div`
   }
 `;
 
-const LoadingDots: FunctionComponent<LoadingDotsProps> = ({ addClassNames }) => (
+const LoadingDots: FunctionComponent = () => (
   <StyledLoadingDots
     aria-hidden='true'
-    className={addClassNames ? LOADING_DOTS_CLS : undefined}
+    className={LOADING_DOTS_CLS}
   >
     <div />
     <div />

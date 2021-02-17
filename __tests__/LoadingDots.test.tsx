@@ -1,7 +1,7 @@
-import { RfsTheme } from '../src/theme';
+import { RFS_DEFAULT_THEME } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
-import LoadingDots from '../src/components/LoadingDots';
 import { render, RenderResult } from '@testing-library/react';
+import LoadingDots from '../src/components/indicators/LoadingDots';
 
 // ============================================
 // Helper functions for LoadingDots component
@@ -9,7 +9,7 @@ import { render, RenderResult } from '@testing-library/react';
 
 const renderLoadingDots = (): RenderResult => {
   return render(
-    <ThemeProvider theme={RfsTheme}>
+    <ThemeProvider theme={RFS_DEFAULT_THEME}>
       <LoadingDots />
     </ThemeProvider>
   );

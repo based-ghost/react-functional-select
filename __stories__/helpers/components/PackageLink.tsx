@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 type PackageLinkProps = Readonly<{
@@ -22,7 +22,7 @@ const Link = styled.a`
   box-shadow: 0 1px 0 0 currentColor;
 `;
 
-const PackageLink = memo<PackageLinkProps>(({ name, href }) => (
+const PackageLink: FunctionComponent<PackageLinkProps> = ({ name, href }) => (
   <Link
     href={href}
     target='_blank'
@@ -31,6 +31,6 @@ const PackageLink = memo<PackageLinkProps>(({ name, href }) => (
   >
     {name}
   </Link>
-));
+);
 
 export default PackageLink;
