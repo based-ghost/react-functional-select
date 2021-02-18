@@ -1,4 +1,4 @@
-# react-functional-select
+# React-Functional-Select
 
 > Micro-sized & micro-optimized select component for React.js.
 
@@ -174,4 +174,4 @@ This project was inspired by [`react-select`](https://github.com/JedWatson/react
 
 ## License
 
-MIT licensed. [Matt Areddia](https://github.com/based-ghost) &copy; 2019.
+MIT licensed. Copyright (c) [Matt Areddia](https://github.com/based-ghost) 2021.
