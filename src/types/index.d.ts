@@ -22,7 +22,6 @@ export type PartialDeep<T> = {
 
 export type OptionData = any;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
-export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
 
 export type SelectedOption = {
   data?: OptionData;
@@ -131,6 +130,6 @@ export type IndicatorIconsProps = Readonly<{
   loadingNode?: ReactNode;
   clearIcon?: IconRenderer;
   caretIcon?: IconRenderer;
-  onClearMouseDown: MouseOrTouchEventHandler<HTMLElement>;
-  onCaretMouseDown?: MouseOrTouchEventHandler<HTMLElement>;
+  onClearMouseDown: EventHandler<MouseOrTouchEvent<HTMLElement>>;
+  onCaretMouseDown?: EventHandler<MouseOrTouchEvent<HTMLElement>>;
 }>;

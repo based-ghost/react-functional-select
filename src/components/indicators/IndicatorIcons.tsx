@@ -93,7 +93,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
       >
         {renderIconFn(caretIcon) || (
           <Caret
-            aria-hidden='true'
+            aria-hidden
             menuOpen={menuOpen}
             isInvalid={isInvalid}
             className={CARET_ICON_CLS}

@@ -77,11 +77,11 @@ export const RFS_DEFAULT_THEME: DefaultTheme = {
     label: {
       fontSize: '0.825em',
       borderRadius: '0.25rem',
-      padding: '1px 2px 1px 6px'
+      padding: '1px 0 1px 6px'
     },
     clear: {
-      fontWeight: 700,
-      padding: '0 7px',
+      fontWeight: 600,
+      padding: '0 6px',
       color: '#a6a6a6',
       fontSize: '0.65em',
       alignSelf: 'center',

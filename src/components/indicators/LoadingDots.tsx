@@ -32,7 +32,7 @@ const StyledLoadingDots = styled.div`
 
 const LoadingDots: FunctionComponent = () => (
   <StyledLoadingDots
-    aria-hidden='true'
+    aria-hidden
     className={LOADING_DOTS_CLS}
   >
     <div />
