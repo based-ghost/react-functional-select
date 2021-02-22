@@ -1,7 +1,6 @@
 {
   "extends": [
     "eslint-config-poetez/typescript-react",
-    "eslint-config-prettier/@typescript-eslint",
     "react-app",
     "plugin:prettier/recommended"
   ],
@@ -18,5 +17,10 @@
     "spaced-comment": "off",
     "capitalized-comments": "off",
     "padding-line-between-statements": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

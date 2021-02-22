@@ -16,10 +16,6 @@ import { FocusedOption, MultiParams } from '../Select';
 // Shared / Object / Param / Misc types
 // ============================================
 
-export type PartialDeep<T> = {
-  [P in keyof T]?: PartialDeep<T[P]>;
-};
-
 export type OptionData = any;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 
@@ -76,11 +72,11 @@ export type MenuListProps = Readonly<{
   itemSize: number;
   loadingMsg: string;
   isLoading?: boolean;
-  noOptionsMsg: string;
   overscanCount?: number;
   width: string | number;
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
+  noOptionsMsg: string | null;
   itemKeySelector?: ReactText;
   renderOptionLabel: (data: OptionData) => ReactNode;
   fixedSizeListRef: MutableRefObject<FixedSizeList | null>;
@@ -94,6 +90,10 @@ export interface MenuProps extends MenuListProps {
   menuRef: MutableRefObject<HTMLDivElement | null>;
   onMenuMouseDown: (e: MouseOrTouchEvent<HTMLDivElement>) => void;
 }
+
+export type MenuWrapperProps = Pick<MenuProps, 'menuOpen' | 'menuTop'> & {
+  hideNoOptionsMsg: boolean;
+};
 
 export type AriaLiveRegionProps = Readonly<{
   menuOpen: boolean;

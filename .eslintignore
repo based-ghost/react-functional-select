@@ -1,6 +1,9 @@
-**/node_modules/**/*
-**/dist/**/*
-**/src/**/*
-**/__stories__/**/*
-**/__tests__/**/*
-docs
+src/
+docs/
+dist/
+__tests__/
+__stories__/
+node_modules/
+
+npm-*.log
+*-debug.log

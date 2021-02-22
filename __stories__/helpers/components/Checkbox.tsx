@@ -89,7 +89,7 @@ const CheckIcon = styled.i`
     width: 0.2rem;
     display: block;
     position: absolute;
-    border-radius: 0.25rem;
+    border-radius: 3px;
     transform-origin: left top;
     background-color: ${_colorCheckMark};
     transition: opacity 0.365s ease, height 0s linear 0.365s;

@@ -1,6 +1,6 @@
 module.exports = (api) => {
   const isTestEnv = api.env('test');
-  const targets = !isTestEnv ? '>1%, not dead, not ie 11, not op_mini all' : { node: 'current' };
+  const targets = !isTestEnv ? '>0.25%, not dead, not ie 11, not op_mini all' : { node: 'current' };
 
   const envOptions = {
     targets,

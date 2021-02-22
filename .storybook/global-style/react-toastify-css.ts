@@ -55,7 +55,7 @@ const ReactToastifyCss = css`
   }
 
   .Toastify__animate__bounceOut {
-    animation: ${_toastify_bounceOut} 0.75s both;
+    animation: ${_toastify_bounceOut} 0.85s both;
   }
 
   .Toastify__toast-container {
@@ -88,7 +88,7 @@ const ReactToastifyCss = css`
       box-sizing: border-box;
       margin-bottom: 1rem;
       padding: 8px;
-      border-radius: 4px;
+      border-radius: 3px;
       box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
       display: flex;
       justify-content: space-between;

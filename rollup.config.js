@@ -39,7 +39,7 @@ const replacePlugin = replace({
 const babelPlugin = (useESModules = true) => {
   const targets = useESModules
     ? { esmodules: true }
-    : '>1%, not dead, not ie 11, not op_mini all';
+    : '>0.25%, not dead, not ie 11, not op_mini all';
 
   return babel({
     babelrc: false,

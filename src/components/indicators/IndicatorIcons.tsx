@@ -75,7 +75,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
 
   return (
     <IndicatorIconsWrapper>
-      {(showClear && !isLoading) && (
+      {showClear && !isLoading && (
         <IndicatorIcon
           onTouchEnd={onClearMouseDown}
           onMouseDown={onClearMouseDown}

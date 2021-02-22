@@ -58,7 +58,9 @@ const MenuList: FunctionComponent<MenuListProps> = ({
       >
         {Option}
       </FixedSizeList>
-      {!isArrayWithLength(menuOptions) && <NoOptionsMsg>{noOptionsMsg}</NoOptionsMsg>}
+      {!isArrayWithLength(menuOptions) && noOptionsMsg && (
+        <NoOptionsMsg>{noOptionsMsg}</NoOptionsMsg>
+      )}
     </Fragment>
   );
 };

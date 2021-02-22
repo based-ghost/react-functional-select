@@ -125,7 +125,7 @@ All properties are technically optional (with a few having default values). Very
 |`menuWidth`| ReactText | `100%` | Width of the menu
 |`menuItemSize`| number | `35` | The height of each option in the menu (px)
 |`isClearable`| bool | `false` | Is the select value clearable
-|`noOptionsMsg`| string | `No options` | The text displayed in the menu when there are no options available
+|`noOptionsMsg`| string | `No options` | The text displayed in the menu when there are no options available (to hide menu when search returns no items, set to `null` or `''`)
 |`loadingMsg`| string | `Loading...` | The text displayed in the menu when `isLoading` === `true`
 |`clearIcon`| ReactNode OR ((state: any) => ReactNode) | `undefined` | Custom clear icon node - `state` forwarded to a function is `{ menuOpen, isLoading, isInvalid, isDisabled }`
 |`caretIcon`| ReactNode OR ((state: any) => ReactNode) | `undefined` | Custom caret icon node - `state` forwarded to a function is `{ menuOpen, isLoading, isInvalid, isDisabled }`

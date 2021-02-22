@@ -1,8 +1,9 @@
 {
-  "bracketSpacing": true,
+  "bracketSpacing": false,
   "printWidth": 100,
   "trailingComma": "es5",
   "tabWidth": 2,
   "singleQuote": true,
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "parser": "babel"
 }

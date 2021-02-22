@@ -40,7 +40,7 @@ export const RFS_DEFAULT_THEME: DefaultTheme = {
     minHeight: '38px',
     borderWidth: '1px',
     borderStyle: 'solid',
-    borderRadius: '0.25rem',
+    borderRadius: '3px',
     boxShadow: '0 0 0 0.2rem',
     padding: '0.375rem 0.75rem',
     boxShadowColor: 'rgba(0, 123, 255, 0.25)',
@@ -51,16 +51,16 @@ export const RFS_DEFAULT_THEME: DefaultTheme = {
     padding: '0',
     width: '100%',
     margin: '0.5rem 0',
-    borderRadius: '0.25rem',
+    borderRadius: '3px',
     backgroundColor: '#fff',
     animation: FADE_IN_ANIMATION_CSS,
-    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 11px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 0.5em 1em -0.125em rgb(10 10 10 / 12%), 0 0 0 1px rgb(10 10 10 / 4%)',
     option: {
       textAlign: 'left',
       selectedColor: '#fff',
       selectedBgColor: '#007bff',
       padding: '0.375rem 0.75rem',
-      focusedBgColor: 'rgba(0, 123, 255, 0.20)'
+      focusedBgColor: 'rgba(0, 123, 255, 0.15)'
     }
   },
   noOptions: {
@@ -71,12 +71,12 @@ export const RFS_DEFAULT_THEME: DefaultTheme = {
   },
   multiValue: {
     margin: '1px 2px',
-    borderRadius: '0.25rem',
+    borderRadius: '3px',
     backgroundColor: '#e7edf3',
     animation: FADE_IN_ANIMATION_CSS,
     label: {
+      borderRadius: '3px',
       fontSize: '0.825em',
-      borderRadius: '0.25rem',
       padding: '1px 0 1px 6px'
     },
     clear: {

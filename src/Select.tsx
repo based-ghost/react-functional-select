@@ -36,9 +36,13 @@ import { RFS_DEFAULT_THEME } from './theme';
 import { FixedSizeList } from 'react-window';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
+import { OptionData, SelectedOption, MouseOrTouchEvent, IndicatorIconsProps } from './types';
 import { mergeDeep, IS_TOUCH_DEVICE, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
 import { useDebounce, useMenuPositioner, useMenuOptions, useMountEffect, useUpdateEffect } from './hooks';
-import { OptionData, PartialDeep, SelectedOption, MouseOrTouchEvent, IndicatorIconsProps } from './types';
+
+type PartialDeep<T> = {
+  [P in keyof T]?: PartialDeep<T[P]>;
+};
 
 export type Theme = PartialDeep<DefaultTheme>;
 
@@ -89,7 +93,6 @@ export type SelectProps = Readonly<{
   menuWidth?: ReactText;
   menuItemSize?: number;
   isClearable?: boolean;
-  noOptionsMsg?: string;
   lazyLoadMenu?: boolean;
   options?: OptionData[];
   isSearchable?: boolean;
@@ -108,6 +111,7 @@ export type SelectProps = Readonly<{
   closeMenuOnSelect?: boolean;
   isAriaLiveEnabled?: boolean;
   scrollMenuIntoView?: boolean;
+  noOptionsMsg?: string | null;
   hideSelectedOptions?: boolean;
   filterIgnoreAccents?: boolean;
   backspaceClearsValue?: boolean;
@@ -501,13 +505,14 @@ const Select = forwardRef<SelectRef, SelectProps>((
     const curFocusedIdx = focusedMultiValue ? selectedOption.findIndex((x) => x.value === focusedMultiValue) : -1;
 
     switch (direction) {
-      case ValueIndexEnum.NEXT:
+      case ValueIndexEnum.NEXT: {
         nextFocusedIdx = (curFocusedIdx > -1 && curFocusedIdx < lastValueIdx)
           ? (curFocusedIdx + 1)
           : -1;
 
         break;
-      case ValueIndexEnum.PREVIOUS:
+      }
+      case ValueIndexEnum.PREVIOUS: {
         nextFocusedIdx =
           curFocusedIdx !== 0
             ? curFocusedIdx === -1
@@ -516,6 +521,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
             : 0;
 
         break;
+      }
     }
 
     const nextFocusedVal: ReactText | null = (nextFocusedIdx >= 0)
@@ -551,20 +557,23 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
     switch (e.key) {
       case 'ArrowDown':
-      case 'ArrowUp':
+      case 'ArrowUp': {
         const downKey = e.key === 'ArrowDown';
         menuOpen
           ? focusOptionOnArrowKey(downKey ? OptionIndexEnum.DOWN : OptionIndexEnum.UP)
           : openMenuAndFocusOption(downKey ? OptionIndexEnum.FIRST : OptionIndexEnum.LAST);
 
         break;
+      }
       case 'ArrowLeft':
-      case 'ArrowRight':
+      case 'ArrowRight': {
         if (!isMulti || inputValue || renderMultiOptions) return;
         focusValueOnArrowKey(e.key === 'ArrowLeft' ? ValueIndexEnum.PREVIOUS : ValueIndexEnum.NEXT);
 
         break;
-      case ' ': // Handle spacebar keydown events
+      }
+      // Handle spacebar keydown events
+      case ' ': {
         if (inputValue) {
           return;
         } else if (!menuOpen) {
@@ -576,27 +585,30 @@ const Select = forwardRef<SelectRef, SelectProps>((
         }
 
         break;
-      case 'Enter': // Check e.keyCode !== 229 (Input Method Editor)
-        if (menuOpen && e.keyCode !== 229) {
-          selectOptionFromFocused();
-        }
-
+      }
+      // Check e.keyCode !== 229 (Input Method Editor)
+      case 'Enter': {
+        if (menuOpen && e.keyCode !== 229) selectOptionFromFocused();
         break;
-      case 'Escape':
+      }
+      case 'Escape': {
         if (menuOpen) {
           setMenuOpen(false);
           setInputValue('');
         }
 
         break;
-      case 'Tab':
+      }
+      case 'Tab': {
         if (!menuOpen || !tabSelectsOption || !focusedOption.data || e.shiftKey) {
           return;
         }
         selectOptionFromFocused();
+
         break;
+      }
       case 'Delete':
-      case 'Backspace':
+      case 'Backspace': {
         if (inputValue) return;
 
         if (focusedMultiValue) {
@@ -622,6 +634,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
         }
 
         break;
+      }
       default:
         return;
     }

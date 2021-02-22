@@ -173,9 +173,9 @@ export const Button = styled.button`
   overflow: visible;
   user-select: none;
   text-align: center;
+  border-radius: 3px;
   display: inline-block;
   vertical-align: middle;
-  border-radius: 0.25rem;
   padding: 0.375rem 0.75rem;
   -webkit-appearance: button;
   background-color: rgba(9, 30, 66, 0.08);
@@ -254,8 +254,8 @@ export const Card = styled.div`
   display: flex;
   margin: 1.25rem 0;
   position: relative;
+  border-radius: 3px;
   word-wrap: break-word;
-  border-radius: 0.25rem;
   background-color: #fff;
   flex-direction: column;
   background-clip: border-box;
@@ -327,7 +327,7 @@ export const MenuPortalElement = styled.div<{ menuOpen: boolean; }>`
   margin: 0.5rem 0;
   min-height: 115px;
   position: relative;
-  border-radius: 0.25rem;
+  border-radius: 3px;
   transition: background-color 0.2s ease-out;
   background-color: ${({ menuOpen }) => menuOpen ? 'white' : 'whitesmoke'};
 

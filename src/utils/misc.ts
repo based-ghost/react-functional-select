@@ -3,7 +3,6 @@ import { OptionData, SelectedOption } from '../types';
 
 import {
   EMPTY_ARRAY,
-  DIACRITICS_REGEXP,
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
   OPTION_SELECTED_CLS,
@@ -20,6 +19,7 @@ export function isArrayWithLength(test: any): boolean {
 /**
  * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).
  */
+const DIACRITICS_REGEXP = /[\u0300-\u036f]/g;
 function stripDiacritics(value: string): string {
   return value.normalize('NFD').replace(DIACRITICS_REGEXP, '');
 }
@@ -51,7 +51,7 @@ export function trimAndFormatFilterStr(
 /**
  * Builds the className property in Option.tsx component.
  */
-export function buildOptionClassName(
+export function optionClassNames(
   isDisabled?: boolean,
   isSelected?: boolean,
   isFocused?: boolean

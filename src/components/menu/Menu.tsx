@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { createPortal } from 'react-dom';
 import MenuList from './MenuList';
-import { MenuProps } from '../../types';
 import styled, { css } from 'styled-components';
+import { isArrayWithLength } from '../../utils';
+import { MenuProps, MenuWrapperProps } from '../../types';
 
 import {
   OPTION_CLS,
@@ -13,19 +14,19 @@ import {
   MENU_CONTAINER_TESTID
 } from '../../constants';
 
-const MenuWrapper = styled.div<Pick<MenuProps, 'menuOpen' | 'menuTop'>>`
+const MenuWrapper = styled.div<MenuWrapperProps>`
   z-index: 999;
   cursor: default;
   position: absolute;
 
-  ${({ menuTop, menuOpen, theme: { menu } }) => css`
+  ${({ menuTop, menuOpen, hideNoOptionsMsg, theme: { menu } }) => css`
     width: ${menu.width};
     margin: ${menu.margin};
     padding: ${menu.padding};
     animation: ${menu.animation};
-    box-shadow: ${menu.boxShadow};
     border-radius: ${menu.borderRadius};
     background-color: ${menu.backgroundColor};
+    box-shadow: ${hideNoOptionsMsg ? 'none' : menu.boxShadow};
     ${!menuOpen ? 'display: none;' : ''}
     ${menuTop ? `top: ${menuTop};` : ''}
   `}
@@ -69,6 +70,11 @@ const Menu: FunctionComponent<MenuProps> = ({
   menuPortalTarget,
   ...menuListProps
 }) => {
+  const hideNoOptionsMsg =
+    menuOpen &&
+    !Boolean(menuListProps.noOptionsMsg) &&
+    !isArrayWithLength(menuListProps.menuOptions);
+
   const menuNode = (
     <MenuWrapper
       ref={menuRef}
@@ -77,6 +83,7 @@ const Menu: FunctionComponent<MenuProps> = ({
       onMouseDown={onMenuMouseDown}
       className={MENU_CONTAINER_CLS}
       data-testid={MENU_CONTAINER_TESTID}
+      hideNoOptionsMsg={hideNoOptionsMsg}
     >
       <MenuList {...menuListProps} />
     </MenuWrapper>

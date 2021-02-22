@@ -1,7 +1,6 @@
 {
   "name": "react-functional-select",
   "version": "3.0.0",
-  "author": "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)",
   "description": "Miro-sized and micro-optimized select component for React.js",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
@@ -12,9 +11,10 @@
   ],
   "sideEffects": false,
   "license": "MIT",
-  "contributors": [
-    "Matt Areddia <mareddia@protonmail.com> (https://github.com/based-ghost/)"
-  ],
+  "author": {
+    "name": "Matt Areddia",
+    "email": "mareddia@protonmail.com"
+  },
   "bugs": {
     "url": "https://github.com/based-ghost/react-functional-select/issues"
   },
@@ -25,19 +25,16 @@
   "homepage": "https://based-ghost.github.io/react-functional-select/",
   "keywords": [
     "react",
-    "reactjs",
-    "react-component",
-    "react-virtualized",
+    "react-components",
+    "react-functional-select",
     "select",
-    "react-select",
+    "dropdown",
     "styled-components",
-    "virtualized",
-    "windowed",
-    "react-window",
-    "combobox",
-    "form",
-    "input",
-    "ui"
+    "virtualization",
+    "windowing",
+    "multi-select",
+    "performance",
+    "functional"
   ],
   "devDependencies": {
     "@babel/cli": "^7.12.17",
@@ -69,12 +66,12 @@
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "^1.12.0",
-    "concurrently": "^5.3.0",
+    "concurrently": "^6.0.0",
     "cross-env": "^7.0.3",
     "enzyme": "^3.11.0",
     "eslint": "^7.20.0",
     "eslint-config-poetez": "^1.0.0",
-    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^26.6.3",
     "jest-enzyme": "^7.1.2",
