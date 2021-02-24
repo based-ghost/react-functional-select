@@ -51,8 +51,8 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
     ? selectedOption.map(({ label }) => label).join(' ')
     : 'N/A';
 
-  const selectedOptionMsg = `Selected option: ${selectedOptionLabel}`;
-  const extendedFeedbackMsg = `${focusedMsg} ${optionsMsg} ${menuMsg}`;
+  const selectedOptionMsg = 'Selected option: ' + selectedOptionLabel;
+  const extendedFeedbackMsg = focusedMsg + optionsMsg + menuMsg;
 
   return (
     <A11yText

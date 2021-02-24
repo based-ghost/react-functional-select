@@ -30,7 +30,7 @@ export const useMenuOptions = (
 
   useEffect(() => {
     const normalizedInput = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
-    const selectedHash = !!selectedOption.length ? new Set(selectedOption.map((x) => x.value)) : undefined;
+    const selectedHash = selectedOption.length ? new Set(selectedOption.map((x) => x.value)) : undefined;
 
     const getIsOptionDisabledOrDefault: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
     const getFilterOptionStringOrDefault: (option: MenuOption) => string = getFilterOptionString || ((option) => (typeof option.label === 'string') ? option.label : `${option.label}`);

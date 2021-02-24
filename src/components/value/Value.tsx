@@ -61,10 +61,7 @@ const Value: FunctionComponent<ValueProps> = ({
   return (
     <Fragment>
       {renderMultiOptions
-        ? renderMultiOptions({
-            renderOptionLabel,
-            selected: selectedOption
-          })
+        ? renderMultiOptions({ renderOptionLabel, selected: selectedOption })
         : selectedOption.map(({ data, value }) => (
             <MultiValue
               key={value}

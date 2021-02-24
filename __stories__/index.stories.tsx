@@ -298,7 +298,7 @@ export const Styling = () => {
   const [selectedOption, setSelectedOption] = useCallbackState<SelectedOption | null>(null);
 
   const selectWrapperStyle = { marginTop: '1rem' };
-  const noteStyle = { color: '#F78D99', fontSize: 'inherit', fontWeight: 700 };
+  const noteStyle = { fontSize: 'inherit', fontWeight: 700 };
 
   const menuItemSize = selectedOption?.value === ThemeEnum.LARGE_TEXT ? 44 : 35;
 
