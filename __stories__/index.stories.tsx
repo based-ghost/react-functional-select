@@ -5,17 +5,6 @@ import { useUpdateEffect } from '../src/hooks';
 import { CityOption, Option, PackageOption } from './types';
 import { Select, MultiParams, MenuOption, SelectRef, Theme } from '../src';
 
-import { useCallbackState } from './helpers';
-import { Checkbox, CodeMarkup, PackageLink, OptionsCountButton } from './helpers';
-
-import {
-  mockHttpRequest,
-  getRandomInt,
-  createAsyncOptions,
-  createSelectOptions,
-  stringifyJavaScriptObj
-} from './helpers';
-
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -29,25 +18,6 @@ import {
   SELECT_CONTAINER_CLS,
   CONTROL_CONTAINER_CLS,
 } from '../src/constants';
-
-import {
-  ThemeEnum,
-  ThemeConfigMap,
-  THEME_DEFAULTS,
-  THEME_OPTIONS,
-  THEME_CONFIG,
-  CITY_OPTIONS,
-  PACKAGE_OPTIONS,
-  CLASS_NAME_HTML,
-  REACT_WINDOW_PACKAGE,
-  TOAST_CONTAINER_PROPS,
-  STYLED_COMPONENTS_PACKAGE,
-  REACT_SVG_PROPS,
-  REACT_SVG_CIRCLE_PROPS,
-  REACT_SVG_PATH_PROPS,
-  CHEVRON_SVG_PROPS,
-  CHEVRON_DOWN_PATH_PROPS
-} from './helpers';
 
 import {
   Button,
@@ -75,7 +45,33 @@ import {
   OptionName,
   ReactSvg,
   ChevronDownSvg,
-  MenuPortalElement
+  MenuPortalElement,
+  ThemeEnum,
+  ThemeConfigMap,
+  Checkbox,
+  CodeMarkup,
+  PackageLink,
+  OptionsCountButton,
+  mockHttpRequest,
+  getRandomInt,
+  useCallbackState,
+  createAsyncOptions,
+  createSelectOptions,
+  stringifyJavaScriptObj,
+  THEME_DEFAULTS,
+  THEME_OPTIONS,
+  THEME_CONFIG,
+  CITY_OPTIONS,
+  PACKAGE_OPTIONS,
+  CLASS_NAME_HTML,
+  REACT_WINDOW_PACKAGE,
+  TOAST_CONTAINER_PROPS,
+  STYLED_COMPONENTS_PACKAGE,
+  REACT_SVG_PROPS,
+  REACT_SVG_CIRCLE_PROPS,
+  REACT_SVG_PATH_PROPS,
+  CHEVRON_SVG_PROPS,
+  CHEVRON_DOWN_PATH_PROPS
 } from './helpers';
 
 export default {

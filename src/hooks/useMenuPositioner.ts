@@ -1,6 +1,6 @@
-import { useUpdateEffect } from './useUpdateEffect';
-import { MenuPositionEnum } from '../constants';
 import { useEffect, useState, useRef, MutableRefObject } from 'react';
+import { MenuPositionEnum } from '../constants';
+import { useUpdateEffect } from './useUpdateEffect';
 import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
 
 /**

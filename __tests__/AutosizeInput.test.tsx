@@ -1,8 +1,7 @@
-import { RFS_DEFAULT_THEME } from '../src/theme';
-import { AutosizeInputProps } from '../src/types';
+import { DEFAULT_THEME } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
-import { AutosizeInput } from '../src/components';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
+import AutosizeInput, { AutosizeInputProps } from '../src/components/input/AutosizeInput';
 import { EMPTY_ARRAY, AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants';
 
 // ============================================
@@ -11,7 +10,7 @@ import { EMPTY_ARRAY, AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/c
 
 const renderAutosizeInput = (props: AutosizeInputProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RFS_DEFAULT_THEME}>
+    <ThemeProvider theme={DEFAULT_THEME}>
       <AutosizeInput {...props} />
     </ThemeProvider>
   );

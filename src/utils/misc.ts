@@ -68,11 +68,11 @@ export function optionClassNames(
 /**
  * Parses an object or an array of objects into output of SelectedOption[].
  */
-export function normalizeValue(
+export const normalizeValue = (
   value: any,
   getOptionValue: (data: OptionData) => ReactText,
   getOptionLabel: (data: OptionData) => ReactText
-): SelectedOption[] {
+): SelectedOption[] => {
   const initialValues = Array.isArray(value)
     ? value
     : isPlainObject(value)
@@ -88,7 +88,7 @@ export function normalizeValue(
     value: getOptionValue(x),
     label: getOptionLabel(x)
   }));
-}
+};
 
 /**
  * Immutable implementation of mergeDeep for two objects. Will return the merged result.

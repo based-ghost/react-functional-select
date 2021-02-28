@@ -1,7 +1,7 @@
 import { Theme } from '../../../src/Select';
 import { createThemeOptions } from '../utils';
 import { mergeDeep } from '../../../src/utils';
-import { RFS_DEFAULT_THEME } from '../../../src/theme';
+import { DEFAULT_THEME } from '../../../src/theme';
 
 // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
 const _bounceKeyframes = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
@@ -72,7 +72,7 @@ export const ThemeConfigMap: Theme = {
 };
 
 export const THEME_OPTIONS = createThemeOptions(ThemeEnum);
-export const THEME_DEFAULTS = mergeDeep(RFS_DEFAULT_THEME, _themeAnimations);
+export const THEME_DEFAULTS = mergeDeep(DEFAULT_THEME, _themeAnimations);
 
 export const THEME_CONFIG: Theme = {
   menu: {

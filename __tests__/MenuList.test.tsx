@@ -1,9 +1,9 @@
-import { RFS_DEFAULT_THEME } from '../src/theme';
+import { MenuOption } from '../src';
+import { DEFAULT_THEME } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
-import MenuList from '../src/components/menu/MenuList';
-import { MenuListProps, MenuOption } from '../src/types';
 import { render, RenderResult } from '@testing-library/react';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
+import MenuList, { MenuListProps } from '../src/components/menu/MenuList';
 import { MENU_ITEM_SIZE_DEFAULT, MENU_MAX_HEIGHT_DEFAULT, LOADING_MSG_DEFAULT, NO_OPTIONS_MSG_DEFAULT, FOCUSED_OPTION_DEFAULT } from '../src/constants';
 
 // ============================================
@@ -12,7 +12,7 @@ import { MENU_ITEM_SIZE_DEFAULT, MENU_MAX_HEIGHT_DEFAULT, LOADING_MSG_DEFAULT, N
 
 const renderMenuList = (props: MenuListProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RFS_DEFAULT_THEME}>
+    <ThemeProvider theme={DEFAULT_THEME}>
       <MenuList {...props} />
     </ThemeProvider>
   );

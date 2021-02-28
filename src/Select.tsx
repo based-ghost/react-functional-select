@@ -21,36 +21,31 @@ import {
   OptionIndexEnum,
   MenuPositionEnum,
   EMPTY_ARRAY,
-  LOADING_MSG_DEFAULT,
   PLACEHOLDER_DEFAULT,
+  LOADING_MSG_DEFAULT,
+  CONTROL_CONTAINER_CLS,
   FOCUSED_OPTION_DEFAULT,
   NO_OPTIONS_MSG_DEFAULT,
   MENU_ITEM_SIZE_DEFAULT,
   MENU_MAX_HEIGHT_DEFAULT,
-  CONTROL_CONTAINER_CLS,
   CONTROL_CONTAINER_TESTID,
   SELECT_WRAPPER_ATTRIBUTES
 } from './constants';
 
-import { RFS_DEFAULT_THEME } from './theme';
+import { DEFAULT_THEME } from './theme';
 import { FixedSizeList } from 'react-window';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
-import { Menu, Value, AutosizeInput, IndicatorIcons, AriaLiveRegion } from './components';
-import { OptionData, SelectedOption, MouseOrTouchEvent, IndicatorIconsProps } from './types';
+import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
 import { mergeDeep, IS_TOUCH_DEVICE, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
 import { useDebounce, useMenuPositioner, useMenuOptions, useMountEffect, useUpdateEffect } from './hooks';
-
-type PartialDeep<T> = {
-  [P in keyof T]?: PartialDeep<T[P]>;
-};
+import { OptionData, FocusedOption, SelectedOption, IconRenderer, MouseOrTouchEvent, PartialDeep } from './types';
 
 export type Theme = PartialDeep<DefaultTheme>;
 
-export interface FocusedOption extends SelectedOption {
-  index: number;
-  isDisabled?: boolean;
-  isSelected?: boolean;
-};
+export type MultiParams = Readonly<{
+  selected: SelectedOption[];
+  renderOptionLabel: (data: OptionData) => ReactNode;
+}>;
 
 export type MenuOption = Readonly<{
   label: ReactText;
@@ -68,11 +63,6 @@ export type SelectRef = Readonly<{
   clearValue: () => void;
   toggleMenu: (state?: boolean) => void;
   setValue: (option?: OptionData) => void;
-}>;
-
-export type MultiParams = Readonly<{
-  selected: SelectedOption[];
-  renderOptionLabel: (data: OptionData) => ReactNode;
 }>;
 
 export type SelectProps = Readonly<{
@@ -99,6 +89,8 @@ export type SelectProps = Readonly<{
   menuMaxHeight?: number;
   loadingNode?: ReactNode;
   ariaLabelledBy?: string;
+  clearIcon?: IconRenderer;
+  caretIcon?: IconRenderer;
   openMenuOnClick?: boolean;
   openMenuOnFocus?: boolean;
   menuPortalTarget?: Element;
@@ -131,14 +123,12 @@ export type SelectProps = Readonly<{
   getIsOptionDisabled?: (data: OptionData) => boolean;
   getFilterOptionString?: (option: MenuOption) => string;
   renderMultiOptions?: (params: MultiParams) => ReactNode;
-  clearIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
-  caretIcon?: ReactNode | ((state: Partial<IndicatorIconsProps>) => ReactNode);
   onKeyDown?: (e: KeyboardEvent<HTMLDivElement>, input?: string, focusedOption?: FocusedOption) => any;
 }>;
 
 interface ControlWrapperProps extends Pick<SelectProps, 'isInvalid' | 'isDisabled'> {
   isFocused: boolean;
-};
+}
 
 const SelectWrapper = styled.div`
   position: relative;
@@ -281,8 +271,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   // Memoized DefaultTheme object for styled-components ThemeProvider
   const theme = useMemo<DefaultTheme>(() => {
     return isPlainObject(themeConfig)
-      ? mergeDeep(RFS_DEFAULT_THEME, themeConfig)
-      : RFS_DEFAULT_THEME;
+      ? mergeDeep(DEFAULT_THEME, themeConfig)
+      : DEFAULT_THEME;
   }, [themeConfig]);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
@@ -507,7 +497,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     switch (direction) {
       case ValueIndexEnum.NEXT: {
         nextFocusedIdx = (curFocusedIdx > -1 && curFocusedIdx < lastValueIdx)
-          ? (curFocusedIdx + 1)
+          ? curFocusedIdx + 1
           : -1;
 
         break;

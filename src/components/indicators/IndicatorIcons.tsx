@@ -1,9 +1,22 @@
-import React, { memo } from 'react';
+import React, { memo, EventHandler, ReactNode } from 'react';
 import LoadingDots from './LoadingDots';
 import ClearSvgIcon from './ClearSvgIcon';
 import styled, { css } from 'styled-components';
-import { IconRenderer, IndicatorIconsProps } from '../../types';
+import { IconRenderer, MouseOrTouchEvent } from '../../types';
 import { CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../../constants';
+
+export type IndicatorIconsProps = Readonly<{
+  menuOpen: boolean;
+  showClear: boolean;
+  isLoading?: boolean;
+  isInvalid?: boolean;
+  isDisabled?: boolean;
+  loadingNode?: ReactNode;
+  clearIcon?: IconRenderer;
+  caretIcon?: IconRenderer;
+  onClearMouseDown: EventHandler<MouseOrTouchEvent<HTMLElement>>;
+  onCaretMouseDown?: EventHandler<MouseOrTouchEvent<HTMLElement>>;
+}>;
 
 const IndicatorIconsWrapper = styled.div`
   display: flex;

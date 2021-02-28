@@ -1,8 +1,8 @@
-import { Value } from '../src/components';
-import { RFS_DEFAULT_THEME } from '../src/theme';
+import { DEFAULT_THEME } from '../src/theme';
+import { SelectedOption } from '../src/types';
 import { ThemeProvider } from 'styled-components';
-import { ValueProps, SelectedOption } from '../src/types';
 import { render, RenderResult } from '@testing-library/react';
+import Value, { ValueProps } from '../src/components/value/Value';
 import { PLACEHOLDER_DEFAULT, EMPTY_ARRAY } from '../src/constants';
 import { RENDER_OPTION_LABEL_MOCK, RENDER_MULTI_OPTIONS_MOCK, getSelectedOptionSingle } from './helpers/utils';
 
@@ -12,7 +12,7 @@ import { RENDER_OPTION_LABEL_MOCK, RENDER_MULTI_OPTIONS_MOCK, getSelectedOptionS
 
 const renderValue = (props: ValueProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RFS_DEFAULT_THEME}>
+    <ThemeProvider theme={DEFAULT_THEME}>
       <Value {...props} />
     </ThemeProvider>
   );
@@ -23,7 +23,7 @@ const rerenderValue = (
   rerender: (...args: any[]) => void
 ): void => {
   rerender(
-    <ThemeProvider theme={RFS_DEFAULT_THEME}>
+    <ThemeProvider theme={DEFAULT_THEME}>
       <Value {...props} />
     </ThemeProvider>
   );

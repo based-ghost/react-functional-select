@@ -1,7 +1,13 @@
-import React, { memo } from 'react';
-import { MultiValueProps } from '../../types';
+import React, { memo, ReactNode, ReactText } from 'react';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../../constants';
+import { OptionData, MouseOrTouchEvent, SelectedOption } from '../../types';
+
+export type MultiValueProps = SelectedOption & Readonly<{
+  isFocused: boolean;
+  renderOptionLabel: (data: OptionData) => ReactNode;
+  removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLElement>) => void;
+}>;
 
 const _clearIconFocusStyle  = css`
   z-index: 5000;

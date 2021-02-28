@@ -1,9 +1,34 @@
-import React, { useMemo, Fragment, FunctionComponent } from 'react';
+import React, {
+  useMemo,
+  Fragment,
+  ReactNode,
+  ReactText,
+  MutableRefObject,
+  FunctionComponent
+} from 'react';
+
 import Option from './Option';
 import styled from 'styled-components';
+import { MenuOption } from '../../Select';
 import { isArrayWithLength } from '../../utils';
-import { MenuListProps, ItemData } from '../../types';
 import { FixedSizeList, ListItemKeySelector } from 'react-window';
+import { ItemData, OptionData, SelectedOption } from '../../types';
+
+export type MenuListProps = Readonly<{
+  height: number;
+  itemSize: number;
+  loadingMsg: string;
+  isLoading?: boolean;
+  overscanCount?: number;
+  width: string | number;
+  menuOptions: MenuOption[];
+  focusedOptionIndex: number;
+  noOptionsMsg: string | null;
+  itemKeySelector?: ReactText;
+  renderOptionLabel: (data: OptionData) => ReactNode;
+  fixedSizeListRef: MutableRefObject<FixedSizeList | null>;
+  selectOption: (option: SelectedOption, isSelected?: boolean) => void;
+}>;
 
 const NoOptionsMsg = styled.div`
   text-align: center;

@@ -1,11 +1,10 @@
-import { FocusedOption } from '../src';
-import { RFS_DEFAULT_THEME } from '../src/theme';
+import { DEFAULT_THEME } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
-import { AriaLiveRegion } from '../src/components';
 import { ARIA_LIVE_TESTID } from '../src/constants';
 import { getSelectedOptionMulti } from './helpers/utils';
+import { FocusedOption, SelectedOption } from '../src/types';
 import { render, RenderResult } from '@testing-library/react';
-import { AriaLiveRegionProps, SelectedOption } from '../src/types';
+import AriaLiveRegion, { AriaLiveRegionProps } from '../src/components/aria/AriaLiveRegion';
 
 // ============================================
 // Helper functions for AriaLiveRegion component
@@ -13,7 +12,7 @@ import { AriaLiveRegionProps, SelectedOption } from '../src/types';
 
 const renderAriaLiveRegion = (props: AriaLiveRegionProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RFS_DEFAULT_THEME}>
+    <ThemeProvider theme={DEFAULT_THEME}>
       <AriaLiveRegion {...props} />
     </ThemeProvider>
   );

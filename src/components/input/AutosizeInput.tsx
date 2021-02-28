@@ -1,9 +1,32 @@
-import React, { forwardRef, memo, useState, useRef, Fragment, Ref } from 'react';
+import React, {
+  Ref,
+  memo,
+  useRef,
+  useState,
+  Fragment,
+  forwardRef,
+  FormEventHandler,
+  FocusEventHandler
+} from 'react';
+
 import styled from 'styled-components';
+import { SelectedOption } from '../../types';
 import { useUpdateEffect } from '../../hooks';
-import { AutosizeInputProps } from '../../types';
 import { AUTOSIZE_INPUT_ATTRIBUTES } from '../../constants';
 import { isArrayWithLength, IS_MICROSOFT_BROWSER } from '../../utils';
+
+export type AutosizeInputProps = Readonly<{
+  id?: string;
+  readOnly: boolean;
+  ariaLabel?: string;
+  inputValue: string;
+  required?: boolean;
+  ariaLabelledBy?: string;
+  selectedOption: SelectedOption[];
+  onBlur: FocusEventHandler<HTMLInputElement>;
+  onFocus: FocusEventHandler<HTMLInputElement>;
+  onChange: FormEventHandler<HTMLInputElement>;
+}>;
 
 const _inputMinWidthPx = 2;
 

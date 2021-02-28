@@ -20,7 +20,7 @@ const external = (id) => !id.startsWith('.') && !path.isAbsolute(id);
 /**
  * Terser Plugin config
  */
-const minifierPlugin = terser({
+const terserPlugin = terser({
   format: {
     preserve_annotations: true,
   },
@@ -30,6 +30,7 @@ const minifierPlugin = terser({
  * Replace Plugin config
  */
 const replacePlugin = replace({
+  preventAssignment: true,
   'process.env.NODE_ENV': JSON.stringify('production'),
 });
 
@@ -82,7 +83,7 @@ export default [
       replacePlugin,
       typescript(),
       babelPlugin(false),
-      minifierPlugin
+      terserPlugin,
     ],
   },
 
@@ -99,7 +100,7 @@ export default [
       replacePlugin,
       typescript(),
       babelPlugin(),
-      minifierPlugin
+      terserPlugin,
     ],
   },
 
@@ -118,7 +119,7 @@ export default [
       replacePlugin,
       typescript(),
       babelPlugin(),
-      minifierPlugin,
+      terserPlugin,
     ],
   },
 ];

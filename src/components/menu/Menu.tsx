@@ -1,9 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { MutableRefObject, FunctionComponent } from 'react';
 import { createPortal } from 'react-dom';
-import MenuList from './MenuList';
 import styled, { css } from 'styled-components';
 import { isArrayWithLength } from '../../utils';
-import { MenuProps, MenuWrapperProps } from '../../types';
+import { MouseOrTouchEvent } from '../../types';
+import MenuList, { MenuListProps } from './MenuList';
 
 import {
   OPTION_CLS,
@@ -13,6 +13,18 @@ import {
   MENU_CONTAINER_CLS,
   MENU_CONTAINER_TESTID
 } from '../../constants';
+
+export interface MenuProps extends MenuListProps {
+  menuTop?: string;
+  menuOpen: boolean;
+  menuPortalTarget?: Element;
+  menuRef: MutableRefObject<HTMLDivElement | null>;
+  onMenuMouseDown: (e: MouseOrTouchEvent<HTMLDivElement>) => void;
+}
+
+interface MenuWrapperProps extends Pick<MenuProps, 'menuOpen' | 'menuTop'> {
+  hideNoOptionsMsg: boolean;
+}
 
 const MenuWrapper = styled.div<MenuWrapperProps>`
   z-index: 999;

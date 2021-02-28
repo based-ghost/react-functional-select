@@ -1,10 +1,9 @@
 import { ReactNode } from 'react';
-import { RFS_DEFAULT_THEME } from '../src/theme';
+import { DEFAULT_THEME } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
-import { IndicatorIcons } from '../src/components';
-import { IndicatorIconsProps } from '../src/types';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/constants';
+import IndicatorIcons, { IndicatorIconsProps } from '../src/components/indicators/IndicatorIcons';
 
 // ============================================
 // Helper functions for IndicatorIcons component
@@ -12,7 +11,7 @@ import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/con
 
 const renderIndicatorIcons = (props: IndicatorIconsProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RFS_DEFAULT_THEME}>
+    <ThemeProvider theme={DEFAULT_THEME}>
       <IndicatorIcons {...props} />
     </ThemeProvider>
   );

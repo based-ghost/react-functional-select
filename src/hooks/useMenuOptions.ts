@@ -1,7 +1,8 @@
 import { useEffect, useState, ReactText } from 'react';
+import { MenuOption } from '../Select';
 import { trimAndFormatFilterStr } from '../utils';
+import { OptionData, SelectedOption } from '../types';
 import { EMPTY_ARRAY, FilterMatchEnum } from '../constants';
-import { OptionData, MenuOption, SelectedOption } from '../types';
 
 /**
  * Parse options to array of MenuOptions and perform filtering (if applicable).

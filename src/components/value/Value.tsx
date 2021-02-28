@@ -1,10 +1,22 @@
-import React, { FunctionComponent, Fragment } from 'react';
+import React, { ReactNode, ReactText, FunctionComponent, Fragment } from 'react';
 import MultiValue from './MultiValue';
-import { ValueProps } from '../../types';
+import { MultiParams } from '../../Select';
 import { isArrayWithLength } from '../../utils';
 import styled, { css } from 'styled-components';
+import { OptionData, MouseOrTouchEvent, SelectedOption } from '../../types';
 
-export const _singleValueBaseStyle = css`
+export type ValueProps = Readonly<{
+  isMulti?: boolean;
+  inputValue: string;
+  placeholder: string;
+  selectedOption: SelectedOption[];
+  focusedMultiValue: ReactText | null;
+  renderOptionLabel: (data: OptionData) => ReactNode;
+  renderMultiOptions?: (params: MultiParams) => ReactNode;
+  removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLElement>) => void;
+}>;
+
+const _singleValueBaseStyle = css`
   top: 50%;
   overflow: hidden;
   position: absolute;
@@ -19,7 +31,7 @@ const SingleValue = styled.div`
   max-width: calc(100% - 0.5rem);
 `;
 
-const Placeholder = styled.div<{ isMulti?: boolean }>`
+const Placeholder = styled.div<Pick<ValueProps, 'isMulti'>>`
   ${_singleValueBaseStyle}
   color: ${({ theme }) => theme.color.placeholder};
   ${({ theme, isMulti }) => isMulti && css`animation: ${theme.multiValue.animation};`}

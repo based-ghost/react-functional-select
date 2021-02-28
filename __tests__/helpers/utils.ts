@@ -1,6 +1,6 @@
-import { MultiParams } from '../../src';
 import { ReactNode, ReactText, CSSProperties } from 'react';
-import { MenuOption, OptionData, SelectedOption } from '../../src/types';
+import { MultiParams, MenuOption } from '../../src';
+import { OptionData, SelectedOption } from '../../src/types';
 
 // ============================================
 // Basic "options" & "selectedOption" data
@@ -16,8 +16,11 @@ export const OPTIONS: Option[] = [
   { value: 2, label: 'Option 2' }
 ];
 
+export const getOptionSingle = (): Option => ({ ...OPTIONS[0] });
+export const getSelectedOptionMulti = (): SelectedOption[] => [...OPTIONS];
+
 export const getSelectedOptionSingle = (): SelectedOption[] => {
-  const data = { ...OPTIONS[0] };
+  const data = getOptionSingle();
 
   const selectedOption: SelectedOption = {
     data,
@@ -27,9 +30,6 @@ export const getSelectedOptionSingle = (): SelectedOption[] => {
 
   return [selectedOption];
 };
-
-export const getOptionSingle = (): Option => ({ ...OPTIONS[0] });
-export const getSelectedOptionMulti = (): SelectedOption[] => [...OPTIONS];
 
 // ============================================
 // "menuOptions" data

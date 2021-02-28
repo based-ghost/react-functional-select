@@ -4,7 +4,7 @@ import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from './constants';
 /**
  * A contextual styled-components DefaultTheme object with default key-value pairs for CSS props.
  */
-export const RFS_DEFAULT_THEME: DefaultTheme = {
+export const DEFAULT_THEME: DefaultTheme = {
   color: {
     border: '#ced4da',
     danger: '#dc3545',

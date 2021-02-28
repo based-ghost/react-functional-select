@@ -1,9 +1,8 @@
-import { MultiValueProps } from '../src/types';
-import { RFS_DEFAULT_THEME } from '../src/theme';
+import { DEFAULT_THEME } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../src/constants';
-import MultiValue from '../src/components/value/MultiValue';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
+import MultiValue, { MultiValueProps } from '../src/components/value/MultiValue';
 import { Option, RENDER_OPTION_LABEL_MOCK, getOptionSingle } from './helpers/utils';
 
 // ============================================
@@ -12,7 +11,7 @@ import { Option, RENDER_OPTION_LABEL_MOCK, getOptionSingle } from './helpers/uti
 
 const renderMultiValue = (props: MultiValueProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RFS_DEFAULT_THEME}>
+    <ThemeProvider theme={DEFAULT_THEME}>
       <MultiValue {...props} />
     </ThemeProvider>
   );

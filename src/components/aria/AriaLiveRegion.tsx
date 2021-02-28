@@ -1,8 +1,19 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../../utils';
-import { AriaLiveRegionProps } from '../../types';
 import { ARIA_LIVE_TESTID } from '../../constants';
+import { FocusedOption, SelectedOption } from '../../types';
+
+export type AriaLiveRegionProps = Readonly<{
+  menuOpen: boolean;
+  isFocused: boolean;
+  ariaLabel?: string;
+  inputValue: string;
+  optionCount: number;
+  isSearchable: boolean;
+  focusedOption: FocusedOption;
+  selectedOption: SelectedOption[];
+}>;
 
 const A11yText = styled.span`
   border: 0;

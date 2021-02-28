@@ -1,7 +1,13 @@
-import React, { memo } from 'react';
+import React, { memo, CSSProperties } from 'react';
+import { ItemData } from '../../types';
 import { areEqual } from 'react-window';
-import { OptionProps } from '../../types';
 import { optionClassNames } from '../../utils';
+
+export type OptionProps = Readonly<{
+  index: number;
+  data: ItemData;
+  style: CSSProperties;
+}>;
 
 const Option = memo<OptionProps>(({
   index,

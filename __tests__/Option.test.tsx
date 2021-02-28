@@ -1,9 +1,9 @@
 import { CSSProperties } from 'react';
-import { OptionProps } from '../src/types';
-import { RFS_DEFAULT_THEME } from '../src/theme';
+import { DEFAULT_THEME } from '../src/theme';
 import { ThemeProvider } from 'styled-components';
 import Option from '../src/components/menu/Option';
 import { OPTION_DISABLED_CLS } from '../src/constants';
+import { OptionProps } from '../src/components/menu/Option';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK, stringifyCSSProperties } from './helpers/utils';
 
@@ -21,7 +21,7 @@ const OPTION_STYLE: CSSProperties = {
 
 const renderOption = (props: OptionProps): RenderResult => {
   return render(
-    <ThemeProvider theme={RFS_DEFAULT_THEME}>
+    <ThemeProvider theme={DEFAULT_THEME}>
       <Option {...props} />
     </ThemeProvider>
   );
