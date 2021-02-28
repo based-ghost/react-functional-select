@@ -1,4 +1,4 @@
-# React-Functional-Select
+# react-functional-select
 
 > Micro-sized & micro-optimized select component for React.js.
 
