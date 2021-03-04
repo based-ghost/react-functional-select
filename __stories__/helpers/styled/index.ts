@@ -176,9 +176,9 @@ export const Button = styled.button`
   border-radius: 3px;
   display: inline-block;
   vertical-align: middle;
+  background-color: #eaebec;
   padding: 0.375rem 0.75rem;
   -webkit-appearance: button;
-  background-color: rgba(9, 30, 66, 0.1);
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
 
   :focus {
@@ -186,7 +186,7 @@ export const Button = styled.button`
   }
 
   :hover, :focus {
-    background-color: rgba(9, 30, 66, 0.1475);
+    background-color: #DDDEDF;
   }
 
   ${MEDIA_QUERY_IS_MOBILE} {
