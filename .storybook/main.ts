@@ -10,6 +10,10 @@ module.exports = {
         loaderOptions: {
           injectStoryParameters: false,
         },
+        sourceLoaderOptions: {
+          parser: 'typescript',
+          injectStoryParameters: false,
+        },
       },
     },
   ],
@@ -17,7 +21,7 @@ module.exports = {
     reactDocgen: 'none'
   },
   webpackFinal: async (config: Configuration) => {
-    config.module.rules.push({
+    /*config.module.rules.push({
       test: /\.stories\.tsx?$/,
       loaders: [
         {
@@ -28,7 +32,7 @@ module.exports = {
         },
       ],
       enforce: 'pre',
-    });
+    }); */
 
     config.module.rules.push({
       test: /\.(ts|tsx)$/,

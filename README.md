@@ -1,4 +1,4 @@
-# React-Functional-Select
+# react-functional-select
 
 > Micro-sized & micro-optimized select component for React.js.
 
@@ -40,8 +40,6 @@ $ yarn add react-window styled-components react-functional-select
 
 - [Demo](https://based-ghost.github.io/react-functional-select/)
 - [Stories source code](./__stories__)
-
-<em>You can find a similar example, along with others, in the storybook..</em>
 
 ```jsx
 import { Select } from 'react-functional-select';

@@ -73,7 +73,7 @@ const MultiValue = memo<MultiValueProps>(({
       onTouchEnd={(e) => removeSelectedOption(value, e)}
       onMouseDown={(e) => removeSelectedOption(value, e)}
     >
-      &#10006;
+      ✖
     </Clear>
   </MultiValueWrapper>
 ));

@@ -57,8 +57,9 @@ test('option parent element renders dynamic style attribute correctly', async ()
   const { props } = createOptionProps();
   const { container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
+  const optionCssProps = stringifyCSSProperties(OPTION_STYLE);
 
-  expect(optionParentEl).toHaveAttribute('style', stringifyCSSProperties(OPTION_STYLE));
+  expect(optionParentEl).toHaveAttribute('style', optionCssProps);
 });
 
 test('"renderOptionLabel" callback should be executed and the result rendered to DOM', async () => {

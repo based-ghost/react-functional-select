@@ -68,10 +68,16 @@ const PreContainer = styled.div`
         padding-right: 1.75em !important;
       }
 
-      .boolean,
-      .function,
-      .number {
+      .boolean {
+        color: rgb(255, 139, 80);
+      }
+
+      .function {
         color: rgb(121, 182, 242);
+      }
+
+      .number {
+        color: rgb(90, 155, 207);
       }
 
       .tag {

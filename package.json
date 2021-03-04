@@ -1,7 +1,7 @@
 {
   "name": "react-functional-select",
   "version": "3.0.1",
-  "description": "Miro-sized and micro-optimized select component for React.js",
+  "description": "Micro-sized and micro-optimized select component for React.js",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
   "umd": "./dist/index.umd.js",
@@ -41,17 +41,17 @@
     "@babel/core": "^7.13.8",
     "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
     "@babel/plugin-proposal-optional-chaining": "^7.13.8",
-    "@babel/plugin-transform-runtime": "^7.13.8",
-    "@babel/preset-env": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.13.9",
+    "@babel/preset-env": "^7.13.9",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.13.0",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-replace": "^2.4.1",
     "@rollup/plugin-typescript": "^8.2.0",
-    "@storybook/addon-storysource": "^6.1.20",
-    "@storybook/addons": "^6.1.20",
+    "@storybook/addon-storysource": "^6.1.21",
+    "@storybook/addons": "^6.1.21",
     "@storybook/preset-create-react-app": "^3.1.6",
-    "@storybook/react": "^6.1.20",
+    "@storybook/react": "^6.1.21",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@types/jest": "^26.0.20",
@@ -60,8 +60,8 @@
     "@types/react-dom": "^17.0.1",
     "@types/react-window": "^1.8.2",
     "@types/styled-components": "^5.1.7",
-    "@typescript-eslint/eslint-plugin": "^4.15.2",
-    "@typescript-eslint/parser": "^4.15.2",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "^1.12.0",
@@ -113,6 +113,6 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.18"
+    "@babel/runtime": "^7.13.9"
   }
 }

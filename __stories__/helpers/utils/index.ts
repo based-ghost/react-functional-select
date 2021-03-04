@@ -1,8 +1,7 @@
 import { Option } from '../../types';
 
 export const stringifyJavaScriptObj = (data: any = {}): string => {
-  return JSON.stringify(data, null, 2)
-    .replace(/"(\w+)"\s*:/g, '$1:');
+  return JSON.stringify(data, null, 2).replace(/"(\w+)"\s*:/g, '$1:');
 };
 
 export const mockHttpRequest = async (delay: number = 500): Promise<void> => {
