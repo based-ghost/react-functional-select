@@ -94,7 +94,7 @@ export const SingleSelect = () => {
 
   return (
     <Container>
-      <Title>Single-select</Title>
+      <Title>Single-Select</Title>
       <Hr />
       <Paragraph>
         In this story's source code, notice that the callback function
@@ -176,7 +176,7 @@ export const MultiSelect = () => {
 
   // Example "renderMultiOptions" property that can be used to further customize labeling for multi-option scenarios
   const renderMultiOptions = useCallback(
-    ({ selected, renderOptionLabel }: MultiParams): ReactNode => (
+    ({ selected, renderOptionLabel }: MultiParams) => (
       <Fragment>
         {selected.length && renderOptionLabel(selected[0].data)}
         {selected.length > 1 && (
@@ -191,7 +191,7 @@ export const MultiSelect = () => {
 
   return (
     <Container>
-      <Title>Multi-select</Title>
+      <Title>Multi-Select</Title>
       <Hr />
       <ListWrapper>
         Add the <code>isMulti</code> property to allow for multiple selections.
@@ -931,6 +931,7 @@ export const Portaling = () => {
 
 export const Async = () => {
   const delay = 500;
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5, 'Initial'));
 

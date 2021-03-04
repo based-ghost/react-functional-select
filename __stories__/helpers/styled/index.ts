@@ -318,7 +318,7 @@ export const CardBody = styled.div<{ multiComponents?: boolean }>`
 export const OtherSpan = styled.span`
   opacity: 0.75;
   font-size: 0.75em;
-  margin-top: 0.05em;
+  margin-top: 0.075em;
   margin-left: 0.45em;
 `;
 

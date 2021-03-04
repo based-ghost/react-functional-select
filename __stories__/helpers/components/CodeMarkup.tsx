@@ -62,16 +62,13 @@ const PreContainer = styled.div`
         font-size: 12px !important;
       }
 
+      .number,
       .boolean {
         color: rgb(255, 139, 80);
       }
 
       .function {
         color: rgb(121, 182, 242);
-      }
-
-      .number {
-        color: rgb(90, 155, 207);
       }
 
       .tag {
