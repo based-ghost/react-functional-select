@@ -165,7 +165,7 @@ export const SubTitle = styled.h4`
 
 export const Button = styled.button`
   border: 0;
-  color: #212428;
+  color: #1a1a1a;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 400;

@@ -21,15 +21,15 @@ export const GlobalStyle = createGlobalStyle`
     flex: 1;
     margin: 0;
     display: flex;
+    color: #1a1a1a;
     font-size: 1rem;
     font-weight: 400;
     text-align: left;
     line-height: 1.5;
     min-height: 120vh;
-    padding: 1rem 0.25rem !important;
     flex-direction: column;
     background-color: #fff;
-    color: rgba(0, 0, 0, 0.87);
+    padding: 1rem 0.25rem !important;
     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
   }
 
@@ -44,11 +44,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   code {
+    color: #1a1a1a;
     font-size: 88%;
     border-radius: 3px;
     word-break: break-word;
     padding: .15em .2em .15em;
-    color: rgba(0, 0, 0, 0.87);
     background-color: rgba(30, 167, 253, 0.115);
     font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
 
