@@ -178,7 +178,7 @@ export const Button = styled.button`
   vertical-align: middle;
   padding: 0.375rem 0.75rem;
   -webkit-appearance: button;
-  background-color: rgba(9, 30, 66, 0.08);
+  background-color: rgba(9, 30, 66, 0.1);
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
 
   :focus {
@@ -186,7 +186,7 @@ export const Button = styled.button`
   }
 
   :hover, :focus {
-    background-color: rgba(9, 30, 66, 0.1275);
+    background-color: rgba(9, 30, 66, 0.1475);
   }
 
   ${MEDIA_QUERY_IS_MOBILE} {
