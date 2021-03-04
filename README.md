@@ -1,6 +1,6 @@
 # react-functional-select
 
-> Micro-sized & micro-optimized select component for React.js.
+> Micro-sized & micro-optimized select component for React.js
 
 [![Latest Stable Version](https://img.shields.io/npm/v/react-functional-select.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
 [![Issues](https://img.shields.io/github/issues/based-ghost/react-functional-select.svg?style=for-the-badge)](https://github.com/based-ghost/react-functional-select/issues)

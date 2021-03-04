@@ -24,11 +24,11 @@ module.exports = {
     config.module.rules.push({
       test: /\.(ts|tsx)$/,
       loader: require.resolve('babel-loader'),
-      options: {
+      /* options: {
         presets: [
           ['react-app', { flow: false, typescript: true, runtime: 'automatic' }]
         ],
-      },
+      }, */
     });
 
     config.resolve.extensions.push('.ts', '.tsx');

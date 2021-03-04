@@ -2,10 +2,6 @@ import { memo } from 'react';
 import { hexToRgba } from '../utils';
 import styled, { css } from 'styled-components';
 
-type CheckboxWrapperProps = Readonly<{
-  isReadOnly?: boolean;
-}>;
-
 type CheckboxProps = Readonly<{
   label?: string;
   checked: boolean;
@@ -49,7 +45,7 @@ const Input = styled.input`
   }
 `;
 
-const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
+const CheckboxWrapper = styled.label<{ isReadOnly?: boolean }>`
   user-select: none;
   position: relative;
   margin-top: 0.5rem;

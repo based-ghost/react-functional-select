@@ -3,17 +3,13 @@ import { Button } from '../styled';
 import { numberWithCommas } from '../utils';
 import styled, { css } from 'styled-components';
 
-type StyledButtonProps = Readonly<{
-  isActive?: boolean;
-}>;
-
 type OptionsCountButtonProps = Readonly<{
   count: number;
   optionsCount: number;
   setOptionsCount: (count: number) => void;
 }>;
 
-const StyledButton = styled(Button)<StyledButtonProps>`
+const StyledButton = styled(Button)<{ isActive?: boolean }>`
   width: 6.25rem;
   transition: none;
 

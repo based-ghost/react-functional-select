@@ -1,5 +1,1 @@
-import { GlobalStyle } from './global-style';
-
-export {
-  GlobalStyle,
-};
+export { GlobalStyle } from './global-style';

@@ -6,7 +6,7 @@ const _gsNodeId = 'temp2-global-style';
 
 const _gsNode =
   document.getElementById(_gsNodeId) ||
-  (function () {
+  (() => {
     const el = document.createElement('div');
     el.id = _gsNodeId;
     document.head.appendChild(el);

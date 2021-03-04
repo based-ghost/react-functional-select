@@ -451,7 +451,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     if (!onOptionChange) return;
 
     const normalizedOptionValue = isMulti
-      ? selectedOption.map(({ data }) => data)
+      ? selectedOption.map((x) => x.data)
       : isArrayWithLength(selectedOption)
       ? selectedOption[0].data
       : null;

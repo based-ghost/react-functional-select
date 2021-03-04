@@ -18,9 +18,8 @@ type CodeMarkupProps = Readonly<{
 }>;
 
 const CodeMarkupContainer = styled.div`
-  font-size: 1rem;
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 10px;
   margin: 1rem 1.5rem;
   background-color: #282c34;
 
@@ -32,40 +31,35 @@ const CodeMarkupContainer = styled.div`
 const Header = styled.div`
   color: #999;
   line-height: 3;
+  font-size: 14px;
   padding: 0 .9rem;
   font-weight: 700;
+  letter-spacing: 0.075em;
   text-transform: uppercase;
   background-color: #20232a;
+
+  ${MEDIA_QUERY_IS_MOBILE_XS} {
+    font-size: 12px;
+  }
 `;
 
 const PreContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  border-radius: 6px;
+  border-radius: 0;
   min-height: 385px !important;
   max-height: 385px !important;
 
   pre {
-    margin: 0 !important;
-    border: none !important;
     margin: 1rem !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
-    background: #282c34 !important;
 
     > code {
       font-size: 14px !important;
-      background: none !important;
       text-shadow: none !important;
-      font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace !important;
-      display: inherit;
-      color: #fff;
 
-      .block-comment,
-      .comment {
-        color: #ddd;
-        padding-right: 1.75em !important;
+      ${MEDIA_QUERY_IS_MOBILE_XS} {
+        font-size: 12px !important;
       }
 
       .boolean {
@@ -101,15 +95,6 @@ const PreContainer = styled.div`
 
       .operator {
         color: rgb(215, 222, 234);
-      }
-
-      ${MEDIA_QUERY_IS_MOBILE_XS} {
-        font-size: 12px !important;
-
-        .block-comment,
-        .comment {
-          display: none !important;
-        }
       }
     }
   }
