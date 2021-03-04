@@ -3,7 +3,6 @@
     "jsx": "react",
     "target": "esnext",
     "module": "esnext",
-    "isolatedModules": true,
     "moduleResolution": "node",
     "lib": ["esnext", "dom.iterable", "dom"],
     "strict": true,
@@ -11,10 +10,11 @@
     "noUnusedLocals": true,
     "removeComments": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
+    "isolatedModules": true,
     "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "src"
