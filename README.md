@@ -41,9 +41,9 @@ $ yarn add react-window styled-components react-functional-select
 - [Demo](https://based-ghost.github.io/react-functional-select/)
 - [Stories source code](./__stories__)
 
-```tsx
+```jsx
 import { Select } from 'react-functional-select';
-import React, { useState, useEffect, useCallback, FunctionComponent } from 'react';
+import { useState, useEffect, useCallback, FunctionComponent } from 'react';
 import { Card, CardHeader, CardBody, Container, SelectContainer } from './helpers/styled';
 
 type Option = Readonly<{
