@@ -1,5 +1,4 @@
-import { DEFAULT_THEME } from '../src/theme';
-import { ThemeProvider } from 'styled-components';
+import { ThemeTestHOC } from './helpers';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import AutosizeInput, { AutosizeInputProps } from '../src/components/input/AutosizeInput';
 import { EMPTY_ARRAY, AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants';
@@ -10,9 +9,9 @@ import { EMPTY_ARRAY, AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/c
 
 const renderAutosizeInput = (props: AutosizeInputProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DEFAULT_THEME}>
+    <ThemeTestHOC>
       <AutosizeInput {...props} />
-    </ThemeProvider>
+    </ThemeTestHOC>
   );
 };
 
@@ -59,9 +58,9 @@ test('input has functional, optional ARIA attributes', async () => {
   };
 
   const { getByTestId } = renderAutosizeInput(mergedProps);
-  const verifyAriaAttributes = ['aria-label', 'aria-labelledby', 'aria-autocomplete'];
+  const verifyAriaAttrs = ['aria-label', 'aria-labelledby', 'aria-autocomplete'];
 
-  verifyAriaAttributes.forEach((attr: string) => {
+  verifyAriaAttrs.forEach((attr: string) => {
     expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute(attr);
   });
 });

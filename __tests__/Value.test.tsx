@@ -1,10 +1,8 @@
-import { DEFAULT_THEME } from '../src/theme';
 import { SelectedOption } from '../src/types';
-import { ThemeProvider } from 'styled-components';
 import { render, RenderResult } from '@testing-library/react';
 import Value, { ValueProps } from '../src/components/value/Value';
 import { PLACEHOLDER_DEFAULT, EMPTY_ARRAY } from '../src/constants';
-import { RENDER_OPTION_LABEL_MOCK, RENDER_MULTI_OPTIONS_MOCK, getSelectedOptionSingle } from './helpers/utils';
+import { RENDER_OPTION_LABEL_MOCK, RENDER_MULTI_OPTIONS_MOCK, getSelectedOptionSingle, ThemeTestHOC } from './helpers';
 
 // ============================================
 // Helper functions for Value component
@@ -12,9 +10,9 @@ import { RENDER_OPTION_LABEL_MOCK, RENDER_MULTI_OPTIONS_MOCK, getSelectedOptionS
 
 const renderValue = (props: ValueProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DEFAULT_THEME}>
+    <ThemeTestHOC>
       <Value {...props} />
-    </ThemeProvider>
+    </ThemeTestHOC>
   );
 };
 
@@ -23,9 +21,9 @@ const rerenderValue = (
   rerender: (...args: any[]) => void
 ): void => {
   rerender(
-    <ThemeProvider theme={DEFAULT_THEME}>
+    <ThemeTestHOC>
       <Value {...props} />
-    </ThemeProvider>
+    </ThemeTestHOC>
   );
 };
 

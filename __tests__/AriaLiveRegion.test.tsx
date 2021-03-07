@@ -1,9 +1,7 @@
-import { DEFAULT_THEME } from '../src/theme';
-import { ThemeProvider } from 'styled-components';
-import { ARIA_LIVE_TESTID } from '../src/constants';
-import { getSelectedOptionMulti } from './helpers/utils';
 import { FocusedOption, SelectedOption } from '../src/types';
 import { render, RenderResult } from '@testing-library/react';
+import { getSelectedOptionMulti, ThemeTestHOC } from './helpers';
+import { ARIA_LIVE_CONTEXT_ID, ARIA_LIVE_SELECTION_ID } from '../src/constants';
 import AriaLiveRegion, { AriaLiveRegionProps } from '../src/components/aria/AriaLiveRegion';
 
 // ============================================
@@ -12,9 +10,9 @@ import AriaLiveRegion, { AriaLiveRegionProps } from '../src/components/aria/Aria
 
 const renderAriaLiveRegion = (props: AriaLiveRegionProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DEFAULT_THEME}>
+    <ThemeTestHOC>
       <AriaLiveRegion {...props} />
-    </ThemeProvider>
+    </ThemeTestHOC>
   );
 };
 
@@ -37,11 +35,13 @@ const createAriaLiveRegionProps = (): AriaLiveRegionProps => {
 // Test cases
 // ============================================
 
-test('AriaLiveRegion component mounts and renders without error', async () => {
+test('AriaLiveRegion component mounts and renders without error & can query childNodes by id attributes', async () => {
   const props = createAriaLiveRegionProps();
-  const { getByTestId } = renderAriaLiveRegion(props);
-  const ariaLiveEl = getByTestId(ARIA_LIVE_TESTID!);
+  const { container } = renderAriaLiveRegion(props);
+  const childNodeIds = [ARIA_LIVE_CONTEXT_ID, ARIA_LIVE_SELECTION_ID];
 
-  expect(ariaLiveEl).toBeInTheDocument();
-  expect(ariaLiveEl.hasChildNodes()).toBeTruthy();
+  childNodeIds.forEach((id) => {
+    const childNode = container.querySelector(`#${id}`);
+    expect(childNode).toBeInTheDocument();
+  });
 });

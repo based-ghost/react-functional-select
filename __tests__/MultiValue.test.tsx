@@ -1,9 +1,7 @@
-import { DEFAULT_THEME } from '../src/theme';
-import { ThemeProvider } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../src/constants';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import MultiValue, { MultiValueProps } from '../src/components/value/MultiValue';
-import { Option, RENDER_OPTION_LABEL_MOCK, getOptionSingle } from './helpers/utils';
+import { Option, RENDER_OPTION_LABEL_MOCK, getOptionSingle, ThemeTestHOC } from './helpers';
 
 // ============================================
 // Helper functions for MultiValue component
@@ -11,9 +9,9 @@ import { Option, RENDER_OPTION_LABEL_MOCK, getOptionSingle } from './helpers/uti
 
 const renderMultiValue = (props: MultiValueProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DEFAULT_THEME}>
+    <ThemeTestHOC>
       <MultiValue {...props} />
-    </ThemeProvider>
+    </ThemeTestHOC>
   );
 };
 

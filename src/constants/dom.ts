@@ -1,5 +1,9 @@
 import { HTMLAttributes, InputHTMLAttributes } from 'react';
 
+// id attributes for AriaLiveRegion.tsx innerHTML content
+export const ARIA_LIVE_CONTEXT_ID = 'aria-selection';
+export const ARIA_LIVE_SELECTION_ID = 'aria-context';
+
 // classNames (menu options)
 export const OPTION_CLS = 'rfs-option';
 export const OPTION_FOCUSED_CLS = `${OPTION_CLS}-focused`;
@@ -17,7 +21,6 @@ export const CONTROL_CONTAINER_CLS = 'rfs-control-container';
 
 // data-testid attributes used for DOM element querying in unit test cases
 // ...this attribute gets rendered in development and test environments (removed in production)
-export const ARIA_LIVE_TESTID = process.env.NODE_ENV === 'test' ? 'rfs-aria-live' : undefined;
 export const CLEAR_ICON_TESTID = process.env.NODE_ENV === 'test' ? CLEAR_ICON_CLS : undefined;
 export const CARET_ICON_TESTID = process.env.NODE_ENV === 'test' ? CARET_ICON_CLS : undefined;
 export const AUTOSIZE_INPUT_TESTID = process.env.NODE_ENV === 'test' ? AUTOSIZE_INPUT_CLS : undefined;

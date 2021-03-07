@@ -1,27 +1,21 @@
 import { ReactText } from 'react';
 import { OptionData, SelectedOption } from '../types';
+import { EMPTY_ARRAY, OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants';
 
-import {
-  EMPTY_ARRAY,
-  OPTION_CLS,
-  OPTION_FOCUSED_CLS,
-  OPTION_SELECTED_CLS,
-  OPTION_DISABLED_CLS
-} from '../constants';
+const DIACRITICS_REGEXP = /[\u0300-\u036f]/g;
+/**
+ * @private
+ * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).
+ */
+function stripDiacritics(value: string): string {
+  return value.normalize('NFD').replace(DIACRITICS_REGEXP, '');
+}
 
 /**
  * Tests if object is an array with at least 1 item.
  */
 export function isArrayWithLength(test: any): boolean {
   return Array.isArray(test) && !!test.length;
-}
-
-/**
- * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).
- */
-const DIACRITICS_REGEXP = /[\u0300-\u036f]/g;
-function stripDiacritics(value: string): string {
-  return value.normalize('NFD').replace(DIACRITICS_REGEXP, '');
 }
 
 /**

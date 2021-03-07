@@ -1,21 +1,36 @@
+/**
+ * @private
+ */
 function getScrollTop(el: HTMLElement): number {
   return isDocumentElement(el) ? window.pageYOffset : el.scrollTop;
 }
 
+/**
+ * @private
+ */
 function scrollTo(el: HTMLElement, top: number): void {
   isDocumentElement(el) ? window.scrollTo(0, top) : (el.scrollTop = top);
 }
 
+/**
+ * @private
+ */
 function isDocumentElement(el: HTMLElement | Window): boolean {
   return el === document.documentElement || el === document.body || el === window;
 }
 
+/**
+ * @private
+ */
 function styleHasOverlfow({ overflow, overflowX, overflowY }: CSSStyleDeclaration): boolean {
   const isOverflow = (x: string): boolean => x === 'auto' || x === 'scroll';
 
   return isOverflow(overflow) || isOverflow(overflowX) || isOverflow(overflowY);
 }
 
+/**
+ * @private
+ */
 function getScrollParent(el: HTMLElement): HTMLElement {
   let style = getComputedStyle(el);
   const excludeStaticParent = style.position === 'absolute';
@@ -34,6 +49,9 @@ function getScrollParent(el: HTMLElement): HTMLElement {
   return document.documentElement;
 }
 
+/**
+ * @private
+ */
 function smoothScrollTo(
   el: HTMLElement,
   to: number,

@@ -491,7 +491,7 @@ export const Events = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>Events trigger a toast notification</Label>
+          <Label>Events trigger a toast notification (demo only)</Label>
           <Checkboxes>
             <Checkbox
               label='onOptionChange'

@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
-import { DEFAULT_THEME } from '../src/theme';
-import { ThemeProvider } from 'styled-components';
+import { ThemeTestHOC } from './helpers';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/constants';
 import IndicatorIcons, { IndicatorIconsProps } from '../src/components/indicators/IndicatorIcons';
@@ -11,9 +10,9 @@ import IndicatorIcons, { IndicatorIconsProps } from '../src/components/indicator
 
 const renderIndicatorIcons = (props: IndicatorIconsProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DEFAULT_THEME}>
+    <ThemeTestHOC>
       <IndicatorIcons {...props} />
-    </ThemeProvider>
+    </ThemeTestHOC>
   );
 };
 

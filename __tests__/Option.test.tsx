@@ -1,11 +1,9 @@
 import { CSSProperties } from 'react';
-import { DEFAULT_THEME } from '../src/theme';
-import { ThemeProvider } from 'styled-components';
 import Option from '../src/components/menu/Option';
 import { OPTION_DISABLED_CLS } from '../src/constants';
 import { OptionProps } from '../src/components/menu/Option';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
-import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK, stringifyCSSProperties } from './helpers/utils';
+import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK, stringifyCSSProperties, ThemeTestHOC } from './helpers';
 
 // ============================================
 // Helper functions & test data for Option.tsx component
@@ -21,9 +19,9 @@ const OPTION_STYLE: CSSProperties = {
 
 const renderOption = (props: OptionProps): RenderResult => {
   return render(
-    <ThemeProvider theme={DEFAULT_THEME}>
+    <ThemeTestHOC>
       <Option {...props} />
-    </ThemeProvider>
+    </ThemeTestHOC>
   );
 };
 
@@ -56,6 +54,7 @@ const createOptionProps = (index = 0, focusedOptionIndex = 0) => {
 test('option parent element renders dynamic style attribute correctly', async () => {
   const { props } = createOptionProps();
   const { container } = renderOption(props);
+
   const optionParentEl = container.querySelector('div');
   const optionCssProps = stringifyCSSProperties(OPTION_STYLE);
 

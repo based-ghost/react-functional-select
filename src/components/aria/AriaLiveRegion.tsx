@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../../utils';
-import { ARIA_LIVE_TESTID } from '../../constants';
 import { FocusedOption, SelectedOption } from '../../types';
+import { ARIA_LIVE_SELECTION_ID, ARIA_LIVE_CONTEXT_ID } from '../../constants';
 
 export type AriaLiveRegionProps = Readonly<{
   menuOpen: boolean;
@@ -20,12 +20,11 @@ const A11yText = styled.span`
   padding: 0;
   width: 1px;
   height: 1px;
-  margin: -1px;
+  z-index: 9999;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
+  clip: rect(1px, 1px, 1px, 1px);
 `;
 
 const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
@@ -68,10 +67,11 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
   return (
     <A11yText
       aria-live='polite'
-      data-testid={ARIA_LIVE_TESTID}
+      aria-atomic='false'
+      aria-relevant='additions text'
     >
-      <span>&nbsp;{selectedOptionMsg}</span>
-      <span>&nbsp;{extendedFeedbackMsg}</span>
+      <span id={ARIA_LIVE_SELECTION_ID}>{selectedOptionMsg}</span>
+      <span id={ARIA_LIVE_CONTEXT_ID}>{extendedFeedbackMsg}</span>
     </A11yText>
   );
 };

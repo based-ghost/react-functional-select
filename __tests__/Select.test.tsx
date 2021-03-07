@@ -15,9 +15,7 @@ import {
 // Helper functions for Select component
 // ============================================
 
-const renderSelect = (props?: SelectProps): RenderResult => {
-  return render(<Select {...props} />);
-};
+const renderSelect = (props?: SelectProps): RenderResult => render(<Select {...props} />);
 
 // ============================================
 // Test cases
