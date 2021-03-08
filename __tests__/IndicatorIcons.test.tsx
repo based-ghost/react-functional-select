@@ -34,7 +34,8 @@ const createIndicatorIconsProps = () => {
   };
 };
 
-const customIconFn = ({ menuOpen, isLoading, isInvalid, isDisabled }: Partial<IndicatorIconsProps>): ReactNode => {
+const customIconFn = (props: Partial<IndicatorIconsProps>): ReactNode => {
+  const { menuOpen, isLoading, isInvalid, isDisabled } = props;
   const testIdText = `${menuOpen}_${isLoading}_${isInvalid}_${isDisabled}`;
 
   return (
@@ -52,7 +53,6 @@ test('clear icon has a static className (enables styling via classic CSS)', asyn
   const { props } = createIndicatorIconsProps();
   const { getByTestId } = renderIndicatorIcons(props);
   const firstChildOfClearIconElement = getByTestId(CLEAR_ICON_TESTID!).firstChild;
-
   expect(firstChildOfClearIconElement).toHaveClass(CLEAR_ICON_CLS);
 });
 

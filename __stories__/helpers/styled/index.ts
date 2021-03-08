@@ -201,7 +201,7 @@ export const Button = styled.button`
 
 export const Buttons = styled.div`
   > button {
-    min-width: 4.5rem;
+    min-width: 6.25rem;
     margin-top: 0.5rem;
 
     :not(:last-of-type) {

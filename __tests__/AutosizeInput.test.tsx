@@ -44,7 +44,6 @@ const createAutosizeInputProps = () => {
 test('input element has a static className (enables styling via classic CSS)', async () => {
   const { props } = createAutosizeInputProps();
   const { getByTestId } = renderAutosizeInput(props);
-
   expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveClass(AUTOSIZE_INPUT_CLS);
 });
 
@@ -60,7 +59,7 @@ test('input has functional, optional ARIA attributes', async () => {
   const { getByTestId } = renderAutosizeInput(mergedProps);
   const verifyAriaAttrs = ['aria-label', 'aria-labelledby', 'aria-autocomplete'];
 
-  verifyAriaAttrs.forEach((attr: string) => {
+  verifyAriaAttrs.forEach((attr) => {
     expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute(attr);
   });
 });

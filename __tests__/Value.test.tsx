@@ -71,7 +71,6 @@ test('component renders NULL if "inputValue" is truthy AND ("isMulti" != true OR
   };
 
   const { container, rerender } = renderValue(singleProps);
-
   expect(container.hasChildNodes()).toBeFalsy();
 
   // Re-render with truthy "inputValue" and "isMulti" = true
@@ -94,7 +93,6 @@ test('"renderOptionLabel" callback should be executed when an option is selected
   };
 
   const { getByText } = renderValue(propsWithSelectedOption);
-
   expect(renderOptionLabelSpy).toHaveBeenCalledTimes(1);
 
   selectedOption.forEach((option: SelectedOption) => {

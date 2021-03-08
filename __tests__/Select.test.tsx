@@ -23,7 +23,6 @@ const renderSelect = (props?: SelectProps): RenderResult => render(<Select {...p
 
 test('container elements have static className value (enables styling via classic CSS)', async () => {
   const { getByTestId } = renderSelect();
-
   expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveClass(SELECT_CONTAINER_CLS);
   expect(getByTestId(CONTROL_CONTAINER_TESTID!)).toHaveClass(CONTROL_CONTAINER_CLS);
   expect(getByTestId(MENU_CONTAINER_TESTID!)).toHaveClass(MENU_CONTAINER_CLS);
@@ -32,12 +31,7 @@ test('container elements have static className value (enables styling via classi
 test('id attributes are added to DOM if defined ("selectId" and "inputId" props)', async () => {
   const inputId = 'test-input-id';
   const selectId = 'test-select-id';
-
-  const props = {
-    inputId,
-    selectId
-  };
-
+  const props = { inputId, selectId };
   const { getByTestId } = renderSelect(props);
 
   expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveAttribute('id', selectId);
