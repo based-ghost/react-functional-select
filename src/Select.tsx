@@ -494,27 +494,19 @@ const Select = forwardRef<SelectRef, SelectProps>((
     const lastValueIdx = selectedOption.length - 1;
     const curFocusedIdx = focusedMultiValue ? selectedOption.findIndex((x) => x.value === focusedMultiValue) : -1;
 
-    switch (direction) {
-      case ValueIndexEnum.NEXT: {
-        nextFocusedIdx = (curFocusedIdx > -1 && curFocusedIdx < lastValueIdx)
-          ? curFocusedIdx + 1
-          : -1;
-
-        break;
-      }
-      case ValueIndexEnum.PREVIOUS: {
-        nextFocusedIdx =
-          curFocusedIdx !== 0
-            ? curFocusedIdx === -1
-              ? lastValueIdx
-              : curFocusedIdx - 1
-            : 0;
-
-        break;
-      }
+    if (direction === ValueIndexEnum.NEXT) {
+      nextFocusedIdx = (curFocusedIdx > -1 && curFocusedIdx < lastValueIdx)
+        ? curFocusedIdx + 1
+        : -1;
+    } else {
+      nextFocusedIdx = curFocusedIdx !== 0
+        ? curFocusedIdx === -1
+          ? lastValueIdx
+          : curFocusedIdx - 1
+        : 0;
     }
 
-    const nextFocusedVal: ReactText | null = (nextFocusedIdx >= 0)
+    const nextFocusedVal = (nextFocusedIdx >= 0)
       ? selectedOption[nextFocusedIdx].value!
       : null;
 

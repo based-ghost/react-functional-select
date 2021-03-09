@@ -16,19 +16,15 @@ export const OPTIONS: Option[] = [
   { value: 2, label: 'Option 2' }
 ];
 
-export const getOptionSingle = (): Option => ({ ...OPTIONS[0] });
 export const getSelectedOptionMulti = (): SelectedOption[] => [...OPTIONS];
+export const getOptionSingle = (index: number = 0): Option => ({ ...OPTIONS[index] });
 
 export const getSelectedOptionSingle = (): SelectedOption[] => {
   const data = getOptionSingle();
+  const { value, label } = data;
+  const option: SelectedOption = { data, value, label };
 
-  const selectedOption: SelectedOption = {
-    data,
-    value: data.value,
-    label: data.label
-  };
-
-  return [selectedOption];
+  return [option];
 };
 
 // ============================================

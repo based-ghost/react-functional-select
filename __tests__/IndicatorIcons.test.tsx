@@ -82,7 +82,6 @@ test('clear icon is not rendered and loading animation is rendered when "isLoadi
   const { props } = createIndicatorIconsProps();
   const mergedProps = { ...props, isLoading: true };
   const { queryByTestId } = renderIndicatorIcons(mergedProps);
-
   expect(queryByTestId(CLEAR_ICON_TESTID!)).toBeNull();
 });
 
