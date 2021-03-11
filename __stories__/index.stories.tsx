@@ -935,19 +935,23 @@ export const Async = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5, 'Initial'));
 
-  const onInputChange = useCallback(() => setIsLoading(true), []);
+  const onInputChange = useCallback(() => {
+    setIsLoading(true);
+  }, []);
 
-  const onSearchChange = useCallback((value?: string) => {
-    mockHttpRequest()
-      .then(() => {
-        const count = getRandomInt(1, 5);
-        const lblSuffix = `Search text: ${value || 'Initial'}`;
-        const nextOptions = createAsyncOptions(count, lblSuffix);
+  const onSearchChange = useCallback(async (value?: string) => {
+    try {
+      await mockHttpRequest();
 
-        setOptions(nextOptions);
-      })
-      .catch((err) => console.error(err))
-      .then(() => setIsLoading(false));
+      const count = getRandomInt(1, 5);
+      const lblSuffix = `Search text: ${value || 'Initial'}`;
+      const nextOptions = createAsyncOptions(count, lblSuffix);
+
+      setOptions(nextOptions);
+      setIsLoading(false);
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
 
   return (
