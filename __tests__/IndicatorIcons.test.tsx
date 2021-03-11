@@ -115,7 +115,6 @@ test('clear icon can render as a ReactNode', async () => {
 test('clear icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', async () => {
   const customIconTestIdText = 'true_false_false_false';
   const { props } = createIndicatorIconsProps();
-
   const mergedProps = { ...props, menuOpen: true, clearIcon: customIconFn };
   const { getByTestId } = renderIndicatorIcons(mergedProps);
 
@@ -136,7 +135,6 @@ test('caret icon can render as a ReactNode', async () => {
 test('caret icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', async () => {
   const customIconTestIdText = 'true_false_false_false';
   const { props } = createIndicatorIconsProps();
-
   const mergedProps = { ...props, menuOpen: true, caretIcon: customIconFn };
   const { getByTestId } = renderIndicatorIcons(mergedProps);
 

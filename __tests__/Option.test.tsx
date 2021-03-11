@@ -54,7 +54,6 @@ const createOptionProps = (index = 0, focusedOptionIndex = 0) => {
 test('option parent element renders dynamic style attribute correctly', async () => {
   const { props } = createOptionProps();
   const { container } = renderOption(props);
-
   const optionParentEl = container.querySelector('div');
   const optionCssProps = stringifyCSSProperties(OPTION_STYLE);
 
@@ -73,7 +72,6 @@ test('"renderOptionLabel" callback should be executed and the result rendered to
 test('option with "isDisabled" = FALSE should have a functioning onClick handler attached', async () => {
   const firstEnabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !option.isDisabled);
   const { props, onClickSelectOptionSpy } = createOptionProps(firstEnabledMenuOptionIndex);
-
   const { container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
 
@@ -85,7 +83,6 @@ test('option with "isDisabled" = FALSE should have a functioning onClick handler
 test(`option with "isDisabled" = TRUE should not have an onClick handler attached and should have class - ${OPTION_DISABLED_CLS} - added to its classList`, async () => {
   const firstDisabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !!option.isDisabled);
   const { props, onClickSelectOptionSpy } = createOptionProps(firstDisabledMenuOptionIndex);
-
   const { container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
 

@@ -1,8 +1,7 @@
-import { FunctionComponent } from 'react';
 import { DEFAULT_THEME } from '../../src/theme';
 import { ThemeProvider } from 'styled-components';
 
-const ThemeTestHOC: FunctionComponent = ({ children }) => (
+const ThemeTestHOC = ({ children }) => (
   <ThemeProvider theme={DEFAULT_THEME}>
     {children}
   </ThemeProvider>

@@ -3,6 +3,7 @@ import { OptionData, SelectedOption } from '../types';
 import { EMPTY_ARRAY, OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants';
 
 const _diacriticsRegExp = /[\u0300-\u036f]/g;
+
 /**
  * @private
  * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).

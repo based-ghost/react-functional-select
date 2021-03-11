@@ -1,4 +1,5 @@
 const _msBrowserRegExp = /(MSIE|Trident\/|Edge\/|Edg\/)/i;
+
 /**
  * Determines if the current browser is IE or Edge (standard/chromium).
  */

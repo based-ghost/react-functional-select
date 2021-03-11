@@ -57,7 +57,6 @@ const createValueProps = () => {
 test('"placeholder" text displays when no option is selected', async () => {
   const { props } = createValueProps();
   const { getByText } = renderValue(props);
-
   expect(getByText(PLACEHOLDER_DEFAULT)).toBeInTheDocument();
 });
 
