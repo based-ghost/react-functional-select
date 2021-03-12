@@ -32,13 +32,22 @@ import {
   SELECT_WRAPPER_ATTRIBUTES
 } from './constants';
 
+import {
+  OptionData,
+  PartialDeep,
+  IconRenderer,
+  FocusedOption,
+  SelectedOption,
+  MouseOrTouchEvent,
+  AriaLiveAttribute
+} from './types';
+
 import { DEFAULT_THEME } from './theme';
 import { FixedSizeList } from 'react-window';
 import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
 import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
 import { mergeDeep, IS_TOUCH_DEVICE, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
 import { useDebounce, useMenuPositioner, useMenuOptions, useMountEffect, useUpdateEffect } from './hooks';
-import { OptionData, FocusedOption, SelectedOption, IconRenderer, MouseOrTouchEvent, PartialDeep } from './types';
 
 export type Theme = PartialDeep<DefaultTheme>;
 
@@ -104,14 +113,15 @@ export type SelectProps = Readonly<{
   isAriaLiveEnabled?: boolean;
   scrollMenuIntoView?: boolean;
   noOptionsMsg?: string | null;
+  ariaLive?: AriaLiveAttribute;
   hideSelectedOptions?: boolean;
   filterIgnoreAccents?: boolean;
   backspaceClearsValue?: boolean;
-  filterMatchFrom?: 'any' | 'start';
+  menuPosition?: MenuPositionEnum;
+  filterMatchFrom?: FilterMatchEnum;
   onMenuOpen?: (...args: any[]) => any;
   onMenuClose?: (...args: any[]) => any;
   onInputChange?: (value?: string) => any;
-  menuPosition?: 'top' | 'auto' | 'bottom';
   initialValue?: OptionData | OptionData[];
   onSearchChange?: (value?: string) => any;
   onOptionChange?: (data: OptionData) => any;
@@ -195,6 +205,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     inputId,
     selectId,
     required,
+    ariaLive,
     autoFocus,
     isLoading,
     onKeyDown,
@@ -762,6 +773,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
         )}
         {isAriaLiveEnabled && (
           <AriaLiveRegion
+            ariaLive={ariaLive}
             menuOpen={menuOpen}
             isFocused={isFocused}
             ariaLabel={ariaLabel}

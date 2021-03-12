@@ -2,6 +2,7 @@ import { ReactNode, ReactText, MouseEvent, TouchEvent } from 'react';
 import { MenuOption, MultiParams } from '../Select';
 
 export type OptionData = any;
+export type AriaLiveAttribute = 'off' | 'polite' | 'assertive';
 export type IconRenderer = ReactNode | ((...args: any[]) => ReactNode);
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 

@@ -1,17 +1,14 @@
 module.exports = (api) => {
   const isTestEnv = api.env('test');
-  const targets = !isTestEnv ? '>0.25%, not dead, not ie 11, not op_mini all' : { node: 'current' };
 
-  const envOptions = {
-    targets,
-    loose: false,
-    bugfixes: true
-  };
+  const targets = !isTestEnv
+    ? '>0.25%, not dead, not ie 11, not op_mini all'
+    : { node: 'current' };
 
   const presets = [
-    ['@babel/preset-env', envOptions],
+    ['@babel/preset-env', { targets, loose: false, bugfixes: true }],
     ['@babel/preset-react', { runtime: 'automatic' }],
-    '@babel/preset-typescript'
+    '@babel/preset-typescript',
   ];
 
   const plugins = [

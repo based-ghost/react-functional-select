@@ -26,6 +26,7 @@ const createAriaLiveRegionProps = (): AriaLiveRegionProps => {
     menuOpen: true,
     isFocused: true,
     isSearchable: true,
+    ariaLive: 'polite',
     inputValue: 'search query',
     optionCount: selectedOption.length
   };
@@ -44,4 +45,15 @@ test('AriaLiveRegion component mounts and renders without error & can query chil
     const childNode = container.querySelector(`#${id}`);
     expect(childNode).toBeInTheDocument();
   });
+});
+
+test('"ariaLive" prop can be passed as one of the accepted aria-live values and the root A11yText span element reflects it accordingly', async () => {
+  const ariaLive: AriaLiveRegionProps['ariaLive'] = 'assertive';
+  const props = createAriaLiveRegionProps();
+  const mergedProps = { ...props, ariaLive };
+
+  const { container } = renderAriaLiveRegion(mergedProps);
+  const a11yTextRootSpanEl = container.firstChild;
+
+  expect(a11yTextRootSpanEl).toHaveAttribute('aria-live', ariaLive);
 });

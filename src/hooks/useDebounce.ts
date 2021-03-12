@@ -19,5 +19,7 @@ export const useDebounce = <T>(value: T, delay?: number): T => {
     };
   }, [value, delay]);
 
-  return (delay === undefined) ? value : debouncedValue;
+  return (delay === undefined)
+    ? value
+    : debouncedValue;
 };

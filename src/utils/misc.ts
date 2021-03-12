@@ -6,7 +6,8 @@ const _diacriticsRegExp = /[\u0300-\u036f]/g;
 
 /**
  * @private
- * Strips all diacritics from a string. May not be supported by all legacy browsers (IE11 >=).
+ * Strips all diacritics from a string.
+ * May not be supported by all legacy browsers (IE11 >=).
  */
 function stripDiacritics(value: string): string {
   return value.normalize('NFD').replace(_diacriticsRegExp, '');
@@ -27,7 +28,8 @@ export function isPlainObject(test: any): boolean {
 }
 
 /**
- * Apply regex to string, and if the value is NOT case sensitive, call .toLowerCase() and return result.
+ * Apply regex to string, and if the value is NOT case sensitive,
+ * call .toLowerCase() and return result.
  */
 export function trimAndFormatFilterStr(
   value: string,
@@ -87,7 +89,8 @@ export const normalizeValue = (
 
 /**
  * Immutable implementation of mergeDeep for two objects. Will return the merged result.
- * In first condition of if/else block - check that property is no 'animation', since we never want to merge that complex styled-component object.
+ * In first condition of if/else block - check that property is no 'animation',
+ * since we never want to merge that complex styled-component object.
  */
 export const mergeDeep = <T>(target: any, source: any): T => {
   const output = { ...target };

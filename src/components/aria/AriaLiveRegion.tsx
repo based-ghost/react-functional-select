@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../../utils';
-import { FocusedOption, SelectedOption } from '../../types';
+import { FocusedOption, SelectedOption, AriaLiveAttribute } from '../../types';
 import { ARIA_LIVE_SELECTION_ID, ARIA_LIVE_CONTEXT_ID } from '../../constants';
 
 export type AriaLiveRegionProps = Readonly<{
@@ -11,6 +11,7 @@ export type AriaLiveRegionProps = Readonly<{
   inputValue: string;
   optionCount: number;
   isSearchable: boolean;
+  ariaLive?: AriaLiveAttribute;
   focusedOption: FocusedOption;
   selectedOption: SelectedOption[];
 }>;
@@ -35,7 +36,8 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
   optionCount,
   isSearchable,
   focusedOption,
-  selectedOption
+  selectedOption,
+  ariaLive = 'polite'
 }) => {
   if (!isFocused) {
     return null;
@@ -66,8 +68,8 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
 
   return (
     <A11yText
-      aria-live='polite'
       aria-atomic='false'
+      aria-live={ariaLive}
       aria-relevant='additions text'
     >
       <span id={ARIA_LIVE_SELECTION_ID}>{selectedOptionMsg}</span>
