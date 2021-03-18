@@ -1,8 +1,9 @@
 import { CSSProperties } from 'react';
 import Option from '../src/components/menu/Option';
+import userEvent from '@testing-library/user-event';
 import { OPTION_DISABLED_CLS } from '../src/constants';
 import { OptionProps } from '../src/components/menu/Option';
-import { render, fireEvent, RenderResult } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK, stringifyCSSProperties, ThemeTestHOC } from './helpers';
 
 // ============================================
@@ -75,7 +76,7 @@ test('option with "isDisabled" = FALSE should have a functioning onClick handler
   const { container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
 
-  fireEvent.click(optionParentEl!);
+  userEvent.click(optionParentEl!);
 
   expect(onClickSelectOptionSpy).toBeCalled();
 });
@@ -86,7 +87,7 @@ test(`option with "isDisabled" = TRUE should not have an onClick handler attache
   const { container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
 
-  fireEvent.click(optionParentEl!);
+  userEvent.click(optionParentEl!);
 
   expect(onClickSelectOptionSpy).not.toBeCalled();
   expect(optionParentEl).toHaveClass(OPTION_DISABLED_CLS);

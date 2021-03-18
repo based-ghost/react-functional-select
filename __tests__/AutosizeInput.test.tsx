@@ -1,4 +1,5 @@
 import { ThemeTestHOC } from './helpers';
+import userEvent from '@testing-library/user-event';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import AutosizeInput, { AutosizeInputProps } from '../src/components/input/AutosizeInput';
 import { EMPTY_ARRAY, AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants';
@@ -89,7 +90,7 @@ test('when "readOnly" = true, the onChange event handler should not be attached 
   const { getByTestId } = renderAutosizeInput(mergedProps);
   const inputElement = getByTestId(AUTOSIZE_INPUT_TESTID!);
 
-  fireEvent.change(inputElement);
+  userEvent.type(inputElement, 'no change')
 
   expect(onChangeSpy).not.toBeCalled();
   expect(inputElement).toHaveAttribute('readonly');

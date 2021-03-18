@@ -1,4 +1,5 @@
 import { Select, SelectProps } from '../src';
+import userEvent from '@testing-library/user-event';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 
 import {
@@ -106,9 +107,10 @@ test('toggling the menu to open/close fires corresponding callbacks "onMenuOpen"
   };
 
   const { getByTestId } = renderSelect(props);
+  const controlWrapperEl = getByTestId(CONTROL_CONTAINER_TESTID!);
 
-  fireEvent.mouseDown(getByTestId(CONTROL_CONTAINER_TESTID!));
-  fireEvent.mouseDown(getByTestId(CONTROL_CONTAINER_TESTID!));
+  userEvent.click(controlWrapperEl);
+  userEvent.click(controlWrapperEl);
 
   expect(onMenuOpenSpy).toBeCalled();
   expect(onMenuCloseSpy).toBeCalled();
