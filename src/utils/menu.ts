@@ -1,21 +1,21 @@
 /**
  * @private
  */
-function getScrollTop(el: HTMLElement): number {
+function getScrollTop(el: Element): number {
   return isDocumentElement(el) ? window.pageYOffset : el.scrollTop;
 }
 
 /**
  * @private
  */
-function scrollTo(el: HTMLElement, top: number): void {
+function scrollTo(el: Element, top: number): void {
   isDocumentElement(el) ? window.scrollTo(0, top) : (el.scrollTop = top);
 }
 
 /**
  * @private
  */
-function isDocumentElement(el: HTMLElement | Window): boolean {
+function isDocumentElement(el: Element | Window): boolean {
   return el === document.documentElement || el === document.body || el === window;
 }
 
@@ -31,7 +31,7 @@ function styleHasOverlfow({ overflow, overflowX, overflowY }: CSSStyleDeclaratio
 /**
  * @private
  */
-function getScrollParent(el: HTMLElement): HTMLElement {
+function getScrollParent(el: Element): Element {
   let style = getComputedStyle(el);
   const excludeStaticParent = style.position === 'absolute';
 
@@ -39,7 +39,10 @@ function getScrollParent(el: HTMLElement): HTMLElement {
     return document.documentElement;
   }
 
-  for (let parent = el as HTMLElement | null; (parent = parent ? parent.parentElement : null);) {
+  for (
+    let parent: Element | null = el;
+    parent = parent?.parentElement;
+  ) {
     style = getComputedStyle(parent);
     if (!(excludeStaticParent && style.position === 'static') && styleHasOverlfow(style)) {
       return parent;
@@ -53,7 +56,7 @@ function getScrollParent(el: HTMLElement): HTMLElement {
  * @private
  */
 function smoothScrollTo(
-  el: HTMLElement,
+  el: Element,
   to: number,
   duration: number = 300,
   callback?: (...args: any[]) => any
@@ -84,8 +87,8 @@ function smoothScrollTo(
  */
 export const calculateMenuTop = (
   menuHeight: number,
-  menuEl: HTMLElement | null,
-  controlEl: HTMLElement | null
+  menuEl: Element | null,
+  controlEl: Element | null
 ): string => {
   const menuHeightOrDefault = (menuHeight > 0 || !menuEl)
     ? menuHeight
@@ -102,7 +105,7 @@ export const calculateMenuTop = (
   return 'calc(' + basePx + 'px + ' + adjustPx + 'px)';
 };
 
-export const menuFitsBelowControl = (el: HTMLElement | null): boolean => {
+export const menuFitsBelowControl = (el: Element | null): boolean => {
   if (!el) return true;
 
   const scrollParent = getScrollParent(el);
@@ -117,7 +120,7 @@ export const menuFitsBelowControl = (el: HTMLElement | null): boolean => {
  * scroll can performed to show the menu in full view. Also, execute a callback if defined.
  */
 export const scrollMenuIntoViewOnOpen = (
-  menuEl: HTMLElement | null,
+  menuEl: Element | null,
   menuScrollDuration: number | undefined,
   scrollMenuIntoView: boolean | undefined,
   handleOnMenuOpen: (availableSpace?: number) => void

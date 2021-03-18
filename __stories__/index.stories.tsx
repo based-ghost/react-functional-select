@@ -942,14 +942,13 @@ export const Async = () => {
   const onSearchChange = useCallback(async (value?: string) => {
     try {
       await mockHttpRequest();
-
       const count = getRandomInt(1, 5);
       const lblSuffix = `Search text: ${value || 'Initial'}`;
       const nextOptions = createAsyncOptions(count, lblSuffix);
-
       setOptions(nextOptions);
       setIsLoading(false);
     } catch (e) {
+      setIsLoading(false);
       console.error(e);
     }
   }, []);
