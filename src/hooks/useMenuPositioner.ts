@@ -14,7 +14,7 @@ export const useMenuPositioner = (
   menuRef: MutableRefObject<HTMLElement | null>,
   controlRef: MutableRefObject<HTMLElement | null>,
   menuOpen: boolean,
-  menuPosition: 'top' | 'auto' | 'bottom',
+  menuPosition: MenuPositionEnum,
   menuItemSize: number,
   menuHeightDefault: number,
   menuOptionsLength: number,

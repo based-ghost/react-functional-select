@@ -11,7 +11,7 @@ import { EMPTY_ARRAY, FilterMatchEnum } from '../constants';
 export const useMenuOptions = (
   options: OptionData[],
   debouncedInputValue: string,
-  filterMatchFrom: 'any' | 'start',
+  filterMatchFrom: FilterMatchEnum,
   selectedOption: SelectedOption[],
   getOptionValue: (data: OptionData) => ReactText,
   getOptionLabel: (data: OptionData) => ReactText,
