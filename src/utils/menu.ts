@@ -33,18 +33,15 @@ function styleHasOverlfow({ overflow, overflowX, overflowY }: CSSStyleDeclaratio
  */
 function getScrollParent(el: Element): Element {
   let style = getComputedStyle(el);
-  const excludeStaticParent = style.position === 'absolute';
+  const isParentAbs = style.position === 'absolute';
 
   if (style.position === 'fixed') {
     return document.documentElement;
   }
 
-  for (
-    let parent: Element | null = el;
-    parent = parent?.parentElement;
-  ) {
+  for (let parent: Element | null = el; (parent = parent?.parentElement);) {
     style = getComputedStyle(parent);
-    if (!(excludeStaticParent && style.position === 'static') && styleHasOverlfow(style)) {
+    if (!(isParentAbs && style.position === 'static') && styleHasOverlfow(style)) {
       return parent;
     }
   }

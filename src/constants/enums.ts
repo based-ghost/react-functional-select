@@ -25,8 +25,8 @@ export type FilterMatchEnum = typeof FilterMatchEnum[keyof typeof FilterMatchEnu
  * Arrow key direction for cycling through multi-values.
  */
 export const ValueIndexEnum = {
-  NEXT: 'next',
-  PREVIOUS: 'prev'
+  NEXT: 0,
+  PREVIOUS: 1
 } as const;
 
 export type ValueIndexEnum = typeof ValueIndexEnum[keyof typeof ValueIndexEnum];
@@ -35,10 +35,10 @@ export type ValueIndexEnum = typeof ValueIndexEnum[keyof typeof ValueIndexEnum];
  * Arrow key direction OR position for cycling through menu options.
  */
 export const OptionIndexEnum = {
-  UP: 'up',
-  DOWN: 'down',
-  LAST: 'last',
-  FIRST: 'first'
+  UP: 0,
+  DOWN: 1,
+  LAST: 2,
+  FIRST: 3
 } as const;
 
 export type OptionIndexEnum = typeof OptionIndexEnum[keyof typeof OptionIndexEnum];
