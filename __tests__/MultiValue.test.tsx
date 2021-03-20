@@ -1,7 +1,10 @@
 import { CLEAR_ICON_MV_TESTID } from '../src/constants';
-import { render, fireEvent, RenderResult } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import MultiValue, { MultiValueProps } from '../src/components/value/MultiValue';
-import { Option, RENDER_OPTION_LABEL_MOCK, getOptionSingle, ThemeTestHOC } from './helpers';
+import { RENDER_OPTION_LABEL_MOCK, getOptionSingle, ThemeTestHOC } from './helpers';
+
+import type { Option } from './helpers';
+import type { RenderResult } from '@testing-library/react';
 
 // ============================================
 // Helper functions for MultiValue component

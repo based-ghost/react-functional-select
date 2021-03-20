@@ -1,9 +1,11 @@
-import React, { ReactNode, ReactText, FunctionComponent, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import MultiValue from './MultiValue';
-import { MultiParams } from '../../Select';
 import { isArrayWithLength } from '../../utils';
 import styled, { css } from 'styled-components';
-import { OptionData, MouseOrTouchEvent, SelectedOption } from '../../types';
+
+import type { MultiParams } from '../../Select';
+import type { ReactNode, ReactText, FunctionComponent } from 'react';
+import type { OptionData, MouseOrTouchEvent, SelectedOption } from '../../types';
 
 export type ValueProps = Readonly<{
   isMulti?: boolean;

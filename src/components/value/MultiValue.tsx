@@ -1,7 +1,9 @@
-import React, { memo, ReactNode, ReactText } from 'react';
+import React, { memo } from 'react';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../../constants';
-import { OptionData, MouseOrTouchEvent, SelectedOption } from '../../types';
+
+import type { ReactNode, ReactText } from 'react';
+import type { OptionData, MouseOrTouchEvent, SelectedOption } from '../../types';
 
 export type MultiValueProps = SelectedOption & Readonly<{
   isFocused: boolean;

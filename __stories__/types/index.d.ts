@@ -1,4 +1,4 @@
-import { ReactText } from 'react';
+import type { ReactText } from 'react';
 
 export type Option = Readonly<{
   label: ReactText;

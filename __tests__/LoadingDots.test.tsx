@@ -1,6 +1,8 @@
 import { ThemeTestHOC } from './helpers';
-import { render, RenderResult } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import LoadingDots from '../src/components/indicators/LoadingDots';
+
+import type { RenderResult } from '@testing-library/react';
 
 // ============================================
 // Helper functions for AriaLiveRegion component

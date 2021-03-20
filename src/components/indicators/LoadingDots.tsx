@@ -1,6 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { LOADING_DOTS_CLS } from '../../constants';
+
+import type { FunctionComponent } from 'react';
 
 const StyledLoadingDots = styled.div`
   display: flex;

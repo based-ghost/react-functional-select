@@ -1,17 +1,10 @@
 import React, {
-  Ref,
   useRef,
   useMemo,
   useState,
   useEffect,
-  ReactNode,
-  ReactText,
-  FormEvent,
-  FocusEvent,
   forwardRef,
   useCallback,
-  KeyboardEvent,
-  FocusEventHandler,
   useImperativeHandle
 } from 'react';
 
@@ -32,7 +25,17 @@ import {
   SELECT_WRAPPER_ATTRIBUTES
 } from './constants';
 
-import {
+import { DEFAULT_THEME } from './theme';
+import styled, { css, ThemeProvider } from 'styled-components';
+import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
+import { mergeDeep, IS_TOUCH_DEVICE, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
+import { useDebounce, useMenuPositioner, useMenuOptions, useMountEffect, useUpdateEffect } from './hooks';
+
+import type { FixedSizeList } from 'react-window';
+import type { DefaultTheme } from 'styled-components';
+import type { Ref, FormEvent, FocusEvent, ReactNode, ReactText, KeyboardEvent, FocusEventHandler } from 'react';
+
+import type {
   OptionData,
   PartialDeep,
   IconRenderer,
@@ -41,13 +44,6 @@ import {
   MouseOrTouchEvent,
   AriaLiveAttribute
 } from './types';
-
-import { DEFAULT_THEME } from './theme';
-import { FixedSizeList } from 'react-window';
-import styled, { css, DefaultTheme, ThemeProvider } from 'styled-components';
-import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
-import { mergeDeep, IS_TOUCH_DEVICE, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
-import { useDebounce, useMenuPositioner, useMenuOptions, useMountEffect, useUpdateEffect } from './hooks';
 
 export type Theme = PartialDeep<DefaultTheme>;
 

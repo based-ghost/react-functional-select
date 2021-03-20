@@ -55,7 +55,7 @@
     "@storybook/react": "^6.1.21",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^13.0.2",
+    "@testing-library/user-event": "^13.0.6",
     "@types/jest": "^26.0.21",
     "@types/node": "^14.14.35",
     "@types/react": "^17.0.3",
@@ -86,7 +86,7 @@
     "react-toastify": "^7.0.3",
     "react-window": "^1.8.6",
     "rimraf": "^3.0.2",
-    "rollup": "^2.41.5",
+    "rollup": "^2.42.1",
     "rollup-plugin-terser": "^7.0.2",
     "styled-components": "^5.2.1",
     "typescript": "^4.2.3"

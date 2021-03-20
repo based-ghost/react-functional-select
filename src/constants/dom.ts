@@ -1,4 +1,4 @@
-import { HTMLAttributes, InputHTMLAttributes } from 'react';
+import type { HTMLAttributes, InputHTMLAttributes } from 'react';
 
 // id attributes for AriaLiveRegion.tsx innerHTML content
 export const ARIA_LIVE_CONTEXT_ID = 'aria-selection';

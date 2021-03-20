@@ -1,5 +1,5 @@
-import { DefaultTheme } from 'styled-components';
 import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from './constants';
+import type { DefaultTheme } from 'styled-components';
 
 /**
  * A contextual styled-components DefaultTheme object with default key-value pairs for CSS props.

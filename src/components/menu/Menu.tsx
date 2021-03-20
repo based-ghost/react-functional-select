@@ -1,9 +1,8 @@
-import React, { MutableRefObject, FunctionComponent } from 'react';
+import React from 'react';
+import MenuList from './MenuList';
 import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import { isArrayWithLength } from '../../utils';
-import { MouseOrTouchEvent } from '../../types';
-import MenuList, { MenuListProps } from './MenuList';
 
 import {
   OPTION_CLS,
@@ -13,6 +12,10 @@ import {
   MENU_CONTAINER_CLS,
   MENU_CONTAINER_TESTID
 } from '../../constants';
+
+import type { MenuListProps } from './MenuList';
+import type { MouseOrTouchEvent } from '../../types';
+import type { MutableRefObject, FunctionComponent } from 'react';
 
 export interface MenuProps extends MenuListProps {
   menuTop?: string;

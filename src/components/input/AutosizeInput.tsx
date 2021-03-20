@@ -1,19 +1,11 @@
-import React, {
-  Ref,
-  memo,
-  useRef,
-  useState,
-  Fragment,
-  forwardRef,
-  FormEventHandler,
-  FocusEventHandler
-} from 'react';
-
+import React, { memo, useRef, useState, Fragment, forwardRef } from 'react';
 import styled from 'styled-components';
-import { SelectedOption } from '../../types';
 import { useUpdateEffect } from '../../hooks';
 import { AUTOSIZE_INPUT_ATTRIBUTES } from '../../constants';
 import { isArrayWithLength, IS_MICROSOFT_BROWSER } from '../../utils';
+
+import type { SelectedOption } from '../../types';
+import type { Ref, FormEventHandler, FocusEventHandler } from 'react';
 
 export type AutosizeInputProps = Readonly<{
   id?: string;

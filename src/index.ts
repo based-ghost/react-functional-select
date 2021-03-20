@@ -1,1 +1,9 @@
-export * from './Select';
+export { Select } from './Select';
+
+export type {
+  Theme,
+  SelectRef,
+  MenuOption,
+  MultiParams,
+  SelectProps
+} from './Select';

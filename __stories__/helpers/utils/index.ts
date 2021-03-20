@@ -1,4 +1,4 @@
-import { Option } from '../../types';
+import type { Option } from '../../types';
 
 export const stringifyJavaScriptObj = (data: any = {}): string => {
   return JSON.stringify(data, null, 2).replace(/"(\w+)"\s*:/g, '$1:');

@@ -1,8 +1,10 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../../utils';
-import { FocusedOption, SelectedOption, AriaLiveAttribute } from '../../types';
 import { ARIA_LIVE_SELECTION_ID, ARIA_LIVE_CONTEXT_ID } from '../../constants';
+
+import type { FunctionComponent } from 'react';
+import type { FocusedOption, SelectedOption, AriaLiveAttribute } from '../../types';
 
 export type AriaLiveRegionProps = Readonly<{
   menuOpen: boolean;

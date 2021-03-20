@@ -1,7 +1,8 @@
-import { Theme } from '../../../src/Select';
 import { createThemeOptions } from '../utils';
 import { mergeDeep } from '../../../src/utils';
 import { DEFAULT_THEME } from '../../../src/theme';
+
+import type { Theme } from '../../../src';
 
 // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
 const _bounceKeyframes = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';

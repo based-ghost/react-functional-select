@@ -1,4 +1,5 @@
-import { useEffect, EffectCallback } from 'react';
+import { useEffect } from 'react';
+import type { EffectCallback } from 'react';
 
 /**
  * Run an effect only once (on initial mount).

@@ -1,8 +1,10 @@
 import { ThemeTestHOC } from './helpers';
 import userEvent from '@testing-library/user-event';
-import { render, fireEvent, RenderResult } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import AutosizeInput, { AutosizeInputProps } from '../src/components/input/AutosizeInput';
 import { EMPTY_ARRAY, AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants';
+
+import type { RenderResult } from '@testing-library/react';
 
 // ============================================
 // Helper functions for AutosizeInput component

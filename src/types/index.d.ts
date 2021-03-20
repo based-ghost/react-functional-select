@@ -1,5 +1,5 @@
-import { ReactNode, ReactText, MouseEvent, TouchEvent } from 'react';
-import { MenuOption, MultiParams } from '../Select';
+import type { MenuOption, MultiParams } from '../Select';
+import type { ReactNode, ReactText, MouseEvent, TouchEvent } from 'react';
 
 export type OptionData = any;
 export type AriaLiveAttribute = 'off' | 'polite' | 'assertive';

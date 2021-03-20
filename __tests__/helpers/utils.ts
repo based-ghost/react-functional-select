@@ -1,6 +1,6 @@
-import { ReactNode, ReactText, CSSProperties } from 'react';
-import { MultiParams, MenuOption } from '../../src';
-import { OptionData, SelectedOption } from '../../src/types';
+import type { MultiParams, MenuOption } from '../../src';
+import type { ReactNode, ReactText, CSSProperties } from 'react';
+import type { OptionData, SelectedOption } from '../../src/types';
 
 // ============================================
 // Basic "options" & "selectedOption" data

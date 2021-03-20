@@ -1,18 +1,13 @@
-import React, {
-  useMemo,
-  Fragment,
-  ReactNode,
-  ReactText,
-  MutableRefObject,
-  FunctionComponent
-} from 'react';
-
+import React, { useMemo, Fragment } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
-import { MenuOption } from '../../Select';
+import { FixedSizeList } from 'react-window';
 import { isArrayWithLength } from '../../utils';
-import { FixedSizeList, ListItemKeySelector } from 'react-window';
-import { ItemData, OptionData, SelectedOption } from '../../types';
+
+import type { MenuOption } from '../../Select';
+import type { ListItemKeySelector } from 'react-window';
+import type { ItemData, OptionData, SelectedOption } from '../../types';
+import type { ReactNode, ReactText, MutableRefObject, FunctionComponent } from 'react';
 
 export type MenuListProps = Readonly<{
   height: number;

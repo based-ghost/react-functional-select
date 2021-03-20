@@ -1,4 +1,5 @@
-import { cssTransition, ToastContainerProps } from 'react-toastify';
+import { cssTransition } from 'react-toastify';
+import type { ToastContainerProps } from 'react-toastify';
 
 // CSS transition config => 'transition' property
 const transition = cssTransition({

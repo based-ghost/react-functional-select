@@ -1,8 +1,10 @@
 import { SelectedOption } from '../src/types';
-import { render, RenderResult } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import Value, { ValueProps } from '../src/components/value/Value';
 import { PLACEHOLDER_DEFAULT, EMPTY_ARRAY } from '../src/constants';
 import { RENDER_OPTION_LABEL_MOCK, RENDER_MULTI_OPTIONS_MOCK, getSelectedOptionSingle, ThemeTestHOC } from './helpers';
+
+import type { RenderResult } from '@testing-library/react';
 
 // ============================================
 // Helper functions for Value component

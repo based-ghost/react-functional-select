@@ -1,7 +1,9 @@
-import { useEffect, useState, useRef, MutableRefObject } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { MenuPositionEnum } from '../constants';
 import { useUpdateEffect } from './useUpdateEffect';
 import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
+
+import type { MutableRefObject } from 'react';
 
 /**
  * Handle calculating and maintaining the menuHeight used by react-window.

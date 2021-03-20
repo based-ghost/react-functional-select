@@ -1,9 +1,7 @@
-import { useMemo, useRef, useState, useEffect, useCallback, Fragment, ReactNode } from 'react';
+import { useMemo, useRef, useState, useEffect, useCallback, Fragment } from 'react';
+import { Select } from '../src';
 import { toast } from 'react-toastify';
-import { SelectedOption } from '../src/types';
 import { useUpdateEffect } from '../src/hooks';
-import { CityOption, Option, PackageOption } from './types';
-import { Select, MultiParams, MenuOption, SelectRef, Theme } from '../src';
 
 import {
   OPTION_CLS,
@@ -73,6 +71,11 @@ import {
   CHEVRON_SVG_PROPS,
   CHEVRON_DOWN_PATH_PROPS
 } from './helpers';
+
+import type { ReactNode } from 'react';
+import type { SelectedOption } from '../src/types';
+import type { CityOption, Option, PackageOption } from './types';
+import type { MultiParams, MenuOption, SelectRef, Theme } from '../src';
 
 export default {
   title: 'React Functional Select'
@@ -294,7 +297,7 @@ export const Styling = () => {
   const [selectedOption, setSelectedOption] = useCallbackState<SelectedOption | null>(null);
 
   const selectWrapperStyle = { marginTop: '1rem' };
-  const noteStyle = { fontSize: 'inherit', fontWeight: 700 };
+  const noteStyle = { color: '#1a1a1a', fontSize: 'inherit', fontWeight: 700 };
   const menuItemSize = selectedOption?.value === ThemeEnum.LARGE_TEXT ? 44 : 35;
 
   const memoizedMarkupNode = useMemo<ReactNode>(() => (
@@ -944,8 +947,7 @@ export const Async = () => {
       await mockHttpRequest();
       const count = getRandomInt(1, 5);
       const lblSuffix = `Search text: ${value || 'Initial'}`;
-      const nextOptions = createAsyncOptions(count, lblSuffix);
-      setOptions(nextOptions);
+      setOptions(createAsyncOptions(count, lblSuffix));
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);

@@ -1,5 +1,5 @@
-import { FunctionComponent } from 'react';
 import styled from 'styled-components';
+import type { FunctionComponent } from 'react';
 
 type PackageLinkProps = Readonly<{
   name: string;

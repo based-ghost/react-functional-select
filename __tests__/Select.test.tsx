@@ -1,6 +1,6 @@
 import { Select, SelectProps } from '../src';
 import userEvent from '@testing-library/user-event';
-import { render, fireEvent, RenderResult } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import {
   MENU_CONTAINER_CLS,
@@ -11,6 +11,8 @@ import {
   SELECT_CONTAINER_TESTID,
   CONTROL_CONTAINER_TESTID
 } from '../src/constants';
+
+import type { RenderResult } from '@testing-library/react';
 
 // ============================================
 // Helper functions for Select component

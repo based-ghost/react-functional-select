@@ -1,9 +1,11 @@
-import { MenuOption } from '../src';
 import { ThemeTestHOC } from './helpers';
-import { render, RenderResult } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
 import MenuList, { MenuListProps } from '../src/components/menu/MenuList';
 import { MENU_ITEM_SIZE_DEFAULT, MENU_MAX_HEIGHT_DEFAULT, LOADING_MSG_DEFAULT, NO_OPTIONS_MSG_DEFAULT, FOCUSED_OPTION_DEFAULT } from '../src/constants';
+
+import type { MenuOption } from '../src';
+import type { RenderResult } from '@testing-library/react';
 
 // ============================================
 // Helper functions for Menu component

@@ -1,6 +1,13 @@
-import { ReactText } from 'react';
-import { OptionData, SelectedOption } from '../types';
-import { EMPTY_ARRAY, OPTION_CLS, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants';
+import {
+  OPTION_CLS,
+  EMPTY_ARRAY,
+  OPTION_FOCUSED_CLS,
+  OPTION_SELECTED_CLS,
+  OPTION_DISABLED_CLS,
+} from '../constants';
+
+import type { ReactText } from 'react';
+import type { OptionData, SelectedOption } from '../types';
 
 const _diacriticsRegExp = /[\u0300-\u036f]/g;
 
@@ -70,11 +77,7 @@ export const normalizeValue = (
   getOptionValue: (data: OptionData) => ReactText,
   getOptionLabel: (data: OptionData) => ReactText
 ): SelectedOption[] => {
-  const initialValues = Array.isArray(value)
-    ? value
-    : isPlainObject(value)
-      ? [value]
-      : EMPTY_ARRAY;
+  const initialValues = Array.isArray(value) ? value : isPlainObject(value) ? [value] : EMPTY_ARRAY;
 
   if (!isArrayWithLength(initialValues)) {
     return initialValues;

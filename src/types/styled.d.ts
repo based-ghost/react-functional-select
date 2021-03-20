@@ -1,5 +1,5 @@
 import 'styled-components';
-import { FlattenSimpleInterpolation } from 'styled-components';
+import type { FlattenSimpleInterpolation } from 'styled-components';
 
 declare module 'styled-components' {
   export interface DefaultTheme {

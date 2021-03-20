@@ -1,4 +1,4 @@
-import { Configuration } from 'webpack';
+import type { Configuration } from 'webpack';
 
 module.exports = {
   stories: ['../__stories__/**/*.stories.tsx'],

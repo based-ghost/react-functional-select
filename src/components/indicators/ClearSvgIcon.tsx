@@ -1,6 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_CLS } from '../../constants';
+
+import type { FunctionComponent } from 'react';
 
 const ClearSvg = styled.svg`
   fill: currentColor;

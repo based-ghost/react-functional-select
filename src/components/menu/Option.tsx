@@ -1,7 +1,9 @@
-import React, { memo, CSSProperties } from 'react';
-import { ItemData } from '../../types';
+import React, { memo } from 'react';
 import { areEqual } from 'react-window';
 import { optionClassNames } from '../../utils';
+
+import type { CSSProperties } from 'react';
+import type { ItemData } from '../../types';
 
 export type OptionProps = Readonly<{
   index: number;

@@ -1,7 +1,8 @@
-import { FunctionComponent } from 'react';
 import { Button } from '../styled';
 import { numberWithCommas } from '../utils';
 import styled, { css } from 'styled-components';
+
+import type { FunctionComponent } from 'react';
 
 type OptionsCountButtonProps = Readonly<{
   count: number;

@@ -1,4 +1,4 @@
-import { CityOption, PackageOption } from '../../types';
+import type { CityOption, PackageOption } from '../../types';
 
 export const PACKAGE_OPTIONS: PackageOption[] = [
   { id: 1, name: 'react' },

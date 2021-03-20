@@ -1,9 +1,11 @@
-import React, { memo, EventHandler, ReactNode } from 'react';
+import React, { memo } from 'react';
 import LoadingDots from './LoadingDots';
 import ClearSvgIcon from './ClearSvgIcon';
 import styled, { css } from 'styled-components';
-import { IconRenderer, MouseOrTouchEvent } from '../../types';
 import { CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../../constants';
+
+import type { EventHandler, ReactNode } from 'react';
+import type { IconRenderer, MouseOrTouchEvent } from '../../types';
 
 export type IndicatorIconsProps = Readonly<{
   menuOpen: boolean;
