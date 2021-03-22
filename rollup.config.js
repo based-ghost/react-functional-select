@@ -24,6 +24,10 @@ const terserPlugin = terser({
   format: {
     preserve_annotations: true,
   },
+  compress: {
+    ecma: 2015,
+    pure_getters: true,
+  },
 });
 
 /**
@@ -32,6 +36,14 @@ const terserPlugin = terser({
 const replacePlugin = replace({
   preventAssignment: true,
   'process.env.NODE_ENV': JSON.stringify('production'),
+});
+
+// Remove data-testid attribute (since undefined in non-test environments)
+// Perform as final step in transformed, bundled code (for esm and cjs builds)
+const removeTestIdPlugin = replace({
+  preventAssignment: true,
+  ',"data-testid":undefined': '',
+  delimiters: ['', ''],
 });
 
 /**
@@ -48,11 +60,11 @@ const babelPlugin = (useESModules = true) => {
     exclude: 'node_modules/**',
     extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
     presets: [
-      ['@babel/preset-env', { targets, loose: false, bugfixes: true }],
-      ['@babel/preset-react', { runtime: 'classic' }],
+      ['@babel/preset-env', {targets, loose: false, bugfixes: true}],
+      ['@babel/preset-react', {runtime: 'classic'}],
     ],
     plugins: [
-      ['@babel/plugin-transform-runtime', { useESModules }],
+      ['@babel/plugin-transform-runtime', {useESModules}],
       '@babel/plugin-proposal-optional-chaining',
       [
         'babel-plugin-styled-components',
@@ -84,6 +96,7 @@ export default [
       typescript(),
       babelPlugin(false),
       terserPlugin,
+      removeTestIdPlugin
     ],
   },
 
@@ -101,6 +114,7 @@ export default [
       typescript(),
       babelPlugin(),
       terserPlugin,
+      removeTestIdPlugin
     ],
   },
 
