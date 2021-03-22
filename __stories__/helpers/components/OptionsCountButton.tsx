@@ -40,7 +40,10 @@ const OptionsCountButton: FunctionComponent<OptionsCountButtonProps> = ({
   const onClick = !isActive ? () => setOptionsCount(count) : undefined;
 
   return (
-    <StyledButton onClick={onClick} isActive={isActive}>
+    <StyledButton
+      onClick={onClick}
+      isActive={isActive}
+    >
       {numberWithCommas(count)}
     </StyledButton>
   );

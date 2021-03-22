@@ -1,3 +1,4 @@
+import path from 'path';
 import type { Configuration } from 'webpack';
 
 module.exports = {
@@ -7,11 +8,11 @@ module.exports = {
     {
       name: '@storybook/addon-storysource',
       options: {
-        loaderOptions: {
-          injectStoryParameters: false,
+        rule: {
+          test: [/\.stories\.(jsx?$|tsx?$)/],
+          include: [path.resolve(__dirname, '../__stories__')],
         },
-        sourceLoaderOptions: {
-          parser: 'typescript',
+        loaderOptions: {
           injectStoryParameters: false,
         },
       },

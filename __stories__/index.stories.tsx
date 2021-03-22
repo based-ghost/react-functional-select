@@ -950,8 +950,8 @@ export const Async = () => {
       setOptions(createAsyncOptions(count, lblSuffix));
       setIsLoading(false);
     } catch (e) {
-      setIsLoading(false);
       console.error(e);
+      setIsLoading(false);
     }
   }, []);
 
