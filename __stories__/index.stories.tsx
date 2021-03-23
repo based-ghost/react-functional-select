@@ -923,6 +923,7 @@ export const Portaling = () => {
               options={options}
               onMenuOpen={onMenuOpen}
               onMenuClose={onMenuClose}
+              scrollMenuIntoView={false}
               menuPortalTarget={menuPortalTarget}
             />
           </SelectContainer>
