@@ -352,7 +352,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     }
 
     const selectedIndex = !isMulti
-      ? menuOptions.findIndex(({ isSelected }) => isSelected)
+      ? menuOptions.findIndex((x) => x.isSelected)
       : -1;
 
     const index = (selectedIndex > -1)

@@ -27,17 +27,16 @@ export const useMenuPositioner = (
 ): [string | undefined, number] => {
   const resetMenuHeightRef = useRef<boolean>(false);
   const isMenuTopPositionRef = useRef<boolean>(false);
-
   const [menuHeight, setMenuHeight] = useState<number>(menuHeightDefault);
-  const [isMenuTopPosition, setIsMenuTopPosition] = useState<boolean>(menuPosition === MenuPositionEnum.TOP);
+  const [isMenuTopPosition, setIsMenuTopPosition] = useState<boolean>(false);
 
   useEffect(() => {
     const isTopPosition =
       menuPosition === MenuPositionEnum.TOP ||
       (menuPosition === MenuPositionEnum.AUTO && !menuFitsBelowControl(menuRef.current));
 
+    isMenuTopPositionRef.current = isTopPosition;
     setIsMenuTopPosition(isTopPosition);
-    isMenuTopPositionRef.current = isMenuTopPosition;
   }, [menuRef, menuPosition]);
 
   useUpdateEffect(() => {

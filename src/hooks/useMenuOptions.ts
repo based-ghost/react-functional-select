@@ -29,12 +29,11 @@ export const useMenuOptions = (
 
   // Prevent effect from executing on search input mutations in 'async' mode (also prevents filtering from executing)
   const searchValue = !async ? debouncedInputValue : '';
-  const hideSelectedOptionsOrDefault = (typeof hideSelectedOptions !== 'boolean') ? !!isMulti : hideSelectedOptions;
+  const hideSelectedOptionsOrDefault = typeof hideSelectedOptions !== 'boolean' ? !!isMulti : hideSelectedOptions;
 
   useEffect(() => {
     const normalizedInput = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
     const selectedHash = selectedOption.length ? new Set(selectedOption.map((x) => x.value)) : undefined;
-
     const getIsOptionDisabledOrDefault: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
     const getFilterOptionStringOrDefault: (option: MenuOption) => string = getFilterOptionString || ((option) => (typeof option.label === 'string') ? option.label : `${option.label}`);
 
