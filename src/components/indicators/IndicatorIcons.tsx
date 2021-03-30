@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
 import LoadingDots from './LoadingDots';
+import { isFunction } from '../../utils';
 import ClearSvgIcon from './ClearSvgIcon';
 import styled, { css } from 'styled-components';
 import { CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../../constants';
 
-import type { EventHandler, ReactNode } from 'react';
-import type { IconRenderer, MouseOrTouchEvent } from '../../types';
+import type { ReactNode } from 'react';
+import type { IconRenderer, MouseOrTouchEventHandler } from '../../types';
 
 export type IndicatorIconsProps = Readonly<{
   menuOpen: boolean;
@@ -16,8 +17,8 @@ export type IndicatorIconsProps = Readonly<{
   loadingNode?: ReactNode;
   clearIcon?: IconRenderer;
   caretIcon?: IconRenderer;
-  onClearMouseDown: EventHandler<MouseOrTouchEvent<HTMLElement>>;
-  onCaretMouseDown?: EventHandler<MouseOrTouchEvent<HTMLElement>>;
+  onClearMouseDown: MouseOrTouchEventHandler;
+  onCaretMouseDown?: MouseOrTouchEventHandler;
 }>;
 
 const IndicatorIconsWrapper = styled.div`
@@ -78,13 +79,13 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
   onClearMouseDown
 }) => {
   const customIconContext =
-    (typeof caretIcon === 'function' || typeof clearIcon === 'function')
+    isFunction(caretIcon) || isFunction(clearIcon)
       ? { menuOpen, isLoading: !!isLoading, isInvalid: !!isInvalid, isDisabled: !!isDisabled }
       : undefined;
 
   const renderIconFn = (renderer: IconRenderer) => {
-    return typeof renderer === 'function'
-      ? renderer(customIconContext)
+    return isFunction(renderer)
+      ? (renderer as ((...args: any[]) => ReactNode))(customIconContext)
       : renderer;
   };
 

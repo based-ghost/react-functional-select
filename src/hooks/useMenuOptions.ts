@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { trimAndFormatFilterStr } from '../utils';
 import { EMPTY_ARRAY, FilterMatchEnum } from '../constants';
+import { isBoolean, trimAndFormatFilterStr } from '../utils';
 
 import type { ReactText } from 'react';
 import type { MenuOption } from '../Select';
@@ -29,7 +29,7 @@ export const useMenuOptions = (
 
   // Prevent effect from executing on search input mutations in 'async' mode (also prevents filtering from executing)
   const searchValue = !async ? debouncedInputValue : '';
-  const hideSelectedOptionsOrDefault = typeof hideSelectedOptions !== 'boolean' ? !!isMulti : hideSelectedOptions;
+  const hideSelectedOptionsOrDefault = !isBoolean(hideSelectedOptions) ? !!isMulti : hideSelectedOptions;
 
   useEffect(() => {
     const normalizedInput = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);

@@ -21,7 +21,21 @@ function stripDiacritics(value: string): string {
 }
 
 /**
- * Tests if object is an array with at least 1 item.
+ * Test if typeof parameter is boolean.
+ */
+export function isBoolean(test: any): boolean {
+  return typeof test === 'boolean';
+}
+
+/**
+ * Test if typeof parameter is function.
+ */
+export function isFunction(test: any): boolean {
+  return typeof test === 'function';
+}
+
+/**
+ * Test if parameter is an array with at least 1 item.
  */
 export function isArrayWithLength(test: any): boolean {
   return Array.isArray(test) && !!test.length;

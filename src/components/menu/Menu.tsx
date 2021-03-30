@@ -85,10 +85,8 @@ const Menu: FunctionComponent<MenuProps> = ({
   menuPortalTarget,
   ...menuListProps
 }) => {
-  const hideNoOptionsMsg =
-    menuOpen &&
-    !Boolean(menuListProps.noOptionsMsg) &&
-    !isArrayWithLength(menuListProps.menuOptions);
+  const { menuOptions, noOptionsMsg } = menuListProps;
+  const hideNoOptionsMsg = menuOpen && !Boolean(noOptionsMsg) && !isArrayWithLength(menuOptions);
 
   const menuNode = (
     <MenuWrapper

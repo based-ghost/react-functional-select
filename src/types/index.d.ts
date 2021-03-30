@@ -1,10 +1,12 @@
 import type { MenuOption, MultiParams } from '../Select';
-import type { ReactNode, ReactText, MouseEvent, TouchEvent } from 'react';
+import type { ReactNode, ReactText, MouseEvent, TouchEvent, EventHandler } from 'react';
 
 export type OptionData = any;
 export type AriaLiveAttribute = 'off' | 'polite' | 'assertive';
 export type IconRenderer = ReactNode | ((...args: any[]) => ReactNode);
+
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
+export type MouseOrTouchEventHandler = EventHandler<MouseOrTouchEvent<Element>>;
 
 export type PartialDeep<T> = {
   [P in keyof T]?: PartialDeep<T[P]>;

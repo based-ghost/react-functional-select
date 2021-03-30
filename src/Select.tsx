@@ -28,8 +28,8 @@ import {
 import { DEFAULT_THEME } from './theme';
 import styled, { css, ThemeProvider } from 'styled-components';
 import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
-import { mergeDeep, IS_TOUCH_DEVICE, isPlainObject, normalizeValue, isArrayWithLength } from './utils';
 import { useDebounce, useMenuPositioner, useMenuOptions, useMountEffect, useUpdateEffect } from './hooks';
+import { mergeDeep, IS_TOUCH_DEVICE, normalizeValue, isPlainObject, isBoolean, isArrayWithLength } from './utils';
 
 import type { FixedSizeList } from 'react-window';
 import type { DefaultTheme } from 'styled-components';
@@ -376,10 +376,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     }
 
     // Use 'blurInputOnSelect' if defined, otherwise evaluate to true if current device is touch-device
-    const blurControl = (typeof blurInputOnSelect === 'boolean')
-      ? blurInputOnSelect
-      : IS_TOUCH_DEVICE;
-
+    const blurControl = isBoolean(blurInputOnSelect) ? blurInputOnSelect : IS_TOUCH_DEVICE;
     if (blurControl) {
       blurInput();
     } else if (closeMenuOnSelect) {
