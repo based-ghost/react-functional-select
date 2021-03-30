@@ -9,7 +9,7 @@
 
 <strong>Key features:</strong>
 
-- Fully-featured <em>AND</em> lightweight: ~7 kB (gzipped)!
+- Fully-featured <strong><em>AND</em></strong> lightweight: ~7 kB (gzipped)!
 - Offers nearly all customization features found in [`react-select`](https://github.com/JedWatson/react-select), in a modern, functional design (inspired by react-select, you will find much of the API similar)
 - Extensible styling API with [`styled-components`](https://github.com/styled-components/styled-components)
 - Opt-in properties to make the component fully accessible
