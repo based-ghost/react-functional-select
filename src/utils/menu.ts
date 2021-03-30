@@ -35,14 +35,16 @@ function isDocumentElement(el: Element | Window): boolean {
   return el === document.documentElement || el === document.body || el === window;
 }
 
+// Test CSSStyleDeclaration props for auto/scroll values - determines scroll eligibility.
+const _overflowRegExp = /(auto|scroll)/;
+
 /**
  * @private
  */
 function isScrollableStyle({overflow, overflowX, overflowY}: CSSStyleDeclaration): boolean {
-  const overflowRegExp = /(auto|scroll)/;
   const overflowTestStr = overflow + overflowX + overflowY;
 
-  return overflowRegExp.test(overflowTestStr);
+  return _overflowRegExp.test(overflowTestStr);
 }
 
 /**

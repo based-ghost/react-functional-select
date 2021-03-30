@@ -49,8 +49,8 @@ export function isPlainObject(test: any): boolean {
 }
 
 /**
- * Handle mouse/touch events by stopping propagation and in some cases,
- * prevent default behavior.
+ * Handle mouse/touch events by suppressing event propagation,
+ * and in some cases, preventing the default behavior.
  */
 export const suppressMouseOrTouchEvent = (
   e: MouseOrTouchEvent<HTMLElement>,

@@ -353,21 +353,21 @@ const Select = forwardRef<SelectRef, SelectProps>((
     scrollToItemIndex(index);
   }, [isMulti, menuOptions]);
 
-  const removeSelectedOption = useCallback((value?: ReactText): void => {
-    setSelectedOption((prevSelected) => prevSelected.filter((x) => x.value !== value));
+  const removeSelectedOption = useCallback((removeValue?: ReactText): void => {
+    setSelectedOption((prev) => prev.filter(({ value }) => value !== removeValue));
   }, []);
 
   const selectOption = useCallback((option: SelectedOption, isSelected?: boolean): void => {
     if (isSelected) {
-      if (isMulti) {
+      if (isMulti)
         removeSelectedOption(option.value);
-      }
     } else {
-      setSelectedOption((prevSelected) => !isMulti ? [option] : [...prevSelected, option]);
+      setSelectedOption((prev) => !isMulti ? [option] : [...prev, option]);
     }
 
     // Use 'blurInputOnSelect' if defined, otherwise evaluate to true if current device is touch-device
     const blurControl = isBoolean(blurInputOnSelect) ? blurInputOnSelect : IS_TOUCH_DEVICE;
+
     if (blurControl) {
       blurInput();
     } else if (closeMenuOnSelect) {
@@ -381,8 +381,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
    * Exposed API methods/properties available on a ref instance of this Select.tsx component.
    */
   useImperativeHandle(ref, () => ({
-    menuOpen,
     empty: !isArrayWithLength(selectedOption),
+    menuOpen,
     blur: blurInput,
     focus: focusInput,
     clearValue: () => {
@@ -450,8 +450,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
     const normalizedOptionValue = isMulti
       ? selectedOption.map((x) => x.data)
       : isArrayWithLength(selectedOption)
-      ? selectedOption[0].data
-      : null;
+        ? selectedOption[0].data
+        : null;
 
     onOptionChange(normalizedOptionValue);
   }, [isMulti, selectedOption, onOptionChange]);
@@ -523,10 +523,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
     const index =
       direction === OptionIndexEnum.DOWN
-        ? ((focusedOption.index + 1) % menuOptions.length)
+        ? (focusedOption.index + 1) % menuOptions.length
         : focusedOption.index > 0
-        ? focusedOption.index - 1
-        : menuOptions.length - 1;
+          ? focusedOption.index - 1
+          : menuOptions.length - 1;
 
     focusedMultiValue && setFocusedMultiValue(null);
     setFocusedOption({ index, ...menuOptions[index] });
@@ -630,6 +630,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     if (!isFocused) focusInput();
 
     const targetIsNotInput = e.currentTarget.tagName !== 'INPUT';
+
     if (!menuOpen) {
       openMenuOnClick && openMenuAndFocusOption(OptionIndexEnum.FIRST);
     } else if (targetIsNotInput) {

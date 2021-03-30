@@ -10,7 +10,7 @@ const Link = styled.a`
   color: #026fb3;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.2;
   overflow: visible;
   user-select: none;
@@ -19,13 +19,12 @@ const Link = styled.a`
   text-decoration: none;
   display: inline-block;
   background-color: transparent;
-  box-shadow: 0 .75px 0 0 currentColor;
-      transform: translate3d(0px, 0px, 0px);
-      transition: all 250ms ease-out 0s;
+  transition: transform 0.25s ease-out;
+  transform: translate3d(0px, 0px, 0px);
 
-      :hover {
-        transform: translate3d(0px, -1px, 0px);
-      }
+  :hover {
+    transform: translate3d(0px, -2px, 0px);
+  }
 `;
 
 const PackageLink: FunctionComponent<PackageLinkProps> = ({ name, href }) => (
