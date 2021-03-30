@@ -42,8 +42,7 @@ const _overflowRegExp = /(auto|scroll)/;
  * @private
  */
 function isScrollableStyle({overflow, overflowX, overflowY}: CSSStyleDeclaration): boolean {
-  const overflowTestStr = overflow + overflowX + overflowY;
-
+  const overflowTestStr = `${overflow}${overflowX}${overflowY}`;
   return _overflowRegExp.test(overflowTestStr);
 }
 

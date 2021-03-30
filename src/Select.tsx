@@ -342,11 +342,11 @@ const Select = forwardRef<SelectRef, SelectProps>((
       ? menuOptions.findIndex((x) => x.isSelected)
       : -1;
 
-    const index = (selectedIndex > -1)
+    const index = selectedIndex > -1
       ? selectedIndex
-      : (position === OptionIndexEnum.FIRST)
-      ? 0
-      : (menuOptions.length - 1);
+      : position === OptionIndexEnum.FIRST
+        ? 0
+        : menuOptions.length - 1;
 
     !menuOpenRef.current && setMenuOpen(true);
     setFocusedOption({ index, ...menuOptions[index] });
@@ -366,7 +366,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
     }
 
     // Use 'blurInputOnSelect' if defined, otherwise evaluate to true if current device is touch-device
-    const blurControl = isBoolean(blurInputOnSelect) ? blurInputOnSelect : IS_TOUCH_DEVICE;
+    const blurControl = isBoolean(blurInputOnSelect)
+      ? blurInputOnSelect
+      : IS_TOUCH_DEVICE;
 
     if (blurControl) {
       blurInput();
@@ -533,6 +535,13 @@ const Select = forwardRef<SelectRef, SelectProps>((
     scrollToItemIndex(index);
   };
 
+  const handleVerticalKeySubRoutine = (key: string): void => {
+    const downKey = key === 'ArrowDown';
+    const downUpIndex = downKey ? OptionIndexEnum.DOWN : OptionIndexEnum.UP;
+    const posIndex = downKey ? OptionIndexEnum.FIRST : OptionIndexEnum.LAST;
+    menuOpen ? focusOptionOnArrowKey(downUpIndex) : openMenuAndFocusOption(posIndex);
+  };
+
   const handleOnKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
     if (isDisabled) return;
 
@@ -544,25 +553,22 @@ const Select = forwardRef<SelectRef, SelectProps>((
     switch (e.key) {
       case 'ArrowDown':
       case 'ArrowUp': {
-        const downKey = e.key === 'ArrowDown';
-        menuOpen
-          ? focusOptionOnArrowKey(downKey ? OptionIndexEnum.DOWN : OptionIndexEnum.UP)
-          : openMenuAndFocusOption(downKey ? OptionIndexEnum.FIRST : OptionIndexEnum.LAST);
-
+        handleVerticalKeySubRoutine(e.key);
         break;
       }
       case 'ArrowLeft':
       case 'ArrowRight': {
         if (!isMulti || inputValue || renderMultiOptions) return;
-        focusValueOnArrowKey(e.key === 'ArrowLeft' ? ValueIndexEnum.PREVIOUS : ValueIndexEnum.NEXT);
 
+        const leftRightIndex = e.key === 'ArrowLeft' ? ValueIndexEnum.PREVIOUS : ValueIndexEnum.NEXT;
+        focusValueOnArrowKey(leftRightIndex);
         break;
       }
       // Handle spacebar keydown events
       case ' ': {
-        if (inputValue) {
-          return;
-        } else if (!menuOpen) {
+        if (inputValue) return;
+
+        if (!menuOpen) {
           openMenuAndFocusOption(OptionIndexEnum.FIRST);
         } else if (!focusedOption.data) {
           return;
@@ -605,14 +611,13 @@ const Select = forwardRef<SelectRef, SelectProps>((
           setFocusedMultiValue(nexFocusedMultiValue);
         } else {
           if (!backspaceClearsValue) return;
+          if (!isArrayWithLength(selectedOption)) break;
 
-          if (isArrayWithLength(selectedOption)) {
-            if (isMulti && !renderMultiOptions) {
-              const { value } = selectedOption[selectedOption.length - 1];
-              removeSelectedOption(value);
-            } else if (isClearable) {
-              setSelectedOption(EMPTY_ARRAY);
-            }
+          if (isMulti && !renderMultiOptions) {
+            const { value } = selectedOption[selectedOption.length - 1];
+            removeSelectedOption(value);
+          } else if (isClearable) {
+            setSelectedOption(EMPTY_ARRAY);
           }
         }
 

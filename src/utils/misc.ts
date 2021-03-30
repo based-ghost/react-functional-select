@@ -103,7 +103,11 @@ export const normalizeValue = (
   getOptionValue: (data: OptionData) => ReactText,
   getOptionLabel: (data: OptionData) => ReactText
 ): SelectedOption[] => {
-  const initialValues = Array.isArray(value) ? value : isPlainObject(value) ? [value] : EMPTY_ARRAY;
+  const initialValues = Array.isArray(value)
+    ? value
+    : isPlainObject(value)
+      ? [value]
+      : EMPTY_ARRAY;
 
   if (!isArrayWithLength(initialValues)) {
     return initialValues;
