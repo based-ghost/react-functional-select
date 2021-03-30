@@ -7,7 +7,7 @@ type PackageLinkProps = Readonly<{
 }>;
 
 const Link = styled.a`
-  color: #149DF3;
+  color: #026fb3;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
@@ -19,7 +19,13 @@ const Link = styled.a`
   text-decoration: none;
   display: inline-block;
   background-color: transparent;
-  box-shadow: 0 1px 0 0 currentColor;
+  box-shadow: 0 .75px 0 0 currentColor;
+      transform: translate3d(0px, 0px, 0px);
+      transition: all 250ms ease-out 0s;
+
+      :hover {
+        transform: translate3d(0px, -1px, 0px);
+      }
 `;
 
 const PackageLink: FunctionComponent<PackageLinkProps> = ({ name, href }) => (

@@ -102,6 +102,10 @@ export const ListWrapper = styled.div`
     max-width: 100% !important;
 
     ul {
+      li {
+        font-weight: 600;
+      }
+
       li + li {
         margin-top: 0.5em !important;
       }
@@ -117,14 +121,10 @@ export const List = styled.ul`
   margin-inline-end: 0px;
   margin-block-start: 1em;
   margin-inline-start: 0px;
-  padding-inline-start: 30px;
+  padding-inline-start: 20px;
 
   li + li {
     margin-top: 0.55em;
-  }
-
-  ${MEDIA_QUERY_IS_MOBILE} {
-    padding-inline-start: 20px;
   }
 `;
 
@@ -148,14 +148,14 @@ export const TextHeader = styled.span`
 
 export const Title = styled.h2`
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.167;
   margin-top: 0.5rem;
   margin-bottom: .5rem;
 `;
 
 export const SubTitle = styled.h4`
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.167;
   font-size: 1.65rem;
   margin-top: 1.25rem;
@@ -165,10 +165,10 @@ export const SubTitle = styled.h4`
 
 export const Button = styled.button`
   border: 0;
-  color: #1a1a1a;
+  color: #5A5A5A;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.5;
   overflow: visible;
   user-select: none;
@@ -243,8 +243,8 @@ export const Checkboxes = styled.div`
     > label {
       width: 100%;
       margin-left: auto;
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
+      margin-top: 0.425rem;
+      margin-bottom: 0.425rem;
     }
   }
 `;
@@ -260,7 +260,7 @@ export const Card = styled.div`
   flex-direction: column;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 3px 0px, rgb(0 0 0 / 5%) 0px 5px 15px 0px;
 
   ${MEDIA_QUERY_IS_MOBILE} {
     border: none;
@@ -311,7 +311,7 @@ export const CardBody = styled.div<{ multiComponents?: boolean }>`
     `}
 
   ${MEDIA_QUERY_IS_MOBILE} {
-    padding: 0.75rem 0;
+    padding: 0.5rem 0;
   }
 `;
 

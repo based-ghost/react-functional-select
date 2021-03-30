@@ -7,7 +7,7 @@ import {
 } from '../constants';
 
 import type { ReactText } from 'react';
-import type { OptionData, SelectedOption } from '../types';
+import type { MouseOrTouchEvent, OptionData, SelectedOption } from '../types';
 
 const _diacriticsRegExp = /[\u0300-\u036f]/g;
 
@@ -47,6 +47,18 @@ export function isArrayWithLength(test: any): boolean {
 export function isPlainObject(test: any): boolean {
   return test !== null && typeof test === 'object' && !Array.isArray(test);
 }
+
+/**
+ * Handle mouse/touch events by stopping propagation and in some cases,
+ * prevent default behavior.
+ */
+export const suppressMouseOrTouchEvent = (
+  e: MouseOrTouchEvent<HTMLElement>,
+  preventDefault: boolean = true
+): void => {
+  preventDefault && e.preventDefault();
+  e.stopPropagation();
+};
 
 /**
  * Apply regex to string, and if the value is NOT case sensitive,

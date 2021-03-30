@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../../constants';
+import { suppressMouseOrTouchEvent } from '../../utils';
 
 import type { ReactNode, ReactText } from 'react';
 import type { OptionData, SelectedOption } from '../../types';
@@ -74,12 +75,9 @@ const MultiValue = memo<MultiValueProps>(({
     <Clear
       isFocused={isFocused}
       data-testid={CLEAR_ICON_MV_TESTID}
+      onMouseDown={suppressMouseOrTouchEvent}
       onClick={() => removeSelectedOption(value)}
       onTouchEnd={() => removeSelectedOption(value)}
-      onMouseDown={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      }}
     >
       ✖
     </Clear>

@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
     flex: 1;
     margin: 0;
     display: flex;
-    color: #1a1a1a;
+    color: #262626;
     font-size: 1rem;
     font-weight: 400;
     text-align: left;
@@ -44,17 +44,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   code {
-    color: #1a1a1a;
+    color: #262626;
     font-size: 88%;
     border-radius: 3px;
     word-break: break-word;
     padding: .15em .2em .15em;
     background-color: rgba(30, 167, 253, 0.115);
     font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
-
-    @media only screen and (max-width: 525px) {
-      padding: .1em .25em .1em;
-    }
   }
 
   ${ReactToastifyCss}

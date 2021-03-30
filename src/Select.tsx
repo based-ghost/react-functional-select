@@ -29,7 +29,7 @@ import { DEFAULT_THEME } from './theme';
 import styled, { css, ThemeProvider } from 'styled-components';
 import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
 import { useDebounce, useMenuPositioner, useMenuOptions, useMountEffect, useUpdateEffect } from './hooks';
-import { mergeDeep, IS_TOUCH_DEVICE, normalizeValue, isPlainObject, isBoolean, isArrayWithLength } from './utils';
+import { mergeDeep, IS_TOUCH_DEVICE, suppressMouseOrTouchEvent, normalizeValue, isPlainObject, isBoolean, isArrayWithLength } from './utils';
 
 import type { FixedSizeList } from 'react-window';
 import type { DefaultTheme } from 'styled-components';
@@ -640,16 +640,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
     }
   };
 
-  const handleMouseOrTouchEvent = (
-    e: MouseOrTouchEvent<HTMLElement>,
-    preventDefault: boolean = true
-  ): void => {
-    preventDefault && e.preventDefault();
-    e.stopPropagation();
-  };
-
   const handleOnMenuMouseDown = (e: MouseOrTouchEvent<HTMLDivElement>): void => {
-    handleMouseOrTouchEvent(e);
+    suppressMouseOrTouchEvent(e);
     focusInput();
   };
 
@@ -674,13 +666,13 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [onInputChange]);
 
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
-    handleMouseOrTouchEvent(e);
+    suppressMouseOrTouchEvent(e);
     setSelectedOption(EMPTY_ARRAY);
     focusInput();
   }, []);
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
-    handleMouseOrTouchEvent(e, e.type === 'mousedown');
+    suppressMouseOrTouchEvent(e, e.type === 'mousedown');
     focusInput();
     menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
   }, [openMenuAndFocusOption]);
