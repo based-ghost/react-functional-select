@@ -293,7 +293,7 @@ export const MultiSelect = () => {
 };
 
 export const Styling = () => {
-  const [themeConfig, setThemeConfig] = useState<Theme>();
+  const [themeConfig, setThemeConfig] = useState<Theme | undefined>(undefined);
   const [selectedOption, setSelectedOption] = useCallbackState<SelectedOption | null>(null);
 
   const selectWrapperStyle = { marginTop: '1rem' };
@@ -882,8 +882,8 @@ export const Portaling = () => {
   const menuPortalElId = 'menu-portal-test';
   const options = useMemo<Option[]>(() => createSelectOptions(3), []);
 
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [menuPortalTarget, setMenuPortalTarget] = useState<Element | undefined>();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuPortalTarget, setMenuPortalTarget] = useState<Element | undefined>(undefined);
 
   const onMenuOpen = useCallback((): void => setMenuOpen(true), []);
   const onMenuClose = useCallback((): void => setMenuOpen(false), []);
@@ -935,8 +935,7 @@ export const Portaling = () => {
 
 export const Async = () => {
   const delay = 500;
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5, 'Initial'));
 
   const onInputChange = useCallback(() => {
