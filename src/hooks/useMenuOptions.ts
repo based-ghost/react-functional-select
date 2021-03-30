@@ -68,8 +68,10 @@ export const useMenuOptions = (
       return menuOption;
     };
 
+    const { length } = options;
     const nextMenuOptions: MenuOption[] = [];
-    for (let i = 0; i < options.length; i++) {
+
+    for (let i = 0; i < length; i++) {
       const option = parseMenuOption(options[i]);
       option && nextMenuOptions.push(option);
     }

@@ -934,6 +934,7 @@ export const Portaling = () => {
 
 export const Async = () => {
   const delay = 500;
+  const selectRef = useRef<SelectRef | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5, 'Initial'));
 
@@ -944,9 +945,13 @@ export const Async = () => {
   const onSearchChange = useCallback(async (value?: string) => {
     try {
       await mockHttpRequest();
+
       const count = getRandomInt(1, 5);
       const lblSuffix = `Search text: ${value || 'Initial'}`;
-      setOptions(createAsyncOptions(count, lblSuffix));
+      const nextOptions = createAsyncOptions(count, lblSuffix);
+
+      selectRef.current?.clearValue();
+      setOptions(nextOptions);
       setIsLoading(false);
     } catch (e) {
       console.error(e);
@@ -1005,6 +1010,7 @@ export const Async = () => {
             <Select
               async
               isClearable
+              ref={selectRef}
               options={options}
               inputDelay={delay}
               isLoading={isLoading}

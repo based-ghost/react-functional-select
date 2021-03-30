@@ -386,8 +386,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
     blur: blurInput,
     focus: focusInput,
     clearValue: () => {
-      setSelectedOption(EMPTY_ARRAY);
-      setFocusedOption(FOCUSED_OPTION_DEFAULT);
+      if (selectOption.length)
+        setSelectedOption(EMPTY_ARRAY);
+      if (focusedOption.data)
+        setFocusedOption(FOCUSED_OPTION_DEFAULT);
     },
     setValue: (option?: OptionData) => {
       const normalizedOptions = normalizeValue(option, getOptionValueFn, getOptionLabelFn);

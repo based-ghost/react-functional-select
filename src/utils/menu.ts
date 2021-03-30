@@ -39,9 +39,9 @@ function isDocumentElement(el: Element | Window): boolean {
  * @private
  */
 function styleHasOverlfow({ overflow, overflowX, overflowY }: CSSStyleDeclaration): boolean {
-  const isOverflow = (x: string): boolean => x === 'auto' || x === 'scroll';
+  const isOverflow = (x: string) => x === 'auto' || x === 'scroll';
 
-  return isOverflow(overflow) || isOverflow(overflowX) || isOverflow(overflowY);
+  return [overflow, overflowX, overflowY].some(isOverflow);
 }
 
 /**
