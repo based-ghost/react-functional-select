@@ -300,7 +300,7 @@ export const Styling = () => {
   const noteStyle = { color: '#1a1a1a', fontSize: 'inherit', fontWeight: 700 };
   const menuItemSize = selectedOption?.value === ThemeEnum.LARGE_TEXT ? 44 : 35;
 
-  const memoizedMarkupNode = useMemo<ReactNode>(() => (
+  const memoizedMarkupNode = useMemo(() => (
     <CodeMarkup
       language='markup'
       header='Class Markup'
@@ -712,11 +712,10 @@ export const Filtering = () => {
 };
 
 export const Virtualization = () => {
-  const optionCountList: number[] = [100, 1000, 5000, 25000, 50000];
-
   const selectRef = useRef<SelectRef | null>(null);
   const [options, setOptions] = useState<Option[]>([]);
-  const [optionsCount, setOptionsCount] = useState<number>(optionCountList[0]);
+  const [optionsCount, setOptionsCount] = useState(100);
+  const optionCountList = [100, 1000, 5000, 25000, 50000];
 
   useUpdateEffect(() => {
     selectRef.current?.clearValue();
