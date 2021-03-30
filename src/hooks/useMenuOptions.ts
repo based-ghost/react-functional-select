@@ -71,7 +71,7 @@ export const useMenuOptions = (
     const nextMenuOptions: MenuOption[] = [];
     for (let i = 0; i < options.length; i++) {
       const option = parseMenuOption(options[i]);
-      if (option) nextMenuOptions.push(option);
+      option && nextMenuOptions.push(option);
     }
 
     setMenuOptions(nextMenuOptions);

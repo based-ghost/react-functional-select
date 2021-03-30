@@ -475,7 +475,14 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [async, options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
-    const { data, value, label, isSelected, isDisabled: disabled } = focusedOption;
+    const {
+      data,
+      value,
+      label,
+      isSelected,
+      isDisabled: disabled
+    } = focusedOption;
+
     if (data && !disabled) {
       selectOption({ data, value, label }, isSelected);
     }
@@ -577,11 +584,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
         break;
       }
       case 'Tab': {
-        if (!menuOpen || !tabSelectsOption || !focusedOption.data || e.shiftKey) {
-          return;
-        }
+        if (!menuOpen || !tabSelectsOption || !focusedOption.data || e.shiftKey) return;
         selectOptionFromFocused();
-
         break;
       }
       case 'Delete':
