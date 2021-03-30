@@ -38,10 +38,11 @@ function isDocumentElement(el: Element | Window): boolean {
 /**
  * @private
  */
-function styleHasOverlfow({ overflow, overflowX, overflowY }: CSSStyleDeclaration): boolean {
-  const isOverflow = (x: string) => x === 'auto' || x === 'scroll';
+function isScrollableStyle({overflow, overflowX, overflowY}: CSSStyleDeclaration): boolean {
+  const overflowRegExp = /(auto|scroll)/;
+  const overflowTestStr = overflow + overflowX + overflowY;
 
-  return [overflow, overflowX, overflowY].some(isOverflow);
+  return overflowRegExp.test(overflowTestStr);
 }
 
 /**
@@ -49,20 +50,21 @@ function styleHasOverlfow({ overflow, overflowX, overflowY }: CSSStyleDeclaratio
  */
 function getScrollParent(el: Element): Element {
   let style = getComputedStyle(el);
+  const docEl = document.documentElement;
   const isParentAbs = style.position === 'absolute';
 
   if (style.position === 'fixed') {
-    return document.documentElement;
+    return docEl;
   }
 
   for (let parent: Element | null = el; (parent = parent?.parentElement);) {
     style = getComputedStyle(parent);
-    if (!(isParentAbs && style.position === 'static') && styleHasOverlfow(style)) {
+    if (!(isParentAbs && style.position === 'static') && isScrollableStyle(style)) {
       return parent;
     }
   }
 
-  return document.documentElement;
+  return docEl;
 }
 
 /**
