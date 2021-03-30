@@ -78,10 +78,9 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
   onCaretMouseDown,
   onClearMouseDown
 }) => {
-  const customIconContext =
-    isFunction(caretIcon) || isFunction(clearIcon)
-      ? { menuOpen, isLoading: !!isLoading, isInvalid: !!isInvalid, isDisabled: !!isDisabled }
-      : undefined;
+  const customIconContext = isFunction(caretIcon) || isFunction(clearIcon)
+    ? { menuOpen, isLoading: !!isLoading, isInvalid: !!isInvalid, isDisabled: !!isDisabled }
+    : undefined;
 
   const renderIconFn = (renderer: IconRenderer) => {
     return isFunction(renderer)

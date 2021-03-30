@@ -136,6 +136,7 @@ All properties are technically optional (with a few having default values). Very
 |`menuOverscanCount`| number | `1` | correlates to `react-window` property `overscanCount`: The number of items (options) to render outside of the visible area. Increasing the number can impact performance, but is useful if the option label is complex and the `renderOptionLabel` prop is defined
 |`itemKeySelector`| ReactText | `undefined` | If defined, will use the property in your original options as each option's key, rather than the parsed stateful value `menuOptions` index (this needs to be a unique property - so properties such as `id` or `value`). This relates to the `itemKey` property in dependency `react-window` - [more info here](https://react-window.now.sh/#/api/FixedSizeList)
 |`menuScrollDuration`| number | `300` | Duration of scroll menu into view animation
+|`menuItemDirection`| 'ltr' OR 'rtl' | `'ltr'` | The direction of text for each menu option and position of the menu's scroll bar (`react-window`'s `direction` prop)
 |`ariaLabelledBy`| string | `undefined` | HTML ID of an element that should be used as the label (for assistive tech)
 |`ariaLive`| 'off' OR 'polite' OR 'assertive' | `'polite'` | Used to set the priority with which screen reader should treat updates to live regions (translates to `aria-live` attribute)
 |`openMenuOnFocus`| bool | `false` | Open the menu when the select control recieves focus

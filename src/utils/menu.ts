@@ -1,5 +1,21 @@
 /**
  * @private
+ * @param c: amount of change
+ * @param d: duration
+ * @param s: initial value (start)
+ * @param t: time (elapsed)
+ */
+function easeOutCubic(
+  c: number,
+  d: number,
+  s: number,
+  t: number
+): number {
+  return c * ((t = t / d - 1) * t * t + 1) + s;
+}
+
+/**
+ * @private
  */
 function getScrollTop(el: Element): number {
   return isDocumentElement(el) ? window.pageYOffset : el.scrollTop;
@@ -58,24 +74,20 @@ function smoothScrollTo(
   duration: number = 300,
   callback?: (...args: any[]) => any
 ): void {
-  let currentTime = 0;
+  let time = 0;
   const start = getScrollTop(el);
   const change = to - start;
 
-  function easeOutCubic(t: number): number {
-    return change * ((t = t / duration - 1) * t * t + 1) + start;
-  }
-
   function scrollFn(): void {
-    currentTime += 5;
-    scrollTo(el, easeOutCubic(currentTime));
+    time += 5;
+    scrollTo(el, easeOutCubic(change, duration, start, time));
 
-    (currentTime < duration)
-      ? window.requestAnimationFrame(scrollFn)
+    (time < duration)
+      ? requestAnimationFrame(scrollFn)
       : callback?.();
   }
 
-  window.requestAnimationFrame(scrollFn);
+  requestAnimationFrame(scrollFn);
 }
 
 /**

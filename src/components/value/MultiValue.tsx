@@ -3,12 +3,12 @@ import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../../constants';
 
 import type { ReactNode, ReactText } from 'react';
-import type { OptionData, MouseOrTouchEvent, SelectedOption } from '../../types';
+import type { OptionData, SelectedOption } from '../../types';
 
 export type MultiValueProps = SelectedOption & Readonly<{
   isFocused: boolean;
+  removeSelectedOption: (value?: ReactText) => void;
   renderOptionLabel: (data: OptionData) => ReactNode;
-  removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLElement>) => void;
 }>;
 
 const _clearIconFocusStyle  = css`
@@ -74,8 +74,12 @@ const MultiValue = memo<MultiValueProps>(({
     <Clear
       isFocused={isFocused}
       data-testid={CLEAR_ICON_MV_TESTID}
-      onTouchEnd={(e) => removeSelectedOption(value, e)}
-      onMouseDown={(e) => removeSelectedOption(value, e)}
+      onClick={() => removeSelectedOption(value)}
+      onTouchEnd={() => removeSelectedOption(value)}
+      onMouseDown={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
     >
       ✖
     </Clear>

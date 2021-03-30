@@ -115,6 +115,7 @@ export type SelectProps = Readonly<{
   backspaceClearsValue?: boolean;
   menuPosition?: MenuPositionEnum;
   filterMatchFrom?: FilterMatchEnum;
+  menuItemDirection?: 'ltr' | 'rtl';
   onMenuOpen?: (...args: any[]) => any;
   onMenuClose?: (...args: any[]) => any;
   onInputChange?: (value?: string) => any;
@@ -232,6 +233,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     isAriaLiveEnabled,
     menuOverscanCount,
     blurInputOnSelect,
+    menuItemDirection,
     renderOptionLabel,
     renderMultiOptions,
     menuScrollDuration,
@@ -319,6 +321,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     menuItemSize,
     menuMaxHeight,
     menuOptions.length,
+    !!menuPortalTarget,
     menuScrollDuration,
     scrollMenuIntoView,
     onMenuOpen,
@@ -328,22 +331,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const blurInput = (): void => inputRef.current?.blur();
   const focusInput = (): void => inputRef.current?.focus();
   const scrollToItemIndex = (index: number): void => listRef.current?.scrollToItem(index);
-
-  const handleMouseOrTouchEvent = (
-    e: MouseOrTouchEvent<HTMLElement>,
-    preventDefault: boolean = true
-  ): void => {
-    e.stopPropagation();
-    preventDefault && e.preventDefault();
-  };
-
-  const removeSelectedOption = useCallback(
-    (removeValue?: ReactText, e?: MouseOrTouchEvent<HTMLElement>): void => {
-      if (e) handleMouseOrTouchEvent(e, e.type === 'mousedown');
-      setSelectedOption((prevSelected) => prevSelected.filter((x) => x.value !== removeValue));
-    },
-    []
-  );
 
   const openMenuAndFocusOption = useCallback((position: OptionIndexEnum): void => {
     if (!isArrayWithLength(menuOptions)) {
@@ -365,6 +352,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
     setFocusedOption({ index, ...menuOptions[index] });
     scrollToItemIndex(index);
   }, [isMulti, menuOptions]);
+
+  const removeSelectedOption = useCallback((value?: ReactText): void => {
+    setSelectedOption((prevSelected) => prevSelected.filter((x) => x.value !== value));
+  }, []);
 
   const selectOption = useCallback((option: SelectedOption, isSelected?: boolean): void => {
     if (isSelected) {
@@ -632,16 +623,25 @@ const Select = forwardRef<SelectRef, SelectProps>((
     if (isDisabled) return;
     if (!isFocused) focusInput();
 
+    const targetIsNotInput = e.currentTarget.tagName !== 'INPUT';
     if (!menuOpen) {
       openMenuOnClick && openMenuAndFocusOption(OptionIndexEnum.FIRST);
-    } else if (e.currentTarget.tagName !== 'INPUT') {
+    } else if (targetIsNotInput) {
       menuOpen && setMenuOpen(false);
       inputValue && setInputValue('');
     }
 
-    if (e.currentTarget.tagName !== 'INPUT') {
+    if (targetIsNotInput) {
       e.preventDefault();
     }
+  };
+
+  const handleMouseOrTouchEvent = (
+    e: MouseOrTouchEvent<HTMLElement>,
+    preventDefault: boolean = true
+  ): void => {
+    preventDefault && e.preventDefault();
+    e.stopPropagation();
   };
 
   const handleOnMenuMouseDown = (e: MouseOrTouchEvent<HTMLDivElement>): void => {
@@ -662,14 +662,15 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [onInputFocus]);
 
   const handleOnInputChange = useCallback((e: FormEvent<HTMLInputElement>): void => {
+    const newInputVal = e.currentTarget.value || '';
     onChangeEventValue.current = true;
-    onInputChange?.(e.currentTarget.value || '');
+    onInputChange?.(newInputVal);
     !menuOpenRef.current && setMenuOpen(true);
-    setInputValue(e.currentTarget.value || '');
+    setInputValue(newInputVal);
   }, [onInputChange]);
 
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
-    handleMouseOrTouchEvent(e, e.type === 'mousedown');
+    handleMouseOrTouchEvent(e);
     setSelectedOption(EMPTY_ARRAY);
     focusInput();
   }, []);
@@ -755,6 +756,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
             fixedSizeListRef={listRef}
             noOptionsMsg={noOptionsMsg}
             selectOption={selectOption}
+            direction={menuItemDirection}
             itemKeySelector={itemKeySelector}
             overscanCount={menuOverscanCount}
             menuPortalTarget={menuPortalTarget}

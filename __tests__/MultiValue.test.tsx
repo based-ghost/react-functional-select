@@ -51,13 +51,13 @@ test('"renderOptionLabel" callback should be executed and should render the sele
   expect(getByText(label)).toBeInTheDocument();
 });
 
-test('clear indicator has functioning "mouseDown" and "touchEnd" events', async () => {
+test('clear indicator has functioning "click" and "touchEnd" events', async () => {
   const { props, removeSelectedOptionSpy } = createMultiValueProps();
   const { getAllByTestId } = renderMultiValue(props);
   const firstClearIconEl = getAllByTestId(CLEAR_ICON_MV_TESTID!)[0];
 
+  fireEvent.click(firstClearIconEl);
   fireEvent.touchEnd(firstClearIconEl);
-  fireEvent.mouseDown(firstClearIconEl);
 
   expect(removeSelectedOptionSpy).toHaveBeenCalledTimes(2);
 });

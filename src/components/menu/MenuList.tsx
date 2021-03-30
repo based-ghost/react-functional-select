@@ -16,6 +16,7 @@ export type MenuListProps = Readonly<{
   isLoading?: boolean;
   overscanCount?: number;
   width: string | number;
+  direction?: 'ltr' | 'rtl';
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
   noOptionsMsg: string | null;
@@ -38,6 +39,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({
   width,
   height,
   itemSize,
+  direction,
   isLoading,
   loadingMsg,
   menuOptions,
@@ -72,6 +74,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({
         itemKey={itemKey}
         itemSize={itemSize}
         itemData={itemData}
+        direction={direction}
         ref={fixedSizeListRef}
         overscanCount={overscanCount}
         itemCount={menuOptions.length}

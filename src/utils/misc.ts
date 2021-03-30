@@ -116,8 +116,8 @@ export const mergeDeep = <T>(target: any, source: any): T => {
     const sourceProp = source[key];
 
     output[key] =
-      (isPlainObject(sourceProp) && key !== 'animation')
-        ? (key in target)
+      (key !== 'animation' && isPlainObject(sourceProp))
+        ? Boolean(target[key])
           ? mergeDeep(target[key], sourceProp)
           : sourceProp
         : sourceProp || '';

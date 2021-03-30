@@ -4,8 +4,8 @@ import { isArrayWithLength } from '../../utils';
 import styled, { css } from 'styled-components';
 
 import type { MultiParams } from '../../Select';
+import type { OptionData, SelectedOption } from '../../types';
 import type { ReactNode, ReactText, FunctionComponent } from 'react';
-import type { OptionData, MouseOrTouchEvent, SelectedOption } from '../../types';
 
 export type ValueProps = Readonly<{
   isMulti?: boolean;
@@ -13,9 +13,9 @@ export type ValueProps = Readonly<{
   placeholder: string;
   selectedOption: SelectedOption[];
   focusedMultiValue: ReactText | null;
+  removeSelectedOption: (value?: ReactText) => void;
   renderOptionLabel: (data: OptionData) => ReactNode;
   renderMultiOptions?: (params: MultiParams) => ReactNode;
-  removeSelectedOption: (value?: ReactText, e?: MouseOrTouchEvent<HTMLElement>) => void;
 }>;
 
 const _singleValueBaseStyle = css`
