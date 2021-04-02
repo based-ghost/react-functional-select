@@ -38,7 +38,7 @@ const createIndicatorIconsProps = () => {
 
 const customIconFn = (props: Partial<IndicatorIconsProps>): ReactNode => {
   const { menuOpen, isLoading, isInvalid, isDisabled } = props;
-  const testIdText = `${menuOpen}_${isLoading}_${isInvalid}_${isDisabled}`;
+  const testIdText = `${menuOpen}-${isLoading}-${isInvalid}-${isDisabled}`;
 
   return (
     <span data-testid={testIdText}>
@@ -115,12 +115,15 @@ test('clear icon can render as a ReactNode', async () => {
 });
 
 test('clear icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', async () => {
-  const customIconTestIdText = 'true_false_false_false';
   const { props } = createIndicatorIconsProps();
   const mergedProps = { ...props, menuOpen: true, clearIcon: customIconFn };
   const { getByTestId } = renderIndicatorIcons(mergedProps);
 
-  expect(getByTestId(customIconTestIdText)).toBeInTheDocument();
+  // Build test-id from forwarded state javascript object payload
+  const { menuOpen, isLoading, isInvalid, isDisabled } = mergedProps;
+  const forwardedStateId = `${menuOpen}-${isLoading}-${isInvalid}-${isDisabled}`
+
+  expect(getByTestId(forwardedStateId)).toBeInTheDocument();
 });
 
 test('caret icon can render as a ReactNode', async () => {
@@ -135,10 +138,13 @@ test('caret icon can render as a ReactNode', async () => {
 });
 
 test('caret icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', async () => {
-  const customIconTestIdText = 'true_false_false_false';
   const { props } = createIndicatorIconsProps();
   const mergedProps = { ...props, menuOpen: true, caretIcon: customIconFn };
   const { getByTestId } = renderIndicatorIcons(mergedProps);
 
-  expect(getByTestId(customIconTestIdText)).toBeInTheDocument();
+  // Build test-id from forwarded state javascript object payload
+  const { menuOpen, isLoading, isInvalid, isDisabled } = mergedProps;
+  const forwardedStateId = `${menuOpen}-${isLoading}-${isInvalid}-${isDisabled}`
+
+  expect(getByTestId(forwardedStateId)).toBeInTheDocument();
 });

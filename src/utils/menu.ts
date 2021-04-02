@@ -77,15 +77,16 @@ function smoothScrollTo(
   duration: number = 300,
   callback?: (...args: any[]) => any
 ): void {
-  let time = 0;
+  let curTime = 0;
   const start = getScrollTop(el);
   const change = to - start;
 
   function scrollFn(): void {
-    time += 5;
-    scrollTo(el, easeOutCubic(change, duration, start, time));
+    curTime += 5;
+    const calcScrollTop = easeOutCubic(change, duration, start, curTime);
+    scrollTo(el, calcScrollTop);
 
-    (time < duration)
+    (curTime < duration)
       ? requestAnimationFrame(scrollFn)
       : callback?.();
   }

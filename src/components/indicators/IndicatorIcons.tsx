@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 import { CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../../constants';
 
 import type { ReactNode } from 'react';
-import type { IconRenderer, MouseOrTouchEventHandler } from '../../types';
+import type { IconRenderer, CustomRendererFn, MouseOrTouchEventHandler } from '../../types';
 
 export type IndicatorIconsProps = Readonly<{
   menuOpen: boolean;
@@ -78,13 +78,9 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
   onCaretMouseDown,
   onClearMouseDown
 }) => {
-  const customIconContext = isFunction(caretIcon) || isFunction(clearIcon)
-    ? { menuOpen, isLoading: !!isLoading, isInvalid: !!isInvalid, isDisabled: !!isDisabled }
-    : undefined;
-
   const renderIconFn = (renderer: IconRenderer) => {
     return isFunction(renderer)
-      ? (renderer as ((...args: any[]) => ReactNode))(customIconContext)
+      ? (renderer as CustomRendererFn)({ menuOpen, isLoading, isInvalid, isDisabled })
       : renderer;
   };
 

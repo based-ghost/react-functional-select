@@ -1,8 +1,8 @@
 import type { HTMLAttributes, InputHTMLAttributes } from 'react';
 
 // id attributes for AriaLiveRegion.tsx innerHTML content
-export const ARIA_LIVE_CONTEXT_ID = 'aria-selection';
-export const ARIA_LIVE_SELECTION_ID = 'aria-context';
+export const ARIA_LIVE_CONTEXT_ID = 'aria-context';
+export const ARIA_LIVE_SELECTION_ID = 'aria-selection';
 
 // classNames (menu options)
 export const OPTION_CLS = 'rfs-option';
@@ -32,7 +32,7 @@ export const CONTROL_CONTAINER_TESTID = process.env.NODE_ENV === 'test' ? CONTRO
 /**
  * Static attributes for 'SelectWrapper' div element.
  */
-export const SELECT_WRAPPER_ATTRIBUTES: HTMLAttributes<HTMLDivElement> & {
+export const SELECT_WRAPPER_ATTRS: HTMLAttributes<HTMLDivElement> & {
   'data-testid'?: string,
 } = {
   role: 'combobox',
@@ -44,7 +44,7 @@ export const SELECT_WRAPPER_ATTRIBUTES: HTMLAttributes<HTMLDivElement> & {
 /**
  * Static attributes for 'AutosizeInput' input element.
  */
-export const AUTOSIZE_INPUT_ATTRIBUTES: InputHTMLAttributes<HTMLInputElement> & {
+export const AUTOSIZE_INPUT_ATTRS: InputHTMLAttributes<HTMLInputElement> & {
   'data-testid'?: string,
 } = {
   tabIndex: 0,

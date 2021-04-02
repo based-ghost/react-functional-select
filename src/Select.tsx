@@ -14,6 +14,7 @@ import {
   OptionIndexEnum,
   MenuPositionEnum,
   EMPTY_ARRAY,
+  SELECT_WRAPPER_ATTRS,
   PLACEHOLDER_DEFAULT,
   LOADING_MSG_DEFAULT,
   CONTROL_CONTAINER_CLS,
@@ -21,8 +22,7 @@ import {
   NO_OPTIONS_MSG_DEFAULT,
   MENU_ITEM_SIZE_DEFAULT,
   MENU_MAX_HEIGHT_DEFAULT,
-  CONTROL_CONTAINER_TESTID,
-  SELECT_WRAPPER_ATTRIBUTES
+  CONTROL_CONTAINER_TESTID
 } from './constants';
 
 import { DEFAULT_THEME } from './theme';
@@ -137,7 +137,7 @@ interface ControlWrapperProps extends Pick<SelectProps, 'isInvalid' | 'isDisable
   isFocused: boolean;
 }
 
-const SelectWrapper = styled.div`
+const SelectWrapper = styled.div.attrs(SELECT_WRAPPER_ATTRS)`
   position: relative;
   box-sizing: border-box;
   ${({ theme }) => theme.select.css}
@@ -535,10 +535,11 @@ const Select = forwardRef<SelectRef, SelectProps>((
     scrollToItemIndex(index);
   };
 
-  const handleVerticalKeySubRoutine = (key: string): void => {
+  const handleUpDownKeySubRoutine = (key: string): void => {
     const downKey = key === 'ArrowDown';
     const downUpIndex = downKey ? OptionIndexEnum.DOWN : OptionIndexEnum.UP;
     const posIndex = downKey ? OptionIndexEnum.FIRST : OptionIndexEnum.LAST;
+
     menuOpen ? focusOptionOnArrowKey(downUpIndex) : openMenuAndFocusOption(posIndex);
   };
 
@@ -550,18 +551,20 @@ const Select = forwardRef<SelectRef, SelectProps>((
       if (e.defaultPrevented) return;
     }
 
-    switch (e.key) {
+    const { key } = e;
+    switch (key) {
       case 'ArrowDown':
       case 'ArrowUp': {
-        handleVerticalKeySubRoutine(e.key);
+        handleUpDownKeySubRoutine(key);
         break;
       }
       case 'ArrowLeft':
       case 'ArrowRight': {
         if (!isMulti || inputValue || renderMultiOptions) return;
 
-        const leftRightIndex = e.key === 'ArrowLeft' ? ValueIndexEnum.PREVIOUS : ValueIndexEnum.NEXT;
+        const leftRightIndex = key === 'ArrowLeft' ? ValueIndexEnum.PREVIOUS : ValueIndexEnum.NEXT;
         focusValueOnArrowKey(leftRightIndex);
+
         break;
       }
       // Handle spacebar keydown events
@@ -643,9 +646,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
       inputValue && setInputValue('');
     }
 
-    if (targetIsNotInput) {
-      e.preventDefault();
-    }
+    if (targetIsNotInput) e.preventDefault();
   };
 
   const handleOnMenuMouseDown = (e: MouseOrTouchEvent<HTMLDivElement>): void => {
@@ -697,7 +698,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
         aria-controls={inputId}
         aria-expanded={menuOpen}
         onKeyDown={handleOnKeyDown}
-        {...SELECT_WRAPPER_ATTRIBUTES}
       >
         <ControlWrapper
           ref={controlRef}

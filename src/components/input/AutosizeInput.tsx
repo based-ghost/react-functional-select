@@ -1,7 +1,7 @@
 import React, { memo, useRef, useState, Fragment, forwardRef } from 'react';
 import styled from 'styled-components';
 import { useUpdateEffect } from '../../hooks';
-import { AUTOSIZE_INPUT_ATTRIBUTES } from '../../constants';
+import { AUTOSIZE_INPUT_ATTRS } from '../../constants';
 import { isArrayWithLength, IS_MICROSOFT_BROWSER } from '../../utils';
 
 import type { SelectedOption } from '../../types';
@@ -36,7 +36,7 @@ const SizerDiv = styled.div`
   ${({ theme }) => theme.input.css}
 `;
 
-const Input = styled.input<{ isInvalid?: boolean }>`
+const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS)<{ isInvalid: boolean }>`
   border: 0;
   outline: 0;
   padding: 0;
@@ -80,7 +80,7 @@ const AutosizeInput = memo(
     ) => {
       const sizerRef = useRef<HTMLDivElement | null>(null);
       const [inputWidth, setInputWidth] = useState<number>(_inputMinWidthPx);
-      const isInvalid = required && !isArrayWithLength(selectedOption);
+      const isInvalid = !!required && !isArrayWithLength(selectedOption);
 
       useUpdateEffect(() => {
         if (sizerRef.current) {
@@ -101,7 +101,6 @@ const AutosizeInput = memo(
             required={isInvalid}
             aria-label={ariaLabel}
             style={{ width: inputWidth }}
-            {...AUTOSIZE_INPUT_ATTRIBUTES}
             aria-labelledby={ariaLabelledBy}
             onChange={!readOnly ? onChange : undefined}
           />

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { isArrayWithLength } from '../../utils';
 import { ARIA_LIVE_SELECTION_ID, ARIA_LIVE_CONTEXT_ID } from '../../constants';
 
 import type { FunctionComponent } from 'react';
@@ -33,40 +32,36 @@ const A11yText = styled.span`
 const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
   menuOpen,
   isFocused,
-  ariaLabel,
   inputValue,
   optionCount,
   isSearchable,
   focusedOption,
   selectedOption,
-  ariaLive = 'polite'
+  ariaLive = 'polite',
+  ariaLabel = 'Select'
 }) => {
   if (!isFocused) {
     return null;
   }
 
-  const optionsMsg = `${optionCount} result(s) available${
+  // Message text for "aria-selection" SPAN
+  const optionsMsg = ` ${optionCount} result(s) available${
     inputValue ? (' for search input ' + inputValue) : ''
   }.`;
 
-  const focusedMsg = focusedOption.value
-    ? `Focused option: ${focusedOption.label}${focusedOption.isDisabled ? ' - disabled' : ''}, ${
-        focusedOption.index + 1
-      } of ${optionCount}.`
-    : '';
-
   const menuMsg = menuOpen
     ? 'Use Up and Down arrow keys to choose options, press Enter or Tab to select the currently focused option, press Escape to close the menu.'
-    : `${ariaLabel || 'Select'} is focused${
-        isSearchable ? ', type to filter options' : ''
-      }, press Down arrow key to open the menu.`;
+    : `${ariaLabel} is focused${isSearchable ? ', type to filter options' : ''}, press Down arrow key to open the menu.`;
 
-  const selectedOptionLabel = isArrayWithLength(selectedOption)
-    ? selectedOption.map(({ label }) => label).join(' ')
-    : 'N/A';
+  const { index, value, label, isDisabled } = focusedOption;
+  const focusedMsg = value
+    ? `Focused option: ${label}${isDisabled ? ' - disabled' : ''}, ${index + 1} of ${optionCount}.`
+    : '';
 
-  const selectedOptionMsg = 'Selected option: ' + selectedOptionLabel;
-  const extendedFeedbackMsg = focusedMsg + optionsMsg + menuMsg;
+  // Message text for "aria-context" SPAN
+  const labels = selectedOption.length ? selectedOption.map((x) => x.label).join(' ') : 'N/A';
+  const selectedOptionMsg = 'Selected option: ' + labels;
+
 
   return (
     <A11yText
@@ -75,7 +70,7 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
       aria-relevant='additions text'
     >
       <span id={ARIA_LIVE_SELECTION_ID}>{selectedOptionMsg}</span>
-      <span id={ARIA_LIVE_CONTEXT_ID}>{extendedFeedbackMsg}</span>
+      <span id={ARIA_LIVE_CONTEXT_ID}>{focusedMsg + optionsMsg + menuMsg}</span>
     </A11yText>
   );
 };

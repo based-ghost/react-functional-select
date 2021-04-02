@@ -23,7 +23,7 @@ const Link = styled.a`
   transform: translate3d(0px, 0px, 0px);
 
   :hover {
-    transform: translate3d(0px, -2px, 0px);
+    transform: translate3d(0px, -1.5px, 0px);
   }
 `;
 

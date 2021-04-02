@@ -3,7 +3,9 @@ import type { ReactNode, ReactText, MouseEvent, TouchEvent, EventHandler } from 
 
 export type OptionData = any;
 export type AriaLiveAttribute = 'off' | 'polite' | 'assertive';
-export type IconRenderer = ReactNode | ((...args: any[]) => ReactNode);
+
+export type CustomRendererFn = (...args: any[]) => ReactNode;
+export type IconRenderer = ReactNode | CustomRendererFn;
 
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 export type MouseOrTouchEventHandler = EventHandler<MouseOrTouchEvent<Element>>;
