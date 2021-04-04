@@ -3,6 +3,9 @@ import type { Configuration } from 'webpack';
 
 module.exports = {
   stories: ['../__stories__/**/*.stories.tsx'],
+  reactOptions: {
+    fastRefresh: true,
+  },
   addons: [
     '@storybook/preset-create-react-app',
     {

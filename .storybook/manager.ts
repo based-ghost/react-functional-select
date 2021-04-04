@@ -10,6 +10,7 @@ const theme = create({
 
 addons.setConfig({
   theme,
+  isFullscreen: false,
   showAddonsPanel: true,
   panelPosition: 'bottom'
 });
