@@ -1,3 +1,5 @@
+import type { CallbackFunction } from '../types';
+
 /**
  * @private
  * @param c: amount of change
@@ -75,18 +77,18 @@ function smoothScrollTo(
   el: Element,
   to: number,
   duration: number = 300,
-  callback?: (...args: any[]) => any
+  callback?: CallbackFunction
 ): void {
-  let curTime = 0;
+  let currentTime = 0;
   const start = getScrollTop(el);
   const change = to - start;
 
   function scrollFn(): void {
-    curTime += 5;
-    const calcScrollTop = easeOutCubic(change, duration, start, curTime);
+    currentTime += 5;
+    const calcScrollTop = easeOutCubic(change, duration, start, currentTime);
     scrollTo(el, calcScrollTop);
 
-    (curTime < duration)
+    (currentTime < duration)
       ? requestAnimationFrame(scrollFn)
       : callback?.();
   }

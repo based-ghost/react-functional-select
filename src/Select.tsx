@@ -9,6 +9,16 @@ import React, {
 } from 'react';
 
 import {
+  mergeDeep,
+  isBoolean,
+  isPlainObject,
+  normalizeValue,
+  IS_TOUCH_DEVICE,
+  isArrayWithLength,
+  suppressMouseOrTouchEvent
+} from './utils';
+
+import {
   ValueIndexEnum,
   FilterMatchEnum,
   OptionIndexEnum,
@@ -29,7 +39,6 @@ import { DEFAULT_THEME } from './theme';
 import styled, { css, ThemeProvider } from 'styled-components';
 import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
 import { useDebounce, useMenuPositioner, useMenuOptions, useMountEffect, useUpdateEffect } from './hooks';
-import { mergeDeep, IS_TOUCH_DEVICE, suppressMouseOrTouchEvent, normalizeValue, isPlainObject, isBoolean, isArrayWithLength } from './utils';
 
 import type { FixedSizeList } from 'react-window';
 import type { DefaultTheme } from 'styled-components';
@@ -41,6 +50,7 @@ import type {
   IconRenderer,
   FocusedOption,
   SelectedOption,
+  CallbackFunction,
   MouseOrTouchEvent,
   AriaLiveAttribute
 } from './types';
@@ -112,12 +122,12 @@ export type SelectProps = Readonly<{
   ariaLive?: AriaLiveAttribute;
   hideSelectedOptions?: boolean;
   filterIgnoreAccents?: boolean;
+  onMenuOpen?: CallbackFunction;
+  onMenuClose?: CallbackFunction;
   backspaceClearsValue?: boolean;
   menuPosition?: MenuPositionEnum;
   filterMatchFrom?: FilterMatchEnum;
   menuItemDirection?: 'ltr' | 'rtl';
-  onMenuOpen?: (...args: any[]) => any;
-  onMenuClose?: (...args: any[]) => any;
   onInputChange?: (value?: string) => any;
   initialValue?: OptionData | OptionData[];
   onSearchChange?: (value?: string) => any;
@@ -265,6 +275,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const prevMenuOptionsLength = useRef<number>();
   const onChangeEventValue = useRef<boolean>(false);
 
+  const onSearchChangeRef = useRef<(value?: string) => any>();
+  const onOptionChangeRef = useRef<(data: OptionData) => any>();
+
   const listRef = useRef<FixedSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -353,14 +366,13 @@ const Select = forwardRef<SelectRef, SelectProps>((
     scrollToItemIndex(index);
   }, [isMulti, menuOptions]);
 
-  const removeSelectedOption = useCallback((removeValue?: ReactText): void => {
-    setSelectedOption((prev) => prev.filter(({ value }) => value !== removeValue));
+  const removeSelectedOption = useCallback((value?: ReactText): void => {
+    setSelectedOption((prev) => prev.filter((x) => x.value !== value));
   }, []);
 
   const selectOption = useCallback((option: SelectedOption, isSelected?: boolean): void => {
     if (isSelected) {
-      if (isMulti)
-        removeSelectedOption(option.value);
+      isMulti && removeSelectedOption(option.value);
     } else {
       setSelectedOption((prev) => !isMulti ? [option] : [...prev, option]);
     }
@@ -408,20 +420,29 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }));
 
   /**
-   * (useMountEffect) If autoFocus = true, focus the control following initial mount.
+   * useMountEffect:
+   * If autoFocus = true, focus the control following initial mount.
    */
   useMountEffect(() => {
-    if (autoFocus) {
-      focusInput();
-    }
+    autoFocus && focusInput();
   });
 
   /**
-   * Write current value of 'menuOpen' to ref object (use to prevent extraneous state update calls)
+   * Write value of 'menuOpen' to ref object.
+   * Prevent extraneous state update calls/rerenders.
    */
   useEffect(() => {
     menuOpenRef.current = menuOpen;
   }, [menuOpen]);
+
+  /**
+   * Write value of 'onOptionChange' & 'onSearchChange' props to ref object.
+   * Prevent effects using these props from excessive executions if they are not memoized or change frequently.
+   */
+  useEffect(() => {
+    onOptionChangeRef.current = onOptionChange;
+    onSearchChangeRef.current = onSearchChange;
+  }, [onOptionChange, onSearchChange]);
 
   /**
    * If control recieves focus & openMenuOnFocus = true, open menu
@@ -437,17 +458,20 @@ const Select = forwardRef<SelectRef, SelectProps>((
    * updates check if onChangeEventValue ref is set true, which indicates the inputValue change was triggered by input change event
    */
   useEffect(() => {
-    if (onSearchChange && onChangeEventValue.current) {
+    const { current: onSearchFn } = onSearchChangeRef;
+    if (onSearchFn && onChangeEventValue.current) {
       onChangeEventValue.current = false;
-      onSearchChange(debouncedInputValue);
+      onSearchFn(debouncedInputValue);
     }
-  }, [onSearchChange, debouncedInputValue]);
+  }, [debouncedInputValue]);
 
   /**
-   * (useUpdateEffect) Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
+   * useUpdateEffect:
+   * Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
    */
   useUpdateEffect(() => {
-    if (!onOptionChange) return;
+    const { current: onChangeFn } = onOptionChangeRef;
+    if (!onChangeFn) return;
 
     const normalizedOptionValue = isMulti
       ? selectedOption.map((x) => x.data)
@@ -455,27 +479,27 @@ const Select = forwardRef<SelectRef, SelectProps>((
         ? selectedOption[0].data
         : null;
 
-    onOptionChange(normalizedOptionValue);
-  }, [isMulti, selectedOption, onOptionChange]);
+    onChangeFn(normalizedOptionValue);
+  }, [isMulti, selectedOption]);
 
   /**
-   * (useUpdateEffect) Handle clearing focused option if menuOptions array has 0 length;
+   * useUpdateEffect:
+   * Handle clearing focused option if menuOptions array has 0 length;
    * Handle menuOptions changes - conditionally focus first option and do scroll to first option;
    * Handle reseting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
    */
   useUpdateEffect(() => {
-    const inputChanged =
-      menuOptions.length > 0 &&
-      (async || menuOptions.length !== options.length || prevMenuOptionsLength.current === 0);
+    const { length: menuLen } = menuOptions;
+    const inputChanged = menuLen > 0 && (async || menuLen !== options.length || prevMenuOptionsLength.current === 0);
 
-    if (menuOptions.length === 0) {
+    if (menuLen === 0) {
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    } else if (menuOptions.length === 1 || inputChanged) {
+    } else if (menuLen === 1 || inputChanged) {
       setFocusedOption({ index: 0, ...menuOptions[0] });
       scrollToItemIndex(0);
     }
 
-    prevMenuOptionsLength.current = menuOptions.length;
+    prevMenuOptionsLength.current = menuLen;
   }, [async, options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
@@ -512,7 +536,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
         : 0;
     }
 
-    const nextFocusedVal = (nextFocusedIdx >= 0)
+    const nextFocusedVal = nextFocusedIdx >= 0
       ? selectedOption[nextFocusedIdx].value!
       : null;
 
