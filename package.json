@@ -1,6 +1,6 @@
 {
   "name": "react-functional-select",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Micro-sized and micro-optimized select component for React.js",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
