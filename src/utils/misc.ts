@@ -13,6 +13,7 @@ const _diacriticsRegExp = /[\u0300-\u036f]/g;
 
 /**
  * @private
+ *
  * Strips all diacritics from a string.
  * May not be supported by all legacy browsers (IE11 >=).
  */
@@ -133,7 +134,7 @@ export const mergeDeep = <T>(target: any, source: any): T => {
 
     output[key] =
       (key !== 'animation' && isPlainObject(sourceProp))
-        ? !!target[key]
+        ? target[key]
           ? mergeDeep(target[key], sourceProp)
           : sourceProp
         : sourceProp || '';

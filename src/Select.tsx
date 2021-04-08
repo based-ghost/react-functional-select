@@ -9,9 +9,8 @@ import React, {
 } from 'react';
 
 import {
-  mergeDeep,
   isBoolean,
-  isPlainObject,
+  mergeThemes,
   normalizeValue,
   IS_TOUCH_DEVICE,
   isArrayWithLength,
@@ -35,7 +34,6 @@ import {
   CONTROL_CONTAINER_TESTID
 } from './constants';
 
-import { DEFAULT_THEME } from './theme';
 import styled, { css, ThemeProvider } from 'styled-components';
 import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
 import { useDebounce, useMenuPositioner, useMenuOptions, useMountEffect, useUpdateEffect } from './hooks';
@@ -270,14 +268,14 @@ const Select = forwardRef<SelectRef, SelectProps>((
   },
   ref: Ref<SelectRef>
 ) => {
-  // Instance prop & DOM node refs
+  // Instance prop refs (primitive/function type)
   const menuOpenRef = useRef<boolean>(false);
   const prevMenuOptionsLength = useRef<number>();
   const onChangeEventValue = useRef<boolean>(false);
-
   const onSearchChangeRef = useRef<(value?: string) => any>();
   const onOptionChangeRef = useRef<(data: OptionData) => any>();
 
+  // DOM element refs
   const listRef = useRef<FixedSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -291,11 +289,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
 
   // Memoized DefaultTheme object for styled-components ThemeProvider
-  const theme = useMemo<DefaultTheme>(() => {
-    return isPlainObject(themeConfig)
-      ? mergeDeep(DEFAULT_THEME, themeConfig)
-      : DEFAULT_THEME;
-  }, [themeConfig]);
+  const theme = useMemo<DefaultTheme>(() => mergeThemes(themeConfig), [themeConfig]);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
   const getOptionLabelFn = useMemo<((data: OptionData) => ReactText)>(() => getOptionLabel || ((data) => data.label), [getOptionLabel]);
@@ -459,6 +453,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
    */
   useEffect(() => {
     const { current: onSearchFn } = onSearchChangeRef;
+
     if (onSearchFn && onChangeEventValue.current) {
       onChangeEventValue.current = false;
       onSearchFn(debouncedInputValue);
@@ -471,15 +466,16 @@ const Select = forwardRef<SelectRef, SelectProps>((
    */
   useUpdateEffect(() => {
     const { current: onChangeFn } = onOptionChangeRef;
-    if (!onChangeFn) return;
 
-    const normalizedOptionValue = isMulti
-      ? selectedOption.map((x) => x.data)
-      : isArrayWithLength(selectedOption)
-        ? selectedOption[0].data
-        : null;
+    if (onChangeFn) {
+      const normalizedOptionValue = isMulti
+        ? selectedOption.map((x) => x.data)
+        : isArrayWithLength(selectedOption)
+          ? selectedOption[0].data
+          : null;
 
-    onChangeFn(normalizedOptionValue);
+      onChangeFn(normalizedOptionValue);
+    }
   }, [isMulti, selectedOption]);
 
   /**

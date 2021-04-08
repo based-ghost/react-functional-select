@@ -1,4 +1,4 @@
-import { DEFAULT_THEME } from '../../src/theme';
+import { DEFAULT_THEME } from '../../src/utils';
 import { ThemeProvider } from 'styled-components';
 
 const ThemeTestHOC = ({ children }) => (

@@ -1,6 +1,5 @@
 import { createThemeOptions } from '../utils';
-import { mergeDeep } from '../../../src/utils';
-import { DEFAULT_THEME } from '../../../src/theme';
+import { mergeThemes } from '../../../src/utils';
 
 import type { Theme } from '../../../src';
 
@@ -73,7 +72,7 @@ export const ThemeConfigMap: Theme = {
 };
 
 export const THEME_OPTIONS = createThemeOptions(ThemeEnum);
-export const THEME_DEFAULTS = mergeDeep(DEFAULT_THEME, _themeAnimations);
+export const THEME_DEFAULTS = mergeThemes(_themeAnimations);
 
 export const THEME_CONFIG: Theme = {
   menu: {

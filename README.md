@@ -1,20 +1,22 @@
-# react-functional-select
-
-> Micro-sized & micro-optimized select component for React.js
-
 [![Latest Stable Version](https://img.shields.io/npm/v/react-functional-select.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
 [![Issues](https://img.shields.io/github/issues/based-ghost/react-functional-select.svg?style=for-the-badge)](https://github.com/based-ghost/react-functional-select/issues)
 [![License](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
 [![Downloads](https://img.shields.io/npm/dt/react-functional-select?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
 
+# react-functional-select
+
+> Micro-sized & micro-optimized select component for React.js
+
+See the accompanying [Interactive Storybook UI Site](https://based-ghost.github.io/react-functional-select/) for live demos and detailed docs.
+
 <strong>Key features:</strong>
 
-- Fully-featured <strong><em>AND</em></strong> lightweight: ~7 kB (gzipped)!
-- Offers nearly all customization features found in [`react-select`](https://github.com/JedWatson/react-select), in a modern, functional design (inspired by react-select, you will find much of the API similar)
+- Extremely lightweight: ~6 kB (gzipped)!
+- Advanced features like async mode, portal support, animations, and option virtualization
+- Fully-featured & customizable: API comparable to [`react-select`](https://github.com/JedWatson/react-select)
+- Engineered for ultimate performance: effortlessly scroll, filter, and key through datasets numbering in the tens of thousands using [`react-window`](https://github.com/bvaughn/react-window) + performance-first code. [Demo of handling 50,000 options here!](https://based-ghost.github.io/react-functional-select/?path=/story/react-functional-select--windowing)
 - Extensible styling API with [`styled-components`](https://github.com/styled-components/styled-components)
-- Opt-in properties to make the component fully accessible
-- Effortlessly scroll, filter, and key through datasets numbering in the tens of thousands via [`react-window`](https://github.com/bvaughn/react-window) + performance-first code. [See in memory load tests from 100 to 50,000 options here!](https://based-ghost.github.io/react-functional-select/?path=/story/react-functional-select--windowing)
-- Async mode for fetching dynamic options from a remote server using the search input value (starting in `v2.1.0`)
+- Accessible
 
 <strong>Peer dependencies:</strong>
 
@@ -23,7 +25,7 @@
 
 ## Overview
 
-Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely using `React Hooks` and `FunctionComponents`. The primary design principal revolves around weighing the cost/benefits of adding a feature against the impact to performance & # of lines of code its addition would have.
+Essentially, this is a focused subset of [`react-select`](https://github.com/JedWatson/react-select)'s API that is engineered for ultimate performance and minimal bundle size. It is built entirely with the `React Hooks` API (no legacy class components). The primary design principal revolves around weighing the cost/benefits of adding a feature against the impact to performance and/or number of lines of code its addition would have.
 
 Any expected features not in the current API is likely due to the reason that such features would have added significant overhead to the package. In addition, if we expose the right public methods and/or callback properties, this feature should be trivial to add to wrapping components - proper decoupling and abstraction of code is key to keeping such channels open for similar customizations that can be kept out of this package. Please, feel free to offer enhancement ideas with/without technical solutions.
 
@@ -43,13 +45,19 @@ $ yarn add react-window styled-components react-functional-select
 
 ```jsx
 import { Select } from 'react-functional-select';
-import { useState, useEffect, useCallback, FunctionComponent } from 'react';
-import { Card, CardHeader, CardBody, Container, SelectContainer } from './helpers/styled';
+import { useState, useEffect, useCallback } from 'react';
+import { Card, CardHeader, CardBody, Container, SelectContainer } from '../shared/components';
+
+import type { FunctionComponent } from 'react';
 
 type Option = Readonly<{
   id: number;
   city: string;
   state: string;
+}>;
+
+type SingleSelectDemoProps = Readonly<{
+  isDisabled: boolean;
 }>;
 
 const _cityOptions: Option[] = [
@@ -60,10 +68,8 @@ const _cityOptions: Option[] = [
   { id: 5, city: 'Houston', state: 'TX' }
 ];
 
-const SingleSelectDemo: FunctionComponent = () => {
+const SingleSelectDemo: FunctionComponent<SingleSelectDemoProps> = ({ isDisabled }) => {
   const [isInvalid, setIsInvalid] = useState<boolean>(false);
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const [isClearable, setIsClearable] = useState<boolean>(true);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
   const getOptionValue = useCallback((option: Option): number => option.id, []);
@@ -83,10 +89,10 @@ const SingleSelectDemo: FunctionComponent = () => {
         <CardBody>
           <SelectContainer>
             <Select
+              isClearable
               isInvalid={isInvalid}
               options={_cityOptions}
               isDisabled={isDisabled}
-              isClearable={isClearable}
               onOptionChange={onOptionChange}
               getOptionValue={getOptionValue}
               getOptionLabel={getOptionLabel}
@@ -97,11 +103,13 @@ const SingleSelectDemo: FunctionComponent = () => {
     </Container>
   );
 };
+
+export default SingleSelectDemo;
 ```
 
 ## Properties
 
-All properties are technically optional (with a few having default values). Very similar with [`react-select`](https://github.com/JedWatson/react-select)'s API.
+All properties are technically optional (with a few having default values). Very similar to [`react-select`](https://github.com/JedWatson/react-select)'s API.
 
 > <strong><em>Note that the following non-primitive properties should be properly memoized if defined:</em></strong><br>`clearIcon`, `caretIcon`, `options`, `renderOptionLabel`, `renderMultiOptions`, `onMenuOpen`, `onOptionChange`, `onKeyDown`, `getOptionLabel`, `getOptionLabel`, `getOptionValue`, `onInputBlur`, `onInputFocus`, `onInputChange`, `onSearchChange`, `getIsOptionDisabled`, `getFilterOptionString`, `themeConfig`
 

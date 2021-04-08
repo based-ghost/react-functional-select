@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { EMPTY_ARRAY, FilterMatchEnum } from '../constants';
 import { isBoolean, trimAndFormatFilterStr } from '../utils';
 
@@ -25,25 +25,31 @@ export const useMenuOptions = (
   hideSelectedOptions?: boolean,
   async?: boolean
 ): MenuOption[] => {
+  const getIsOptionDisabledRef = useRef<(data: OptionData) => boolean>();
+  const getFilterOptionStringRef = useRef<(option: MenuOption) => string>();
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(EMPTY_ARRAY);
 
   // Prevent effect from executing on search input mutations in 'async' mode (also prevents filtering from executing)
   const searchValue = !async ? debouncedInputValue : '';
-  const hideSelectedOptionsOrDefault = !isBoolean(hideSelectedOptions) ? !!isMulti : hideSelectedOptions;
+  const hideSelectedOptionsOrDefault = isBoolean(hideSelectedOptions) ? hideSelectedOptions : !!isMulti;
 
   useEffect(() => {
-    const normalizedInput = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
+    getIsOptionDisabledRef.current = getIsOptionDisabled || ((data) => !!data.isDisabled);
+    getFilterOptionStringRef.current = getFilterOptionString || (({ label }) => (typeof label === 'string') ? label : `${label}`);
+  }, [getIsOptionDisabled, getFilterOptionString]);
+
+  useEffect(() => {
+    const isMatchFilter = filterMatchFrom === FilterMatchEnum.ANY;
+    const normalizedSearch = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
     const selectedHash = selectedOption.length ? new Set(selectedOption.map((x) => x.value)) : undefined;
-    const getIsOptionDisabledOrDefault: (data: OptionData) => boolean = getIsOptionDisabled || ((data) => !!data.isDisabled);
-    const getFilterOptionStringOrDefault: (option: MenuOption) => string = getFilterOptionString || ((option) => (typeof option.label === 'string') ? option.label : `${option.label}`);
 
     const isOptionFilterMatch = (option: MenuOption): boolean => {
-      const optionStr = getFilterOptionStringOrDefault(option);
+      const optionStr = getFilterOptionStringRef.current!(option);
       const normalizedOptionLabel = trimAndFormatFilterStr(optionStr, filterIgnoreCase, filterIgnoreAccents);
 
-      return (filterMatchFrom === FilterMatchEnum.ANY)
-        ? normalizedOptionLabel.indexOf(normalizedInput) > -1
-        : normalizedOptionLabel.substr(0, normalizedInput.length) === normalizedInput;
+      return isMatchFilter
+        ? normalizedOptionLabel.indexOf(normalizedSearch) > -1
+        : normalizedOptionLabel.substr(0, normalizedSearch.length) === normalizedSearch;
     };
 
     const parseMenuOption = (data: OptionData): MenuOption | undefined => {
@@ -54,12 +60,12 @@ export const useMenuOptions = (
         data,
         value,
         label,
-        ...(getIsOptionDisabledOrDefault(data) && { isDisabled: true }),
+        ...(getIsOptionDisabledRef.current!(data) && { isDisabled: true }),
         ...(selectedHash?.has(value) && { isSelected: true })
       };
 
       if (
-        (normalizedInput && !isOptionFilterMatch(menuOption)) ||
+        (normalizedSearch && !isOptionFilterMatch(menuOption)) ||
         (hideSelectedOptionsOrDefault && menuOption.isSelected)
       ) {
         return;
@@ -77,7 +83,7 @@ export const useMenuOptions = (
     }
 
     setMenuOptions(nextMenuOptions);
-  }, [options, selectedOption, searchValue, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, getFilterOptionString, getIsOptionDisabled, getOptionValue, getOptionLabel]);
+  }, [options, selectedOption, searchValue, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, getOptionValue, getOptionLabel]);
 
   return menuOptions;
 };
