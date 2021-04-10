@@ -1,11 +1,16 @@
-import React, { Fragment } from 'react';
+import React, { memo, Fragment } from 'react';
 import MultiValue from './MultiValue';
 import { isArrayWithLength } from '../../utils';
 import styled, { css } from 'styled-components';
+import { useFirstRenderState } from '../../hooks';
 
 import type { MultiParams } from '../../Select';
+import type { ReactNode, ReactText } from 'react';
 import type { OptionData, SelectedOption } from '../../types';
-import type { ReactNode, ReactText, FunctionComponent } from 'react';
+
+type PlaceholderProps = Readonly<{
+  isFirstRender: boolean;
+}>;
 
 export type ValueProps = Readonly<{
   isMulti?: boolean;
@@ -33,13 +38,13 @@ const SingleValue = styled.div`
   max-width: calc(100% - 0.5rem);
 `;
 
-const Placeholder = styled.div<Pick<ValueProps, 'isMulti'>>`
+const Placeholder = styled.div<PlaceholderProps>`
   ${_singleValueBaseStyle}
   color: ${({ theme }) => theme.color.placeholder};
-  ${({ theme, isMulti }) => isMulti && css`animation: ${theme.multiValue.animation};`}
+  ${({ theme, isFirstRender }) => !isFirstRender && css`animation: ${theme.placeholder.animation};`}
 `;
 
-const Value: FunctionComponent<ValueProps> = ({
+const Value = memo<ValueProps>(({
   isMulti,
   inputValue,
   placeholder,
@@ -49,6 +54,9 @@ const Value: FunctionComponent<ValueProps> = ({
   renderMultiOptions,
   removeSelectedOption
 }) => {
+  // Do not apply Placeholder animation on initial render/mount of component
+  const isFirstRender = useFirstRenderState();
+
   if (
     inputValue &&
     (!isMulti || (isMulti && (!isArrayWithLength(selectedOption) || renderMultiOptions)))
@@ -58,7 +66,7 @@ const Value: FunctionComponent<ValueProps> = ({
 
   if (!isArrayWithLength(selectedOption)) {
     return (
-      <Placeholder isMulti={isMulti}>
+      <Placeholder isFirstRender={isFirstRender}>
         {placeholder}
       </Placeholder>
     );
@@ -88,6 +96,8 @@ const Value: FunctionComponent<ValueProps> = ({
           ))}
     </Fragment>
   );
-};
+});
+
+Value.displayName = 'Value';
 
 export default Value;

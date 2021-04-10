@@ -10,7 +10,7 @@ import type { OptionData, SelectedOption } from '../types';
  * Parse options to array of MenuOptions and perform filtering (if applicable).
  * Set menuOptions state (ensure array returned).
  */
-export const useMenuOptions = (
+const useMenuOptions = (
   options: OptionData[],
   debouncedInputValue: string,
   filterMatchFrom: FilterMatchEnum,
@@ -87,3 +87,5 @@ export const useMenuOptions = (
 
   return menuOptions;
 };
+
+export default useMenuOptions;

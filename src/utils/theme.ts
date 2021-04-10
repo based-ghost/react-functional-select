@@ -72,6 +72,9 @@ export const DEFAULT_THEME: DefaultTheme = {
     color: 'hsl(0, 0%, 60%)',
     padding: '0.375rem 0.75rem'
   },
+  placeholder: {
+    animation: FADE_IN_ANIMATION_CSS
+  },
   multiValue: {
     margin: '1px 2px',
     borderRadius: '3px',

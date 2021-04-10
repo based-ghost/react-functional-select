@@ -695,15 +695,15 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [onInputChange]);
 
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
-    suppressMouseOrTouchEvent(e);
     setSelectedOption(EMPTY_ARRAY);
+    suppressMouseOrTouchEvent(e);
     focusInput();
   }, []);
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
-    suppressMouseOrTouchEvent(e, e.type === 'mousedown');
     focusInput();
     menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
+    suppressMouseOrTouchEvent(e);
   }, [openMenuAndFocusOption]);
 
   const renderMenu = !lazyLoadMenu || (lazyLoadMenu && menuOpen);

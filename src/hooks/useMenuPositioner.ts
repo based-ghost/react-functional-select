@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { MenuPositionEnum } from '../constants';
-import { useUpdateEffect } from './useUpdateEffect';
+import useUpdateEffect from './useUpdateEffect';
 import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
 
 import type { RefObject } from 'react';
@@ -13,7 +13,7 @@ import type { CallbackFunction } from '../types';
  * Use ref to track if the menuHeight was resized, and if so, set the menu height back to default (avoids uncessary renders) with call to setMenuHeight.
  * Handle determining where to place the menu in relation to control - when menuPosition = 'top' or menuPosition = 'bottom' and there is not sufficient space below control, place on top.
  */
-export const useMenuPositioner = (
+const useMenuPositioner = (
   menuRef: RefObject<HTMLElement | null>,
   controlRef: RefObject<HTMLElement | null>,
   menuOpen: boolean,
@@ -88,3 +88,5 @@ export const useMenuPositioner = (
 
   return [menuStyleTop, menuHeightCalc];
 };
+
+export default useMenuPositioner;

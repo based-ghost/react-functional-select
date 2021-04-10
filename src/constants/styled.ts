@@ -16,5 +16,5 @@ const _fadeInKeyframes = keyframes`
   }
 `;
 
-export const FADE_IN_ANIMATION_CSS = css`${_fadeInKeyframes} 0.2s ease-out both`;
+export const FADE_IN_ANIMATION_CSS = css`${_fadeInKeyframes} 0.25s ease-in-out both`;
 export const BOUNCE_ANIMATION_CSS = css`${_bounceKeyframes} 1.19s ease-in-out infinite`;

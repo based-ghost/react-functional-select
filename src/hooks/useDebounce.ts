@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
  * Debouncer hook (hacky fix to prevent unecessary state mutations if no delay is passed).
  * If a number is passed for the delay parameter, use to debounce/set the value.
  */
-export const useDebounce = <T>(value: T, delay: number = 0): T => {
+const useDebounce = <T>(value: T, delay: number = 0): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
@@ -21,3 +21,5 @@ export const useDebounce = <T>(value: T, delay: number = 0): T => {
 
   return delay <= 0 ? value : debouncedValue;
 };
+
+export default useDebounce;

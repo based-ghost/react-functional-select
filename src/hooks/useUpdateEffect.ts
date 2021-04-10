@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
  * Run an effect only on updates.
  * Skip the first effect execution that occurrs after initial mount.
  */
-export const useUpdateEffect: typeof useEffect = (effect, deps): void => {
+const useUpdateEffect: typeof useEffect = (effect, deps): void => {
   const isFirstRender = useRef<boolean>(true);
 
   useEffect(() => {
@@ -16,3 +16,5 @@ export const useUpdateEffect: typeof useEffect = (effect, deps): void => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };
+
+export default useUpdateEffect;
