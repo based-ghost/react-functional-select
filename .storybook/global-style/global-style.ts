@@ -11,6 +11,8 @@ export const GlobalStyle = createGlobalStyle`
   html {
     line-height: 1.15;
     text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -34,23 +36,26 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   em {
+    color: #191919;
     font-weight: 600;
   }
 
   strong {
-    color: black;
+    color: #191919;
     font-weight: 600;
     font-size: 1.025em;
   }
 
   code {
-    color: #262626;
+    color: #191919;
     font-size: 88%;
     border-radius: 3px;
     word-break: break-word;
     padding: .15em .2em .15em;
-    background-color: rgba(30, 167, 253, 0.115);
-    font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+    background-color: rgba(187, 239, 253, 0.325);
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
   }
 
   ${ReactToastifyCss}

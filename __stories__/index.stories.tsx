@@ -106,7 +106,7 @@ export const SingleSelect = () => {
         in the dependency arrays of <code>useCallbacks</code>, <code>useEffects</code>,
         and <code>useMemos</code>. When defined in a functional component, wrap in
         a <code>useCallback</code>; when defined in a legacy class component, ensure proper
-        binding to <code>this</code>. Alternatively, if there is no dependency on any state,
+        binding to <em>this</em>. Alternatively, if there is no dependency on any state,
         you can opt to hoist functions outside of the component entirely.
       </Paragraph>
       <Paragraph>
@@ -201,9 +201,9 @@ export const MultiSelect = () => {
         <List>
           <Li>
             <TextHeader>hideSelectedOptions?: boolean</TextHeader> - Hide the
-            selected option from the menu. Default value is false, however, if
-            undefined and <code>isMulti === true</code>, then its value defaults
-            to true.
+            selected option from the menu. Default value is <em>false</em>, however,
+            if undefined and <code>isMulti</code> is <em>true</em>, then its value
+            defaults to <em>true</em>.
           </Li>
           <Li>
             <TextHeader>closeMenuOnSelect?: boolean</TextHeader> - Close the
@@ -295,7 +295,7 @@ export const Styling = () => {
   const [selectedOption, setSelectedOption] = useCallbackState<SelectedOption | null>(null);
 
   const selectWrapperStyle = { marginTop: '1rem' };
-  const noteStyle = { color: '#262626', fontSize: 'inherit', fontWeight: 700 };
+  const noteStyle = { fontSize: 'inherit', fontWeight: 700 };
   const menuItemSize = selectedOption?.value === ThemeEnum.LARGE_TEXT ? 44 : 35;
 
   const memoizedMarkupNode = useMemo(() => (
@@ -642,15 +642,15 @@ export const Filtering = () => {
         <List>
           <Li>
             <TextHeader>filterIgnoreCase?: boolean</TextHeader> - Filter ignores
-            case when matching strings. Default value is <code>true</code>.
+            case when matching strings. Default value is <em>true</em>.
           </Li>
           <Li>
             <TextHeader>filterIgnoreAccents?: boolean</TextHeader> - Filter
-            ignores accents when matching strings. Default value is <code>false</code>.
+            ignores accents when matching strings. Default value is <em>false</em>.
           </Li>
           <Li>
             <TextHeader>filterMatchFrom?: 'any' | 'start'</TextHeader> -
-            Position in source string to perform match. Default value is <code>'any'</code>.
+            Position in source string to perform match. Default value is <em>'any'</em>.
           </Li>
           <Li>
             <TextHeader>getFilterOptionString(option: MenuOption) {'=>'} string</TextHeader> -
@@ -846,7 +846,7 @@ export const Advanced = () => {
             <TextHeader>caretIcon: ReactNode | (...args: any[]) {'=>'} ReactNode</TextHeader> - A custom
             node or a function that returns a node can used for the <code>caretIcon</code> property.
             When using a function, an object containing stateful data is forwarded and can be used to style
-            your custom node accordingly. The state is <code>{'{ menuOpen, isLoading, isInvalid, isDisabled }'}</code> of
+            your custom node accordingly. The state is <em>{'{ menuOpen, isLoading, isInvalid, isDisabled }'}</em> of
             type <code>Record{'<'}string, boolean{'>'}</code>. The <code>clearIcon</code> property has an identical definition.
           </Li>
         </List>

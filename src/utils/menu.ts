@@ -36,7 +36,7 @@ function scrollTo(el: Element, top: number): void {
  * @private
  */
 function isDocumentElement(el: Element | Window): boolean {
-  return el === document.documentElement || el === document.body || el === window;
+  return el === document.body || el === document.documentElement || el === window;
 }
 
 /**

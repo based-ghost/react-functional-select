@@ -134,15 +134,20 @@ export const Li = styled.li`
 `;
 
 export const TextHeader = styled.span`
-  color: black;
-  font-weight: 600;
-  line-height: 1.6;
+  color: #191919;
+  line-height: 1.65;
   font-size: 1.025em;
+  border-radius: 3px;
   word-break: break-word;
-  padding: 3px 0 3px 6.4px;
+  background-color: #eef0f3;
+  padding: .15em .45em .15em;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
 
   ${MEDIA_QUERY_IS_MOBILE_XS} {
-    padding: .1em .25em .1em;
+    line-height: 1.6;
+    padding: .1em .4em .1em;
   }
 `;
 
