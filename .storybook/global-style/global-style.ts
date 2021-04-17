@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import ReactToastifyCss from './react-toastify-css';
 
-export const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   *,
   *::before,
   *::after {
@@ -60,3 +60,5 @@ export const GlobalStyle = createGlobalStyle`
 
   ${ReactToastifyCss}
 `;
+
+export default GlobalStyle;

@@ -7,7 +7,7 @@ export const MEDIA_QUERY_IS_TABLET = '@media only screen and (max-width: 991px) 
 
 // Need to implement a div version of Paragraph since PrettyPrintJson contains an <pre> element
 // ...which cannot be a child of a <p> element
-const _paragraphCSS = css`
+const PARAGRAPH_BASE_STYLE = css`
   margin-top: 0;
   display: block;
   margin-bottom: 1rem;
@@ -18,11 +18,11 @@ const _paragraphCSS = css`
 `;
 
 export const Content = styled.p`
-  ${_paragraphCSS}
+  ${PARAGRAPH_BASE_STYLE}
 `;
 
 export const Paragraph = styled.p`
-  ${_paragraphCSS}
+  ${PARAGRAPH_BASE_STYLE}
 
   ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
     max-width: 85%;
@@ -92,7 +92,7 @@ export const Column = styled.div<{ widthPercent?: number }>`
 `;
 
 export const ListWrapper = styled.div`
-  ${_paragraphCSS}
+  ${PARAGRAPH_BASE_STYLE}
 
   ${MEDIA_QUERY_IS_TABLET_OR_DESKTOP} {
     max-width: 85%;
@@ -138,16 +138,16 @@ export const TextHeader = styled.span`
   line-height: 1.65;
   font-size: 1.025em;
   border-radius: 3px;
+  padding: .15em .3em;
   word-break: break-word;
   background-color: #eef0f3;
-  padding: .15em .45em .15em;
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;
   font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
 
   ${MEDIA_QUERY_IS_MOBILE_XS} {
     line-height: 1.6;
-    padding: .1em .4em .1em;
+    padding: .1em .25em;
   }
 `;
 
@@ -350,7 +350,7 @@ export const MenuPortalElement = styled.div<{ menuOpen: boolean; }>`
 // Advanced story specific
 // =======================================
 
-const _spinKeyframes = keyframes`
+const SPIN_KEYFRAMES = keyframes`
   from {
     transform: rotate(0deg);
   } to {
@@ -358,7 +358,7 @@ const _spinKeyframes = keyframes`
   }
 `;
 
-const _spinAnimationCss = css`animation: ${_spinKeyframes} infinite 8s linear;`;
+const SPIN_ANIMATION_CSS = css`animation: ${SPIN_KEYFRAMES} infinite 8s linear;`;
 
 export const ReactSvg = styled.svg<{ isDisabled?: boolean }>`
   width: 34px;
@@ -366,7 +366,7 @@ export const ReactSvg = styled.svg<{ isDisabled?: boolean }>`
   color: #1ea7fd;
   fill: currentColor;
   display: inline-block;
-  ${({ isDisabled }) => !isDisabled && _spinAnimationCss}
+  ${({ isDisabled }) => !isDisabled && SPIN_ANIMATION_CSS}
 `;
 
 export const ChevronDownSvg = styled.svg<{ menuOpen: boolean }>`

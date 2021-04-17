@@ -2,21 +2,21 @@ import ReactDOM from 'react-dom';
 import { GlobalStyle } from './global-style';
 
 // Configure createGlobalStyle for styled-components
-const _gsNodeId = 'temp2-global-style';
+const GS_NODE_ID = 'temp2-global-style';
 
-const _gsNode =
-  document.getElementById(_gsNodeId) ||
+const GS_NODE =
+  document.getElementById(GS_NODE_ID) ||
   (() => {
     const el = document.createElement('div');
-    el.id = _gsNodeId;
+    el.id = GS_NODE_ID;
     document.head.appendChild(el);
     return el;
   })();
 
 // Callback to remove node used to mount GlobalStyle to
 const rendererCallbackFn = () => {
-  _gsNode && document.head.removeChild(_gsNode);
+  GS_NODE && document.head.removeChild(GS_NODE);
 };
 
 // Mount GlobalStyle to gsNode and then execute callback rendererCallbackFn()
-ReactDOM.render(<GlobalStyle />, _gsNode, rendererCallbackFn);
+ReactDOM.render(<GlobalStyle />, GS_NODE, rendererCallbackFn);

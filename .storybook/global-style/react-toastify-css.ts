@@ -1,6 +1,6 @@
 import { css, keyframes } from 'styled-components';
 
-const _toastify_trackProgress = keyframes`
+const TOASTIFY_TRACK_PROGRESS = keyframes`
   0% {
     transform: scaleX(1);
   } 100% {
@@ -8,7 +8,7 @@ const _toastify_trackProgress = keyframes`
   }
 `;
 
-const _toastify_bounceOut = keyframes`
+const TOASTIFY_BOUNCE_OUT = keyframes`
   20% {
     transform: scale3d(0.9, 0.9, 0.9);
   } 50%,
@@ -21,7 +21,7 @@ const _toastify_bounceOut = keyframes`
   }
 `;
 
-const _toastify_bounceIn = keyframes`
+const TOASTIFY_BOUNCE_IN = keyframes`
   from,
   20%,
   40%,
@@ -51,11 +51,11 @@ const _toastify_bounceIn = keyframes`
 
 const ReactToastifyCss = css`
   .Toastify__animate__bounceIn {
-    animation: ${_toastify_bounceIn} 1s both;
+    animation: ${TOASTIFY_BOUNCE_IN} 1s both;
   }
 
   .Toastify__animate__bounceOut {
-    animation: ${_toastify_bounceOut} 0.85s both;
+    animation: ${TOASTIFY_BOUNCE_OUT} 0.85s both;
   }
 
   .Toastify__toast-container {
@@ -163,7 +163,7 @@ const ReactToastifyCss = css`
       transform-origin: left;
 
       &--animated {
-        animation: ${_toastify_trackProgress} linear 1 forwards;
+        animation: ${TOASTIFY_TRACK_PROGRESS} linear 1 forwards;
       }
 
       &--controlled {

@@ -23,7 +23,7 @@ export type ValueProps = Readonly<{
   renderMultiOptions?: (params: MultiParams) => ReactNode;
 }>;
 
-const _singleValueBaseStyle = css`
+const SINGLE_VALUE_BASE_STYLE = css`
   top: 50%;
   overflow: hidden;
   position: absolute;
@@ -34,12 +34,12 @@ const _singleValueBaseStyle = css`
 `;
 
 const SingleValue = styled.div`
-  ${_singleValueBaseStyle}
+  ${SINGLE_VALUE_BASE_STYLE}
   max-width: calc(100% - 0.5rem);
 `;
 
 const Placeholder = styled.div<PlaceholderProps>`
-  ${_singleValueBaseStyle}
+  ${SINGLE_VALUE_BASE_STYLE}
   color: ${({ theme }) => theme.color.placeholder};
   ${({ theme, isFirstRender }) => !isFirstRender && css`animation: ${theme.placeholder.animation};`}
 `;

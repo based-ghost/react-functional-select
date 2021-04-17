@@ -4,22 +4,22 @@ import { mergeThemes } from '../../../src/utils';
 import type { Theme } from '../../../src';
 
 // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
-const _bounceKeyframes = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
-const _fadeInKeyframes = 'FADE_IN_KEYFRAMES 0.225s ease-in-out forwards';
+const FADE_IN_KEYFRAMES = 'FADE_IN_KEYFRAMES 0.25s ease-in-out';
+const BOUNCE_KEYFRAMES = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
 
-const _themeAnimations: Theme = {
+const THEME_ANIMATIONS: Theme = {
   loader: {
-    animation: _bounceKeyframes
+    animation: BOUNCE_KEYFRAMES
   },
   menu: {
-    animation: _fadeInKeyframes
+    animation: FADE_IN_KEYFRAMES
   },
   multiValue: {
-    animation: _fadeInKeyframes
+    animation: FADE_IN_KEYFRAMES
   },
   icon: {
     clear: {
-      animation: _fadeInKeyframes
+      animation: FADE_IN_KEYFRAMES
     }
   }
 };
@@ -72,7 +72,7 @@ export const ThemeConfigMap: Theme = {
 };
 
 export const THEME_OPTIONS = createThemeOptions(ThemeEnum);
-export const THEME_DEFAULTS = mergeThemes(_themeAnimations);
+export const THEME_DEFAULTS = mergeThemes(THEME_ANIMATIONS);
 
 export const THEME_CONFIG: Theme = {
   menu: {

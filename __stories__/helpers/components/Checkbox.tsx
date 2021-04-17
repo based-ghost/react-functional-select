@@ -9,8 +9,8 @@ type CheckboxProps = Readonly<{
   onCheck: (checked: boolean) => void;
 }>;
 
-const _colorCheckMark = '#149DF3';
-const _colorBorderChecked = hexToRgba(_colorCheckMark, 0.78);
+const CHECK_COLOR = '#149DF3';
+const CHECK_BORDER_COLOR = hexToRgba(CHECK_COLOR, 0.78);
 
 const Label = styled.span`
   user-select: none;
@@ -26,7 +26,7 @@ const Input = styled.input`
   position: absolute;
 
   :checked ~ i {
-    border-color: ${_colorBorderChecked};
+    border-color: ${CHECK_BORDER_COLOR};
 
     :after,
     :before {
@@ -87,7 +87,7 @@ const CheckIcon = styled.i`
     position: absolute;
     border-radius: 3px;
     transform-origin: left top;
-    background-color: ${_colorCheckMark};
+    background-color: ${CHECK_COLOR};
     transition: opacity 0.365s ease, height 0s linear 0.365s;
   }
 
