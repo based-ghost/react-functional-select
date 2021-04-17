@@ -54,7 +54,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: .15em .2em .15em;
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: auto;
-    background-color: rgba(187, 239, 253, 0.325);
+    background-color: rgba(187, 239, 253, 0.32);
     font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
   }
 
