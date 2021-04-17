@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 import { CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../../constants';
 
 import type { ReactNode } from 'react';
-import type { IconRenderer, CustomRendererFn, MouseOrTouchEventHandler } from '../../types';
+import type { IconRenderer, CustomRendererCallback, MouseOrTouchEventHandler } from '../../types';
 
 export type IndicatorIconsProps = Readonly<{
   menuOpen: boolean;
@@ -78,9 +78,9 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
   onCaretMouseDown,
   onClearMouseDown
 }) => {
-  const renderIconFn = (renderer: IconRenderer) => {
+  const renderIconCallback = (renderer: IconRenderer) => {
     return isFunction(renderer)
-      ? (renderer as CustomRendererFn)({ menuOpen, isLoading, isInvalid, isDisabled })
+      ? (renderer as CustomRendererCallback)({ menuOpen, isLoading, isInvalid, isDisabled })
       : renderer;
   };
 
@@ -92,7 +92,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
           onMouseDown={onClearMouseDown}
           data-testid={CLEAR_ICON_TESTID}
         >
-          {renderIconFn(clearIcon) || <ClearSvgIcon />}
+          {renderIconCallback(clearIcon) || <ClearSvgIcon />}
         </IndicatorIcon>
       )}
       {isLoading && (loadingNode || <LoadingDots />)}
@@ -102,7 +102,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
         onMouseDown={onCaretMouseDown}
         data-testid={CARET_ICON_TESTID}
       >
-        {renderIconFn(caretIcon) || (
+        {renderIconCallback(caretIcon) || (
           <Caret
             aria-hidden
             menuOpen={menuOpen}

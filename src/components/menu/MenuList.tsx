@@ -6,8 +6,8 @@ import { isArrayWithLength } from '../../utils';
 
 import type { MenuOption } from '../../Select';
 import type { ListItemKeySelector } from 'react-window';
-import type { ItemData, OptionData, SelectedOption } from '../../types';
-import type { ReactNode, ReactText, MutableRefObject, FunctionComponent } from 'react';
+import type { ReactText, MutableRefObject, FunctionComponent } from 'react';
+import type { ItemData, RenderLabelCallback, SelectedOption } from '../../types';
 
 export type MenuListProps = Readonly<{
   height: number;
@@ -21,7 +21,7 @@ export type MenuListProps = Readonly<{
   focusedOptionIndex: number;
   noOptionsMsg: string | null;
   itemKeySelector?: ReactText;
-  renderOptionLabel: (data: OptionData) => ReactNode;
+  renderOptionLabel: RenderLabelCallback;
   fixedSizeListRef: MutableRefObject<FixedSizeList | null>;
   selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 }>;

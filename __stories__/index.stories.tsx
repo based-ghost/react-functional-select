@@ -2,7 +2,6 @@ import { useMemo, useRef, useState, useEffect, useCallback, Fragment } from 'rea
 import { Select } from '../src';
 import { toast } from 'react-toastify';
 import { useUpdateEffect } from '../src/hooks';
-
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -16,7 +15,6 @@ import {
   SELECT_CONTAINER_CLS,
   CONTROL_CONTAINER_CLS,
 } from '../src/constants';
-
 import {
   Button,
   Buttons,

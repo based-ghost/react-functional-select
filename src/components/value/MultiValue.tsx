@@ -1,15 +1,15 @@
 import React, { memo } from 'react';
+import { suppressEvent } from '../../utils';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../../constants';
-import { suppressMouseOrTouchEvent } from '../../utils';
 
-import type { ReactNode, ReactText } from 'react';
-import type { OptionData, SelectedOption } from '../../types';
+import type { ReactText } from 'react';
+import type { RenderLabelCallback, SelectedOption } from '../../types';
 
 export type MultiValueProps = SelectedOption & Readonly<{
   isFocused: boolean;
+  renderOptionLabel: RenderLabelCallback;
   removeSelectedOption: (value?: ReactText) => void;
-  renderOptionLabel: (data: OptionData) => ReactNode;
 }>;
 
 const _clearIconFocusStyle  = css`
@@ -67,22 +67,26 @@ const MultiValue = memo<MultiValueProps>(({
   isFocused,
   renderOptionLabel,
   removeSelectedOption
-}) => (
-  <MultiValueWrapper>
-    <Label>
-      {renderOptionLabel(data)}
-    </Label>
-    <Clear
-      isFocused={isFocused}
-      data-testid={CLEAR_ICON_MV_TESTID}
-      onMouseDown={suppressMouseOrTouchEvent}
-      onClick={() => removeSelectedOption(value)}
-      onTouchEnd={() => removeSelectedOption(value)}
-    >
-      ✖
-    </Clear>
-  </MultiValueWrapper>
-));
+}) => {
+  const onClearEvent = () => removeSelectedOption(value);
+
+  return (
+    <MultiValueWrapper>
+      <Label>
+        {renderOptionLabel(data)}
+      </Label>
+      <Clear
+        isFocused={isFocused}
+        onClick={onClearEvent}
+        onTouchEnd={onClearEvent}
+        onMouseDown={suppressEvent}
+        data-testid={CLEAR_ICON_MV_TESTID}
+      >
+        ✖
+      </Clear>
+    </MultiValueWrapper>
+  );
+});
 
 MultiValue.displayName = 'MultiValue';
 

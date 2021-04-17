@@ -6,10 +6,10 @@ import {
   OPTION_DISABLED_CLS,
 } from '../constants';
 
-import type { ReactText } from 'react';
-import type { MouseOrTouchEvent, OptionData, SelectedOption } from '../types';
+import type { SyntheticEvent } from 'react';
+import type { SelectedOption, OptionValueCallback, OptionLabelCallback } from '../types';
 
-const _diacriticsRegExp = /[\u0300-\u036f]/g;
+const DIACRITICS_REG_EXP = /[\u0300-\u036f]/g;
 
 /**
  * @private
@@ -18,7 +18,7 @@ const _diacriticsRegExp = /[\u0300-\u036f]/g;
  * May not be supported by all legacy browsers (IE11 >=).
  */
 function stripDiacritics(value: string): string {
-  return value.normalize('NFD').replace(_diacriticsRegExp, '');
+  return value.normalize('NFD').replace(DIACRITICS_REG_EXP, '');
 }
 
 /**
@@ -50,14 +50,10 @@ export function isPlainObject(test: any): boolean {
 }
 
 /**
- * Handle mouse/touch events by suppressing event propagation,
- * and in some cases, preventing the default behavior.
+ * Call preventDefault() and stopPropagation() on event.
  */
-export const suppressMouseOrTouchEvent = (
-  e: MouseOrTouchEvent<HTMLElement>,
-  preventDefault: boolean = true
-): void => {
-  preventDefault && e.preventDefault();
+export const suppressEvent = (e: SyntheticEvent<Element>): void => {
+  e.preventDefault();
   e.stopPropagation();
 };
 
@@ -67,8 +63,8 @@ export const suppressMouseOrTouchEvent = (
  */
 export function trimAndFormatFilterStr(
   value: string,
-  filterIgnoreCase?: boolean,
-  filterIgnoreAccents?: boolean
+  filterIgnoreCase: boolean,
+  filterIgnoreAccents: boolean
 ): string {
   let trimVal = value.trim();
 
@@ -101,8 +97,8 @@ export function optionClassNames(
  */
 export const normalizeValue = (
   value: any,
-  getOptionValue: (data: OptionData) => ReactText,
-  getOptionLabel: (data: OptionData) => ReactText
+  getOptionValue: OptionValueCallback,
+  getOptionLabel: OptionLabelCallback
 ): SelectedOption[] => {
   const initialValues = Array.isArray(value)
     ? value

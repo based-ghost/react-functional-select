@@ -3,10 +3,12 @@ import { MenuPositionEnum } from '../constants';
 import useUpdateEffect from './useUpdateEffect';
 import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
 
-import type { RefObject } from 'react';
 import type { CallbackFunction } from '../types';
+import type { RefObject, MutableRefObject } from 'react';
 
 /**
+ * useMenuPositioner hook
+ *
  * Handle calculating and maintaining the menuHeight used by react-window.
  * Handle scroll animation and callback execution when menuOpen = true.
  * Handle resetting menuHeight back to the menuHeightDefault and callback execution when menuOpen = false.
@@ -22,23 +24,16 @@ const useMenuPositioner = (
   menuHeightDefault: number,
   menuOptionsLength: number,
   isMenuPortaled: boolean,
+  onMenuOpenRef: MutableRefObject<CallbackFunction | undefined>,
+  onMenuCloseRef: MutableRefObject<CallbackFunction | undefined>,
   menuScrollDuration?: number,
-  scrollMenuIntoView?: boolean,
-  onMenuOpen?: CallbackFunction,
-  onMenuClose?: CallbackFunction
+  scrollMenuIntoView?: boolean
 ): [string | undefined, number] => {
-  const onMenuOpenRef = useRef<CallbackFunction>();
-  const onMenuCloseRef = useRef<CallbackFunction>();
   const resetMenuHeightRef = useRef<boolean>(false);
   const shouldScrollRef = useRef<boolean>(!isMenuPortaled);
 
   const [menuHeight, setMenuHeight] = useState<number>(menuHeightDefault);
   const [isMenuTopPosition, setIsMenuTopPosition] = useState<boolean>(false);
-
-  useEffect(() => {
-    onMenuOpenRef.current = onMenuOpen;
-    onMenuCloseRef.current = onMenuClose;
-  }, [onMenuOpen, onMenuClose]);
 
   useEffect(() => {
     shouldScrollRef.current = !isMenuTopPosition && !isMenuPortaled;
@@ -77,7 +72,7 @@ const useMenuPositioner = (
         setMenuHeight(menuHeightDefault);
       }
     }
-  }, [menuRef, menuOpen, menuHeightDefault, scrollMenuIntoView, menuScrollDuration]);
+  }, [menuRef, menuOpen, menuHeightDefault, scrollMenuIntoView, menuScrollDuration, onMenuCloseRef, onMenuOpenRef]);
 
   // Calculated menu height passed react-window; calculate MenuWrapper <div /> 'top' style prop if menu is positioned above control
   const menuHeightCalc = Math.min(menuHeight, menuOptionsLength * menuItemSize);

@@ -1,12 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { EMPTY_ARRAY, FilterMatchEnum } from '../constants';
 import { isBoolean, trimAndFormatFilterStr } from '../utils';
 
-import type { ReactText } from 'react';
 import type { MenuOption } from '../Select';
-import type { OptionData, SelectedOption } from '../types';
+import type { MutableRefObject } from 'react';
+import type {
+  OptionData,
+  SelectedOption,
+  OptionValueCallback,
+  OptionLabelCallback,
+  OptionFilterCallback,
+  OptionDisabledCallback
+} from '../types';
 
 /**
+ * useMenuOptions hook
+ *
  * Parse options to array of MenuOptions and perform filtering (if applicable).
  * Set menuOptions state (ensure array returned).
  */
@@ -15,39 +24,33 @@ const useMenuOptions = (
   debouncedInputValue: string,
   filterMatchFrom: FilterMatchEnum,
   selectedOption: SelectedOption[],
-  getOptionValue: (data: OptionData) => ReactText,
-  getOptionLabel: (data: OptionData) => ReactText,
-  getIsOptionDisabled?: (data: OptionData) => boolean,
-  getFilterOptionString?: (option: MenuOption) => string,
-  filterIgnoreCase?: boolean,
-  filterIgnoreAccents?: boolean,
-  isMulti?: boolean,
-  hideSelectedOptions?: boolean,
-  async?: boolean
+  getOptionValue: OptionValueCallback,
+  getOptionLabel: OptionLabelCallback,
+  getIsOptionDisabledRef: MutableRefObject<OptionDisabledCallback>,
+  getFilterOptionStringRef: MutableRefObject<OptionFilterCallback>,
+  filterIgnoreCase: boolean = false,
+  filterIgnoreAccents: boolean = false,
+  isMulti: boolean = false,
+  async: boolean = false,
+  hideSelectedOptions?: boolean
 ): MenuOption[] => {
-  const getIsOptionDisabledRef = useRef<(data: OptionData) => boolean>();
-  const getFilterOptionStringRef = useRef<(option: MenuOption) => string>();
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(EMPTY_ARRAY);
 
   // Prevent effect from executing on search input mutations in 'async' mode (also prevents filtering from executing)
   const searchValue = !async ? debouncedInputValue : '';
-  const hideSelectedOptionsOrDefault = isBoolean(hideSelectedOptions) ? hideSelectedOptions : !!isMulti;
+  const hideSelectedOptionsOrDefault = isBoolean(hideSelectedOptions) ? hideSelectedOptions : isMulti;
 
   useEffect(() => {
-    getIsOptionDisabledRef.current = getIsOptionDisabled || ((data) => !!data.isDisabled);
-    getFilterOptionStringRef.current = getFilterOptionString || (({ label }) => (typeof label === 'string') ? label : `${label}`);
-  }, [getIsOptionDisabled, getFilterOptionString]);
-
-  useEffect(() => {
-    const isMatchFilter = filterMatchFrom === FilterMatchEnum.ANY;
+    const { current: getIsOptionDisabled } = getIsOptionDisabledRef;
+    const { current: getFilterOptionStr } = getFilterOptionStringRef;
     const normalizedSearch = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
     const selectedHash = selectedOption.length ? new Set(selectedOption.map((x) => x.value)) : undefined;
 
     const isOptionFilterMatch = (option: MenuOption): boolean => {
-      const optionStr = getFilterOptionStringRef.current!(option);
+      const optionStr = getFilterOptionStr(option);
       const normalizedOptionLabel = trimAndFormatFilterStr(optionStr, filterIgnoreCase, filterIgnoreAccents);
 
-      return isMatchFilter
+      return filterMatchFrom === FilterMatchEnum.ANY
         ? normalizedOptionLabel.indexOf(normalizedSearch) > -1
         : normalizedOptionLabel.substr(0, normalizedSearch.length) === normalizedSearch;
     };
@@ -60,7 +63,7 @@ const useMenuOptions = (
         data,
         value,
         label,
-        ...(getIsOptionDisabledRef.current!(data) && { isDisabled: true }),
+        ...(getIsOptionDisabled(data) && { isDisabled: true }),
         ...(selectedHash?.has(value) && { isSelected: true })
       };
 
@@ -74,16 +77,26 @@ const useMenuOptions = (
       return menuOption;
     };
 
-    const { length } = options;
-    const nextMenuOptions: MenuOption[] = [];
-
-    for (let i = 0; i < length; i++) {
-      const option = parseMenuOption(options[i]);
-      option && nextMenuOptions.push(option);
-    }
+    const nextMenuOptions = options.reduce((acc: MenuOption[], option: OptionData) => {
+      const menuOption = parseMenuOption(option);
+      menuOption && acc.push(menuOption);
+      return acc;
+    }, []);
 
     setMenuOptions(nextMenuOptions);
-  }, [options, selectedOption, searchValue, hideSelectedOptionsOrDefault, filterMatchFrom, filterIgnoreCase, filterIgnoreAccents, getOptionValue, getOptionLabel]);
+  }, [
+    options,
+    searchValue,
+    getOptionValue,
+    getOptionLabel,
+    selectedOption,
+    filterMatchFrom,
+    filterIgnoreCase,
+    filterIgnoreAccents,
+    getIsOptionDisabledRef,
+    getFilterOptionStringRef,
+    hideSelectedOptionsOrDefault
+  ]);
 
   return menuOptions;
 };

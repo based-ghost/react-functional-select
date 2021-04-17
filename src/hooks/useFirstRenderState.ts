@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 
 /**
+ * useFirstRenderState hook
+ *
  * Returns "true" if component is just mounted (first render), else "false".
  */
 const useFirstRenderState = (): boolean => {

@@ -6,7 +6,7 @@ import { useFirstRenderState } from '../../hooks';
 
 import type { MultiParams } from '../../Select';
 import type { ReactNode, ReactText } from 'react';
-import type { OptionData, SelectedOption } from '../../types';
+import type { SelectedOption, RenderLabelCallback } from '../../types';
 
 type PlaceholderProps = Readonly<{
   isFirstRender: boolean;
@@ -18,8 +18,8 @@ export type ValueProps = Readonly<{
   placeholder: string;
   selectedOption: SelectedOption[];
   focusedMultiValue: ReactText | null;
+  renderOptionLabel: RenderLabelCallback;
   removeSelectedOption: (value?: ReactText) => void;
-  renderOptionLabel: (data: OptionData) => ReactNode;
   renderMultiOptions?: (params: MultiParams) => ReactNode;
 }>;
 

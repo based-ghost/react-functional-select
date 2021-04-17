@@ -1,7 +1,8 @@
-[![Latest Stable Version](https://img.shields.io/npm/v/react-functional-select.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
-[![Issues](https://img.shields.io/github/issues/based-ghost/react-functional-select.svg?style=for-the-badge)](https://github.com/based-ghost/react-functional-select/issues)
-[![License](https://img.shields.io/badge/license-mit-red.svg?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
-[![Downloads](https://img.shields.io/npm/dt/react-functional-select?style=for-the-badge)](https://www.npmjs.com/package/react-functional-select)
+[![npm version](https://img.shields.io/npm/v/react-functional-select.svg?style=flat-square)](https://www.npmjs.com/package/react-functional-select)
+[![npm downloads](https://img.shields.io/npm/dt/react-functional-select.svg?style=flat-square)](https://www.npmjs.com/package/react-functional-select)
+[![Issues](https://img.shields.io/github/issues/based-ghost/react-functional-select.svg?style=flat-square)](https://github.com/based-ghost/react-functional-select/issues)
+[![License](https://img.shields.io/badge/license-mit-red.svg?style=flat-square)](https://www.npmjs.com/package/react-functional-select)
+[![style: styled-components](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?style=flat-square)](https://github.com/styled-components/styled-components)
 
 # react-functional-select
 

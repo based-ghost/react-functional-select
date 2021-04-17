@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 
 /**
+ * useUpdateEffect hook
+ *
  * Run an effect only on updates.
  * Skip the first effect execution that occurrs after initial mount.
  */

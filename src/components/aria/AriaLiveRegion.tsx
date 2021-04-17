@@ -44,7 +44,7 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
     return null;
   }
 
-  // Message text for "aria-selection" SPAN
+  // Message contents for "aria-context" <span>
   const optionsMsg = ` ${optionCount} result(s) available${
     inputValue ? (' for search input ' + inputValue) : ''
   }.`;
@@ -58,19 +58,21 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
     ? `Focused option: ${label}${isDisabled ? ' - disabled' : ''}, ${index + 1} of ${optionCount}.`
     : '';
 
-  // Message text for "aria-context" SPAN
+  // Message contents for "aria-selection" <span>
   const labels = selectedOption.length ? selectedOption.map((x) => x.label).join(' ') : 'N/A';
-  const selectedOptionMsg = 'Selected option: ' + labels;
 
+  // Formatted messages for both <span>'s
+  const selectionMsg = 'Selected option: ' + labels;
+  const ariaContextMsg = `${focusedMsg} ${optionsMsg} ${menuMsg}`.trimStart();
 
   return (
     <A11yText
-      aria-atomic='false'
+      aria-atomic="false"
       aria-live={ariaLive}
-      aria-relevant='additions text'
+      aria-relevant="additions text"
     >
-      <span id={ARIA_LIVE_SELECTION_ID}>{selectedOptionMsg}</span>
-      <span id={ARIA_LIVE_CONTEXT_ID}>{focusedMsg + optionsMsg + menuMsg}</span>
+      <span id={ARIA_LIVE_SELECTION_ID}>{selectionMsg}</span>
+      <span id={ARIA_LIVE_CONTEXT_ID}>{ariaContextMsg}</span>
     </A11yText>
   );
 };

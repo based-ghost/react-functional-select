@@ -3,7 +3,6 @@ import MenuList from './MenuList';
 import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import { isArrayWithLength } from '../../utils';
-
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -55,25 +54,22 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     white-space: nowrap;
     text-overflow: ellipsis;
     -webkit-tap-highlight-color: transparent;
+	  padding: ${({ theme }) => theme.menu.option.padding};
+	  text-align: ${({ theme }) => theme.menu.option.textAlign};
 
-    ${({ theme: { menu: { option } } }) => css`
-      padding: ${option.padding};
-      text-align: ${option.textAlign};
+    &.${OPTION_FOCUSED_CLS},
+    &:hover:not(.${OPTION_DISABLED_CLS}):not(.${OPTION_SELECTED_CLS}) {
+      background-color: ${({ theme }) => theme.menu.option.focusedBgColor};
+    }
 
-      &.${OPTION_FOCUSED_CLS},
-      &:hover:not(.${OPTION_DISABLED_CLS}):not(.${OPTION_SELECTED_CLS}) {
-        background-color: ${option.focusedBgColor};
-      }
+    &.${OPTION_SELECTED_CLS} {
+      color: ${({ theme }) => theme.menu.option.selectedColor};
+      background-color: ${({ theme }) => theme.menu.option.selectedBgColor};
+    }
 
-      &.${OPTION_SELECTED_CLS} {
-        color: ${option.selectedColor};
-        background-color: ${option.selectedBgColor};
-      }
-
-      &.${OPTION_DISABLED_CLS} {
-        opacity: 0.35;
-      }
-    `}
+    &.${OPTION_DISABLED_CLS} {
+      opacity: 0.35;
+    }
   }
 `;
 
