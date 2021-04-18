@@ -417,39 +417,39 @@ const Select = forwardRef<SelectRef, SelectProps>((
     }
   }, [isMulti, closeMenuOnSelect, removeSelectedOption, blurInputOnSelect]);
 
+  const hasSelectedOptions = isArrayWithLength(selectedOption);
+
   /**
    * useImperativeHandle.
    * Exposed API methods/properties available on a ref instance of this Select.tsx component.
+   * Dependency list passed as the third param to re-create the handle when one of them updates.
    */
-  useImperativeHandle(ref, () => ({
-    empty: !isArrayWithLength(selectedOption),
-    menuOpen,
-    blur: blurInput,
-    focus: focusInput,
-    clearValue: () => {
-      if (selectOption.length)
+  useImperativeHandle(
+    ref,
+    () => ({
+      empty: !hasSelectedOptions,
+      menuOpen: menuOpenRef.current,
+      blur: blurInput,
+      focus: focusInput,
+      clearValue: () => {
         setSelectedOption(EMPTY_ARRAY);
-      if (focusedOption.data)
         setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    },
-    setValue: (option?: OptionData) => {
-      const normalizedOptions = normalizeValue(
-        option,
-        getOptionValueFn,
-        getOptionLabelFn
-      );
-
-      setSelectedOption(normalizedOptions);
-    },
-    toggleMenu: (state?: boolean) => {
-      if (state === true || (state === undefined && !menuOpen)) {
-        !isFocused && focusInput();
-        openMenuAndFocusOption(OptionIndexEnum.FIRST);
-      } else {
-        blurInput();
+      },
+      setValue: (option?: OptionData) => {
+        const normalizedOptions = normalizeValue(option, getOptionValueFn, getOptionLabelFn);
+        setSelectedOption(normalizedOptions);
+      },
+      toggleMenu: (state?: boolean) => {
+        if (state === true || (state === undefined && !menuOpenRef.current)) {
+          focusInput();
+          openMenuAndFocusOption(OptionIndexEnum.FIRST);
+        } else {
+          blurInput();
+        }
       }
-    }
-  }));
+    }),
+    [hasSelectedOptions, getOptionValueFn, getOptionLabelFn, openMenuAndFocusOption]
+  );
 
   /**
    * useMountEffect:
@@ -543,7 +543,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   // Only Multiselect mode supports value focusing
   const focusValueOnArrowKey = (direction: ValueIndexEnum): void => {
-    if (!isArrayWithLength(selectedOption)) return;
+    if (!hasSelectedOptions) return;
 
     let nextFocusedIdx = -1;
     const lastValueIdx = selectedOption.length - 1;
@@ -662,7 +662,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
           setFocusedMultiValue(nexFocusedMultiValue);
         } else {
           if (!backspaceClearsValue) return;
-          if (!isArrayWithLength(selectedOption)) break;
+          if (!hasSelectedOptions) break;
 
           if (isMulti && !renderMultiOptions) {
             const { value } = selectedOption[selectedOption.length - 1];
@@ -735,8 +735,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, []);
 
   const renderMenu = !lazyLoadMenu || (lazyLoadMenu && menuOpen);
+  const showClear = !!(isClearable && !isDisabled && hasSelectedOptions);
   const inputReadOnly = isDisabled || !isSearchable || !!focusedMultiValue;
-  const showClear = !!(isClearable && !isDisabled && isArrayWithLength(selectedOption));
   const handleOnCaretMouseDownOrNoop = (!isDisabled && !openMenuOnClick) ? handleOnCaretMouseDown : undefined;
 
   return (
@@ -779,7 +779,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
               onFocus={handleOnInputFocus}
               onChange={handleOnInputChange}
               ariaLabelledBy={ariaLabelledBy}
-              selectedOption={selectedOption}
+              hasSelectedOptions={hasSelectedOptions}
             />
           </ValueWrapper>
           <IndicatorIcons

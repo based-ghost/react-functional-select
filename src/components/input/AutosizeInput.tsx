@@ -1,10 +1,9 @@
 import React, { memo, useRef, useState, Fragment, forwardRef } from 'react';
 import styled from 'styled-components';
 import { useUpdateEffect } from '../../hooks';
+import { IS_MICROSOFT_BROWSER } from '../../utils';
 import { AUTOSIZE_INPUT_ATTRS } from '../../constants';
-import { isArrayWithLength, IS_MICROSOFT_BROWSER } from '../../utils';
 
-import type { SelectedOption } from '../../types';
 import type { Ref, FormEventHandler, FocusEventHandler } from 'react';
 
 export type AutosizeInputProps = Readonly<{
@@ -14,7 +13,7 @@ export type AutosizeInputProps = Readonly<{
   inputValue: string;
   required?: boolean;
   ariaLabelledBy?: string;
-  selectedOption: SelectedOption[];
+  hasSelectedOptions: boolean;
   onBlur: FocusEventHandler<HTMLInputElement>;
   onFocus: FocusEventHandler<HTMLInputElement>;
   onChange: FormEventHandler<HTMLInputElement>;
@@ -73,13 +72,13 @@ const AutosizeInput = memo(
       ariaLabel,
       inputValue,
       ariaLabelledBy,
-      selectedOption
+      hasSelectedOptions
     },
     ref: Ref<HTMLInputElement>
   ) => {
     const sizerRef = useRef<HTMLDivElement | null>(null);
     const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
-    const isInvalid = !!required && !isArrayWithLength(selectedOption);
+    const isInvalid = !!required && !hasSelectedOptions;
 
     useUpdateEffect(() => {
       if (sizerRef.current) {

@@ -1,8 +1,8 @@
 import { ThemeTestHOC } from './helpers';
 import userEvent from '@testing-library/user-event';
 import { render, fireEvent } from '@testing-library/react';
+import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants';
 import AutosizeInput, { AutosizeInputProps } from '../src/components/input/AutosizeInput';
-import { EMPTY_ARRAY, AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants';
 
 import type { RenderResult } from '@testing-library/react';
 
@@ -29,7 +29,7 @@ const createAutosizeInputProps = () => {
     onBlur: onBlurSpy,
     onFocus: onFocusSpy,
     onChange: onChangeSpy,
-    selectedOption: EMPTY_ARRAY
+    hasSelectedOptions: false
   };
 
   return {
