@@ -21,6 +21,7 @@ const _clearIconFocusStyle  = css`
 const MultiValueWrapper = styled.div`
   min-width: 0;
   display: flex;
+  will-change: opacity;
 
   ${({ theme: { multiValue } }) => css`
     margin: ${multiValue.margin};

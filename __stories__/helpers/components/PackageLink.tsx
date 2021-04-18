@@ -19,6 +19,7 @@ const Link = styled.a`
   text-align: center;
   text-decoration: none;
   display: inline-block;
+  will-change: transform;
   background-color: transparent;
   transition: transform 0.25s ease-out;
   transform: translate3d(0px, 0px, 0px);

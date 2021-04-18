@@ -32,6 +32,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   z-index: 999;
   cursor: default;
   position: absolute;
+  will-change: opacity, box-shadow, display;
 
   ${({ menuTop, menuOpen, hideNoOptionsMsg, theme: { menu } }) => css`
     width: ${menu.width};
@@ -56,6 +57,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     -webkit-tap-highlight-color: transparent;
 	  padding: ${({ theme }) => theme.menu.option.padding};
 	  text-align: ${({ theme }) => theme.menu.option.textAlign};
+    will-change: top, opacity, color, background-color;
 
     &.${OPTION_FOCUSED_CLS},
     &:hover:not(.${OPTION_DISABLED_CLS}):not(.${OPTION_SELECTED_CLS}) {

@@ -192,6 +192,7 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
   align-items: center;
   box-sizing: border-box;
   justify-content: space-between;
+  will-change: box-shadow, border-color;
 
   ${({ isDisabled, isFocused, isInvalid, theme: { control, color } }) => css`
     transition: ${control.transition};

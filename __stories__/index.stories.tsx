@@ -492,7 +492,9 @@ export const Events = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>Events trigger a toast notification (demo only)</Label>
+          <Label>
+            Events trigger a toast notification (demo only)
+          </Label>
           <Checkboxes>
             <Checkbox
               label='onOptionChange'
@@ -798,7 +800,10 @@ export const Advanced = () => {
   const renderOptionLabel = useCallback(
     (option: PackageOption): ReactNode => (
       <OptionContainer>
-        <ReactSvg {...REACT_SVG_PROPS} isDisabled={getIsOptionDisabled(option)}>
+        <ReactSvg
+          {...REACT_SVG_PROPS}
+          isDisabled={getIsOptionDisabled(option)}
+        >
           <path {...REACT_SVG_PATH_PROPS} />
           <circle {...REACT_SVG_CIRCLE_PROPS} />
         </ReactSvg>
@@ -810,7 +815,10 @@ export const Advanced = () => {
 
   const customCaretIcon = useCallback(
     ({ menuOpen }): ReactNode => (
-      <ChevronDownSvg {...CHEVRON_SVG_PROPS} menuOpen={menuOpen}>
+      <ChevronDownSvg
+        menuOpen={menuOpen}
+        {...CHEVRON_SVG_PROPS}
+      >
         <path {...CHEVRON_DOWN_PATH_PROPS} />
       </ChevronDownSvg>
     ),
@@ -855,7 +863,9 @@ export const Advanced = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>JSX labels, custom caret icon, and disabled option</Label>
+          <Label>
+            JSX labels, custom caret icon, and disabled option
+          </Label>
         </CardHeader>
         <CardBody>
           <SelectContainer>
@@ -1001,7 +1011,9 @@ export const Async = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>Search debounced 500ms and mock HTTP call resolves after {delay}ms</Label>
+          <Label>
+            Search debounced 500ms and mock HTTP call resolves after {delay}ms
+          </Label>
         </CardHeader>
         <CardBody>
           <SelectContainer>

@@ -73,6 +73,7 @@ const CheckIcon = styled.i`
   border-width: 1.5px;
   box-sizing: border-box;
   border-radius: 0.0625rem;
+  will-change: border-color;
   background-color: transparent;
   border-color: rgba(0, 0, 0, 0.54);
   transition: border-color 0.365s ease;
@@ -88,6 +89,7 @@ const CheckIcon = styled.i`
     border-radius: 3px;
     transform-origin: left top;
     background-color: ${CHECK_COLOR};
+    will-change: opacity, height, transform;
     transition: opacity 0.365s ease, height 0s linear 0.365s;
   }
 

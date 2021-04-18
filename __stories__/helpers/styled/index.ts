@@ -184,6 +184,7 @@ export const Button = styled.button`
   background-color: #eaebec;
   padding: 0.375rem 0.75rem;
   -webkit-appearance: button;
+  will-change: color, background-color;
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
 
   :focus {
@@ -333,6 +334,7 @@ export const MenuPortalElement = styled.div<{ menuOpen: boolean; }>`
   min-height: 115px;
   position: relative;
   border-radius: 3px;
+  will-change: background-color;
   transition: background-color 0.2s ease-out;
   background-color: ${({ menuOpen }) => menuOpen ? 'white' : 'whitesmoke'};
 
@@ -373,6 +375,7 @@ export const ChevronDownSvg = styled.svg<{ menuOpen: boolean }>`
   width: 14px;
   height: 14px;
   fill: currentColor;
+  will-change: transform;
   transition: transform 0.25s ease-in-out;
   ${({ menuOpen }) => menuOpen && css`transform: rotate(180deg);`}
 `;
