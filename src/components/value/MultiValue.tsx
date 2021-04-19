@@ -12,7 +12,7 @@ export type MultiValueProps = SelectedOption & Readonly<{
   removeSelectedOption: (value?: ReactText) => void;
 }>;
 
-const _clearIconFocusStyle  = css`
+const CLEAR_ICON_FOCUS_STYLE  = css`
   z-index: 5000;
   transform: scale(1.26);
   color: ${({ theme }) => theme.multiValue.clear.focusColor};
@@ -21,7 +21,6 @@ const _clearIconFocusStyle  = css`
 const MultiValueWrapper = styled.div`
   min-width: 0;
   display: flex;
-  will-change: opacity;
 
   ${({ theme: { multiValue } }) => css`
     margin: ${multiValue.margin};
@@ -55,11 +54,11 @@ const Clear = styled.i<Pick<MultiValueProps, 'isFocused'>>`
     font-weight: ${clear.fontWeight};
 
     :hover {
-      ${_clearIconFocusStyle}
+      ${CLEAR_ICON_FOCUS_STYLE}
     }
   `}
 
-   ${({ isFocused }) => isFocused && _clearIconFocusStyle}
+   ${({ isFocused }) => isFocused && CLEAR_ICON_FOCUS_STYLE}
 `;
 
 const MultiValue = memo<MultiValueProps>(({

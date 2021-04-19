@@ -45,11 +45,11 @@ const IndicatorIcon = styled.div`
 `;
 
 const Caret = styled.div<Pick<IndicatorIconsProps, 'menuOpen' | 'isInvalid'>>`
+  will-change: transform, color;
   transition: ${({ theme }) => theme.icon.caret.transition};
   border-top: ${({ theme }) => theme.icon.caret.size} dashed;
   border-left: ${({ theme }) => theme.icon.caret.size} solid transparent;
   border-right: ${({ theme }) => theme.icon.caret.size} solid transparent;
-  will-change: transform, color;
 
   ${({ theme, menuOpen, isInvalid }) =>
     menuOpen &&
