@@ -53,7 +53,7 @@ export const DEFAULT_THEME: DefaultTheme = {
   menu: {
     padding: '0',
     width: '100%',
-    margin: '0.3rem 0',
+    margin: '0.35rem 0',
     borderRadius: '3px',
     backgroundColor: '#fff',
     animation: FADE_IN_ANIMATION_CSS,
