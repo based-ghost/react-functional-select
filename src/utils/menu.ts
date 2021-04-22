@@ -123,7 +123,8 @@ export const menuFitsBelowControl = (el: Element | null): boolean => {
 
   const scrollParent = getScrollParent(el);
   const { top, height } = el.getBoundingClientRect();
-  const spaceBelow = scrollParent.getBoundingClientRect().height - getScrollTop(scrollParent) - top;
+  const { height: scrollParentHeight } = scrollParent.getBoundingClientRect();
+  const spaceBelow = scrollParentHeight - getScrollTop(scrollParent) - top;
 
   return spaceBelow >= height;
 };
@@ -172,5 +173,10 @@ export const scrollMenuIntoViewOnOpen = (
   const marginBottom = parseInt(marginBottomStyle, 10);
   const scrollDown = bottom - viewInner + scrollTop + marginBottom;
 
-  smoothScrollTo(scrollParent, scrollDown, menuScrollDuration, handleOnMenuOpen);
+  smoothScrollTo(
+    scrollParent,
+    scrollDown,
+    menuScrollDuration,
+    handleOnMenuOpen
+  );
 };

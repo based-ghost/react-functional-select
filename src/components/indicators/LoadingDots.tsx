@@ -14,7 +14,6 @@ const StyledLoadingDots = styled.div`
   > div {
     border-radius: 100%;
     display: inline-block;
-    will-change: transform;
 
     ${({ theme: { loader } }) => css`
       width: ${loader.size};

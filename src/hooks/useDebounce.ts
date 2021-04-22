@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import useUpdateEffect from './useUpdateEffect';
 
 /**
  * useDebounce hook
@@ -9,7 +10,7 @@ import { useEffect, useState } from 'react';
 const useDebounce = <T>(value: T, delay: number = 0): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (delay <= 0) return;
 
     const handler = setTimeout(() => {

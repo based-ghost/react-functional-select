@@ -6,8 +6,6 @@ import type { FunctionComponent } from 'react';
 
 const ClearSvg = styled.svg`
   fill: currentColor;
-  will-change: opacity, color;
-
   ${({ theme }) => css`
     width: ${theme.icon.clear.width};
     height: ${theme.icon.clear.height};

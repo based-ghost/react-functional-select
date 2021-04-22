@@ -56,15 +56,16 @@ const Value = memo<ValueProps>(({
 }) => {
   // Do not apply Placeholder animation on initial render/mount of component
   const isFirstRender = useFirstRenderState();
+  const noSelectedOptions = !isArrayWithLength(selectedOption);
 
   if (
     inputValue &&
-    (!isMulti || (isMulti && (!isArrayWithLength(selectedOption) || renderMultiOptions)))
+    (!isMulti || (isMulti && (noSelectedOptions || renderMultiOptions)))
   ) {
     return null;
   }
 
-  if (!isArrayWithLength(selectedOption)) {
+  if (noSelectedOptions) {
     return (
       <Placeholder isFirstRender={isFirstRender}>
         {placeholder}

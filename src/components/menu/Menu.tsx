@@ -32,7 +32,6 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   z-index: 999;
   cursor: default;
   position: absolute;
-  will-change: opacity;
 
   ${({ menuTop, menuOpen, hideNoOptionsMsg, theme: { menu } }) => css`
     width: ${menu.width};

@@ -159,7 +159,7 @@ export type SelectProps = Readonly<{
   getIsOptionDisabled?: (data: OptionData) => boolean;
   getFilterOptionString?: (option: MenuOption) => string;
   renderMultiOptions?: (params: MultiParams) => ReactNode;
-  onKeyDown?: (e: KeyboardEvent<HTMLDivElement>, input?: string, focusedOption?: FocusedOption) => any;
+  onKeyDown?: (e: KeyboardEvent<Element>, input?: string, focusedOption?: FocusedOption) => any;
 }>;
 
 interface ControlWrapperProps extends Pick<SelectProps, 'isInvalid' | 'isDisabled'> {
@@ -373,6 +373,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const focusInput = (): void => inputRef.current?.focus();
   const scrollToItemIndex = (index: number): void => listRef.current?.scrollToItem(index);
 
+  const hasSelectedOptions = isArrayWithLength(selectedOption);
+  const blurInputOnSelectOrDefault = isBoolean(blurInputOnSelect) ? blurInputOnSelect : IS_TOUCH_DEVICE;
+
   const openMenuAndFocusOption = useCallback((position: OptionIndexEnum): void => {
     if (!isArrayWithLength(menuOptions)) {
       !menuOpenRef.current && setMenuOpen(true);
@@ -405,20 +408,13 @@ const Select = forwardRef<SelectRef, SelectProps>((
       setSelectedOption((prev) => !isMulti ? [option] : [...prev, option]);
     }
 
-    // Use 'blurInputOnSelect' if defined, otherwise evaluate to true if current device is touch-device
-    const blurControl = isBoolean(blurInputOnSelect)
-      ? blurInputOnSelect
-      : IS_TOUCH_DEVICE;
-
-    if (blurControl) {
+    if (blurInputOnSelectOrDefault) {
       blurInput();
     } else if (closeMenuOnSelect) {
       setMenuOpen(false);
       setInputValue('');
     }
-  }, [isMulti, closeMenuOnSelect, removeSelectedOption, blurInputOnSelect]);
-
-  const hasSelectedOptions = isArrayWithLength(selectedOption);
+  }, [isMulti, closeMenuOnSelect, removeSelectedOption, blurInputOnSelectOrDefault]);
 
   /**
    * useImperativeHandle.
@@ -593,7 +589,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     menuOpen ? focusOptionOnArrowKey(downUpIndex) : openMenuAndFocusOption(posIndex);
   };
 
-  const handleOnKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
+  const handleOnKeyDown = (e: KeyboardEvent<HTMLElement>): void => {
     if (isDisabled) return;
 
     if (onKeyDown) {
@@ -610,10 +606,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
       case 'ArrowLeft':
       case 'ArrowRight': {
         if (!isMulti || inputValue || renderMultiOptions) return;
-
         const leftRightIndex = e.key === 'ArrowLeft' ? ValueIndexEnum.PREVIOUS : ValueIndexEnum.NEXT;
         focusValueOnArrowKey(leftRightIndex);
-
         break;
       }
       // Handle spacebar keydown events
@@ -640,7 +634,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
           setMenuOpen(false);
           setInputValue('');
         }
-
         break;
       }
       case 'Tab': {
@@ -655,9 +648,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
         if (focusedMultiValue) {
           const clearFocusedIndex = selectedOption.findIndex((x) => x.value === focusedMultiValue);
 
-          const nexFocusedMultiValue = (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
-            ? selectedOption[clearFocusedIndex + 1].value!
-            : null;
+          const nexFocusedMultiValue =
+            (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
+              ? selectedOption[clearFocusedIndex + 1].value!
+              : null;
 
           removeSelectedOption(focusedMultiValue);
           setFocusedMultiValue(nexFocusedMultiValue);
@@ -682,23 +676,24 @@ const Select = forwardRef<SelectRef, SelectProps>((
     e.preventDefault();
   };
 
-  const handleOnControlMouseDown = (e: MouseOrTouchEvent<HTMLDivElement>): void => {
+  const handleOnControlMouseDown = (e: MouseOrTouchEvent<HTMLElement>): void => {
     if (isDisabled) return;
     if (!isFocused) focusInput();
 
-    const targetIsNotInput = e.currentTarget.tagName !== 'INPUT';
+    const evtTarget = e.target as HTMLElement;
+    const isNotInput = evtTarget.nodeName !== 'INPUT';
 
     if (!menuOpen) {
       openMenuOnClick && openMenuAndFocusOption(OptionIndexEnum.FIRST);
-    } else if (targetIsNotInput) {
+    } else if (isNotInput) {
       menuOpen && setMenuOpen(false);
       inputValue && setInputValue('');
     }
 
-    if (targetIsNotInput) e.preventDefault();
+    if (isNotInput) e.preventDefault();
   };
 
-  const handleOnMenuMouseDown = (e: MouseOrTouchEvent<HTMLDivElement>): void => {
+  const handleOnMenuMouseDown = (e: MouseOrTouchEvent<HTMLElement>): void => {
     suppressEvent(e);
     focusInput();
   };
@@ -723,13 +718,13 @@ const Select = forwardRef<SelectRef, SelectProps>((
     !menuOpenRef.current && setMenuOpen(true);
   }, [onInputChange]);
 
-  const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
+  const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
     focusInput();
     menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
     suppressEvent(e);
   }, [openMenuAndFocusOption]);
 
-  const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLDivElement>): void => {
+  const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
     focusInput();
     setSelectedOption(EMPTY_ARRAY);
     suppressEvent(e);

@@ -22,10 +22,7 @@ export type OptionFilterCallback = (option: MenuOption) => string;
 export type OptionDisabledCallback = (data: OptionData) => boolean;
 
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
-export type MouseOrTouchEventHandler = EventHandler<MouseOrTouchEvent<Element>>;
-
-export type IndicatorIconEvent<T = Element> = MouseOrTouchEvent<T> | KeyboardEvent<T>;
-export type IndicatorIconEventHandler = EventHandler<IndicatorIconEvent<Element>>;
+export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
 
 export type TestableElement = {
   'data-testid'?: string;
