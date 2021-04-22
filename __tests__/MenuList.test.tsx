@@ -1,11 +1,18 @@
 import { ThemeTestHOC } from './helpers';
 import { render } from '@testing-library/react';
+import MenuList from '../src/components/Menu/MenuList';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
-import MenuList, { MenuListProps } from '../src/components/menu/MenuList';
-import { MENU_ITEM_SIZE_DEFAULT, MENU_MAX_HEIGHT_DEFAULT, LOADING_MSG_DEFAULT, NO_OPTIONS_MSG_DEFAULT, FOCUSED_OPTION_DEFAULT } from '../src/constants';
+import {
+  MENU_ITEM_SIZE_DEFAULT,
+  MENU_MAX_HEIGHT_DEFAULT,
+  LOADING_MSG_DEFAULT,
+  NO_OPTIONS_MSG_DEFAULT,
+  FOCUSED_OPTION_DEFAULT
+} from '../src/constants';
 
 import type { MenuOption } from '../src';
 import type { RenderResult } from '@testing-library/react';
+import type { MenuListProps } from '../src/components/Menu/MenuList';
 
 // ============================================
 // Helper functions for Menu component

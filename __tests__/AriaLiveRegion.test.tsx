@@ -1,10 +1,11 @@
 import { render } from '@testing-library/react';
+import AriaLiveRegion from '../src/components/AriaLiveRegion';
 import { getSelectedOptionMulti, ThemeTestHOC } from './helpers';
 import { ARIA_LIVE_CONTEXT_ID, ARIA_LIVE_SELECTION_ID } from '../src/constants';
-import AriaLiveRegion, { AriaLiveRegionProps } from '../src/components/aria/AriaLiveRegion';
 
 import type { RenderResult } from '@testing-library/react';
 import type { FocusedOption, SelectedOption } from '../src/types';
+import type { AriaLiveRegionProps } from '../src/components/AriaLiveRegion';
 
 // ============================================
 // Helper functions for AriaLiveRegion component

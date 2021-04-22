@@ -44,26 +44,25 @@ const IndicatorIcon = styled.div`
   ${({ theme }) => theme.icon.css}
 `;
 
-const Caret = styled.div<Pick<IndicatorIconsProps, 'menuOpen' | 'isInvalid'>>`
-  transition: ${({ theme }) => theme.icon.caret.transition};
-  border-top: ${({ theme }) => theme.icon.caret.size} dashed;
-  border-left: ${({ theme }) => theme.icon.caret.size} solid transparent;
-  border-right: ${({ theme }) => theme.icon.caret.size} solid transparent;
-
-  ${({ theme, menuOpen, isInvalid }) =>
-    menuOpen &&
-    css`
-      transform: rotate(180deg);
-      color: ${isInvalid ? theme.color.danger : theme.color.caretActive || theme.color.primary};
-    `}
-`;
-
 const Separator = styled.div`
   width: 1px;
   margin: 0.5rem 0;
   align-self: stretch;
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.color.iconSeparator || theme.color.border};
+`;
+
+const Caret = styled.div<Pick<IndicatorIconsProps, 'menuOpen' | 'isInvalid'>>`
+  transition: ${({ theme }) => theme.icon.caret.transition};
+  border-top: ${({ theme }) => theme.icon.caret.size} dashed;
+  border-left: ${({ theme }) => theme.icon.caret.size} solid transparent;
+  border-right: ${({ theme }) => theme.icon.caret.size} solid transparent;
+  ${({ theme, menuOpen, isInvalid }) =>
+    menuOpen &&
+    css`
+      transform: rotate(180deg);
+      color: ${isInvalid ? theme.color.danger : theme.color.caretActive || theme.color.primary};
+    `}
 `;
 
 const IndicatorIcons = memo<IndicatorIconsProps>(({
@@ -96,7 +95,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
         </IndicatorIcon>
       )}
       {isLoading && (loadingNode || <LoadingDots />)}
-      <Separator />
+      <Separator role="none" />
       <IndicatorIcon
         onTouchEnd={onCaretMouseDown}
         onMouseDown={onCaretMouseDown}

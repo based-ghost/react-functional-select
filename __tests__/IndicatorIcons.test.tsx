@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { ThemeTestHOC } from './helpers';
 import { render, fireEvent } from '@testing-library/react';
 import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/constants';
-import IndicatorIcons, { IndicatorIconsProps } from '../src/components/indicators/IndicatorIcons';
+import IndicatorIcons, { IndicatorIconsProps } from '../src/components/IndicatorIcons';
 
 import type { RenderResult } from '@testing-library/react';
 

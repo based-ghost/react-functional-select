@@ -21,14 +21,12 @@ const CLEAR_ICON_FOCUS_STYLE  = css`
 const MultiValueWrapper = styled.div`
   min-width: 0;
   display: flex;
-
   ${({ theme: { multiValue } }) => css`
     margin: ${multiValue.margin};
     animation: ${multiValue.animation};
     border-radius: ${multiValue.borderRadius};
     background-color: ${multiValue.backgroundColor};
   `}
-
   ${({ theme }) => theme.multiValue.css}
 `;
 
@@ -44,7 +42,6 @@ const Label = styled.div`
 const Clear = styled.i<Pick<MultiValueProps, 'isFocused'>>`
   display: flex;
   font-style: inherit;
-
   ${({ theme: { multiValue: { clear } } }) => css`
     color: ${clear.color};
     padding: ${clear.padding};
@@ -57,7 +54,6 @@ const Clear = styled.i<Pick<MultiValueProps, 'isFocused'>>`
       ${CLEAR_ICON_FOCUS_STYLE}
     }
   `}
-
    ${({ isFocused }) => isFocused && CLEAR_ICON_FOCUS_STYLE}
 `;
 

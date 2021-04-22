@@ -22,11 +22,12 @@ const A11yText = styled.span`
   padding: 0;
   width: 1px;
   height: 1px;
+  margin: -1px;
   z-index: 9999;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  clip: rect(1px, 1px, 1px, 1px);
+  clip: rect(0, 0, 0, 0);
 `;
 
 const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
@@ -45,18 +46,13 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
   }
 
   // Message contents for "aria-context" <span>
-  const optionsMsg = ` ${optionCount} result(s) available${
-    inputValue ? (' for search input ' + inputValue) : ''
-  }.`;
-
   const menuMsg = menuOpen
     ? 'Use Up and Down arrow keys to choose options, press Enter or Tab to select the currently focused option, press Escape to close the menu.'
     : `${ariaLabel} is focused${isSearchable ? ', type to filter options' : ''}, press Down arrow key to open the menu.`;
 
   const { index, value, label, isDisabled } = focusedOption;
-  const focusedMsg = value
-    ? `Focused option: ${label}${isDisabled ? ' - disabled' : ''}, ${index + 1} of ${optionCount}.`
-    : '';
+  const focusedMsg = (value && !isDisabled) ? `Option ${label} is focused, ${index + 1} of ${optionCount}.` : '';
+  const optionsMsg = `${optionCount} option(s) available${inputValue ? (' for search ' + inputValue) : ''}.`;
 
   // Message contents for "aria-selection" <span>
   const labels = selectedOption.length ? selectedOption.map((x) => x.label).join(' ') : 'N/A';

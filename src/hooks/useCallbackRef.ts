@@ -1,27 +1,28 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
-import type { MutableRefObject } from 'react';
+import type { CallbackFunction } from '../types';
 
 /**
  * useCallbackRef hook
  *
- * Stores the callback value to a ref object and exports that ref.
- * This is useful for passed in callback props that are referenced frequently referenced in deps list.
+ * A custom hook that converts a callback to a ref to avoid triggering re-renders
+ * ..when passed as a prop or avoid re-executing effects when passed as a dependency
  *
  * @param callback The callback to write to a ref object
- * @param defaultCallback The default value of the callback for when "callback" is undefined
  */
-const useCallbackRef = <T>(
-  callback?: T,
-  defaultCallback?: T
-): MutableRefObject<T | undefined> => {
-  const callbackRef = useRef<T | undefined>(callback || defaultCallback);
+const useCallbackRef = <T extends CallbackFunction>(callback: T | undefined): T => {
+  const callbackRef = useRef(callback);
 
   useEffect(() => {
-    callbackRef.current = callback || defaultCallback;
-  }, [callback, defaultCallback]);
+    callbackRef.current = callback;
+  });
 
-  return callbackRef;
+  return useCallback(
+    ((...args) => {
+      return callbackRef.current?.(...args);
+    }) as T,
+    []
+  );
 };
 
 export default useCallbackRef;

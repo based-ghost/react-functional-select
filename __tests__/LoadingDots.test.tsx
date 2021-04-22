@@ -1,6 +1,6 @@
 import { ThemeTestHOC } from './helpers';
 import { render } from '@testing-library/react';
-import LoadingDots from '../src/components/indicators/LoadingDots';
+import LoadingDots from '../src/components/IndicatorIcons/LoadingDots';
 
 import type { RenderResult } from '@testing-library/react';
 

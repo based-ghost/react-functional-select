@@ -3,7 +3,6 @@ import { EMPTY_ARRAY, FilterMatchEnum } from '../constants';
 import { isBoolean, trimAndFormatFilterStr } from '../utils';
 
 import type { MenuOption } from '../Select';
-import type { MutableRefObject } from 'react';
 import type {
   OptionData,
   SelectedOption,
@@ -26,8 +25,8 @@ const useMenuOptions = (
   selectedOption: SelectedOption[],
   getOptionValue: OptionValueCallback,
   getOptionLabel: OptionLabelCallback,
-  getIsOptionDisabledRef: MutableRefObject<OptionDisabledCallback>,
-  getFilterOptionStringRef: MutableRefObject<OptionFilterCallback>,
+  getIsOptionDisabledRef: OptionDisabledCallback,
+  getFilterOptionStringRef: OptionFilterCallback,
   filterIgnoreCase: boolean = false,
   filterIgnoreAccents: boolean = false,
   isMulti: boolean = false,
@@ -41,16 +40,15 @@ const useMenuOptions = (
   const hideSelectedOptionsOrDefault = isBoolean(hideSelectedOptions) ? hideSelectedOptions : isMulti;
 
   useEffect(() => {
-    const { current: getIsOptionDisabled } = getIsOptionDisabledRef;
-    const { current: getFilterOptionStr } = getFilterOptionStringRef;
+    const isFilterMatchAny = filterMatchFrom === FilterMatchEnum.ANY;
     const normalizedSearch = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
     const selectedHash = selectedOption.length ? new Set(selectedOption.map((x) => x.value)) : undefined;
 
     const isOptionFilterMatch = (option: MenuOption): boolean => {
-      const optionStr = getFilterOptionStr(option);
+      const optionStr = getFilterOptionStringRef(option);
       const normalizedOptionLabel = trimAndFormatFilterStr(optionStr, filterIgnoreCase, filterIgnoreAccents);
 
-      return filterMatchFrom === FilterMatchEnum.ANY
+      return isFilterMatchAny
         ? normalizedOptionLabel.indexOf(normalizedSearch) > -1
         : normalizedOptionLabel.substr(0, normalizedSearch.length) === normalizedSearch;
     };
@@ -63,7 +61,7 @@ const useMenuOptions = (
         data,
         value,
         label,
-        ...(getIsOptionDisabled(data) && { isDisabled: true }),
+        ...(getIsOptionDisabledRef(data) && { isDisabled: true }),
         ...(selectedHash?.has(value) && { isSelected: true })
       };
 
@@ -77,11 +75,14 @@ const useMenuOptions = (
       return menuOption;
     };
 
-    const nextMenuOptions = options.reduce((acc: MenuOption[], option: OptionData) => {
-      const menuOption = parseMenuOption(option);
-      menuOption && acc.push(menuOption);
-      return acc;
-    }, []);
+    const nextMenuOptions = options.reduce(
+      (acc: MenuOption[], option: OptionData) => {
+        const menuOption = parseMenuOption(option);
+        menuOption && acc.push(menuOption);
+        return acc;
+      },
+      []
+    );
 
     setMenuOptions(nextMenuOptions);
   }, [

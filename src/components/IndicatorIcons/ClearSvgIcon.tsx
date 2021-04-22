@@ -17,6 +17,7 @@ const ClearSvg = styled.svg`
 const ClearSvgIcon: FunctionComponent = () => (
   <ClearSvg
     aria-hidden
+    focusable="false"
     viewBox="0 0 14 16"
     className={CLEAR_ICON_CLS}
   >

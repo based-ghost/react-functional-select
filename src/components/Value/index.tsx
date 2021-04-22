@@ -8,10 +8,6 @@ import type { MultiParams } from '../../Select';
 import type { ReactNode, ReactText } from 'react';
 import type { SelectedOption, RenderLabelCallback } from '../../types';
 
-type PlaceholderProps = Readonly<{
-  isFirstRender: boolean;
-}>;
-
 export type ValueProps = Readonly<{
   isMulti?: boolean;
   inputValue: string;
@@ -38,7 +34,7 @@ const SingleValue = styled.div`
   max-width: calc(100% - 0.5rem);
 `;
 
-const Placeholder = styled.div<PlaceholderProps>`
+const Placeholder = styled.div<{ isFirstRender: boolean }>`
   ${SINGLE_VALUE_BASE_STYLE}
   color: ${({ theme }) => theme.color.placeholder};
   ${({ theme, isFirstRender }) => !isFirstRender && css`animation: ${theme.placeholder.animation};`}
@@ -86,15 +82,15 @@ const Value = memo<ValueProps>(({
       {renderMultiOptions
         ? renderMultiOptions({ renderOptionLabel, selected: selectedOption })
         : selectedOption.map(({ data, value }) => (
-            <MultiValue
-              key={value}
-              data={data}
-              value={value}
-              renderOptionLabel={renderOptionLabel}
-              isFocused={value === focusedMultiValue}
-              removeSelectedOption={removeSelectedOption}
-            />
-          ))}
+          <MultiValue
+            key={value}
+            data={data}
+            value={value}
+            renderOptionLabel={renderOptionLabel}
+            isFocused={value === focusedMultiValue}
+            removeSelectedOption={removeSelectedOption}
+          />
+        ))}
     </Fragment>
   );
 });

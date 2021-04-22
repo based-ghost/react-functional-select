@@ -3,8 +3,8 @@ import { MenuPositionEnum } from '../constants';
 import useUpdateEffect from './useUpdateEffect';
 import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
 
+import type { RefObject } from 'react';
 import type { CallbackFunction } from '../types';
-import type { RefObject, MutableRefObject } from 'react';
 
 /**
  * useMenuPositioner hook
@@ -24,8 +24,8 @@ const useMenuPositioner = (
   menuHeightDefault: number,
   menuOptionsLength: number,
   isMenuPortaled: boolean,
-  onMenuOpenRef: MutableRefObject<CallbackFunction | undefined>,
-  onMenuCloseRef: MutableRefObject<CallbackFunction | undefined>,
+  onMenuOpenRef: CallbackFunction,
+  onMenuCloseRef: CallbackFunction,
   menuScrollDuration?: number,
   scrollMenuIntoView?: boolean
 ): [string | undefined, number] => {
@@ -50,7 +50,7 @@ const useMenuPositioner = (
   useUpdateEffect(() => {
     if (menuOpen) {
       const handleOnMenuOpen = (availableSpace?: number): void => {
-        onMenuOpenRef.current?.();
+        onMenuOpenRef();
         if (availableSpace) {
           resetMenuHeightRef.current = true;
           setMenuHeight(availableSpace);
@@ -66,7 +66,7 @@ const useMenuPositioner = (
           )
         : handleOnMenuOpen();
     } else {
-      onMenuCloseRef.current?.();
+      onMenuCloseRef();
       if (resetMenuHeightRef.current) {
         resetMenuHeightRef.current = false;
         setMenuHeight(menuHeightDefault);

@@ -35,7 +35,7 @@ const SizerDiv = styled.div`
   ${({ theme }) => theme.input.css}
 `;
 
-const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS)<{ isInvalid: boolean }>`
+const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS) <{ isInvalid: boolean }>`
   border: 0;
   outline: 0;
   padding: 0;

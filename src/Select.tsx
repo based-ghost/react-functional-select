@@ -5,11 +5,11 @@ import React, {
   useEffect,
   forwardRef,
   useCallback,
-  MutableRefObject,
   useImperativeHandle
 } from 'react';
 import {
   isBoolean,
+  isFunction,
   mergeThemes,
   suppressEvent,
   normalizeValue,
@@ -69,8 +69,6 @@ import type {
   AriaLiveAttribute,
   OptionLabelCallback,
   OptionValueCallback,
-  OptionFilterCallback,
-  OptionDisabledCallback,
   RenderLabelCallback
 } from './types';
 
@@ -294,6 +292,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const menuOpenRef = useRef<boolean>(false);
   const prevMenuOptionsLength = useRef<number>();
   const onChangeEventValue = useRef<boolean>(false);
+  const onSearchChangeIsFunc = useRef<boolean>(isFunction(onSearchChange));
+  const onOptionChangeIsFunc = useRef<boolean>(isFunction(onOptionChange));
 
   // DOM element refs
   const listRef = useRef<FixedSizeList | null>(null);
@@ -318,8 +318,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const onSearchChangeRef = useCallbackRef(onSearchChange);
   const onOptionChangeRef = useCallbackRef(onOptionChange);
 
-  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled, GET_OPTION_DISABLED_DEFAULT);
-  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString, GET_OPTION_FILTER_DEFAULT);
+  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || GET_OPTION_DISABLED_DEFAULT);
+  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || GET_OPTION_FILTER_DEFAULT);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
   const getOptionLabelFn = useMemo<OptionLabelCallback>(() => getOptionLabel || GET_OPTION_LABEL_DEFAULT, [getOptionLabel]);
@@ -344,8 +344,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
     selectedOption,
     getOptionValueFn,
     getOptionLabelFn,
-    getIsOptionDisabledRef as MutableRefObject<OptionDisabledCallback>,
-    getFilterOptionStringRef as MutableRefObject<OptionFilterCallback>,
+    getIsOptionDisabledRef,
+    getFilterOptionStringRef,
     filterIgnoreCase,
     filterIgnoreAccents,
     isMulti,
@@ -373,6 +373,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const focusInput = (): void => inputRef.current?.focus();
   const scrollToItemIndex = (index: number): void => listRef.current?.scrollToItem(index);
 
+  // Local boolean flags based on component props
   const hasSelectedOptions = isArrayWithLength(selectedOption);
   const blurInputOnSelectOrDefault = isBoolean(blurInputOnSelect) ? blurInputOnSelect : IS_TOUCH_DEVICE;
 
@@ -465,6 +466,15 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [menuOpen]);
 
   /**
+   * Execute every render - these ref boolean flags are used to determine if functions
+   * ..are defined inside of a callback wrapper returned from 'useCallbackRef' custom hook
+   */
+  useEffect(() => {
+    onSearchChangeIsFunc.current = isFunction(onSearchChange);
+    onOptionChangeIsFunc.current = isFunction(onOptionChange);
+  });
+
+  /**
    * If control recieves focus & openMenuOnFocus = true, open menu
    */
   useEffect(() => {
@@ -478,31 +488,31 @@ const Select = forwardRef<SelectRef, SelectProps>((
    * updates check if onChangeEventValue ref is set true, which indicates the inputValue change was triggered by input change event
    */
   useEffect(() => {
-    const { current: onSearchFn } = onSearchChangeRef;
+    const { current: isDefinedFunc } = onSearchChangeIsFunc;
 
-    if (onSearchFn && onChangeEventValue.current) {
+    if (isDefinedFunc && onChangeEventValue.current) {
       onChangeEventValue.current = false;
-      onSearchFn(debouncedInputValue);
+      onSearchChangeRef(debouncedInputValue);
     }
-  }, [debouncedInputValue]);
+  }, [onSearchChangeRef, debouncedInputValue]);
 
   /**
    * useUpdateEffect:
    * Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
    */
   useUpdateEffect(() => {
-    const { current: onChangeFn } = onOptionChangeRef;
+    const { current: isDefinedFunc } = onOptionChangeIsFunc;
 
-    if (onChangeFn) {
+    if (isDefinedFunc) {
       const normalizedOptionValue = isMulti
         ? selectedOption.map((x) => x.data)
         : isArrayWithLength(selectedOption)
           ? selectedOption[0].data
           : null;
 
-      onChangeFn(normalizedOptionValue);
+      onOptionChangeRef(normalizedOptionValue);
     }
-  }, [isMulti, selectedOption]);
+  }, [onOptionChangeRef, isMulti, selectedOption]);
 
   /**
    * useUpdateEffect:
