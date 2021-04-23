@@ -4,17 +4,13 @@ const OVERFLOW_REG_EXP = /(auto|scroll)/;
 
 /**
  * @private
+ *
  * @param c: amount of change
  * @param d: duration
  * @param s: initial value (start)
  * @param t: time (elapsed)
  */
-function easeOutCubic(
-  c: number,
-  d: number,
-  s: number,
-  t: number
-): number {
+function easeOutCubic(c: number, d: number, s: number, t: number): number {
   return c * ((t = t / d - 1) * t * t + 1) + s;
 }
 

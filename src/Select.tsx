@@ -32,9 +32,7 @@ import {
   MENU_MAX_HEIGHT_DEFAULT,
   CONTROL_CONTAINER_TESTID,
   GET_OPTION_LABEL_DEFAULT,
-  GET_OPTION_VALUE_DEFAULT,
-  GET_OPTION_FILTER_DEFAULT,
-  GET_OPTION_DISABLED_DEFAULT
+  GET_OPTION_VALUE_DEFAULT
 } from './constants';
 import {
   useDebounce,
@@ -301,7 +299,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const inputRef = useRef<HTMLInputElement | null>(null);
   const controlRef = useRef<HTMLDivElement | null>(null);
 
-  // Stateful values
+  // Local state values
   const [inputValue, setInputValue] = useState<string>('');
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -310,16 +308,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   // Memoized DefaultTheme object for styled-components ThemeProvider
   const theme = useMemo<DefaultTheme>(() => mergeThemes(themeConfig), [themeConfig]);
-
-  // Write certain callback props to ref objects. Prevent effects using these props
-  // ..from excessive executions if they are not memoized or change frequently.
-  const onMenuOpenRef = useCallbackRef(onMenuOpen);
-  const onMenuCloseRef = useCallbackRef(onMenuClose);
-  const onSearchChangeRef = useCallbackRef(onSearchChange);
-  const onOptionChangeRef = useCallbackRef(onOptionChange);
-
-  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || GET_OPTION_DISABLED_DEFAULT);
-  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || GET_OPTION_FILTER_DEFAULT);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
   const getOptionLabelFn = useMemo<OptionLabelCallback>(() => getOptionLabel || GET_OPTION_LABEL_DEFAULT, [getOptionLabel]);
@@ -330,11 +318,13 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const debouncedInputValue = useDebounce<string>(inputValue, inputDelay);
 
   // If initialValue is specified attempt to initialize, otherwise default to []
-  const [selectedOption, setSelectedOption] = useState<SelectedOption[]>(() => normalizeValue(
-    initialValue,
-    getOptionValueFn,
-    getOptionLabelFn
-  ));
+  const [selectedOption, setSelectedOption] = useState<SelectedOption[]>(
+    () => normalizeValue(
+      initialValue,
+      getOptionValueFn,
+      getOptionLabelFn
+    )
+  );
 
   // Custom hook abstraction that handles the creation of menuOptions
   const menuOptions = useMenuOptions(
@@ -344,8 +334,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
     selectedOption,
     getOptionValueFn,
     getOptionLabelFn,
-    getIsOptionDisabledRef,
-    getFilterOptionStringRef,
+    getIsOptionDisabled,
+    getFilterOptionString,
     filterIgnoreCase,
     filterIgnoreAccents,
     isMulti,
@@ -363,11 +353,14 @@ const Select = forwardRef<SelectRef, SelectProps>((
     menuMaxHeight,
     menuOptions.length,
     !!menuPortalTarget,
-    onMenuOpenRef,
-    onMenuCloseRef,
+    onMenuOpen,
+    onMenuClose,
     menuScrollDuration,
     scrollMenuIntoView,
   );
+
+  const onSearchChangeRef = useCallbackRef(onSearchChange);
+  const onOptionChangeRef = useCallbackRef(onOptionChange);
 
   const blurInput = (): void => inputRef.current?.blur();
   const focusInput = (): void => inputRef.current?.focus();
@@ -729,15 +722,15 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [onInputChange]);
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
+    suppressEvent(e);
     focusInput();
     menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
-    suppressEvent(e);
   }, [openMenuAndFocusOption]);
 
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
+    suppressEvent(e);
     focusInput();
     setSelectedOption(EMPTY_ARRAY);
-    suppressEvent(e);
   }, []);
 
   const renderMenu = !lazyLoadMenu || (lazyLoadMenu && menuOpen);

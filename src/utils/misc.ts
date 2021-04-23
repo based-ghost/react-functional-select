@@ -67,7 +67,6 @@ export function trimAndFormatFilterStr(
   filterIgnoreAccents: boolean
 ): string {
   let trimVal = value.trim();
-
   if (filterIgnoreCase) {
     trimVal = trimVal.toLowerCase();
   }
@@ -85,9 +84,9 @@ export function optionClassNames(
 ): string {
   let className = OPTION_CLS;
 
-  if (isDisabled) className += (' ' + OPTION_DISABLED_CLS);
-  if (isSelected) className += (' ' + OPTION_SELECTED_CLS);
-  if (isFocused) className += (' ' + OPTION_FOCUSED_CLS);
+  if (isDisabled) className += ' ' + OPTION_DISABLED_CLS;
+  if (isSelected) className += ' ' + OPTION_SELECTED_CLS;
+  if (isFocused) className += ' ' + OPTION_FOCUSED_CLS;
 
   return className;
 }
@@ -124,8 +123,9 @@ export const normalizeValue = (
  */
 export const mergeDeep = <T>(target: any, source: any): T => {
   const output = { ...target };
+  const keys = Object.keys(source);
 
-  Object.keys(source).forEach((key) => {
+  keys.forEach((key) => {
     const sourceProp = source[key];
 
     output[key] =

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { EMPTY_ARRAY, FilterMatchEnum } from '../constants';
+import useCallbackRef from './useCallbackRef';
 import { isBoolean, trimAndFormatFilterStr } from '../utils';
+import { EMPTY_ARRAY, FilterMatchEnum, GET_OPTION_DISABLED_DEFAULT, GET_OPTION_FILTER_DEFAULT } from '../constants';
 
 import type { MenuOption } from '../Select';
 import type {
@@ -25,8 +26,8 @@ const useMenuOptions = (
   selectedOption: SelectedOption[],
   getOptionValue: OptionValueCallback,
   getOptionLabel: OptionLabelCallback,
-  getIsOptionDisabledRef: OptionDisabledCallback,
-  getFilterOptionStringRef: OptionFilterCallback,
+  getIsOptionDisabled?: OptionDisabledCallback,
+  getFilterOptionString?: OptionFilterCallback,
   filterIgnoreCase: boolean = false,
   filterIgnoreAccents: boolean = false,
   isMulti: boolean = false,
@@ -34,6 +35,8 @@ const useMenuOptions = (
   hideSelectedOptions?: boolean
 ): MenuOption[] => {
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(EMPTY_ARRAY);
+  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || GET_OPTION_DISABLED_DEFAULT);
+  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || GET_OPTION_FILTER_DEFAULT);
 
   // Prevent effect from executing on search input mutations in 'async' mode (also prevents filtering from executing)
   const searchValue = !async ? debouncedInputValue : '';

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { MenuPositionEnum } from '../constants';
+import useCallbackRef from './useCallbackRef';
 import useUpdateEffect from './useUpdateEffect';
 import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
 
@@ -24,13 +25,15 @@ const useMenuPositioner = (
   menuHeightDefault: number,
   menuOptionsLength: number,
   isMenuPortaled: boolean,
-  onMenuOpenRef: CallbackFunction,
-  onMenuCloseRef: CallbackFunction,
+  onMenuOpen?: CallbackFunction,
+  onMenuClose?: CallbackFunction,
   menuScrollDuration?: number,
   scrollMenuIntoView?: boolean
 ): [string | undefined, number] => {
   const resetMenuHeightRef = useRef<boolean>(false);
   const shouldScrollRef = useRef<boolean>(!isMenuPortaled);
+  const onMenuOpenRef = useCallbackRef(onMenuOpen);
+  const onMenuCloseRef = useCallbackRef(onMenuClose);
 
   const [menuHeight, setMenuHeight] = useState<number>(menuHeightDefault);
   const [isMenuTopPosition, setIsMenuTopPosition] = useState<boolean>(false);
