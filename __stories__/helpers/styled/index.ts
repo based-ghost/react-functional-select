@@ -387,10 +387,24 @@ export const OptionContainer = styled.div`
   flex-direction: row;
 `;
 
+export const OptionContent = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const OptionName = styled.span`
   color: #515151;
   font-size: 1em;
   font-weight: 600;
+  margin-left: 1px;
+  margin-bottom: 1.5px;
+`;
+
+export const OptionDescription = styled.span`
+  color: #515151;
+  font-size: 1em;
+  font-weight: 300;
   margin-left: 1px;
   margin-bottom: 1.5px;
 `;

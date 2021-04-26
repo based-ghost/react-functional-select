@@ -38,7 +38,9 @@ import {
   CardBody,
   OtherSpan,
   OptionContainer,
+  OptionContent,
   OptionName,
+  OptionDescription,
   ReactSvg,
   ChevronDownSvg,
   MenuPortalElement,
@@ -296,7 +298,7 @@ export const Styling = () => {
 
   const selectWrapperStyle = { marginTop: '1rem' };
   const noteStyle = { fontSize: 'inherit', fontWeight: 700 };
-  const menuItemSize = selectedOption?.value === ThemeEnum.LARGE_TEXT ? 44 : 35;
+  const getMenuItemSize = () => selectedOption?.value === ThemeEnum.LARGE_TEXT ? 44 : 35;
 
   const memoizedMarkupNode = useMemo(() => (
     <CodeMarkup
@@ -394,7 +396,7 @@ export const Styling = () => {
                   isSearchable={false}
                   options={THEME_OPTIONS}
                   themeConfig={themeConfig}
-                  menuItemSize={menuItemSize}
+                  getMenuItemSize={getMenuItemSize}
                   initialValue={THEME_OPTIONS[0]}
                   onOptionChange={setSelectedOption}
                 />
@@ -807,10 +809,20 @@ export const Advanced = () => {
           <path {...REACT_SVG_PATH_PROPS} />
           <circle {...REACT_SVG_CIRCLE_PROPS} />
         </ReactSvg>
-        <OptionName>{option.name}</OptionName>
+        <OptionContent>
+          <OptionName>{option.name}</OptionName>
+          {option.description && <OptionDescription>{option.description}</OptionDescription>}
+        </OptionContent>
       </OptionContainer>
     ),
     [getIsOptionDisabled]
+  );
+
+  const getMenuItemSize = useCallback(
+    (index: number): number => (
+      PACKAGE_OPTIONS[index].description ? 70 : 35
+    ),
+    []
   );
 
   const customCaretIcon = useCallback(
@@ -876,6 +888,7 @@ export const Advanced = () => {
               caretIcon={customCaretIcon}
               getOptionValue={getOptionValue}
               renderOptionLabel={renderOptionLabel}
+              getMenuItemSize={getMenuItemSize}
               getIsOptionDisabled={getIsOptionDisabled}
             />
           </SelectContainer>

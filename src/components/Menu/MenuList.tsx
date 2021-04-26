@@ -1,7 +1,7 @@
 import React, { useMemo, Fragment } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
-import { FixedSizeList } from 'react-window';
+import { VariableSizeList } from 'react-window';
 import { isArrayWithLength } from '../../utils';
 
 import type { MenuOption } from '../../Select';
@@ -11,7 +11,7 @@ import type { ItemData, RenderLabelCallback, SelectedOption } from '../../types'
 
 export type MenuListProps = Readonly<{
   height: number;
-  itemSize: number;
+  getItemSize: (index: number) => number;
   loadingMsg: string;
   isLoading?: boolean;
   overscanCount?: number;
@@ -22,7 +22,7 @@ export type MenuListProps = Readonly<{
   noOptionsMsg: string | null;
   itemKeySelector?: ReactText;
   renderOptionLabel: RenderLabelCallback;
-  fixedSizeListRef: MutableRefObject<FixedSizeList | null>;
+  variableSizeListRef: MutableRefObject<VariableSizeList | null>;
   selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 }>;
 
@@ -38,7 +38,7 @@ const NoOptionsMsg = styled.div`
 const MenuList: FunctionComponent<MenuListProps> = ({
   width,
   height,
-  itemSize,
+  getItemSize: itemSize,
   direction,
   isLoading,
   loadingMsg,
@@ -47,7 +47,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({
   noOptionsMsg,
   overscanCount,
   itemKeySelector,
-  fixedSizeListRef,
+  variableSizeListRef: fixedSizeListRef,
   renderOptionLabel,
   focusedOptionIndex
 }) => {
@@ -68,7 +68,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({
 
   return (
     <Fragment>
-      <FixedSizeList
+      <VariableSizeList
         width={width}
         height={height}
         itemKey={itemKey}
@@ -80,7 +80,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({
         itemCount={menuOptions.length}
       >
         {Option}
-      </FixedSizeList>
+      </VariableSizeList>
       {!isArrayWithLength(menuOptions) && noOptionsMsg && (
         <NoOptionsMsg>{noOptionsMsg}</NoOptionsMsg>
       )}
