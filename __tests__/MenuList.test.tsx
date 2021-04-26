@@ -37,11 +37,11 @@ const createMenuListProps = (menuOptions: MenuOption[] = []): MenuListProps => {
     width: '100%',
     renderOptionLabel,
     focusedOptionIndex,
-    fixedSizeListRef: null,
+    variableSizeListRef: null,
     itemKeySelector: undefined,
     height: MENU_MAX_HEIGHT_DEFAULT,
     loadingMsg: LOADING_MSG_DEFAULT,
-    itemSize: MENU_ITEM_SIZE_DEFAULT,
+    getItemSize: () => MENU_ITEM_SIZE_DEFAULT,
     noOptionsMsg: NO_OPTIONS_MSG_DEFAULT
   };
 };

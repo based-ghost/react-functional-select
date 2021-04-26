@@ -45,7 +45,7 @@ import {
 import styled, { css, ThemeProvider } from 'styled-components';
 import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
 
-import type { FixedSizeList } from 'react-window';
+import type { VariableSizeList } from 'react-window';
 import type { DefaultTheme } from 'styled-components';
 import type {
   Ref,
@@ -111,7 +111,7 @@ export type SelectProps = Readonly<{
   isDisabled?: boolean;
   placeholder?: string;
   menuWidth?: ReactText;
-  menuItemSize?: number;
+  getMenuItemSize?: (index: number) => number;
   isClearable?: boolean;
   lazyLoadMenu?: boolean;
   options?: OptionData[];
@@ -281,7 +281,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     loadingMsg = LOADING_MSG_DEFAULT,
     placeholder = PLACEHOLDER_DEFAULT,
     noOptionsMsg = NO_OPTIONS_MSG_DEFAULT,
-    menuItemSize = MENU_ITEM_SIZE_DEFAULT,
+    getMenuItemSize = () => MENU_ITEM_SIZE_DEFAULT,
     menuMaxHeight = MENU_MAX_HEIGHT_DEFAULT
   },
   ref: Ref<SelectRef>
@@ -294,7 +294,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const onOptionChangeIsFunc = useRef<boolean>(isFunction(onOptionChange));
 
   // DOM element refs
-  const listRef = useRef<FixedSizeList | null>(null);
+  const listRef = useRef<VariableSizeList | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const controlRef = useRef<HTMLDivElement | null>(null);
@@ -343,15 +343,17 @@ const Select = forwardRef<SelectRef, SelectProps>((
     hideSelectedOptions
   );
 
+  const menuItemSizes = menuOptions.map((_, i) => getMenuItemSize(i))
+  const menuSize = menuItemSizes.reduce((a, b) => a + b, 0)
+
   // Custom hook abstraction that handles calculating menuHeightCalc (defaults to menuMaxHeight) / handles executing callbacks/logic on menuOpen state change.
   const [menuStyleTop, menuHeightCalc] = useMenuPositioner(
     menuRef,
     controlRef,
     menuOpen,
     menuPosition,
-    menuItemSize,
     menuMaxHeight,
-    menuOptions.length,
+    menuSize,
     !!menuPortalTarget,
     onMenuOpen,
     onMenuClose,
@@ -801,10 +803,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
             isLoading={isLoading}
             menuTop={menuStyleTop}
             height={menuHeightCalc}
-            itemSize={menuItemSize}
+            getItemSize={getMenuItemSize}
             loadingMsg={loadingMsg}
             menuOptions={menuOptions}
-            fixedSizeListRef={listRef}
+            variableSizeListRef={listRef}
             noOptionsMsg={noOptionsMsg}
             selectOption={selectOption}
             direction={menuItemDirection}
