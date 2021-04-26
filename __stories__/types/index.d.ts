@@ -14,4 +14,5 @@ export type CityOption = Readonly<{
 export type PackageOption = Readonly<{
   id: number;
   name: string;
+  description?: string;
 }>;

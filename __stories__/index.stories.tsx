@@ -38,7 +38,9 @@ import {
   CardBody,
   OtherSpan,
   OptionContainer,
+  OptionContent,
   OptionName,
+  OptionDescription,
   ReactSvg,
   ChevronDownSvg,
   MenuPortalElement,
@@ -807,6 +809,25 @@ export const Advanced = () => {
           <path {...REACT_SVG_PATH_PROPS} />
           <circle {...REACT_SVG_CIRCLE_PROPS} />
         </ReactSvg>
+        <OptionContent>
+          <OptionName>{option.name}</OptionName>
+          {option.description && <OptionDescription>{option.description}</OptionDescription>}
+        </OptionContent>
+      </OptionContainer>
+    ),
+    [getIsOptionDisabled]
+  );
+
+  const renderControlLabel = useCallback(
+    (option: PackageOption): ReactNode => (
+      <OptionContainer>
+        <ReactSvg
+          {...REACT_SVG_PROPS}
+          isDisabled={getIsOptionDisabled(option)}
+        >
+          <path {...REACT_SVG_PATH_PROPS} />
+          <circle {...REACT_SVG_CIRCLE_PROPS} />
+        </ReactSvg>
         <OptionName>{option.name}</OptionName>
       </OptionContainer>
     ),
@@ -875,7 +896,9 @@ export const Advanced = () => {
               themeConfig={THEME_CONFIG}
               caretIcon={customCaretIcon}
               getOptionValue={getOptionValue}
+              menuItemSize={70}
               renderOptionLabel={renderOptionLabel}
+              renderControlLabel={renderControlLabel}
               getIsOptionDisabled={getIsOptionDisabled}
             />
           </SelectContainer>

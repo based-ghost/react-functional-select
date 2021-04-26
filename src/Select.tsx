@@ -152,6 +152,7 @@ export type SelectProps = Readonly<{
   onInputBlur?: FocusEventHandler<HTMLInputElement>;
   onInputFocus?: FocusEventHandler<HTMLInputElement>;
   renderOptionLabel?: (data: OptionData) => ReactNode;
+  renderControlLabel?: (data: OptionData) => ReactNode;
   getIsOptionDisabled?: (data: OptionData) => boolean;
   getFilterOptionString?: (option: MenuOption) => string;
   renderMultiOptions?: (params: MultiParams) => ReactNode;
@@ -261,6 +262,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     blurInputOnSelect,
     menuItemDirection,
     renderOptionLabel,
+    renderControlLabel,
     renderMultiOptions,
     menuScrollDuration,
     filterIgnoreAccents,
@@ -313,6 +315,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const getOptionLabelFn = useMemo<OptionLabelCallback>(() => getOptionLabel || GET_OPTION_LABEL_DEFAULT, [getOptionLabel]);
   const getOptionValueFn = useMemo<OptionValueCallback>(() => getOptionValue || GET_OPTION_VALUE_DEFAULT, [getOptionValue]);
   const renderOptionLabelFn = useMemo<RenderLabelCallback>(() => renderOptionLabel || getOptionLabelFn, [renderOptionLabel, getOptionLabelFn]);
+  const renderControlLabelFn = useMemo<RenderLabelCallback>(() => renderControlLabel || renderOptionLabelFn, [renderControlLabel, renderOptionLabelFn]);
 
   // Custom hook abstraction that debounces search input value (opt-in)
   const debouncedInputValue = useDebounce<string>(inputValue, inputDelay);
@@ -764,7 +767,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
               selectedOption={selectedOption}
               focusedMultiValue={focusedMultiValue}
               renderMultiOptions={renderMultiOptions}
-              renderOptionLabel={renderOptionLabelFn}
+              renderOptionLabel={renderControlLabelFn}
               removeSelectedOption={removeSelectedOption}
             />
             <AutosizeInput

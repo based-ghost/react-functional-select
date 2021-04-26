@@ -1,10 +1,10 @@
 import type { CityOption, PackageOption } from '../../types';
 
 export const PACKAGE_OPTIONS: PackageOption[] = [
-  { id: 1, name: 'react' },
+  { id: 1, name: 'react', description: 'React is a JavaScript library for creating user interfaces'},
   { id: 2, name: 'react-dom' },
   { id: 3, name: 'reactstrap' },
-  { id: 4, name: 'react-scripts' },
+  { id: 4, name: 'react-scripts', description: 'Configuration and scripts for Create React App.' },
   { id: 5, name: 'react-window' }
 ];
 
