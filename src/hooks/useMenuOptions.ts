@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import useCallbackRef from './useCallbackRef';
 import { isBoolean, trimAndFormatFilterStr } from '../utils';
-import { EMPTY_ARRAY, FilterMatchEnum, GET_OPTION_DISABLED_DEFAULT, GET_OPTION_FILTER_DEFAULT } from '../constants';
-
 import type { MenuOption } from '../Select';
+import {
+  EMPTY_ARRAY,
+  FilterMatchEnum,
+  FunctionDefaults
+} from '../constants';
 import type {
   OptionData,
   SelectedOption,
@@ -14,8 +17,6 @@ import type {
 } from '../types';
 
 /**
- * useMenuOptions hook
- *
  * Parse options to array of MenuOptions and perform filtering (if applicable).
  * Set menuOptions state (ensure array returned).
  */
@@ -35,21 +36,27 @@ const useMenuOptions = (
   hideSelectedOptions?: boolean
 ): MenuOption[] => {
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(EMPTY_ARRAY);
-  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || GET_OPTION_DISABLED_DEFAULT);
-  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || GET_OPTION_FILTER_DEFAULT);
+
+  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || FunctionDefaults.OPTION_FILTER);
+  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || FunctionDefaults.OPTION_IS_DISABLED);
 
   // Prevent effect from executing on search input mutations in 'async' mode (also prevents filtering from executing)
   const searchValue = !async ? debouncedInputValue : '';
+  const isFilterMatchAny = filterMatchFrom === FilterMatchEnum.ANY;
   const hideSelectedOptionsOrDefault = isBoolean(hideSelectedOptions) ? hideSelectedOptions : isMulti;
 
   useEffect(() => {
-    const isFilterMatchAny = filterMatchFrom === FilterMatchEnum.ANY;
+    const selectedHash = selectedOption.length ? new Set(selectedOption.map((x) => x.value)) : null;
     const normalizedSearch = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
-    const selectedHash = selectedOption.length ? new Set(selectedOption.map((x) => x.value)) : undefined;
 
     const isOptionFilterMatch = (option: MenuOption): boolean => {
-      const optionStr = getFilterOptionStringRef(option);
-      const normalizedOptionLabel = trimAndFormatFilterStr(optionStr, filterIgnoreCase, filterIgnoreAccents);
+      if (!normalizedSearch) return true;
+
+      const normalizedOptionLabel = trimAndFormatFilterStr(
+        getFilterOptionStringRef(option),
+        filterIgnoreCase,
+        filterIgnoreAccents
+      );
 
       return isFilterMatchAny
         ? normalizedOptionLabel.indexOf(normalizedSearch) > -1
@@ -59,19 +66,11 @@ const useMenuOptions = (
     const parseMenuOption = (data: OptionData): MenuOption | undefined => {
       const value = getOptionValue(data);
       const label = getOptionLabel(data);
+      const isDisabled = getIsOptionDisabledRef(data);
+      const isSelected = selectedHash?.has(value) ?? false;
+      const menuOption: MenuOption = { data, value, label, isDisabled, isSelected };
 
-      const menuOption: MenuOption = {
-        data,
-        value,
-        label,
-        ...(getIsOptionDisabledRef(data) && { isDisabled: true }),
-        ...(selectedHash?.has(value) && { isSelected: true })
-      };
-
-      if (
-        (normalizedSearch && !isOptionFilterMatch(menuOption)) ||
-        (hideSelectedOptionsOrDefault && menuOption.isSelected)
-      ) {
+      if (!isOptionFilterMatch(menuOption) || (hideSelectedOptionsOrDefault && isSelected)) {
         return;
       }
 
@@ -94,7 +93,7 @@ const useMenuOptions = (
     getOptionValue,
     getOptionLabel,
     selectedOption,
-    filterMatchFrom,
+    isFilterMatchAny,
     filterIgnoreCase,
     filterIgnoreAccents,
     getIsOptionDisabledRef,

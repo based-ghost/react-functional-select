@@ -1,5 +1,1 @@
-import { useCallbackState } from './useCallbackState';
-
-export {
-  useCallbackState
-};
+export { default as useCallbackState } from './useCallbackState';

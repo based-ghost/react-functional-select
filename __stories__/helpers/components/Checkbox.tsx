@@ -14,7 +14,7 @@ const CHECK_BORDER_COLOR = hexToRgba(CHECK_COLOR, 0.78);
 
 const Label = styled.span`
   user-select: none;
-  margin-left: 1.6rem;
+  margin-left: 1.45rem;
 `;
 
 const Input = styled.input`
@@ -31,7 +31,7 @@ const Input = styled.input`
     :after,
     :before {
       opacity: 1;
-      transition: height 0.365s ease;
+      transition: height 0.34s ease;
     }
 
     :after {
@@ -40,7 +40,7 @@ const Input = styled.input`
 
     :before {
       height: 1.16rem;
-      transition-delay: 0.135s;
+      transition-delay: 0.11s;
     }
   }
 `;
@@ -73,10 +73,9 @@ const CheckIcon = styled.i`
   border-width: 1.5px;
   box-sizing: border-box;
   border-radius: 0.0625rem;
-  will-change: border-color;
   background-color: transparent;
   border-color: rgba(0, 0, 0, 0.54);
-  transition: border-color 0.365s ease;
+  transition: border-color 0.34s ease;
 
   :after,
   :before {
@@ -89,8 +88,7 @@ const CheckIcon = styled.i`
     border-radius: 3px;
     transform-origin: left top;
     background-color: ${CHECK_COLOR};
-    will-change: opacity, height, transform;
-    transition: opacity 0.365s ease, height 0s linear 0.365s;
+    transition: opacity 0.34s ease, height 0s linear 0.34s;
   }
 
   :after {

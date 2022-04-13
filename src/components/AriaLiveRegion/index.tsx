@@ -1,8 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
+import React, { type FunctionComponent } from 'react';
 import { ARIA_LIVE_SELECTION_ID, ARIA_LIVE_CONTEXT_ID } from '../../constants';
-
-import type { FunctionComponent } from 'react';
 import type { FocusedOption, SelectedOption, AriaLiveAttribute } from '../../types';
 
 export type AriaLiveRegionProps = Readonly<{
@@ -58,7 +56,7 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
   const labels = selectedOption.length ? selectedOption.map((x) => x.label).join(' ') : 'N/A';
 
   // Formatted messages for both <span>'s
-  const selectionMsg = 'Selected option: ' + labels;
+  const selectionMsg = `Selected option: ${labels}`;
   const ariaContextMsg = `${focusedMsg} ${optionsMsg} ${menuMsg}`.trimStart();
 
   return (

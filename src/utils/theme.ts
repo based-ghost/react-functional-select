@@ -1,6 +1,5 @@
-import { mergeDeep, isPlainObject } from './misc';
+import { mergeDeep, isPlainObject } from './common';
 import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from '../constants';
-
 import type { Theme } from '../Select';
 import type { DefaultTheme } from 'styled-components';
 
@@ -92,7 +91,7 @@ export const DEFAULT_THEME: DefaultTheme = {
       fontSize: '0.65em',
       alignSelf: 'center',
       focusColor: '#808080',
-      transition: 'color 0.2s ease-out, transform 0.2s ease-out, z-index 0.2s ease-out'
+      transition: 'color 0.2s ease-out'
     }
   }
 };
@@ -102,7 +101,7 @@ export const DEFAULT_THEME: DefaultTheme = {
  * A new object of DefaultTheme type is returned, with properties overriden as defined in theme param.
  */
 export const mergeThemes = (theme?: Theme): DefaultTheme => {
-  return theme && isPlainObject(theme)
+  return isPlainObject(theme)
     ? mergeDeep(DEFAULT_THEME, theme)
     : DEFAULT_THEME;
 };

@@ -1,7 +1,6 @@
+import type { Theme } from '../../../src';
 import { createThemeOptions } from '../utils';
 import { mergeThemes } from '../../../src/utils';
-
-import type { Theme } from '../../../src';
 
 // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
 const FADE_IN_KEYFRAMES = 'FADE_IN_KEYFRAMES 0.25s ease-in-out';

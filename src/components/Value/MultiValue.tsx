@@ -1,9 +1,7 @@
-import React, { memo } from 'react';
+import React, { memo, type ReactText } from 'react';
 import { suppressEvent } from '../../utils';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../../constants';
-
-import type { ReactText } from 'react';
 import type { RenderLabelCallback, SelectedOption } from '../../types';
 
 export type MultiValueProps = SelectedOption & Readonly<{
@@ -13,8 +11,6 @@ export type MultiValueProps = SelectedOption & Readonly<{
 }>;
 
 const CLEAR_ICON_FOCUS_STYLE  = css`
-  z-index: 5000;
-  transform: scale(1.26);
   color: ${({ theme }) => theme.multiValue.clear.focusColor};
 `;
 
@@ -50,7 +46,7 @@ const Clear = styled.i<Pick<MultiValueProps, 'isFocused'>>`
     transition: ${clear.transition};
     font-weight: ${clear.fontWeight};
 
-    :hover {
+    &:hover {
       ${CLEAR_ICON_FOCUS_STYLE}
     }
   `}
@@ -64,13 +60,12 @@ const MultiValue = memo<MultiValueProps>(({
   renderOptionLabel,
   removeSelectedOption
 }) => {
+  const labelContent = renderOptionLabel(data);
   const onClearEvent = () => removeSelectedOption(value);
 
   return (
     <MultiValueWrapper>
-      <Label>
-        {renderOptionLabel(data)}
-      </Label>
+      <Label>{labelContent}</Label>
       <Clear
         isFocused={isFocused}
         onClick={onClearEvent}

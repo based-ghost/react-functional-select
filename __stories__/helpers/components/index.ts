@@ -1,11 +1,4 @@
-import Checkbox from './Checkbox';
-import CodeMarkup from './CodeMarkup';
-import PackageLink from './PackageLink';
-import OptionsCountButton from './OptionsCountButton';
-
-export {
-  Checkbox,
-  CodeMarkup,
-  PackageLink,
-  OptionsCountButton
-};
+export { default as Checkbox } from './Checkbox';
+export { default as CodeMarkup } from './CodeMarkup';
+export { default as PackageLink } from './PackageLink';
+export { default as OptionsCountButton } from './OptionsCountButton';

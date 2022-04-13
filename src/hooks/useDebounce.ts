@@ -2,8 +2,6 @@ import { useState } from 'react';
 import useUpdateEffect from './useUpdateEffect';
 
 /**
- * useDebounce hook
- *
  * Debouncer hook (hacky fix to prevent unecessary state mutations if no delay is passed).
  * If a number is passed for the delay parameter, use to debounce/set the value.
  */

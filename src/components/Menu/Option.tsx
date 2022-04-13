@@ -1,15 +1,23 @@
-import React, { memo } from 'react';
+import React, { memo, type CSSProperties } from 'react';
 import { areEqual } from 'react-window';
-import { optionClassNames } from '../../utils';
-
-import type { CSSProperties } from 'react';
 import type { ItemData } from '../../types';
+import { buildOptionClsName } from '../../utils';
 
 export type OptionProps = Readonly<{
   index: number;
   data: ItemData;
   style: CSSProperties;
 }>;
+
+// Custom comparison function for React.memo().
+// Extends functionality provided from "areEqual" with added bailout feature based on value of "memoizeOptions"
+function propsAreEqual(
+  prevProps: OptionProps,
+  nextProps: OptionProps
+): boolean {
+  const { memoizeOptions } = nextProps.data;
+  return memoizeOptions && areEqual(prevProps, nextProps);
+}
 
 const Option = memo<OptionProps>(({
   index,
@@ -22,7 +30,7 @@ const Option = memo<OptionProps>(({
   }
 }) => {
   const { data, value, label, isDisabled, isSelected } = menuOptions[index];
-  const className = optionClassNames(isDisabled, isSelected, (index === focusedOptionIndex));
+  const className = buildOptionClsName(isDisabled, isSelected, (index === focusedOptionIndex));
   const onClick = !isDisabled ? () => selectOption({ data, value, label }, isSelected) : undefined;
 
   return (
@@ -34,7 +42,7 @@ const Option = memo<OptionProps>(({
       {renderOptionLabel(data)}
     </div>
   );
-}, areEqual);
+}, propsAreEqual);
 
 Option.displayName = 'Option';
 

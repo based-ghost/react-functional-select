@@ -1,5 +1,6 @@
-import React from 'react';
-import MenuList from './MenuList';
+import React, { type MutableRefObject, type FunctionComponent } from 'react';
+import type { MouseOrTouchEvent } from '../../types';
+import MenuList, { type MenuListProps } from './MenuList';
 import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import { isArrayWithLength } from '../../utils';
@@ -11,10 +12,6 @@ import {
   MENU_CONTAINER_CLS,
   MENU_CONTAINER_TESTID
 } from '../../constants';
-
-import type { MenuListProps } from './MenuList';
-import type { MouseOrTouchEvent } from '../../types';
-import type { MutableRefObject, FunctionComponent } from 'react';
 
 export interface MenuProps extends MenuListProps {
   menuTop?: string;
@@ -41,8 +38,8 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     border-radius: ${menu.borderRadius};
     background-color: ${menu.backgroundColor};
     box-shadow: ${hideNoOptionsMsg ? 'none' : menu.boxShadow};
-    ${!menuOpen ? 'display: none;' : ''}
-    ${menuTop ? `top: ${menuTop};` : ''}
+    ${!menuOpen && 'display: none;'}
+    ${menuTop && `top: ${menuTop};`}
   `}
 
   ${({ theme }) => theme.menu.css}
@@ -54,7 +51,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     white-space: nowrap;
     text-overflow: ellipsis;
     -webkit-tap-highlight-color: transparent;
-    will-change: top, color, background-color;
+    will-change: top;
 	  padding: ${({ theme }) => theme.menu.option.padding};
 	  text-align: ${({ theme }) => theme.menu.option.textAlign};
 

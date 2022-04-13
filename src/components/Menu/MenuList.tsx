@@ -1,12 +1,9 @@
-import React, { useMemo, Fragment } from 'react';
+import React, { useMemo, Fragment, type ReactText, type MutableRefObject, type FunctionComponent } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
-import { FixedSizeList } from 'react-window';
+import { FixedSizeList, type ListItemKeySelector } from 'react-window';
 import { isArrayWithLength } from '../../utils';
-
 import type { MenuOption } from '../../Select';
-import type { ListItemKeySelector } from 'react-window';
-import type { ReactText, MutableRefObject, FunctionComponent } from 'react';
 import type { ItemData, RenderLabelCallback, SelectedOption } from '../../types';
 
 export type MenuListProps = Readonly<{
@@ -16,6 +13,7 @@ export type MenuListProps = Readonly<{
   isLoading?: boolean;
   overscanCount?: number;
   width: string | number;
+  memoizeOptions: boolean;
   direction?: 'ltr' | 'rtl';
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
@@ -46,6 +44,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({
   selectOption,
   noOptionsMsg,
   overscanCount,
+  memoizeOptions,
   itemKeySelector,
   fixedSizeListRef,
   renderOptionLabel,
@@ -53,10 +52,11 @@ const MenuList: FunctionComponent<MenuListProps> = ({
 }) => {
   const itemData = useMemo<ItemData>(() => ({
     menuOptions,
+    memoizeOptions,
     selectOption,
     renderOptionLabel,
     focusedOptionIndex
-  }), [menuOptions, focusedOptionIndex, selectOption, renderOptionLabel]);
+  }), [menuOptions, memoizeOptions, focusedOptionIndex, selectOption, renderOptionLabel]);
 
   if (isLoading) {
     return <NoOptionsMsg>{loadingMsg}</NoOptionsMsg>;
@@ -81,7 +81,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({
       >
         {Option}
       </FixedSizeList>
-      {!isArrayWithLength(menuOptions) && noOptionsMsg && (
+      {(!isArrayWithLength(menuOptions) && noOptionsMsg) && (
         <NoOptionsMsg>{noOptionsMsg}</NoOptionsMsg>
       )}
     </Fragment>

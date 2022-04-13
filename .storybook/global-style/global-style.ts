@@ -1,5 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
 import ReactToastifyCss from './react-toastify-css';
+import { createGlobalStyle } from 'styled-components';
+import { MEDIA_QUERY_IS_MOBILE_XS } from '../../__stories__/helpers';
 
 const GlobalStyle = createGlobalStyle`
   *,
@@ -47,15 +48,32 @@ const GlobalStyle = createGlobalStyle`
   }
 
   code {
+    padding: .2em;
     color: #191919;
-    font-size: 88%;
+    font-size: 86.5%;
     border-radius: 3px;
     word-break: break-word;
-    padding: .15em .2em .15em;
-    -webkit-font-smoothing: auto;
-    -moz-osx-font-smoothing: auto;
-    background-color: rgba(187, 239, 253, 0.3);
-    font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+    background-color: rgba(187, 239, 253, 0.29);
+    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+
+    &.language-jsx,
+    &.language-markup,
+    &.language-javascript {
+      font-weight: 400;
+      font-size: 14px !important;
+
+      ${MEDIA_QUERY_IS_MOBILE_XS} {
+        font-size: 12px !important;
+      }
+    }
+  }
+
+  .prismjs {
+    font-size: 14px;
+
+    ${MEDIA_QUERY_IS_MOBILE_XS} {
+      font-size: 12px !important;
+    }
   }
 
   ${ReactToastifyCss}

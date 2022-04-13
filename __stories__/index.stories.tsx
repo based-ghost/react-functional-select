@@ -70,7 +70,6 @@ import {
   CHEVRON_DOWN_PATH_PROPS
 } from './helpers';
 
-import type { ReactNode } from 'react';
 import type { SelectedOption } from '../src/types';
 import type { CityOption, Option, PackageOption } from './types';
 import type { MultiParams, MenuOption, SelectRef, Theme } from '../src';
@@ -172,8 +171,8 @@ export const MultiSelect = () => {
   const [blurInputOnSelect, setBlurInputOnSelect] = useCallbackState(false);
   const [hideSelectedOptions, setHideSelectedOptions] = useCallbackState(true);
 
-  const getOptionValue = useCallback((option: CityOption): number => option.id, []);
-  const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
+  const getOptionValue = useCallback(({ id }: CityOption): number => id, []);
+  const getOptionLabel = useCallback(({ city, state }: CityOption): string => `${city}, ${state}`, []);
 
   // Example "renderMultiOptions" property that can be used to further customize labeling for multi-option scenarios
   const renderMultiOptions = useCallback(
@@ -425,12 +424,12 @@ export const Events = () => {
   const [addOnInputFocus, setAddOnInputFocus] = useCallbackState(false);
   const [addOnOptionChange, setAddOnOptionChange] = useCallbackState(true);
 
-  const onMenuOpen = useCallback(() => toast.info('Menu opened!'), []);
-  const onMenuClose = useCallback(() => toast.info('Menu closed!'), []);
-  const onInputBlur = useCallback(() => toast.info('Control blurred!'), []);
-  const onInputFocus = useCallback(() => toast.info('Control focused!'), []);
-  const onKeyDown = useCallback(() => toast.info('keydown event executed!'), []);
-  const onOptionChange = useCallback((option: Option) => toast.info(`Selected Option: "${option?.value}"`), []);
+  const onMenuOpen = useCallback(() => toast.info('Menu opened'), []);
+  const onMenuClose = useCallback(() => toast.info('Menu closed'), []);
+  const onInputBlur = useCallback(() => toast.info('Control blurred'), []);
+  const onInputFocus = useCallback(() => toast.info('Control focused'), []);
+  const onKeyDown = useCallback(() => toast.info('keydown event executed'), []);
+  const onOptionChange = useCallback((option: Option) => toast.info(`Selected option: "${option?.value}"`), []);
 
   // Configure reat-toastify onMount and cleanup active toasts on beforeDismount
   useEffect(() => {
@@ -492,9 +491,7 @@ export const Events = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>
-            Events trigger a toast notification (demo only)
-          </Label>
+          <Label>Events trigger a toast notification (demo only)</Label>
           <Checkboxes>
             <Checkbox
               label='onOptionChange'
@@ -626,8 +623,8 @@ export const Filtering = () => {
   const [filterIgnoreAccents, setFilterIgnoreAccents] = useCallbackState(false);
   const [filterMatchFromStart, setFilterMatchFromStart] = useCallbackState(false);
 
-  const getOptionValue = useCallback((option: CityOption): number => option.id, []);
-  const getOptionLabel = useCallback((option: CityOption): string => `${option.city}, ${option.state}`, []);
+  const getOptionValue = useCallback(({ id }: CityOption): number => id, []);
+  const getOptionLabel = useCallback(({ city, state }: CityOption): string => `${city}, ${state}`, []);
   const getFilterOptionString = useCallback((menuOption: MenuOption): string => menuOption.data.state, []);
 
   const options = useMemo<CityOption[]>(() => [
@@ -715,6 +712,7 @@ export const Virtualization = () => {
   const selectRef = useRef<SelectRef | null>(null);
   const [options, setOptions] = useState<Option[]>([]);
   const [optionsCount, setOptionsCount] = useState(100);
+
   const optionCountList = [100, 1000, 5000, 25000, 50000];
 
   useUpdateEffect(() => {
@@ -785,7 +783,10 @@ export const Virtualization = () => {
         </CardHeader>
         <CardBody>
           <SelectContainer>
-            <Select ref={selectRef} options={options} />
+            <Select
+              ref={selectRef}
+              options={options}
+            />
           </SelectContainer>
         </CardBody>
       </Card>
@@ -794,27 +795,27 @@ export const Virtualization = () => {
 };
 
 export const Advanced = () => {
-  const getOptionValue = useCallback((x: PackageOption): number => x.id, []);
-  const getIsOptionDisabled = useCallback((x: PackageOption): boolean => x.name === PACKAGE_OPTIONS[3].name, []);
+  const getOptionValue = useCallback(({ id }: PackageOption): number => id, []);
+  const getIsOptionDisabled = useCallback((opt: PackageOption): boolean => opt.name === PACKAGE_OPTIONS[3].name, []);
 
   const renderOptionLabel = useCallback(
-    (option: PackageOption): ReactNode => (
+    (opt: PackageOption) => (
       <OptionContainer>
         <ReactSvg
           {...REACT_SVG_PROPS}
-          isDisabled={getIsOptionDisabled(option)}
+          isDisabled={getIsOptionDisabled(opt)}
         >
           <path {...REACT_SVG_PATH_PROPS} />
           <circle {...REACT_SVG_CIRCLE_PROPS} />
         </ReactSvg>
-        <OptionName>{option.name}</OptionName>
+        <OptionName>{opt.name}</OptionName>
       </OptionContainer>
     ),
     [getIsOptionDisabled]
   );
 
   const customCaretIcon = useCallback(
-    ({ menuOpen }): ReactNode => (
+    ({ menuOpen }) => (
       <ChevronDownSvg
         menuOpen={menuOpen}
         {...CHEVRON_SVG_PROPS}
@@ -863,9 +864,7 @@ export const Advanced = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>
-            JSX labels, custom caret icon, and disabled option
-          </Label>
+          <Label>JSX labels, custom caret icon, and disabled option</Label>
         </CardHeader>
         <CardBody>
           <SelectContainer>
@@ -892,8 +891,8 @@ export const Portaling = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuPortalTarget, setMenuPortalTarget] = useState<Element | undefined>(undefined);
 
-  const onMenuOpen = useCallback((): void => setMenuOpen(true), []);
-  const onMenuClose = useCallback((): void => setMenuOpen(false), []);
+  const onMenuOpen = useCallback(() => setMenuOpen(true), []);
+  const onMenuClose = useCallback(() => setMenuOpen(false), []);
 
   useEffect(() => {
     const portalEl = document.getElementById(menuPortalElId);
@@ -914,9 +913,7 @@ export const Portaling = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>
-            Menu component portaled to an element below this text.
-          </Label>
+          <Label>Menu component portaled to an element below this text.</Label>
           <MenuPortalElement
             menuOpen={menuOpen}
             id={menuPortalElId}
@@ -946,26 +943,24 @@ export const Async = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5, 'Initial'));
 
-  const onInputChange = useCallback(() => {
-    setIsLoading(true);
-  }, []);
+  const onInputChange = useCallback(() => setIsLoading(true), []);
 
-  const onSearchChange = useCallback(async (value?: string) => {
-    try {
-      await mockHttpRequest();
-
-      const count = getRandomInt(1, 5);
-      const lblSuffix = `Search text: ${value || 'Initial'}`;
-      const nextOptions = createAsyncOptions(count, lblSuffix);
-
-      selectRef.current?.clearValue();
-      setOptions(nextOptions);
-      setIsLoading(false);
-    } catch (e) {
-      console.error(e);
-      setIsLoading(false);
-    }
-  }, []);
+  const onSearchChange = useCallback(
+    async (value: string = 'Initial') => {
+      try {
+        await mockHttpRequest();
+        const count = getRandomInt(1, 5);
+        const nextOptions = createAsyncOptions(count, `Search text: ${value}`);
+        selectRef.current?.clearValue();
+        setOptions(nextOptions);
+        setIsLoading(false);
+      } catch (e) {
+        console.error(e);
+        setIsLoading(false);
+      }
+    },
+    []
+  );
 
   return (
     <Container>
@@ -1011,9 +1006,7 @@ export const Async = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>
-            Search debounced 500ms and mock HTTP call resolves after {delay}ms
-          </Label>
+          <Label>Search debounced 500ms and mock HTTP call resolves after {delay}ms</Label>
         </CardHeader>
         <CardBody>
           <SelectContainer>

@@ -5,7 +5,15 @@ import React, {
   useEffect,
   forwardRef,
   useCallback,
-  useImperativeHandle
+  useImperativeHandle,
+  type Ref,
+  type ReactNode,
+  type ReactText,
+  type FormEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type SyntheticEvent,
+  type FocusEventHandler
 } from 'react';
 import {
   isBoolean,
@@ -17,10 +25,10 @@ import {
   isArrayWithLength
 } from './utils';
 import {
-  ValueIndexEnum,
   FilterMatchEnum,
   OptionIndexEnum,
   MenuPositionEnum,
+  FunctionDefaults,
   EMPTY_ARRAY,
   SELECT_WRAPPER_ATTRS,
   PLACEHOLDER_DEFAULT,
@@ -30,9 +38,7 @@ import {
   NO_OPTIONS_MSG_DEFAULT,
   MENU_ITEM_SIZE_DEFAULT,
   MENU_MAX_HEIGHT_DEFAULT,
-  CONTROL_CONTAINER_TESTID,
-  GET_OPTION_LABEL_DEFAULT,
-  GET_OPTION_VALUE_DEFAULT
+  CONTROL_CONTAINER_TESTID
 } from './constants';
 import {
   useDebounce,
@@ -42,20 +48,9 @@ import {
   useUpdateEffect,
   useMenuPositioner
 } from './hooks';
-import styled, { css, ThemeProvider } from 'styled-components';
 import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
-
+import styled, { css, ThemeProvider, type DefaultTheme } from 'styled-components';
 import type { FixedSizeList } from 'react-window';
-import type { DefaultTheme } from 'styled-components';
-import type {
-  Ref,
-  ReactNode,
-  ReactText,
-  FormEvent,
-  FocusEvent,
-  KeyboardEvent,
-  FocusEventHandler
-} from 'react';
 import type {
   OptionData,
   PartialDeep,
@@ -81,8 +76,8 @@ export type MenuOption = Readonly<{
   label: ReactText;
   value: ReactText;
   data: OptionData;
-  isDisabled?: boolean;
-  isSelected?: boolean;
+  isDisabled: boolean;
+  isSelected: boolean;
 }>;
 
 export type SelectRef = Readonly<{
@@ -121,6 +116,7 @@ export type SelectProps = Readonly<{
   ariaLabelledBy?: string;
   clearIcon?: IconRenderer;
   caretIcon?: IconRenderer;
+  memoizeOptions?: boolean;
   openMenuOnClick?: boolean;
   openMenuOnFocus?: boolean;
   menuPortalTarget?: Element;
@@ -188,7 +184,6 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
   align-items: center;
   box-sizing: border-box;
   justify-content: space-between;
-  will-change: box-shadow, border-color;
 
   ${({ isDisabled, isFocused, isInvalid, theme: { control, color } }) => css`
     transition: ${control.transition};
@@ -203,18 +198,10 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
       ? control.focusedBorderColor
       : color.border};
 
-    ${control.height ? `height: ${control.height};` : ''}
-    ${isDisabled ? 'pointer-events:none;user-select:none;' : ''}
-
-    ${control.backgroundColor || isDisabled
-      ? `background-color: ${isDisabled ? color.disabled : control.backgroundColor};`
-      : ''}
-
-    ${isFocused
-      ? `box-shadow: ${control.boxShadow} ${
-          isInvalid ? color.dangerLight : control.boxShadowColor
-        };`
-      : ''}
+    ${control.height && `height: ${control.height};`}
+    ${isDisabled && 'pointer-events:none;user-select:none;'}
+    ${(control.backgroundColor || isDisabled) && `background-color: ${isDisabled ? color.disabled : control.backgroundColor};`}
+    ${isFocused && `box-shadow: ${control.boxShadow} ${isInvalid ? color.dangerLight : control.boxShadowColor};`}
   `}
 
   ${({ theme }) => theme.control.css}
@@ -269,6 +256,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     getFilterOptionString,
     isSearchable = true,
     lazyLoadMenu = false,
+    memoizeOptions = false,
     openMenuOnClick = true,
     filterIgnoreCase = true,
     tabSelectsOption = true,
@@ -310,8 +298,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const theme = useMemo<DefaultTheme>(() => mergeThemes(themeConfig), [themeConfig]);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
-  const getOptionLabelFn = useMemo<OptionLabelCallback>(() => getOptionLabel || GET_OPTION_LABEL_DEFAULT, [getOptionLabel]);
-  const getOptionValueFn = useMemo<OptionValueCallback>(() => getOptionValue || GET_OPTION_VALUE_DEFAULT, [getOptionValue]);
+  const getOptionLabelFn = useMemo<OptionLabelCallback>(() => getOptionLabel || FunctionDefaults.OPTION_LABEL, [getOptionLabel]);
+  const getOptionValueFn = useMemo<OptionValueCallback>(() => getOptionValue || FunctionDefaults.OPTION_VALUE, [getOptionValue]);
   const renderOptionLabelFn = useMemo<RenderLabelCallback>(() => renderOptionLabel || getOptionLabelFn, [renderOptionLabel, getOptionLabelFn]);
 
   // Custom hook abstraction that debounces search input value (opt-in)
@@ -364,7 +352,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   const blurInput = (): void => inputRef.current?.blur();
   const focusInput = (): void => inputRef.current?.focus();
-  const scrollToItemIndex = (index: number): void => listRef.current?.scrollToItem(index);
+  const scrollToItemIndex = (idx: number): void => listRef.current?.scrollToItem(idx);
 
   // Local boolean flags based on component props
   const hasSelectedOptions = isArrayWithLength(selectedOption);
@@ -372,7 +360,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   const openMenuAndFocusOption = useCallback((position: OptionIndexEnum): void => {
     if (!isArrayWithLength(menuOptions)) {
-      !menuOpenRef.current && setMenuOpen(true);
+      setMenuOpen(true);
       return;
     }
 
@@ -386,9 +374,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
         ? 0
         : menuOptions.length - 1;
 
-    !menuOpenRef.current && setMenuOpen(true);
-    setFocusedOption({ index, ...menuOptions[index] });
     scrollToItemIndex(index);
+    setMenuOpen(true);
+    setFocusedMultiValue(null);
+    setFocusedOption({ index, ...menuOptions[index] });
   }, [isMulti, menuOptions]);
 
   const removeSelectedOption = useCallback((value?: ReactText): void => {
@@ -405,8 +394,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
     if (blurInputOnSelectOrDefault) {
       blurInput();
     } else if (closeMenuOnSelect) {
-      setMenuOpen(false);
       setInputValue('');
+      setMenuOpen(false);
     }
   }, [isMulti, closeMenuOnSelect, removeSelectedOption, blurInputOnSelectOrDefault]);
 
@@ -481,9 +470,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
    * updates check if onChangeEventValue ref is set true, which indicates the inputValue change was triggered by input change event
    */
   useEffect(() => {
-    const { current: isDefinedFunc } = onSearchChangeIsFunc;
+    const { current: isFunc } = onSearchChangeIsFunc;
 
-    if (isDefinedFunc && onChangeEventValue.current) {
+    if (isFunc && onChangeEventValue.current) {
       onChangeEventValue.current = false;
       onSearchChangeRef(debouncedInputValue);
     }
@@ -494,9 +483,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
    * Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
    */
   useUpdateEffect(() => {
-    const { current: isDefinedFunc } = onOptionChangeIsFunc;
+    const { current: isFunc } = onOptionChangeIsFunc;
 
-    if (isDefinedFunc) {
+    if (isFunc) {
       const normalizedOptionValue = isMulti
         ? selectedOption.map((x) => x.data)
         : isArrayWithLength(selectedOption)
@@ -514,17 +503,17 @@ const Select = forwardRef<SelectRef, SelectProps>((
    * Handle reseting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
    */
   useUpdateEffect(() => {
-    const { length: menuLen } = menuOptions;
-    const inputChanged = menuLen > 0 && (async || menuLen !== options.length || prevMenuOptionsLength.current === 0);
+    const { length } = menuOptions;
+    const inputChanged = length > 0 && (async || length !== options.length || prevMenuOptionsLength.current === 0);
 
-    if (menuLen === 0) {
+    if (length === 0) {
       setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    } else if (menuLen === 1 || inputChanged) {
-      setFocusedOption({ index: 0, ...menuOptions[0] });
+    } else if (length === 1 || inputChanged) {
       scrollToItemIndex(0);
+      setFocusedOption({ index: 0, ...menuOptions[0] });
     }
 
-    prevMenuOptionsLength.current = menuLen;
+    prevMenuOptionsLength.current = length;
   }, [async, options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
@@ -541,15 +530,15 @@ const Select = forwardRef<SelectRef, SelectProps>((
     }
   };
 
-  // Only Multiselect mode supports value focusing
-  const focusValueOnArrowKey = (direction: ValueIndexEnum): void => {
+  // Only Multiselect mode supports value focusing (ArrowRight || ArrowLeft)
+  const focusValueOnArrowKey = (key: string): void => {
     if (!hasSelectedOptions) return;
 
     let nextFocusedIdx = -1;
     const lastValueIdx = selectedOption.length - 1;
     const curFocusedIdx = focusedMultiValue ? selectedOption.findIndex((x) => x.value === focusedMultiValue) : -1;
 
-    if (direction === ValueIndexEnum.NEXT) {
+    if (key === 'ArrowRight') {
       nextFocusedIdx = (curFocusedIdx > -1 && curFocusedIdx < lastValueIdx)
         ? curFocusedIdx + 1
         : -1;
@@ -565,8 +554,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
       ? selectedOption[nextFocusedIdx].value!
       : null;
 
-    if (focusedOption.data) setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    if (nextFocusedVal !== focusedMultiValue) setFocusedMultiValue(nextFocusedVal);
+    if (focusedOption.data)
+      setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    if (nextFocusedVal !== focusedMultiValue)
+      setFocusedMultiValue(nextFocusedVal);
   };
 
   const focusOptionOnArrowKey = (direction: OptionIndexEnum): void => {
@@ -579,38 +570,41 @@ const Select = forwardRef<SelectRef, SelectProps>((
           ? focusedOption.index - 1
           : menuOptions.length - 1;
 
-    focusedMultiValue && setFocusedMultiValue(null);
-    setFocusedOption({ index, ...menuOptions[index] });
     scrollToItemIndex(index);
-  };
-
-  const handleUpDownKeySubRoutine = (key: string): void => {
-    const downKey = key === 'ArrowDown';
-    const downUpIndex = downKey ? OptionIndexEnum.DOWN : OptionIndexEnum.UP;
-    const posIndex = downKey ? OptionIndexEnum.FIRST : OptionIndexEnum.LAST;
-
-    menuOpen ? focusOptionOnArrowKey(downUpIndex) : openMenuAndFocusOption(posIndex);
+    setFocusedMultiValue(null);
+    setFocusedOption({ index, ...menuOptions[index] });
   };
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLElement>): void => {
     if (isDisabled) return;
 
+    const {
+      key,
+      keyCode,
+      shiftKey,
+      defaultPrevented
+    } = e;
+
     if (onKeyDown) {
       onKeyDown(e, inputValue, focusedOption);
-      if (e.defaultPrevented) return;
+      if (defaultPrevented) return;
     }
 
-    switch (e.key) {
+    switch (key) {
       case 'ArrowDown':
       case 'ArrowUp': {
-        handleUpDownKeySubRoutine(e.key);
+        menuOpen
+          ? focusOptionOnArrowKey(key === 'ArrowDown' ? OptionIndexEnum.DOWN : OptionIndexEnum.UP)
+          : openMenuAndFocusOption(key === 'ArrowDown' ? OptionIndexEnum.FIRST : OptionIndexEnum.LAST);
+
         break;
       }
       case 'ArrowLeft':
       case 'ArrowRight': {
-        if (!isMulti || inputValue || renderMultiOptions) return;
-        const leftRightIndex = e.key === 'ArrowLeft' ? ValueIndexEnum.PREVIOUS : ValueIndexEnum.NEXT;
-        focusValueOnArrowKey(leftRightIndex);
+        if (!isMulti || inputValue || renderMultiOptions) {
+          return;
+        }
+        focusValueOnArrowKey(key);
         break;
       }
       // Handle spacebar keydown events
@@ -629,7 +623,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
       }
       // Check e.keyCode !== 229 (Input Method Editor)
       case 'Enter': {
-        if (menuOpen && e.keyCode !== 229) selectOptionFromFocused();
+        if (menuOpen && keyCode !== 229) selectOptionFromFocused();
         break;
       }
       case 'Escape': {
@@ -640,7 +634,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
         break;
       }
       case 'Tab': {
-        if (!menuOpen || !tabSelectsOption || !focusedOption.data || e.shiftKey) return;
+        if (!menuOpen || !tabSelectsOption || !focusedOption.data || shiftKey) {
+          return;
+        }
         selectOptionFromFocused();
         break;
       }
@@ -679,26 +675,25 @@ const Select = forwardRef<SelectRef, SelectProps>((
     e.preventDefault();
   };
 
+  const handleOnMouseDownEvent = (e: SyntheticEvent<Element>): void => {
+    suppressEvent(e);
+    focusInput();
+  };
+
   const handleOnControlMouseDown = (e: MouseOrTouchEvent<HTMLElement>): void => {
     if (isDisabled) return;
     if (!isFocused) focusInput();
 
-    const evtTarget = e.target as HTMLElement;
-    const isNotInput = evtTarget.nodeName !== 'INPUT';
+    const isNotInput = (e.target as HTMLElement).nodeName !== 'INPUT';
 
     if (!menuOpen) {
       openMenuOnClick && openMenuAndFocusOption(OptionIndexEnum.FIRST);
     } else if (isNotInput) {
-      menuOpen && setMenuOpen(false);
-      inputValue && setInputValue('');
+      setMenuOpen(false);
+      setInputValue('');
     }
 
     if (isNotInput) e.preventDefault();
-  };
-
-  const handleOnMenuMouseDown = (e: MouseOrTouchEvent<HTMLElement>): void => {
-    suppressEvent(e);
-    focusInput();
   };
 
   const handleOnInputBlur = useCallback((e: FocusEvent<HTMLInputElement>): void => {
@@ -715,21 +710,20 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   const handleOnInputChange = useCallback((e: FormEvent<HTMLInputElement>): void => {
     onChangeEventValue.current = true;
-    const newInputVal = e.currentTarget.value || '';
-    onInputChange?.(newInputVal);
-    setInputValue(newInputVal);
-    !menuOpenRef.current && setMenuOpen(true);
+    onInputChange?.(e.currentTarget.value);
+    setInputValue(e.currentTarget.value);
+    setMenuOpen(true);
   }, [onInputChange]);
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
-    suppressEvent(e);
-    focusInput();
-    menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
+    handleOnMouseDownEvent(e);
+    menuOpenRef.current
+      ? setMenuOpen(false)
+      : openMenuAndFocusOption(OptionIndexEnum.FIRST);
   }, [openMenuAndFocusOption]);
 
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
-    suppressEvent(e);
-    focusInput();
+    handleOnMouseDownEvent(e);
     setSelectedOption(EMPTY_ARRAY);
   }, []);
 
@@ -808,13 +802,14 @@ const Select = forwardRef<SelectRef, SelectProps>((
             noOptionsMsg={noOptionsMsg}
             selectOption={selectOption}
             direction={menuItemDirection}
+            memoizeOptions={memoizeOptions}
             itemKeySelector={itemKeySelector}
             overscanCount={menuOverscanCount}
             menuPortalTarget={menuPortalTarget}
             width={menuWidth || theme.menu.width}
-            onMenuMouseDown={handleOnMenuMouseDown}
             renderOptionLabel={renderOptionLabelFn}
             focusedOptionIndex={focusedOption.index}
+            onMenuMouseDown={handleOnMouseDownEvent}
           />
         )}
         {isAriaLiveEnabled && (

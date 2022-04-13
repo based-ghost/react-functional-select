@@ -1,11 +1,9 @@
-import React, { memo, Fragment } from 'react';
+import React, { memo, Fragment, type ReactNode, type ReactText } from 'react';
 import MultiValue from './MultiValue';
 import { isArrayWithLength } from '../../utils';
 import styled, { css } from 'styled-components';
 import { useFirstRenderState } from '../../hooks';
-
 import type { MultiParams } from '../../Select';
-import type { ReactNode, ReactText } from 'react';
 import type { SelectedOption, RenderLabelCallback } from '../../types';
 
 export type ValueProps = Readonly<{
@@ -54,10 +52,7 @@ const Value = memo<ValueProps>(({
   const isFirstRender = useFirstRenderState();
   const noSelectedOptions = !isArrayWithLength(selectedOption);
 
-  if (
-    inputValue &&
-    (!isMulti || (isMulti && (noSelectedOptions || renderMultiOptions)))
-  ) {
+  if (inputValue && (!isMulti || (isMulti && (noSelectedOptions || renderMultiOptions)))) {
     return null;
   }
 
@@ -82,15 +77,15 @@ const Value = memo<ValueProps>(({
       {renderMultiOptions
         ? renderMultiOptions({ renderOptionLabel, selected: selectedOption })
         : selectedOption.map(({ data, value }) => (
-          <MultiValue
-            key={value}
-            data={data}
-            value={value}
-            renderOptionLabel={renderOptionLabel}
-            isFocused={value === focusedMultiValue}
-            removeSelectedOption={removeSelectedOption}
-          />
-        ))}
+            <MultiValue
+              key={value}
+              data={data}
+              value={value}
+              renderOptionLabel={renderOptionLabel}
+              isFocused={value === focusedMultiValue}
+              removeSelectedOption={removeSelectedOption}
+            />
+          ))}
     </Fragment>
   );
 });

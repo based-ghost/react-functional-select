@@ -5,7 +5,6 @@ import {
   OPTION_SELECTED_CLS,
   OPTION_DISABLED_CLS,
 } from '../constants';
-
 import type { SyntheticEvent } from 'react';
 import type { SelectedOption, OptionValueCallback, OptionLabelCallback } from '../types';
 
@@ -17,37 +16,14 @@ const DIACRITICS_REG_EXP = /[\u0300-\u036f]/g;
  * Strips all diacritics from a string.
  * May not be supported by all legacy browsers (IE11 >=).
  */
-function stripDiacritics(value: string): string {
-  return value.normalize('NFD').replace(DIACRITICS_REG_EXP, '');
-}
+const stripDiacritics = (val: string): string => {
+  return val.normalize('NFD').replace(DIACRITICS_REG_EXP, '');
+};
 
-/**
- * Test if typeof parameter is boolean.
- */
-export function isBoolean(test: any): boolean {
-  return typeof test === 'boolean';
-}
-
-/**
- * Test if typeof parameter is function.
- */
-export function isFunction(test: any): boolean {
-  return typeof test === 'function';
-}
-
-/**
- * Test if parameter is an array with at least 1 item.
- */
-export function isArrayWithLength(test: any): boolean {
-  return Array.isArray(test) && !!test.length;
-}
-
-/**
- * Tests for a 'plain, classic' object (non-primitive type that is not an array).
- */
-export function isPlainObject(test: any): boolean {
-  return test !== null && typeof test === 'object' && !Array.isArray(test);
-}
+export const isBoolean = (val: unknown): val is Boolean => typeof val === 'boolean';
+export const isFunction = (val: unknown): val is Function => typeof val === 'function';
+export const isArrayWithLength = (val: unknown): boolean => Array.isArray(val) && !!val.length;
+export const isPlainObject = (val: unknown): boolean => val !== null && typeof val === 'object' && !Array.isArray(val);
 
 /**
  * Call preventDefault() and stopPropagation() on event.
@@ -61,27 +37,27 @@ export const suppressEvent = (e: SyntheticEvent<Element>): void => {
  * Apply regex to string, and if the value is NOT case sensitive,
  * call .toLowerCase() and return result.
  */
-export function trimAndFormatFilterStr(
+export const trimAndFormatFilterStr = (
   value: string,
   filterIgnoreCase: boolean,
   filterIgnoreAccents: boolean
-): string {
+): string => {
   let trimVal = value.trim();
   if (filterIgnoreCase) {
     trimVal = trimVal.toLowerCase();
   }
 
   return !filterIgnoreAccents ? trimVal : stripDiacritics(trimVal);
-}
+};
 
 /**
  * Builds the className property in Option.tsx component.
  */
-export function optionClassNames(
-  isDisabled?: boolean,
-  isSelected?: boolean,
-  isFocused?: boolean
-): string {
+export const buildOptionClsName = (
+  isDisabled: boolean,
+  isSelected: boolean,
+  isFocused: boolean
+): string => {
   let className = OPTION_CLS;
 
   if (isDisabled) className += ' ' + OPTION_DISABLED_CLS;
@@ -89,7 +65,7 @@ export function optionClassNames(
   if (isFocused) className += ' ' + OPTION_FOCUSED_CLS;
 
   return className;
-}
+};
 
 /**
  * Parses an object or an array of objects into output of SelectedOption[].
@@ -99,20 +75,20 @@ export const normalizeValue = (
   getOptionValue: OptionValueCallback,
   getOptionLabel: OptionLabelCallback
 ): SelectedOption[] => {
-  const initialValues = Array.isArray(value)
+  const initValues = Array.isArray(value)
     ? value
     : isPlainObject(value)
       ? [value]
       : EMPTY_ARRAY;
 
-  if (!isArrayWithLength(initialValues)) {
-    return initialValues;
+  if (!isArrayWithLength(initValues)) {
+    return initValues;
   }
 
-  return initialValues.map((x: any) => ({
-    data: x,
-    value: getOptionValue(x),
-    label: getOptionLabel(x)
+  return initValues.map((data: any) => ({
+    data,
+    value: getOptionValue(data),
+    label: getOptionLabel(data)
   }));
 };
 
@@ -123,9 +99,8 @@ export const normalizeValue = (
  */
 export const mergeDeep = <T>(target: any, source: any): T => {
   const output = { ...target };
-  const keys = Object.keys(source);
 
-  keys.forEach((key) => {
+  Object.keys(source).forEach((key) => {
     const sourceProp = source[key];
 
     output[key] =
@@ -133,7 +108,7 @@ export const mergeDeep = <T>(target: any, source: any): T => {
         ? target[key]
           ? mergeDeep(target[key], sourceProp)
           : sourceProp
-        : sourceProp || '';
+        : sourceProp ?? '';
   });
 
   return output;

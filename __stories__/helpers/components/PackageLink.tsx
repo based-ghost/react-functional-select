@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import type { FunctionComponent } from 'react';
 
 type PackageLinkProps = Readonly<{
@@ -8,28 +7,21 @@ type PackageLinkProps = Readonly<{
 }>;
 
 const Link = styled.a`
-  color: #026fb3;
+  color: #1EA7FD;
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.2;
-  overflow: visible;
-  user-select: none;
-  padding: 0 .05rem;
-  text-align: center;
+  font-weight: 600;
+  line-height: 1.5;
   text-decoration: none;
-  display: inline-block;
-  will-change: transform;
-  background-color: transparent;
-  transition: transform 0.25s ease-out;
-  transform: translate3d(0px, 0px, 0px);
 
   :hover {
-    transform: translate3d(0px, -1.5px, 0px);
+    text-decoration: underline;
   }
 `;
 
-const PackageLink: FunctionComponent<PackageLinkProps> = ({ name, href }) => (
+const PackageLink: FunctionComponent<PackageLinkProps> = ({
+  name,
+  href
+}) => (
   <Link
     href={href}
     target='_blank'

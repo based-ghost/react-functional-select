@@ -1,37 +1,21 @@
-import path from 'path';
-import type { Configuration } from 'webpack';
+import type { StorybookConfig } from '@storybook/react/types';
 
-module.exports = {
-  stories: ['../__stories__/**/*.stories.tsx'],
+const config: StorybookConfig = {
+  stories: ['../__stories__/**/*.stories.@(js|ts|tsx|mdx)'],
+  addons: ['@storybook/addon-storysource'],
+  staticDirs: ['../public'],
+  core: {
+    builder: 'webpack4'
+  },
   reactOptions: {
     fastRefresh: true,
   },
-  addons: [
-    '@storybook/preset-create-react-app',
-    {
-      name: '@storybook/addon-storysource',
-      options: {
-        rule: {
-          test: [/\.stories\.(jsx?$|tsx?$)/],
-          include: [path.resolve(__dirname, '../__stories__')],
-        },
-        loaderOptions: {
-          injectStoryParameters: false,
-        },
-      },
-    },
-  ],
-  typescript: {
-    reactDocgen: 'none'
+  features: {
+    modernInlineRender: true,
+    // interactionsDebugger: true
   },
-  webpackFinal: async (config: Configuration) => {
-    config.module.rules.push({
-      test: /\.(ts|tsx)$/,
-      loader: require.resolve('babel-loader'),
-    });
-
-    config.resolve.extensions.push('.ts', '.tsx');
-
-    return config;
-  },
+  framework: '@storybook/react'
+  // logLevel: 'debug'
 };
+
+module.exports = config;

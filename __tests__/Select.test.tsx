@@ -1,7 +1,6 @@
-import { Select, SelectProps } from '../src';
+import { Select, type SelectProps } from '../src';
 import userEvent from '@testing-library/user-event';
 import { render, fireEvent } from '@testing-library/react';
-
 import {
   MENU_CONTAINER_CLS,
   SELECT_CONTAINER_CLS,
@@ -12,13 +11,14 @@ import {
   CONTROL_CONTAINER_TESTID
 } from '../src/constants';
 
-import type { RenderResult } from '@testing-library/react';
-
 // ============================================
 // Helper functions for Select component
 // ============================================
 
-const renderSelect = (props?: SelectProps): RenderResult => render(<Select {...props} />);
+const renderSelect = (props?: SelectProps) => ({
+  user: userEvent.setup(),
+  ...render(<Select {...props} />)
+});
 
 // ============================================
 // Test cases
@@ -26,9 +26,9 @@ const renderSelect = (props?: SelectProps): RenderResult => render(<Select {...p
 
 test('container elements have static className value (enables styling via classic CSS)', async () => {
   const { getByTestId } = renderSelect();
-  expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveClass(SELECT_CONTAINER_CLS);
-  expect(getByTestId(CONTROL_CONTAINER_TESTID!)).toHaveClass(CONTROL_CONTAINER_CLS);
-  expect(getByTestId(MENU_CONTAINER_TESTID!)).toHaveClass(MENU_CONTAINER_CLS);
+  expect(getByTestId(SELECT_CONTAINER_TESTID)).toHaveClass(SELECT_CONTAINER_CLS);
+  expect(getByTestId(CONTROL_CONTAINER_TESTID)).toHaveClass(CONTROL_CONTAINER_CLS);
+  expect(getByTestId(MENU_CONTAINER_TESTID)).toHaveClass(MENU_CONTAINER_CLS);
 });
 
 test('id attributes are added to DOM if defined ("selectId" and "inputId" props)', async () => {
@@ -37,8 +37,8 @@ test('id attributes are added to DOM if defined ("selectId" and "inputId" props)
   const props = { inputId, selectId };
   const { getByTestId } = renderSelect(props);
 
-  expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveAttribute('id', selectId);
-  expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute('id', inputId);
+  expect(getByTestId(SELECT_CONTAINER_TESTID)).toHaveAttribute('id', selectId);
+  expect(getByTestId(AUTOSIZE_INPUT_TESTID)).toHaveAttribute('id', inputId);
 });
 
 // NOTE: element.not.toBeVisible() relies on access to CSS style sheets to check 'display: none;' - CSS-in-JS breaks this
@@ -60,7 +60,7 @@ test('"onInputFocus" callback should be fired when input is focused (if a define
   const props = { onInputFocus: onFocusSpy };
   const { getByTestId } = renderSelect(props);
 
-  fireEvent.focus(getByTestId(AUTOSIZE_INPUT_TESTID!));
+  fireEvent.focus(getByTestId(AUTOSIZE_INPUT_TESTID));
   expect(onFocusSpy).toHaveBeenCalledTimes(1);
 });
 
@@ -78,7 +78,7 @@ test('"onInputBlur" callback should be fired on blur (if a defined function)', a
   const props = { onInputBlur: onBlurSpy };
   const { getByTestId } = renderSelect(props);
 
-  fireEvent.blur(getByTestId(AUTOSIZE_INPUT_TESTID!));
+  fireEvent.blur(getByTestId(AUTOSIZE_INPUT_TESTID));
   expect(onBlurSpy).toHaveBeenCalledTimes(1);
 });
 
@@ -108,11 +108,11 @@ test('toggling the menu to open/close fires corresponding callbacks "onMenuOpen"
     onMenuClose: onMenuCloseSpy,
   };
 
-  const { getByTestId } = renderSelect(props);
-  const controlWrapperEl = getByTestId(CONTROL_CONTAINER_TESTID!);
+  const { user, getByTestId } = renderSelect(props);
+  const controlWrapperEl = getByTestId(CONTROL_CONTAINER_TESTID);
 
-  userEvent.click(controlWrapperEl);
-  userEvent.click(controlWrapperEl);
+  await user.click(controlWrapperEl);
+  await user.click(controlWrapperEl);
 
   expect(onMenuOpenSpy).toBeCalled();
   expect(onMenuCloseSpy).toBeCalled();
@@ -120,5 +120,5 @@ test('toggling the menu to open/close fires corresponding callbacks "onMenuOpen"
 
 test('When "lazyLoadMenu" property = true, then menu components are only rendered in DOM when "menuOpen" state = true', async () => {
   const { queryByTestId } = renderSelect({ lazyLoadMenu: true });
-  expect(queryByTestId(MENU_CONTAINER_TESTID!)).toBeNull();
+  expect(queryByTestId(MENU_CONTAINER_TESTID)).toBeNull();
 });

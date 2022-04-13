@@ -1,15 +1,11 @@
-import { useEffect, useState, useRef } from 'react';
-import { MenuPositionEnum } from '../constants';
+import { useEffect, useState, useRef, type RefObject } from 'react';
 import useCallbackRef from './useCallbackRef';
 import useUpdateEffect from './useUpdateEffect';
+import { MenuPositionEnum } from '../constants';
 import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
-
-import type { RefObject } from 'react';
 import type { CallbackFunction } from '../types';
 
 /**
- * useMenuPositioner hook
- *
  * Handle calculating and maintaining the menuHeight used by react-window.
  * Handle scroll animation and callback execution when menuOpen = true.
  * Handle resetting menuHeight back to the menuHeightDefault and callback execution when menuOpen = false.
@@ -30,8 +26,8 @@ const useMenuPositioner = (
   menuScrollDuration?: number,
   scrollMenuIntoView?: boolean
 ): [string | undefined, number] => {
-  const resetMenuHeightRef = useRef<boolean>(false);
-  const shouldScrollRef = useRef<boolean>(!isMenuPortaled);
+  const resetMenuHeightRef = useRef(false);
+  const shouldScrollRef = useRef(!isMenuPortaled);
   const onMenuOpenRef = useCallbackRef(onMenuOpen);
   const onMenuCloseRef = useCallbackRef(onMenuClose);
 
@@ -40,13 +36,11 @@ const useMenuPositioner = (
 
   useEffect(() => {
     shouldScrollRef.current = !isMenuTopPosition && !isMenuPortaled;
-  }, [isMenuTopPosition, isMenuPortaled]);
+  });
 
   useEffect(() => {
-    const isTopPos =
-      menuPosition === MenuPositionEnum.TOP ||
-      (menuPosition === MenuPositionEnum.AUTO && !menuFitsBelowControl(menuRef.current));
-
+    const { TOP, AUTO } = MenuPositionEnum;
+    const isTopPos = menuPosition === TOP || (menuPosition === AUTO && !menuFitsBelowControl(menuRef.current));
     setIsMenuTopPosition(isTopPos);
   }, [menuRef, menuPosition]);
 
@@ -79,10 +73,7 @@ const useMenuPositioner = (
 
   // Calculated menu height passed react-window; calculate MenuWrapper <div /> 'top' style prop if menu is positioned above control
   const menuHeightCalc = Math.min(menuHeight, menuOptionsLength * menuItemSize);
-
-  const menuStyleTop = isMenuTopPosition
-    ? calculateMenuTop(menuHeightCalc, menuRef.current, controlRef.current)
-    : undefined;
+  const menuStyleTop = isMenuTopPosition ? calculateMenuTop(menuHeightCalc, menuRef.current, controlRef.current) : undefined;
 
   return [menuStyleTop, menuHeightCalc];
 };

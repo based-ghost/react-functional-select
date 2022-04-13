@@ -2,15 +2,13 @@ import { ReactNode } from 'react';
 import { ThemeTestHOC } from './helpers';
 import { render, fireEvent } from '@testing-library/react';
 import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/constants';
-import IndicatorIcons, { IndicatorIconsProps } from '../src/components/IndicatorIcons';
-
-import type { RenderResult } from '@testing-library/react';
+import IndicatorIcons, { type IndicatorIconsProps } from '../src/components/IndicatorIcons';
 
 // ============================================
 // Helper functions for IndicatorIcons component
 // ============================================
 
-const renderIndicatorIcons = (props: IndicatorIconsProps): RenderResult => {
+const renderIndicatorIcons = (props: IndicatorIconsProps) => {
   return render(
     <ThemeTestHOC>
       <IndicatorIcons {...props} />
@@ -54,14 +52,14 @@ const customIconFn = (props: Partial<IndicatorIconsProps>): ReactNode => {
 test('clear icon has a static className (enables styling via classic CSS)', async () => {
   const { props } = createIndicatorIconsProps();
   const { getByTestId } = renderIndicatorIcons(props);
-  const firstChildOfClearIconElement = getByTestId(CLEAR_ICON_TESTID!).firstChild;
+  const firstChildOfClearIconElement = getByTestId(CLEAR_ICON_TESTID).firstChild;
   expect(firstChildOfClearIconElement).toHaveClass(CLEAR_ICON_CLS);
 });
 
 test('clear indicator has functioning "mouseDown" and "touchEnd" events', async () => {
   const { props, onClearMouseDownSpy } = createIndicatorIconsProps();
   const { getByTestId } = renderIndicatorIcons(props);
-  const clearIndicatorEl = getByTestId(CLEAR_ICON_TESTID!);
+  const clearIndicatorEl = getByTestId(CLEAR_ICON_TESTID);
 
   fireEvent.touchEnd(clearIndicatorEl);
   fireEvent.mouseDown(clearIndicatorEl);
@@ -72,7 +70,7 @@ test('clear indicator has functioning "mouseDown" and "touchEnd" events', async 
 test('caret indicator has functioning "mouseDown" and "touchEnd" events', async () => {
   const { props, onCaretMouseDownSpy } = createIndicatorIconsProps();
   const { getByTestId } = renderIndicatorIcons(props);
-  const caretIndicatorEl = getByTestId(CARET_ICON_TESTID!);
+  const caretIndicatorEl = getByTestId(CARET_ICON_TESTID);
 
   fireEvent.touchEnd(caretIndicatorEl);
   fireEvent.mouseDown(caretIndicatorEl);
@@ -84,7 +82,7 @@ test('clear icon is not rendered and loading animation is rendered when "isLoadi
   const { props } = createIndicatorIconsProps();
   const mergedProps = { ...props, isLoading: true };
   const { queryByTestId } = renderIndicatorIcons(mergedProps);
-  expect(queryByTestId(CLEAR_ICON_TESTID!)).toBeNull();
+  expect(queryByTestId(CLEAR_ICON_TESTID)).toBeNull();
 });
 
 test('loading can render as a custom node (instead of default LoadingDots.tsx component)', async () => {

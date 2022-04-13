@@ -1,11 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, type ReactNode } from 'react';
 import LoadingDots from './LoadingDots';
 import { isFunction } from '../../utils';
 import ClearSvgIcon from './ClearSvgIcon';
 import styled, { css } from 'styled-components';
 import { CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../../constants';
-
-import type { ReactNode } from 'react';
 import type { IconRenderer, CustomRendererCallback, MouseOrTouchEventHandler } from '../../types';
 
 export type IndicatorIconsProps = Readonly<{
@@ -79,7 +77,12 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
 }) => {
   const renderIconCallback = (renderer: IconRenderer) => {
     return isFunction(renderer)
-      ? (renderer as CustomRendererCallback)({ menuOpen, isLoading, isInvalid, isDisabled })
+      ? (renderer as CustomRendererCallback)({
+          menuOpen,
+          isLoading,
+          isInvalid,
+          isDisabled
+        })
       : renderer;
   };
 

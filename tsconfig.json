@@ -4,22 +4,16 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["esnext", "dom.iterable", "dom"],
     "strict": true,
+    "allowJs": true,
     "skipLibCheck": true,
     "noUnusedLocals": true,
-    "removeComments": false,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": [
     "src"
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }

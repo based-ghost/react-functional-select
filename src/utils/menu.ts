@@ -38,7 +38,8 @@ function isDocumentElement(el: Element | Window): boolean {
 /**
  * @private
  */
-function isScrollableStyle({overflow, overflowX, overflowY}: CSSStyleDeclaration): boolean {
+function isScrollableStyle(style: CSSStyleDeclaration): boolean {
+  const { overflow, overflowX, overflowY } = style;
   return OVERFLOW_REG_EXP.test(`${overflow}${overflowX}${overflowY}`);
 }
 
@@ -99,16 +100,13 @@ export const calculateMenuTop = (
   menuEl: Element | null,
   controlEl: Element | null
 ): string => {
-  const menuHeightOrDefault = (menuHeight > 0 || !menuEl)
-    ? menuHeight
-    : menuEl.getBoundingClientRect().height;
-
-  const controlHeight = controlEl ? controlEl.getBoundingClientRect().height : 0;
   const menuElStyle = menuEl && getComputedStyle(menuEl);
   const marginBottom = menuElStyle ? parseInt(menuElStyle.marginBottom, 10) : 0;
   const marginTop = menuElStyle ? parseInt(menuElStyle.marginTop, 10) : 0;
 
-  const basePx = -Math.abs(menuHeightOrDefault + controlHeight);
+  const controlHeight = controlEl?.getBoundingClientRect().height ?? 0;
+  const menuHeightCalc = menuHeight > 0 ? menuHeight : (menuEl?.getBoundingClientRect().height ?? 0);
+  const basePx = -Math.abs(menuHeightCalc + controlHeight);
   const adjustPx = marginBottom + marginTop;
 
   return `calc(${basePx}px + ${adjustPx}px)`;

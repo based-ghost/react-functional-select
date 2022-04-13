@@ -1,6 +1,3 @@
-/**
- * @jest-environment node
- */
 import { Select } from '../src';
 import { renderToString } from 'react-dom/server';
 

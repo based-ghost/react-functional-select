@@ -1,17 +1,13 @@
 import { CLEAR_ICON_MV_TESTID } from '../src/constants';
 import { render, fireEvent } from '@testing-library/react';
-import MultiValue from '../src/components/Value/MultiValue';
-import { RENDER_OPTION_LABEL_MOCK, getOptionSingle, ThemeTestHOC } from './helpers';
-
-import type { Option } from './helpers';
-import type { RenderResult } from '@testing-library/react';
-import type { MultiValueProps } from '../src/components/Value/MultiValue';
+import MultiValue, { type MultiValueProps } from '../src/components/Value/MultiValue';
+import { RENDER_OPTION_LABEL_MOCK, getOptionSingle, ThemeTestHOC, type Option } from './helpers';
 
 // ============================================
 // Helper functions for MultiValue component
 // ============================================
 
-const renderMultiValue = (props: MultiValueProps): RenderResult => {
+const renderMultiValue = (props: MultiValueProps) => {
   return render(
     <ThemeTestHOC>
       <MultiValue {...props} />
@@ -55,7 +51,7 @@ test('"renderOptionLabel" callback should be executed and should render the sele
 test('clear indicator has functioning "click" and "touchEnd" events', async () => {
   const { props, removeSelectedOptionSpy } = createMultiValueProps();
   const { getAllByTestId } = renderMultiValue(props);
-  const firstClearIconEl = getAllByTestId(CLEAR_ICON_MV_TESTID!)[0];
+  const firstClearIconEl = getAllByTestId(CLEAR_ICON_MV_TESTID)[0];
 
   fireEvent.click(firstClearIconEl);
   fireEvent.touchEnd(firstClearIconEl);

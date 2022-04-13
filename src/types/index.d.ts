@@ -1,12 +1,5 @@
-import type { MenuOption, MultiParams } from '../Select';
-import type {
-  ReactNode,
-  ReactText,
-  MouseEvent,
-  TouchEvent,
-  EventHandler,
-  KeyboardEvent
-} from 'react';
+import type { MenuOption } from '../Select';
+import type { ReactNode, ReactText, MouseEvent, TouchEvent, EventHandler } from 'react';
 
 export type OptionData = any;
 export type CallbackFunction = (...args: any[]) => any;
@@ -16,7 +9,8 @@ export type CustomRendererCallback = (...args: any[]) => ReactNode;
 export type IconRenderer = ReactNode | CustomRendererCallback;
 
 export type OptionValueCallback = (data: OptionData) => ReactText;
-export type OptionLabelCallback = (data: OptionData) => ReactText;
+export type OptionLabelCallback = OptionValueCallback;
+
 export type RenderLabelCallback = (data: OptionData) => ReactNode;
 export type OptionFilterCallback = (option: MenuOption) => string;
 export type OptionDisabledCallback = (data: OptionData) => boolean;
@@ -45,6 +39,7 @@ export interface FocusedOption extends SelectedOption {
 }
 
 export type ItemData = {
+  memoizeOptions: boolean;
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
   renderOptionLabel: (data: OptionData) => ReactNode;

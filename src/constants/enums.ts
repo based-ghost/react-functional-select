@@ -22,16 +22,6 @@ export const FilterMatchEnum = {
 export type FilterMatchEnum = typeof FilterMatchEnum[keyof typeof FilterMatchEnum];
 
 /**
- * Arrow key direction for cycling through multi-values.
- */
-export const ValueIndexEnum = {
-  NEXT: 0,
-  PREVIOUS: 1
-} as const;
-
-export type ValueIndexEnum = typeof ValueIndexEnum[keyof typeof ValueIndexEnum];
-
-/**
  * Arrow key direction OR position for cycling through menu options.
  */
 export const OptionIndexEnum = {

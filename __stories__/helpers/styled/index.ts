@@ -135,20 +135,13 @@ export const Li = styled.li`
 
 export const TextHeader = styled.span`
   color: #191919;
-  line-height: 1.65;
-  font-size: 1.025em;
+  line-height: 1.7;
+  font-size: 86.5%;
   border-radius: 3px;
-  padding: .15em .3em;
+  padding: .24rem .4rem;
   word-break: break-word;
-  background-color: #eef0f3;
-  -webkit-font-smoothing: auto;
-  -moz-osx-font-smoothing: auto;
-  font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
-
-  ${MEDIA_QUERY_IS_MOBILE_XS} {
-    line-height: 1.6;
-    padding: .1em .25em;
-  }
+  background-color: rgba(28,32,36,.06);
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
 `;
 
 export const Title = styled.h2`
@@ -184,7 +177,6 @@ export const Button = styled.button`
   background-color: #eaebec;
   padding: 0.375rem 0.75rem;
   -webkit-appearance: button;
-  will-change: color, background-color;
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
 
   :focus {
@@ -334,7 +326,6 @@ export const MenuPortalElement = styled.div<{ menuOpen: boolean; }>`
   min-height: 115px;
   position: relative;
   border-radius: 3px;
-  will-change: background-color;
   transition: background-color 0.2s ease-out;
   background-color: ${({ menuOpen }) => menuOpen ? 'white' : 'whitesmoke'};
 
@@ -375,7 +366,6 @@ export const ChevronDownSvg = styled.svg<{ menuOpen: boolean }>`
   width: 14px;
   height: 14px;
   fill: currentColor;
-  will-change: transform;
   transition: transform 0.25s ease-in-out;
   ${({ menuOpen }) => menuOpen && css`transform: rotate(180deg);`}
 `;

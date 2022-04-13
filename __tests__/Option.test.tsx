@@ -1,12 +1,9 @@
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import { render } from '@testing-library/react';
-import Option from '../src/components/Menu/Option';
+import Option, { type OptionProps } from '../src/components/Menu/Option';
 import userEvent from '@testing-library/user-event';
 import { OPTION_DISABLED_CLS } from '../src/constants';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK, stringifyCSSProperties, ThemeTestHOC } from './helpers';
-
-import type { RenderResult } from '@testing-library/react';
-import type { OptionProps } from '../src/components/Menu/Option';
 
 // ============================================
 // Helper functions & test data for Option.tsx component
@@ -20,15 +17,22 @@ const OPTION_STYLE: CSSProperties = {
   position: 'absolute'
 };
 
-const renderOption = (props: OptionProps): RenderResult => {
-  return render(
-    <ThemeTestHOC>
-      <Option {...props} />
-    </ThemeTestHOC>
-  );
+const renderOption = (props: OptionProps) => {
+  return {
+    user: userEvent.setup(),
+    ...render(
+      <ThemeTestHOC>
+        <Option {...props} />
+      </ThemeTestHOC>
+    )
+  };
 };
 
-const createOptionProps = (index = 0, focusedOptionIndex = 0) => {
+const createOptionProps = (
+  index = 0,
+  focusedOptionIndex = 0,
+  memoizeOptions = false
+) => {
   const onClickSelectOptionSpy = jest.fn();
   const renderOptionLabelSpy = RENDER_OPTION_LABEL_MOCK;
 
@@ -36,6 +40,7 @@ const createOptionProps = (index = 0, focusedOptionIndex = 0) => {
     index,
     style: OPTION_STYLE,
     data: {
+      memoizeOptions,
       focusedOptionIndex,
       menuOptions: MENU_OPTIONS,
       selectOption: onClickSelectOptionSpy,
@@ -75,10 +80,10 @@ test('"renderOptionLabel" callback should be executed and the result rendered to
 test('option with "isDisabled" = FALSE should have a functioning onClick handler attached', async () => {
   const firstEnabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !option.isDisabled);
   const { props, onClickSelectOptionSpy } = createOptionProps(firstEnabledMenuOptionIndex);
-  const { container } = renderOption(props);
+  const { user, container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
 
-  userEvent.click(optionParentEl!);
+  await user.click(optionParentEl);
 
   expect(onClickSelectOptionSpy).toBeCalled();
 });
@@ -86,10 +91,10 @@ test('option with "isDisabled" = FALSE should have a functioning onClick handler
 test(`option with "isDisabled" = TRUE should not have an onClick handler attached and should have class - ${OPTION_DISABLED_CLS} - added to its classList`, async () => {
   const firstDisabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !!option.isDisabled);
   const { props, onClickSelectOptionSpy } = createOptionProps(firstDisabledMenuOptionIndex);
-  const { container } = renderOption(props);
+  const { user, container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
 
-  userEvent.click(optionParentEl!);
+  await user.click(optionParentEl);
 
   expect(onClickSelectOptionSpy).not.toBeCalled();
   expect(optionParentEl).toHaveClass(OPTION_DISABLED_CLS);

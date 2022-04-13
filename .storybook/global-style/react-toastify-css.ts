@@ -59,6 +59,7 @@ const ReactToastifyCss = css`
   }
 
   .Toastify__toast-container {
+    font-size: 16px;
     z-index: 9999;
     position: fixed;
     padding: 4px;
@@ -94,29 +95,34 @@ const ReactToastifyCss = css`
       justify-content: space-between;
       max-height: 800px;
       overflow: hidden;
-      font-size: 1.075rem;
       font-weight: 400;
-      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+      font-family: sans-serif;
       cursor: pointer;
       direction: ltr;
+      background: #20232a;
 
-      &--default {
-        background: #fff;
-        color: #aaa;
-      }
-
-      &--info {
-        color: #fff;
-        background: #20232a;
+      &--rtl {
+        direction: rtl;
       }
 
       &-body {
-        flex: 1;
         margin: auto 0 auto 0.75rem;
+        flex: 1 1 auto;
+        padding: 6px;
+        display: flex;
+        color: #fff;
+        align-items: center;
+      }
+
+      &-icon {
+        margin-inline-end: 10px;
+        width: 20px;
+        flex-shrink: 0;
+        display: flex;
+        fill: #1ea7fd;
       }
 
       @media only screen and (max-width: 480px) {
-        font-size: 1rem;
         border-radius: 0;
         margin-bottom: 0.25rem;
       }
@@ -132,11 +138,6 @@ const ReactToastifyCss = css`
       opacity: 0.7;
       transition: 0.3s ease;
       align-self: flex-start;
-
-      &--default {
-        color: #000;
-        opacity: 0.3;
-      }
 
       & > svg {
         fill: currentColor;
@@ -158,8 +159,7 @@ const ReactToastifyCss = css`
       width: 100%;
       height: 5px;
       z-index: 9999;
-      opacity: 0.7;
-      background-color: rgba(107, 244, 255, 0.7);
+      background-color: #1ea7fd;
       transform-origin: left;
 
       &--animated {

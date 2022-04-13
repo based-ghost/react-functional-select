@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { type FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { LOADING_DOTS_CLS } from '../../constants';
-
-import type { FunctionComponent } from 'react';
 
 const StyledLoadingDots = styled.div`
   display: flex;
@@ -15,11 +13,11 @@ const StyledLoadingDots = styled.div`
     border-radius: 100%;
     display: inline-block;
 
-    ${({ theme: { loader } }) => css`
-      width: ${loader.size};
-      height: ${loader.size};
-      animation: ${loader.animation};
-      background-color: ${loader.color};
+    ${({ theme }) => css`
+      width: ${theme.loader.size};
+      height: ${theme.loader.size};
+      animation: ${theme.loader.animation};
+      background-color: ${theme.loader.color};
     `}
 
     :nth-of-type(1) {

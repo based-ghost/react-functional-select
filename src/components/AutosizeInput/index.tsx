@@ -1,10 +1,7 @@
-import React, { memo, useRef, useState, Fragment, forwardRef } from 'react';
-import styled from 'styled-components';
+import React, { memo, useRef, useState, Fragment, forwardRef, type Ref, type FormEventHandler, type FocusEventHandler } from 'react';
 import { useUpdateEffect } from '../../hooks';
-import { IS_MICROSOFT_BROWSER } from '../../utils';
+import styled, { css } from 'styled-components';
 import { AUTOSIZE_INPUT_ATTRS } from '../../constants';
-
-import type { Ref, FormEventHandler, FocusEventHandler } from 'react';
 
 export type AutosizeInputProps = Readonly<{
   id?: string;
@@ -21,6 +18,12 @@ export type AutosizeInputProps = Readonly<{
 
 const INPUT_MIN_WIDTH_PX = 2;
 
+const INPUT_FONT_STYLE = css`
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+`;
+
 const SizerDiv = styled.div`
   top: 0;
   left: 0;
@@ -29,23 +32,19 @@ const SizerDiv = styled.div`
   white-space: pre;
   position: absolute;
   visibility: hidden;
-  font-size: inherit;
-  font-weight: inherit;
-  font-family: inherit;
+  ${INPUT_FONT_STYLE}
   ${({ theme }) => theme.input.css}
 `;
 
-const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS) <{ isInvalid: boolean }>`
+const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS)<{ isInvalid: boolean }>`
   border: 0;
   outline: 0;
   padding: 0;
   cursor: text;
   background: 0;
   color: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  font-family: inherit;
   box-sizing: content-box;
+  ${INPUT_FONT_STYLE}
 
   :read-only {
     opacity: 0;
@@ -57,7 +56,6 @@ const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS) <{ isInvalid: boolean }>`
   }
 
   ${({ theme }) => theme.input.css}
-  ${IS_MICROSOFT_BROWSER && '::-ms-clear{display:none;}'}
 `;
 
 const AutosizeInput = memo(
@@ -76,13 +74,14 @@ const AutosizeInput = memo(
     },
     ref: Ref<HTMLInputElement>
   ) => {
+    const isInvalid = !!required && !hasSelectedOptions;
     const sizerRef = useRef<HTMLDivElement | null>(null);
     const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
-    const isInvalid = !!required && !hasSelectedOptions;
 
     useUpdateEffect(() => {
-      if (sizerRef.current) {
-        setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
+      const { current: el } = sizerRef;
+      if (el) {
+        setInputWidth(el.scrollWidth + INPUT_MIN_WIDTH_PX);
       }
     }, [inputValue]);
 
@@ -102,9 +101,7 @@ const AutosizeInput = memo(
           aria-labelledby={ariaLabelledBy}
           onChange={!readOnly ? onChange : undefined}
         />
-        <SizerDiv ref={sizerRef}>
-          {inputValue}
-        </SizerDiv>
+        <SizerDiv ref={sizerRef}>{inputValue}</SizerDiv>
       </Fragment>
     );
   })
