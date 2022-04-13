@@ -77,6 +77,7 @@
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.4",
     "babel-plugin-styled-components": "^2.0.7",
+    "chromatic": "^6.5.4",
     "cross-env": "^7.0.3",
     "enzyme": "^3.11.0",
     "eslint": "^8.13.0",
@@ -87,8 +88,8 @@
     "jest-enzyme": "^7.1.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-scripts": "^4.0.2",
     "react-syntax-highlighter": "^15.5.0",
     "react-toastify": "^8.2.0",
@@ -117,7 +118,8 @@
     "test:watch": "cross-env NODE_ENV=test jest -c jest.config.js --watch",
     "start": "run-s storybook",
     "storybook": "start-storybook -c .storybook -p 9009 --no-manager-cache",
-    "build-storybook": "build-storybook -c .storybook -o docs",
-    "lint": "eslint \"+(.storybook|__stories__|__tests__|config|src)/**/*.{ts,js}\""
+    "build-storybook": "build-storybook -c .storybook",
+    "lint": "eslint \"+(.storybook|__stories__|__tests__|config|src)/**/*.{ts,js}\"",
+    "chromatic": "npx chromatic --project-token=df2e1449fdc1"
   }
 }
