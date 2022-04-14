@@ -99,7 +99,7 @@ const ReactToastifyCss = css`
       font-family: sans-serif;
       cursor: pointer;
       direction: ltr;
-      background: #20232a;
+      background: #282c34;
 
       &--rtl {
         direction: rtl;

@@ -1,9 +1,8 @@
 import type { StorybookConfig } from '@storybook/react/types';
 
 const config: StorybookConfig = {
-  stories: ['../__stories__/**/*.stories.@(js|ts|tsx|mdx)'],
+  stories: ['../__stories__/**/*.stories.@(j|t)sx?'],
   addons: ['@storybook/addon-storysource'],
-  staticDirs: ['../public'],
   core: {
     builder: 'webpack4'
   },
@@ -11,11 +10,11 @@ const config: StorybookConfig = {
     fastRefresh: true,
   },
   features: {
-    modernInlineRender: true,
-    // interactionsDebugger: true
+    postcss: false,
+    modernInlineRender: true
   },
+  staticDirs: ['../public'],
   framework: '@storybook/react'
-  // logLevel: 'debug'
 };
 
 module.exports = config;

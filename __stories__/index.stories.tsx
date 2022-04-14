@@ -74,7 +74,7 @@ import {
 } from './helpers';
 
 export default {
-  title: 'React Functional Select'
+  title: 'React Functional Select/Demos'
 };
 
 export const SingleSelect = () => {

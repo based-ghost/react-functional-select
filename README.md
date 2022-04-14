@@ -8,7 +8,7 @@
 
 > Micro-sized & micro-optimized select component for React.js
 
-See the accompanying [Interactive Storybook UI Site](https://625676b6922472003af898b4-bpkekyoyyc.chromatic.com/?path=/story/react-functional-select) for live demos and detailed docs.
+See the accompanying [Interactive Storybook UI Site](https://625676b6922472003af898b4-bpkekyoyyc.chromatic.com/) for live demos and detailed docs.
 
 <strong>Key features:</strong>
 
@@ -41,7 +41,7 @@ $ yarn add react-window styled-components react-functional-select
 
 ## Usage
 
-- [Demo](https://625676b6922472003af898b4-bpkekyoyyc.chromatic.com/?path=/story/react-functional-select)
+- [Demo](https://625676b6922472003af898b4-bpkekyoyyc.chromatic.com/)
 - [Stories source code](./__stories__)
 
 ```jsx
