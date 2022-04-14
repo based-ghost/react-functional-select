@@ -3,11 +3,11 @@ import type { StorybookConfig } from '@storybook/react/types';
 const config: StorybookConfig = {
   stories: ['../__stories__/**/*.stories.@(j|t)sx?'],
   addons: ['@storybook/addon-storysource'],
-  core: {
-    builder: 'webpack4'
-  },
   reactOptions: {
     fastRefresh: true,
+  },
+  core: {
+    builder: 'webpack4'
   },
   features: {
     modernInlineRender: true
