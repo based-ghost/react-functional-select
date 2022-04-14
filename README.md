@@ -8,14 +8,14 @@
 
 > Micro-sized & micro-optimized select component for React.js
 
-See the accompanying [Interactive Storybook UI Site](https://625676b6922472003af898b4-bpkekyoyyc.chromatic.com/) for live demos and detailed docs.
+See the accompanying [Interactive Storybook UI Site](https://master--625676b6922472003af898b4.chromatic.com) for live demos and detailed docs.
 
 <strong>Key features:</strong>
 
 - Extremely lightweight: ~6 kB (gzipped)!
 - Advanced features like async mode, portal support, animations, and option virtualization
 - Fully-featured & customizable: API comparable to [`react-select`](https://github.com/JedWatson/react-select)
-- Engineered for ultimate performance: effortlessly scroll, filter, and key through datasets numbering in the tens of thousands using [`react-window`](https://github.com/bvaughn/react-window) + performance-first code. [Demo of handling 50,000 options here!](https://625676b6922472003af898b4-bpkekyoyyc.chromatic.com/?path=/story/react-functional-select--virtualization)
+- Engineered for ultimate performance: effortlessly scroll, filter, and key through datasets numbering in the tens of thousands using [`react-window`](https://github.com/bvaughn/react-window) + performance-first code. [Demo of handling 50,000 options here!](https://master--625676b6922472003af898b4.chromatic.com/?path=/story/react-functional-select-demos--virtualization)
 - Extensible styling API with [`styled-components`](https://github.com/styled-components/styled-components)
 - Accessible
 
@@ -41,7 +41,7 @@ $ yarn add react-window styled-components react-functional-select
 
 ## Usage
 
-- [Demo](https://625676b6922472003af898b4-bpkekyoyyc.chromatic.com/)
+- [Demo](https://master--625676b6922472003af898b4.chromatic.com)
 - [Stories source code](./__stories__)
 
 ```jsx

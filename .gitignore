@@ -4,6 +4,8 @@
 .idea
 .vs/
 .vscode/
+.cache
+.env
 
 # dependencies
 node_modules
@@ -22,4 +24,6 @@ logs
 
 # misc
 .DS_Store
+storybook-static
 package-lock.json
+chromatic-diagnostics.json

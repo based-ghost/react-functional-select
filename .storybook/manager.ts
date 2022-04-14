@@ -3,11 +3,12 @@ import { create } from '@storybook/theming';
 
 const theme = create({
   base: 'light',
-  appBg: '#F0F0F0',
-  barBg: '#EAEAEA',
+  appBg: '#E6E6E6',
+  barBg: '#E0E0E0',
+  barTextColor: '#8C8C8C',
   colorSecondary: '#1ea7fd',
-  appBorderColor: '#E5E5E5',
-  brandUrl: 'https://625676b6922472003af898b4-bpkekyoyyc.chromatic.com/'
+  appBorderColor: '#D3D3D3',
+  brandUrl: 'https://master--625676b6922472003af898b4.chromatic.com'
 });
 
 addons.setConfig({

@@ -69,7 +69,7 @@
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.24",
     "@types/react": "^18.0.5",
-    "@types/react-dom": "^18.0.0",
+    "@types/react-dom": "^18.0.1",
     "@types/react-window": "^1.8.5",
     "@types/styled-components": "^5.1.25",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
@@ -88,8 +88,8 @@
     "jest-enzyme": "^7.1.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-scripts": "^4.0.2",
     "react-syntax-highlighter": "^15.5.0",
     "react-toastify": "^8.2.0",
@@ -118,8 +118,8 @@
     "test:watch": "cross-env NODE_ENV=test jest -c jest.config.js --watch",
     "start": "run-s storybook",
     "storybook": "start-storybook -c .storybook -p 9009 --no-manager-cache",
-    "build-storybook": "build-storybook -c .storybook -o docs",
+    "build-storybook": "build-storybook -c .storybook -o storybook-static",
     "lint": "eslint \"+(.storybook|__stories__|__tests__|config|src)/**/*.{ts,js}\"",
-    "chromatic": "npx chromatic --project-token=df2e1449fdc1"
+    "chromatic": "chromatic --force-rebuild"
   }
 }

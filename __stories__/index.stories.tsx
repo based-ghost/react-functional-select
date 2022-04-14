@@ -1,10 +1,10 @@
-import { useMemo, useRef, useState, useEffect, useCallback, Fragment } from 'react';
 import { Select } from '../src';
 import { toast } from 'react-toastify';
 import { useUpdateEffect } from '../src/hooks';
 import type { SelectedOption } from '../src/types';
 import type { CityOption, Option, PackageOption } from './types';
 import type { MultiParams, MenuOption, SelectRef, Theme } from '../src';
+import { useMemo, useRef, useState, useEffect, useCallback, Fragment } from 'react';
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
