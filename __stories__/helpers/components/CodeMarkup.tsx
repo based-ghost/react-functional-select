@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
 
 // Register light build of react-syntax-highlighter and register only what is needed
@@ -7,7 +8,6 @@ const markup = require('react-syntax-highlighter/dist/esm/languages/prism/markup
 const javascript = require('react-syntax-highlighter/dist/esm/languages/prism/javascript').default;
 const dark = require('react-syntax-highlighter/dist/esm/styles/prism/dark').default;
 
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 SyntaxHighlighter.registerLanguage('markup', markup);
 SyntaxHighlighter.registerLanguage('javascript', javascript);
 

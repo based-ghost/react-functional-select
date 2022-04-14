@@ -2,6 +2,9 @@ import { useMemo, useRef, useState, useEffect, useCallback, Fragment } from 'rea
 import { Select } from '../src';
 import { toast } from 'react-toastify';
 import { useUpdateEffect } from '../src/hooks';
+import type { SelectedOption } from '../src/types';
+import type { CityOption, Option, PackageOption } from './types';
+import type { MultiParams, MenuOption, SelectRef, Theme } from '../src';
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -69,10 +72,6 @@ import {
   CHEVRON_SVG_PROPS,
   CHEVRON_DOWN_PATH_PROPS
 } from './helpers';
-
-import type { SelectedOption } from '../src/types';
-import type { CityOption, Option, PackageOption } from './types';
-import type { MultiParams, MenuOption, SelectRef, Theme } from '../src';
 
 export default {
   title: 'React Functional Select'

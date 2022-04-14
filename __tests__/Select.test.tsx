@@ -60,8 +60,8 @@ test('"onInputFocus" callback should be fired when input is focused (if a define
   const props = { onInputFocus: onFocusSpy };
   const { getByTestId } = renderSelect(props);
 
-  fireEvent.focus(getByTestId(AUTOSIZE_INPUT_TESTID));
-  expect(onFocusSpy).toHaveBeenCalledTimes(1);
+  getByTestId(AUTOSIZE_INPUT_TESTID).focus();
+  expect(onFocusSpy).toBeCalled();
 });
 
 // NOTE: element.not.toBeVisible() relies on access to CSS style sheets to check 'display: none;' - CSS-in-JS breaks this
@@ -79,7 +79,7 @@ test('"onInputBlur" callback should be fired on blur (if a defined function)', a
   const { getByTestId } = renderSelect(props);
 
   fireEvent.blur(getByTestId(AUTOSIZE_INPUT_TESTID));
-  expect(onBlurSpy).toHaveBeenCalledTimes(1);
+  expect(onBlurSpy).toBeCalled();
 });
 
 // NOTE: element.not.toBeVisible() relies on access to CSS style sheets to check 'display: none;' - CSS-in-JS breaks this

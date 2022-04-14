@@ -1,5 +1,6 @@
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { CLEAR_ICON_MV_TESTID } from '../src/constants';
-import { render, fireEvent } from '@testing-library/react';
 import MultiValue, { type MultiValueProps } from '../src/components/Value/MultiValue';
 import { RENDER_OPTION_LABEL_MOCK, getOptionSingle, ThemeTestHOC, type Option } from './helpers';
 
@@ -8,11 +9,14 @@ import { RENDER_OPTION_LABEL_MOCK, getOptionSingle, ThemeTestHOC, type Option } 
 // ============================================
 
 const renderMultiValue = (props: MultiValueProps) => {
-  return render(
-    <ThemeTestHOC>
-      <MultiValue {...props} />
-    </ThemeTestHOC>
-  );
+  return {
+    user: userEvent.setup(),
+    ...render(
+      <ThemeTestHOC>
+        <MultiValue {...props} />
+      </ThemeTestHOC>
+    )
+  };
 };
 
 const createMultiValueProps = () => {
@@ -44,17 +48,16 @@ test('"renderOptionLabel" callback should be executed and should render the sele
   const { getByText } = renderMultiValue(props);
   const { label } = props.data;
 
-  expect(renderOptionLabelSpy).toHaveBeenCalledTimes(1);
+  expect(renderOptionLabelSpy).toBeCalled();
   expect(getByText(label)).toBeInTheDocument();
 });
 
-test('clear indicator has functioning "click" and "touchEnd" events', async () => {
+test('clear indicator has functioning "click" user events', async () => {
   const { props, removeSelectedOptionSpy } = createMultiValueProps();
-  const { getAllByTestId } = renderMultiValue(props);
+  const { user, getAllByTestId } = renderMultiValue(props);
   const firstClearIconEl = getAllByTestId(CLEAR_ICON_MV_TESTID)[0];
 
-  fireEvent.click(firstClearIconEl);
-  fireEvent.touchEnd(firstClearIconEl);
+  await user.click(firstClearIconEl);
 
-  expect(removeSelectedOptionSpy).toHaveBeenCalledTimes(2);
+  expect(removeSelectedOptionSpy).toBeCalled();
 });

@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
 import { render } from '@testing-library/react';
-import Option, { type OptionProps } from '../src/components/Menu/Option';
 import userEvent from '@testing-library/user-event';
 import { OPTION_DISABLED_CLS } from '../src/constants';
+import Option, { type OptionProps } from '../src/components/Menu/Option';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK, stringifyCSSProperties, ThemeTestHOC } from './helpers';
 
 // ============================================

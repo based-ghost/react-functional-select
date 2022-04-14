@@ -1,8 +1,8 @@
 import { ThemeTestHOC } from './helpers';
 import type { MenuOption } from '../src';
 import { render } from '@testing-library/react';
-import MenuList, { type MenuListProps } from '../src/components/Menu/MenuList';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
+import MenuList, { type MenuListProps } from '../src/components/Menu/MenuList';
 import {
   MENU_ITEM_SIZE_DEFAULT,
   MENU_MAX_HEIGHT_DEFAULT,
