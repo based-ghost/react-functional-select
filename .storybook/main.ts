@@ -10,7 +10,6 @@ const config: StorybookConfig = {
     fastRefresh: true,
   },
   features: {
-    postcss: false,
     modernInlineRender: true
   },
   staticDirs: ['../public'],
