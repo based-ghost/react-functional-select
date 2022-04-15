@@ -104,8 +104,8 @@ test('"blur" and "focus" events with callback handlers are attached to the input
   const { getByTestId } = renderAutosizeInput(props);
   const inputElement = getByTestId(AUTOSIZE_INPUT_TESTID);
 
-  inputElement.focus();
   fireEvent.blur(inputElement);
+  fireEvent.focus(inputElement);
 
   expect(onBlurSpy).toBeCalled();
   expect(onFocusSpy).toBeCalled();

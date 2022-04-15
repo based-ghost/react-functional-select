@@ -140,7 +140,7 @@ export const TextHeader = styled.span`
   border-radius: 3px;
   padding: .24rem .4rem;
   word-break: break-word;
-  background-color: rgba(28,32,36,.06);
+  background-color: rgba(28,32,36,0.0525);
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
 `;
 
