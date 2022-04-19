@@ -4,13 +4,14 @@ const config: StorybookConfig = {
   stories: ['../__stories__/**/*.stories.@(js|tsx|mdx)'],
   addons: ['@storybook/addon-storysource'],
   reactOptions: {
-    fastRefresh: true,
+    fastRefresh: true
   },
   core: {
     builder: 'webpack4'
   },
   features: {
-    modernInlineRender: true
+    postcss: false
+    // modernInlineRender: true
   },
   staticDirs: ['../public'],
   framework: '@storybook/react'

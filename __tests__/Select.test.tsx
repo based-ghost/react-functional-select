@@ -60,7 +60,7 @@ test('"onInputFocus" callback should be fired when input is focused (if a define
   const props = { onInputFocus: onFocusSpy };
   const { getByTestId } = renderSelect(props);
 
-  getByTestId(AUTOSIZE_INPUT_TESTID).focus();
+  fireEvent.focus(getByTestId(AUTOSIZE_INPUT_TESTID));
   expect(onFocusSpy).toBeCalled();
 });
 
