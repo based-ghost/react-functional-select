@@ -1,5 +1,5 @@
-import { memo } from 'react';
 import { hexToRgba } from '../utils';
+import type { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 
 type CheckboxProps = Readonly<{
@@ -10,7 +10,7 @@ type CheckboxProps = Readonly<{
 }>;
 
 const CHECK_COLOR = '#149DF3';
-const CHECK_BORDER_COLOR = hexToRgba(CHECK_COLOR, 0.78);
+const CHECK_BORDER_COLOR = hexToRgba(CHECK_COLOR, 0.83);
 
 const Label = styled.span`
   user-select: none;
@@ -104,7 +104,7 @@ const CheckIcon = styled.i`
   }
 `;
 
-const Checkbox = memo<CheckboxProps>(({
+const Checkbox: FunctionComponent<CheckboxProps> = ({
   label,
   onCheck,
   checked,
@@ -119,6 +119,6 @@ const Checkbox = memo<CheckboxProps>(({
     <CheckIcon />
     {label && <Label>{label}</Label>}
   </CheckboxWrapper>
-));
+);
 
 export default Checkbox;
