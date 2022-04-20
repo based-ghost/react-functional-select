@@ -5,7 +5,7 @@ const theme = create({
   base: 'light',
   appBg: '#E6E6E6',
   barBg: '#E0E0E0',
-  barTextColor: '#8C8C8C',
+  barTextColor: '#848484',
   colorSecondary: '#1ea7fd',
   appBorderColor: '#D3D3D3',
   brandUrl: 'https://master--625676b6922472003af898b4.chromatic.com'

@@ -1,5 +1,5 @@
-import ReactToastifyCss from './react-toastify-css';
 import { createGlobalStyle } from 'styled-components';
+import ReactToastifyOverride from './react-toastify-override';
 import { MEDIA_QUERY_IS_MOBILE_XS } from '../../__stories__/helpers';
 
 const GlobalStyle = createGlobalStyle`
@@ -47,6 +47,13 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.025em;
   }
 
+  .prismjs {
+    font-size: 14px;
+    ${MEDIA_QUERY_IS_MOBILE_XS} {
+      font-size: 12px !important;
+    }
+  }
+
   code {
     padding: .2em;
     color: #191919;
@@ -61,22 +68,13 @@ const GlobalStyle = createGlobalStyle`
     &.language-javascript {
       font-weight: 400;
       font-size: 14px !important;
-
       ${MEDIA_QUERY_IS_MOBILE_XS} {
         font-size: 12px !important;
       }
     }
   }
 
-  .prismjs {
-    font-size: 14px;
-
-    ${MEDIA_QUERY_IS_MOBILE_XS} {
-      font-size: 12px !important;
-    }
-  }
-
-  ${ReactToastifyCss}
+  ${ReactToastifyOverride}
 `;
 
 export default GlobalStyle;

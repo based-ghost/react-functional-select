@@ -18,6 +18,15 @@ const name = 'ReactFunctionalSelect';
 const external = (id) => !id.startsWith('.') && !path.isAbsolute(id);
 
 /**
+ * Terser Plugin config
+ */
+const terserPlugin = terser({
+  format: {
+    comments: false
+  }
+});
+
+/**
  * Replace Plugin config
  */
 const replacePlugin = replace({
@@ -83,7 +92,7 @@ export default [
       replacePlugin,
       typescript(),
       babelPlugin(false),
-      terser(),
+      terserPlugin,
       removeTestIdPlugin
     ],
   },
@@ -100,7 +109,7 @@ export default [
       replacePlugin,
       typescript(),
       babelPlugin(),
-      terser(),
+      terserPlugin,
       removeTestIdPlugin
     ],
   },
@@ -119,7 +128,8 @@ export default [
       replacePlugin,
       typescript(),
       babelPlugin(),
-      terser()
+      terserPlugin,
+      removeTestIdPlugin
     ],
   },
 ];
