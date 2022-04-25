@@ -1,4 +1,4 @@
-import React, { memo, type ReactText } from 'react';
+import React, { memo } from 'react';
 import { suppressEvent } from '../../utils';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../../constants';
@@ -7,7 +7,7 @@ import type { RenderLabelCallback, SelectedOption } from '../../types';
 export type MultiValueProps = SelectedOption & Readonly<{
   isFocused: boolean;
   renderOptionLabel: RenderLabelCallback;
-  removeSelectedOption: (value?: ReactText) => void;
+  removeSelectedOption: (value?: string | number) => void;
 }>;
 
 const CLEAR_ICON_FOCUS_STYLE  = css`

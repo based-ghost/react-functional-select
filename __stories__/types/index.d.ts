@@ -1,8 +1,6 @@
-import type { ReactText } from 'react';
-
 export type Option = Readonly<{
-  label: ReactText;
-  value: ReactText;
+  label: string | number;
+  value: string | number;
 }>;
 
 export type CityOption = Readonly<{

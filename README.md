@@ -129,7 +129,7 @@ All properties are technically optional (with a few having default values). Very
 |`isDisabled`| bool | `false` | Is the select control disabled - recieves disabled styling
 |`required`| bool | `false` | Is the select control required - applied to the `input` element. When `true`, the optionally specified CSS from the `themeConfig.input.cssRequired` field will be applied to the `input` element.
 |`placeholder`| string | `Select option..` | Placeholder text for the select value
-|`menuWidth`| ReactText | `100%` | Width of the menu
+|`menuWidth`| string | number | `100%` | Width of the menu
 |`menuItemSize`| number | `35` | The height of each option in the menu (px)
 |`isClearable`| bool | `false` | Is the select value clearable
 |`noOptionsMsg`| string | `No options` | The text displayed in the menu when there are no options available (to hide menu when search returns no items, set to `null` or `''`)
@@ -143,7 +143,7 @@ All properties are technically optional (with a few having default values). Very
 |`openMenuOnClick`| bool | `true` | If true, the menu can be toggled by clicking anywhere on the select control; if false, the menu can only be toggled by clicking the 'caret' icon on the far right of the control
 |`menuMaxHeight`| number | `300` | Max height of the menu element - this effects how many options `react-window` will render
 |`menuOverscanCount`| number | `1` | correlates to `react-window` property `overscanCount`: The number of items (options) to render outside of the visible area. Increasing the number can impact performance, but is useful if the option label is complex and the `renderOptionLabel` prop is defined
-|`itemKeySelector`| ReactText | `undefined` | If defined, will use the property in your original options as each option's key, rather than the parsed stateful value `menuOptions` index (this needs to be a unique property - so properties such as `id` or `value`). This relates to the `itemKey` property in dependency `react-window` - [more info here](https://react-window.now.sh/#/api/FixedSizeList)
+|`itemKeySelector`| string | number | `undefined` | If defined, will use the property in your original options as each option's key, rather than the parsed stateful value `menuOptions` index (this needs to be a unique property - so properties such as `id` or `value`). This relates to the `itemKey` property in dependency `react-window` - [more info here](https://react-window.now.sh/#/api/FixedSizeList)
 |`menuScrollDuration`| number | `300` | Duration of scroll menu into view animation
 |`menuItemDirection`| 'ltr' OR 'rtl' | `'ltr'` | The direction of text for each menu option and position of the menu's scroll bar (`react-window`'s `direction` prop)
 |`ariaLabelledBy`| string | `undefined` | HTML ID of an element that should be used as the label (for assistive tech)
@@ -164,14 +164,14 @@ All properties are technically optional (with a few having default values). Very
 |`onMenuClose`| (...args: any[]) => void | `undefined` | Callback function executed after the menu is closed
 |`onOptionChange`| (data: any) => void | `undefined` | Callback function executed after a new option is selected
 |`onKeyDown`| (e: KeyboardEvent, input?: string, focusedOption?: FocusedOption) => void | `undefined` | Callback function executed `onKeyDown` event
-|`getOptionLabel`| (data: any) => ReactText | `undefined` | Resolves option data to React.ReactText to be displayed as the label by components (by default will use option.label)
-|`getOptionValue`| (data: any) => ReactText | `undefined` | Resolves option data to React.ReactText to compare option values (by default will use option.value)
+|`getOptionLabel`| (data: any) => string | number | `undefined` | Resolves option data to string | number to be displayed as the label by components (by default will use option.label)
+|`getOptionValue`| (data: any) => string | number | `undefined` | Resolves option data to string | number to compare option values (by default will use option.value)
 |`onInputBlur`| (e: FocusEvent) => void | `undefined` | Handle blur events on the search input
 |`onInputFocus`| (e: FocusEvent) => void | `undefined` | Handle focus events on the search input
 |`onInputChange`| (value: string) => void | `undefined` | Handle change events on the search input
 |`onSearchChange`| (value: string) => void | `undefined` | Callback executed after the debounced search input value is persisted to the component's state - if no debounce is defined via the `inputDelay` property, it probably makes more sense to use `onInputChange` instead.
 |`renderOptionLabel`| (data: any) => ReactNode | `undefined` | Formats option labels in the menu and control as JSX.Elements or React Components (by default will use `getOptionLabel`)
-|`renderMultiOptions`| (params: any) => ReactNode | `undefined` | Allows for customization as to how multi-select options should be formatted. The `MultiParams` contains the array of selected options `{ selected: Array<{ data: any, value: ReactText, label: ReactText}>, renderOptionLabel: (data: any): ReactNode }`. Left and right arrow key navigation will also be disabled when this property is defined.
+|`renderMultiOptions`| (params: any) => ReactNode | `undefined` | Allows for customization as to how multi-select options should be formatted. The `MultiParams` contains the array of selected options `{ selected: Array<{ data: any, value: string | number, label: string | number}>, renderOptionLabel: (data: any): ReactNode }`. Left and right arrow key navigation will also be disabled when this property is defined.
 |`getIsOptionDisabled`| (data: any) => boolean | `undefined` | When defined will evaluate each option to determine whether it is disabled or not (if not specified, each option will be evaluated as to whether or not it contains a property of `isDisabled` with a value of `true`)
 |`getFilterOptionString`| (option: any) => string | `undefined` | When defined will take each option and generate a string used in the filtering process (by default, will use option.label)
 |`themeConfig`| Partial\<DefaultTheme\> | `undefined` | Object that takes specified property key-value pairs and merges them into the theme object

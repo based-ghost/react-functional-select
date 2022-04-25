@@ -8,7 +8,6 @@ import React, {
   useImperativeHandle,
   type Ref,
   type ReactNode,
-  type ReactText,
   type FormEvent,
   type FocusEvent,
   type KeyboardEvent,
@@ -73,8 +72,8 @@ export type MultiParams = Readonly<{
 }>;
 
 export type MenuOption = Readonly<{
-  label: ReactText;
-  value: ReactText;
+  label: string | number;
+  value: string | number;
   data: OptionData;
   isDisabled: boolean;
   isSelected: boolean;
@@ -105,7 +104,6 @@ export type SelectProps = Readonly<{
   themeConfig?: Theme;
   isDisabled?: boolean;
   placeholder?: string;
-  menuWidth?: ReactText;
   menuItemSize?: number;
   isClearable?: boolean;
   lazyLoadMenu?: boolean;
@@ -123,11 +121,11 @@ export type SelectProps = Readonly<{
   menuOverscanCount?: number;
   tabSelectsOption?: boolean;
   filterIgnoreCase?: boolean;
-  itemKeySelector?: ReactText;
   menuScrollDuration?: number;
   blurInputOnSelect?: boolean;
   closeMenuOnSelect?: boolean;
   isAriaLiveEnabled?: boolean;
+  menuWidth?: string | number;
   scrollMenuIntoView?: boolean;
   noOptionsMsg?: string | null;
   ariaLive?: AriaLiveAttribute;
@@ -139,6 +137,7 @@ export type SelectProps = Readonly<{
   menuPosition?: MenuPositionEnum;
   filterMatchFrom?: FilterMatchEnum;
   menuItemDirection?: 'ltr' | 'rtl';
+  itemKeySelector?: string | number;
   getOptionLabel?: OptionLabelCallback;
   getOptionValue?: OptionValueCallback;
   onInputChange?: (value?: string) => any;
@@ -291,7 +290,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const [inputValue, setInputValue] = useState<string>('');
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [focusedMultiValue, setFocusedMultiValue] = useState<ReactText | null>(null);
+  const [focusedMultiValue, setFocusedMultiValue] = useState<string | number | null>(null);
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
 
   // Memoized DefaultTheme object for styled-components ThemeProvider
@@ -380,7 +379,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     setFocusedOption({ index, ...menuOptions[index] });
   }, [isMulti, menuOptions]);
 
-  const removeSelectedOption = useCallback((value?: ReactText): void => {
+  const removeSelectedOption = useCallback((value?: string | number): void => {
     setSelectedOption((prev) => prev.filter((x) => x.value !== value));
   }, []);
 

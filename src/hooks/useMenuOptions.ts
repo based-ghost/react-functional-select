@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
+import type { MenuOption } from '../Select';
 import useCallbackRef from './useCallbackRef';
 import { isBoolean, trimAndFormatFilterStr } from '../utils';
-import type { MenuOption } from '../Select';
-import {
-  EMPTY_ARRAY,
-  FilterMatchEnum,
-  FunctionDefaults
-} from '../constants';
+import { EMPTY_ARRAY, FilterMatchEnum, FunctionDefaults } from '../constants';
 import type {
   OptionData,
   SelectedOption,

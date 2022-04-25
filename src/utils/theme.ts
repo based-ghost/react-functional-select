@@ -1,7 +1,7 @@
-import { mergeDeep, isPlainObject } from './common';
-import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from '../constants';
 import type { Theme } from '../Select';
+import { mergeDeep, isPlainObject } from './common';
 import type { DefaultTheme } from 'styled-components';
+import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from '../constants';
 
 /**
  * A contextual styled-components DefaultTheme object with default key-value pairs for CSS props.

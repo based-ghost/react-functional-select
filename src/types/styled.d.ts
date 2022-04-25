@@ -1,4 +1,3 @@
-import 'styled-components';
 import type { FlattenSimpleInterpolation } from 'styled-components';
 
 declare module 'styled-components' {

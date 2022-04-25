@@ -1,5 +1,5 @@
 import type { MenuOption } from '../Select';
-import type { ReactNode, ReactText, MouseEvent, TouchEvent, EventHandler } from 'react';
+import type { ReactNode, MouseEvent, TouchEvent, EventHandler } from 'react';
 
 export type OptionData = any;
 export type CallbackFunction = (...args: any[]) => any;
@@ -8,7 +8,7 @@ export type AriaLiveAttribute = 'off' | 'polite' | 'assertive';
 export type CustomRendererCallback = (...args: any[]) => ReactNode;
 export type IconRenderer = ReactNode | CustomRendererCallback;
 
-export type OptionValueCallback = (data: OptionData) => ReactText;
+export type OptionValueCallback = (data: OptionData) => string | number;
 export type OptionLabelCallback = OptionValueCallback;
 
 export type RenderLabelCallback = (data: OptionData) => ReactNode;
@@ -28,8 +28,8 @@ export type PartialDeep<T> = {
 
 export type SelectedOption = {
   data?: OptionData;
-  value?: ReactText;
-  label?: ReactText;
+  value?: string | number;
+  label?: string | number;
 };
 
 export interface FocusedOption extends SelectedOption {

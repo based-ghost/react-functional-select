@@ -7,7 +7,7 @@ const config: StorybookConfig = {
     fastRefresh: true
   },
   core: {
-    builder: 'webpack4'
+    builder: 'webpack5'
   },
   features: {
     postcss: false

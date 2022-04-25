@@ -1,9 +1,9 @@
-import React, { useMemo, Fragment, type ReactText, type MutableRefObject, type FunctionComponent } from 'react';
+import React, { useMemo, Fragment, type MutableRefObject, type FunctionComponent } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
-import { FixedSizeList, type ListItemKeySelector } from 'react-window';
-import { isArrayWithLength } from '../../utils';
 import type { MenuOption } from '../../Select';
+import { isArrayWithLength } from '../../utils';
+import { FixedSizeList, type ListItemKeySelector } from 'react-window';
 import type { ItemData, RenderLabelCallback, SelectedOption } from '../../types';
 
 export type MenuListProps = Readonly<{
@@ -18,7 +18,7 @@ export type MenuListProps = Readonly<{
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
   noOptionsMsg: string | null;
-  itemKeySelector?: ReactText;
+  itemKeySelector?: string | number;
   renderOptionLabel: RenderLabelCallback;
   fixedSizeListRef: MutableRefObject<FixedSizeList | null>;
   selectOption: (option: SelectedOption, isSelected?: boolean) => void;

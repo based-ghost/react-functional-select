@@ -1,5 +1,5 @@
+import type { ReactNode, CSSProperties } from 'react';
 import type { MultiParams, MenuOption } from '../../src';
-import type { ReactNode, ReactText, CSSProperties } from 'react';
 import type { OptionData, SelectedOption } from '../../src/types';
 
 // ============================================
@@ -7,8 +7,8 @@ import type { OptionData, SelectedOption } from '../../src/types';
 // ============================================
 
 export type Option = Readonly<{
-  label: ReactText;
-  value: ReactText;
+  label: string | number;
+  value: string | number;
 }>;
 
 export const OPTIONS: Option[] = [

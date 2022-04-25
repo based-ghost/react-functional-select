@@ -1,4 +1,4 @@
-import React, { memo, Fragment, type ReactNode, type ReactText } from 'react';
+import React, { memo, Fragment, type ReactNode } from 'react';
 import MultiValue from './MultiValue';
 import { isArrayWithLength } from '../../utils';
 import styled, { css } from 'styled-components';
@@ -11,9 +11,9 @@ export type ValueProps = Readonly<{
   inputValue: string;
   placeholder: string;
   selectedOption: SelectedOption[];
-  focusedMultiValue: ReactText | null;
+  focusedMultiValue: string | number | null;
   renderOptionLabel: RenderLabelCallback;
-  removeSelectedOption: (value?: ReactText) => void;
+  removeSelectedOption: (value?: string | number) => void;
   renderMultiOptions?: (params: MultiParams) => ReactNode;
 }>;
 

@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef, type RefObject } from 'react';
 import useCallbackRef from './useCallbackRef';
 import useUpdateEffect from './useUpdateEffect';
 import { MenuPositionEnum } from '../constants';
-import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
 import type { CallbackFunction } from '../types';
+import { useEffect, useState, useRef, type RefObject } from 'react';
+import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
 
 /**
  * Handle calculating and maintaining the menuHeight used by react-window.
