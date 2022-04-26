@@ -1,12 +1,6 @@
 import type { SyntheticEvent } from 'react';
 import type { SelectedOption, OptionValueCallback, OptionLabelCallback } from '../types';
-import {
-  OPTION_CLS,
-  EMPTY_ARRAY,
-  OPTION_FOCUSED_CLS,
-  OPTION_SELECTED_CLS,
-  OPTION_DISABLED_CLS
-} from '../constants';
+import { OPTION_CLS, EMPTY_ARRAY, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants';
 
 const DIACRITICS_REG_EXP = /[\u0300-\u036f]/g;
 

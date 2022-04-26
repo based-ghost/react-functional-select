@@ -11,13 +11,13 @@ export type OptionProps = Readonly<{
 
 // Custom comparison function for React.memo().
 // Extends functionality provided from "areEqual" with added bailout feature based on value of "memoizeOptions"
-function propsAreEqual(
+const propsAreEqual = (
   prevProps: OptionProps,
   nextProps: OptionProps
-): boolean {
+): boolean => {
   const { memoizeOptions } = nextProps.data;
   return memoizeOptions && areEqual(prevProps, nextProps);
-}
+};
 
 const Option = memo<OptionProps>(({
   index,
