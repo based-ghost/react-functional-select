@@ -10,8 +10,8 @@ const config: StorybookConfig = {
     builder: 'webpack5'
   },
   features: {
-    postcss: false
-    // modernInlineRender: true
+    postcss: false,
+    modernInlineRender: true
   },
   staticDirs: ['../public'],
   framework: '@storybook/react'
