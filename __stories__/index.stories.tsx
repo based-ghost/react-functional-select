@@ -1,7 +1,7 @@
 import { Select } from '../src';
-import { toast } from 'react-toastify';
 import { useUpdateEffect } from '../src/hooks';
 import type { SelectedOption } from '../src/types';
+import { toast, ToastContainer } from 'react-toastify';
 import type { CityOption, Option, PackageOption } from './types';
 import type { MultiParams, MenuOption, SelectRef, Theme } from '../src';
 import { useMemo, useRef, useState, useEffect, useCallback, Fragment } from 'react';
@@ -98,7 +98,7 @@ export const SingleSelect = () => {
       <Paragraph>
         In this story's source code, notice that the callback function
         properties <code>getOptionValue</code> and <code>getOptionLabel</code> are
-        wrapped in a <code>useCallback</code>. While not required, <em> strongly prefer </em>
+        wrapped in a <code>useCallback</code>. While not required, <em>strongly prefer </em>
         memoization of any callback function property whenever possible. This will boost
         performance and reduce the amount of renders as these properties are referenced
         in the dependency arrays of <code>useCallbacks</code>, <code>useEffects</code>,
@@ -430,115 +430,109 @@ export const Events = () => {
   const onKeyDown = useCallback(() => toast.info('keydown event executed'), []);
   const onOptionChange = useCallback((option: Option) => toast.info(`Selected option: "${option?.value}"`), []);
 
-  // Configure reat-toastify onMount and cleanup active toasts on beforeDismount
-  useEffect(() => {
-    toast?.configure(TOAST_CONTAINER_PROPS);
-
-    return () => {
-      toast?.dismiss();
-    };
-  }, []);
-
   return (
-    <Container>
-      <Title>Events</Title>
-      <Hr />
-      <ListWrapper>
-        There are various callback function properties that are executed following
-        their associated events:
-        <List>
-          <Li>
-            <TextHeader>onOptionChange(data: any) {'=>'} void</TextHeader> -
-            executed after an option is selected or removed
-          </Li>
-          <Li>
-            <TextHeader>onMenuOpen(...args: any[]) {'=>'} void</TextHeader> -
-            executed after the menu is opened
-          </Li>
-          <Li>
-            <TextHeader>onMenuClose(...args: any[]) {'=>'} void</TextHeader> -
-            executed after the menu is closed
-          </Li>
-          <Li>
-            <TextHeader>onInputChange(value: string) {'=>'} void</TextHeader> -
-            executed after the input control's value changes
-          </Li>
-          <Li>
-            <TextHeader>onInputBlur(e: FocusEvent{'<'}HTMLInputElement{'>'}) {'=>'} void</TextHeader> -
-            executed after the input control is blurred
-          </Li>
-          <Li>
-            <TextHeader>onInputFocus(e: FocusEvent{'<'}HTMLInputElement{'>'}) {'=>'} void</TextHeader> -
-            executed after the input control is focused
-          </Li>
-          <Li>
-            <TextHeader>
-              onKeyDown(e: KeyboardEvent{'<'}HTMLDivElement{'>'}, input?: string, focusedOption?: FocusedOption) {'=>'} void
-            </TextHeader> -
-            executed after the onKeyDown event
-          </Li>
-          <Li>
-            <TextHeader>onSearchChange(value: string) {'=>'} void</TextHeader> -
-            executed after the input value is persisted to state; this value also evaluates
-            the <code>inputDelay</code> property for debouncing - this callback is really
-            only useful when <code>inputDelay</code> is defined, and if not, it probably
-            makes more sense to use the <code>onInputChange</code> callback
-          </Li>
-        </List>
-      </ListWrapper>
-      <SubTitle>Demo</SubTitle>
-      <Hr />
-      <Card>
-        <CardHeader>
-          <Label>Events trigger a toast notification (demo only)</Label>
-          <Checkboxes>
-            <Checkbox
-              label='onOptionChange'
-              checked={addOnOptionChange}
-              onCheck={setAddOnOptionChange}
-            />
-            <Checkbox
-              label='onMenuOpen'
-              checked={addOnMenuOpen}
-              onCheck={setAddOnMenuOpen}
-            />
-            <Checkbox
-              label='onMenuClose'
-              checked={addOnMenuClose}
-              onCheck={setAddOnMenuClose}
-            />
-            <Checkbox
-              label='onInputBlur'
-              checked={addOnInputBlur}
-              onCheck={setAddOnInputBlur}
-            />
-            <Checkbox
-              label='onInputFocus'
-              checked={addOnInputFocus}
-              onCheck={setAddOnInputFocus}
-            />
-            <Checkbox
-              label='onKeyDown'
-              checked={addOnKeyDown}
-              onCheck={setAddOnKeyDown}
-            />
-          </Checkboxes>
-        </CardHeader>
-        <CardBody>
-          <SelectContainer>
-            <Select
-              options={options}
-              onKeyDown={addOnKeyDown ? onKeyDown : undefined}
-              onMenuOpen={addOnMenuOpen ? onMenuOpen : undefined}
-              onMenuClose={addOnMenuClose ? onMenuClose : undefined}
-              onInputBlur={addOnInputBlur ? onInputBlur : undefined}
-              onInputFocus={addOnInputFocus ? onInputFocus : undefined}
-              onOptionChange={addOnOptionChange ? onOptionChange : undefined}
-            />
-          </SelectContainer>
-        </CardBody>
-      </Card>
-    </Container>
+    <Fragment>
+      <ToastContainer {...TOAST_CONTAINER_PROPS} />
+      <Container>
+        <Title>Events</Title>
+        <Hr />
+        <ListWrapper>
+          There are various callback function properties that are executed following
+          their associated events:
+          <List>
+            <Li>
+              <TextHeader>onOptionChange(data: any) {'=>'} void</TextHeader> -
+              executed after an option is selected or removed
+            </Li>
+            <Li>
+              <TextHeader>onMenuOpen(...args: any[]) {'=>'} void</TextHeader> -
+              executed after the menu is opened
+            </Li>
+            <Li>
+              <TextHeader>onMenuClose(...args: any[]) {'=>'} void</TextHeader> -
+              executed after the menu is closed
+            </Li>
+            <Li>
+              <TextHeader>onInputChange(value: string) {'=>'} void</TextHeader> -
+              executed after the input control's value changes
+            </Li>
+            <Li>
+              <TextHeader>onInputBlur(e: FocusEvent{'<'}HTMLInputElement{'>'}) {'=>'} void</TextHeader> -
+              executed after the input control is blurred
+            </Li>
+            <Li>
+              <TextHeader>onInputFocus(e: FocusEvent{'<'}HTMLInputElement{'>'}) {'=>'} void</TextHeader> -
+              executed after the input control is focused
+            </Li>
+            <Li>
+              <TextHeader>
+                onKeyDown(e: KeyboardEvent{'<'}HTMLDivElement{'>'}, input?: string, focusedOption?: FocusedOption) {'=>'} void
+              </TextHeader> -
+              executed after the onKeyDown event
+            </Li>
+            <Li>
+              <TextHeader>onSearchChange(value: string) {'=>'} void</TextHeader> -
+              executed after the input value is persisted to state; this value also evaluates
+              the <code>inputDelay</code> property for debouncing - this callback is really
+              only useful when <code>inputDelay</code> is defined, and if not, it probably
+              makes more sense to use the <code>onInputChange</code> callback
+            </Li>
+          </List>
+        </ListWrapper>
+        <SubTitle>Demo</SubTitle>
+        <Hr />
+        <Card>
+          <CardHeader>
+            <Label>Events trigger a toast notification (demo only)</Label>
+            <Checkboxes>
+              <Checkbox
+                label='onOptionChange'
+                checked={addOnOptionChange}
+                onCheck={setAddOnOptionChange}
+              />
+              <Checkbox
+                label='onMenuOpen'
+                checked={addOnMenuOpen}
+                onCheck={setAddOnMenuOpen}
+              />
+              <Checkbox
+                label='onMenuClose'
+                checked={addOnMenuClose}
+                onCheck={setAddOnMenuClose}
+              />
+              <Checkbox
+                label='onInputBlur'
+                checked={addOnInputBlur}
+                onCheck={setAddOnInputBlur}
+              />
+              <Checkbox
+                label='onInputFocus'
+                checked={addOnInputFocus}
+                onCheck={setAddOnInputFocus}
+              />
+              <Checkbox
+                label='onKeyDown'
+                checked={addOnKeyDown}
+                onCheck={setAddOnKeyDown}
+              />
+            </Checkboxes>
+          </CardHeader>
+          <CardBody>
+            <SelectContainer>
+              <Select
+                options={options}
+                onKeyDown={addOnKeyDown ? onKeyDown : undefined}
+                onMenuOpen={addOnMenuOpen ? onMenuOpen : undefined}
+                onMenuClose={addOnMenuClose ? onMenuClose : undefined}
+                onInputBlur={addOnInputBlur ? onInputBlur : undefined}
+                onInputFocus={addOnInputFocus ? onInputFocus : undefined}
+                onOptionChange={addOnOptionChange ? onOptionChange : undefined}
+              />
+            </SelectContainer>
+          </CardBody>
+        </Card>
+      </Container>
+    </Fragment>
   );
 };
 
