@@ -107,7 +107,7 @@ export const ListWrapper = styled.div`
       }
 
       li + li {
-        margin-top: 0.5em !important;
+        margin-top: 0.55em !important;
       }
     }
   }
@@ -124,7 +124,7 @@ export const List = styled.ul`
   padding-inline-start: 20px;
 
   li + li {
-    margin-top: 0.55em;
+    margin-top: 0.6em;
   }
 `;
 
@@ -134,7 +134,7 @@ export const Li = styled.li`
 `;
 
 export const TextHeader = styled.span`
-  color: #191919;
+  color: #353535;
   line-height: 1.7;
   font-size: 86.5%;
   border-radius: 3px;

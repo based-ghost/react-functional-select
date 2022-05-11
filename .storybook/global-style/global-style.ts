@@ -37,12 +37,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
   em {
-    color: #191919;
     font-weight: 600;
   }
 
   strong {
-    color: #191919;
     font-weight: 600;
     font-size: 1.025em;
   }
@@ -56,7 +54,7 @@ const GlobalStyle = createGlobalStyle`
 
   code {
     padding: .2em;
-    color: #191919;
+    color: #353535;
     font-size: 86.5%;
     border-radius: 3px;
     word-break: break-word;
