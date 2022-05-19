@@ -53,9 +53,20 @@ const PreContainer = styled.div`
   max-height: 385px !important;
 
   pre {
+    line-height: 20px;
     margin: 1rem !important;
 
     > code {
+      padding: 0;
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      line-height: 20px !important;
+      text-shadow: black 0px -0.1em 0.2em !important;
+
+      ${MEDIA_QUERY_IS_MOBILE_XS} {
+        font-size: 12px !important;
+      }
+
       .boolean {
         color: #ff8b50;
       }

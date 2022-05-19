@@ -7,11 +7,12 @@ const config: StorybookConfig = {
     fastRefresh: true
   },
   core: {
-    builder: 'webpack5'
+    builder: 'webpack5',
+    disableTelemetry: true
   },
   features: {
-    postcss: false,
-    modernInlineRender: true
+    // postcss: false,
+    // modernInlineRender: true
   },
   staticDirs: ['../public'],
   framework: '@storybook/react'
