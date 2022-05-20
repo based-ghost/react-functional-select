@@ -10,10 +10,6 @@ const config: StorybookConfig = {
     builder: 'webpack5',
     disableTelemetry: true
   },
-  features: {
-    // postcss: false,
-    // modernInlineRender: true
-  },
   staticDirs: ['../public'],
   framework: '@storybook/react'
 };

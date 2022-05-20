@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+import { MEDIA_QUERY_IS_MOBILE } from '../styled';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { MEDIA_QUERY_IS_MOBILE, MEDIA_QUERY_IS_MOBILE_XS } from '../styled';
 
 // Register light build of react-syntax-highlighter and register only what is needed
 const markup = require('react-syntax-highlighter/dist/esm/languages/prism/markup').default;
@@ -38,10 +38,6 @@ const Header = styled.div`
   letter-spacing: 0.075em;
   text-transform: uppercase;
   background-color: #20232a;
-
-  ${MEDIA_QUERY_IS_MOBILE_XS} {
-    font-size: 12px;
-  }
 `;
 
 const PreContainer = styled.div`
@@ -49,8 +45,8 @@ const PreContainer = styled.div`
   height: 100%;
   overflow: auto;
   border-radius: 0;
-  min-height: 385px !important;
-  max-height: 385px !important;
+  min-height: 365px !important;
+  max-height: 365px !important;
 
   pre {
     line-height: 20px;
@@ -62,10 +58,6 @@ const PreContainer = styled.div`
       font-weight: 400 !important;
       line-height: 20px !important;
       text-shadow: black 0px -0.1em 0.2em !important;
-
-      ${MEDIA_QUERY_IS_MOBILE_XS} {
-        font-size: 12px !important;
-      }
 
       .boolean {
         color: #ff8b50;

@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
     min-height: 120vh;
     flex-direction: column;
     background-color: #fff;
-    padding: 1rem 0.25rem !important;
+    padding: 1rem 0 !important;
     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
   }
 
