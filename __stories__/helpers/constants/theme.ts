@@ -3,24 +3,27 @@ import { createThemeOptions } from '../utils';
 import { mergeThemes } from '../../../src/utils';
 
 // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
-const FADE_IN_KEYFRAMES = 'FADE_IN_KEYFRAMES 0.25s ease-in-out';
-const BOUNCE_KEYFRAMES = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
+const FADE_IN_KEYFRAMES_STR = 'FADE_IN_KEYFRAMES 0.25s ease-in-out';
+const BOUNCE_KEYFRAMES_STR = 'BOUNCE_KEYFRAMES 1.19s ease-in-out infinite';
 
 const THEME_ANIMATIONS: Theme = {
   loader: {
-    animation: BOUNCE_KEYFRAMES
+    animation: BOUNCE_KEYFRAMES_STR
   },
   menu: {
-    animation: FADE_IN_KEYFRAMES
+    animation: FADE_IN_KEYFRAMES_STR
   },
   multiValue: {
-    animation: FADE_IN_KEYFRAMES
+    animation: FADE_IN_KEYFRAMES_STR
   },
   icon: {
     clear: {
-      animation: FADE_IN_KEYFRAMES
+      animation: FADE_IN_KEYFRAMES_STR
     }
-  }
+  },
+  placeholder: {
+    animation: FADE_IN_KEYFRAMES_STR
+  },
 };
 
 export const ThemeEnum = {
