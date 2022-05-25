@@ -103,7 +103,7 @@ export const ListWrapper = styled.div`
 
     ul {
       li {
-        font-weight: 600;
+        font-style: italic;
       }
 
       li + li {
@@ -135,12 +135,12 @@ export const Li = styled.li`
 
 export const TextHeader = styled.span`
   color: #353535;
+  font-size: 95%;
   line-height: 1.7;
-  font-size: 86.5%;
-  border-radius: 3px;
-  padding: .24rem .4rem;
+  border-radius: 4px;
+  padding: .15em .5em;
   word-break: break-word;
-  background-color: rgba(28,32,36,0.05);
+  background-color: #f2f2f2;
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
 `;
 

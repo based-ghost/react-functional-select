@@ -45,10 +45,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   code {
-    padding: .2em;
+    font-size: 95%;
     color: #353535;
-    font-size: 86.5%;
-    border-radius: 3px;
+    line-height: 1.7;
+    border-radius: 4px;
+    padding: .15em .5em;
     word-break: break-word;
     background-color: rgba(187, 239, 253, 0.29);
     font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;

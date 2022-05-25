@@ -294,6 +294,7 @@ export const Styling = () => {
 
   const selectWrapperStyle = { marginTop: '1rem' };
   const noteStyle = { fontSize: 'inherit', fontWeight: 700 };
+  const noteCodeStyle = { fontWeight: 500 };
   const menuItemSize = selectedOption?.value === ThemeEnum.LARGE_TEXT ? 44 : 35;
 
   const memoizedMarkupNode = useMemo(() => (
@@ -379,7 +380,7 @@ export const Styling = () => {
       <Card>
         <CardHeader>
           <Label>
-            <em style={noteStyle}>Note: </em>the <code>themeConfig</code> property
+            <em style={noteStyle}>Note: </em>the <code style={noteCodeStyle}>themeConfig</code> property
             value provided shoud be properly memoized!
           </Label>
         </CardHeader>
