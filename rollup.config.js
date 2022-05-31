@@ -53,7 +53,7 @@ const babelPlugin = (useESModules = true) => {
   return babel({
     babelrc: false,
     babelHelpers: 'runtime',
-    exclude: 'node_modules/**',
+    exclude: '**/node_modules/**',
     extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
     presets: [
       ['@babel/preset-env', {targets, loose: true}],

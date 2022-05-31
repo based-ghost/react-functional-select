@@ -16,7 +16,7 @@ export type AutosizeInputProps = Readonly<{
   onChange: FormEventHandler<HTMLInputElement>;
 }>;
 
-const INPUT_MIN_WIDTH_PX = 2;
+const INPUT_MIN_WIDTH_PX = 15;
 
 const INPUT_FONT_STYLE = css`
   font-size: inherit;
@@ -101,7 +101,9 @@ const AutosizeInput = memo(
           aria-labelledby={ariaLabelledBy}
           onChange={!readOnly ? onChange : undefined}
         />
-        <SizerDiv ref={sizerRef}>{inputValue}</SizerDiv>
+        <SizerDiv ref={sizerRef}>
+          {inputValue}
+        </SizerDiv>
       </Fragment>
     );
   })
