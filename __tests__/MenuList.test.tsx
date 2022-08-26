@@ -1,3 +1,4 @@
+import React from 'react';
 import { ThemeTestHOC } from './helpers';
 import type { MenuOption } from '../src';
 import { render } from '@testing-library/react';
@@ -34,7 +35,7 @@ const createMenuListProps = (menuOptions: MenuOption[] = []): MenuListProps => {
     width: '100%',
     renderOptionLabel,
     focusedOptionIndex,
-    memoizeOptions: false,
+    memoOptions: false,
     fixedSizeListRef: null,
     itemKeySelector: undefined,
     height: MENU_MAX_HEIGHT_DEFAULT,

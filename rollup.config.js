@@ -15,16 +15,7 @@ const globals = {
 
 const input = './src/index.ts';
 const name = 'ReactFunctionalSelect';
-const external = (id) => !id.startsWith('.') && !path.isAbsolute(id);
-
-/**
- * Terser Plugin config
- */
-const terserPlugin = terser({
-  format: {
-    comments: false
-  }
-});
+const external = (id) => id.includes('@babel/runtime') || (!id.startsWith('.') && !path.isAbsolute(id));
 
 /**
  * Replace Plugin config
@@ -43,17 +34,18 @@ const removeTestIdPlugin = replace({
 });
 
 /**
- * Babel Plugin config (differs from project's babel.config.js)
+ * Babel Plugin config (prevents use of root babel.config.js with babelrc and configFile as false)
  */
-const babelPlugin = (useESModules = true) => {
+const babelPlugin = (useESModules) => {
   const targets = useESModules
     ? { esmodules: true }
-    : '> 0.25%, not dead, not ie 11';
+    : '> 0.25%, last 2 versions, not dead, not ie 11';
 
   return babel({
     babelrc: false,
+    configFile: false,
     babelHelpers: 'runtime',
-    exclude: '**/node_modules/**',
+    exclude: 'node_modules/**',
     extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
     presets: [
       ['@babel/preset-env', {targets, loose: true}],
@@ -78,6 +70,17 @@ const babelPlugin = (useESModules = true) => {
   });
 };
 
+/**
+ * Common plugins in each build
+ */
+const commonPlugins = (useESModules = true) => [
+  typescript(),
+  replacePlugin,
+  babelPlugin(useESModules),
+  terser(),
+  removeTestIdPlugin,
+];
+
 export default [
   // COMMONJS
   {
@@ -86,15 +89,9 @@ export default [
     output: {
       file: pkg.main,
       format: 'cjs',
-      exports: 'named'
+      exports: 'named',
     },
-    plugins: [
-      replacePlugin,
-      typescript(),
-      babelPlugin(false),
-      terserPlugin,
-      removeTestIdPlugin
-    ],
+    plugins: commonPlugins(false),
   },
 
   // MODULE
@@ -103,15 +100,9 @@ export default [
     input,
     output: {
       file: pkg.module,
-      format: 'es'
+      format: 'esm',
     },
-    plugins: [
-      replacePlugin,
-      typescript(),
-      babelPlugin(),
-      terserPlugin,
-      removeTestIdPlugin
-    ],
+    plugins: commonPlugins(true),
   },
 
   // BROWSER/UMD
@@ -122,14 +113,8 @@ export default [
       file: pkg.umd,
       format: 'umd',
       globals,
-      name
+      name,
     },
-    plugins: [
-      replacePlugin,
-      typescript(),
-      babelPlugin(),
-      terserPlugin,
-      removeTestIdPlugin
-    ],
+    plugins: commonPlugins(true),
   },
 ];

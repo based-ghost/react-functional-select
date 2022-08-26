@@ -112,7 +112,7 @@ export default SingleSelectDemo;
 
 All properties are technically optional (with a few having default values). Very similar to [`react-select`](https://github.com/JedWatson/react-select)'s API.
 
-> <strong><em>Note that the following non-primitive properties should be properly memoized if defined:</em></strong><br>`clearIcon`, `caretIcon`, `options`, `renderOptionLabel`, `renderMultiOptions`, `onMenuOpen`, `onOptionChange`, `onKeyDown`, `getOptionLabel`, `getOptionLabel`, `getOptionValue`, `onInputBlur`, `onInputFocus`, `onInputChange`, `onSearchChange`, `getIsOptionDisabled`, `getFilterOptionString`, `themeConfig`
+> <strong><em>Note that the following non-primitive properties should be properly memoized if defined:</em></strong><br>`clearIcon`, `caretIcon`, `options`, `renderOptionLabel`, `onMenuOpen`, `onOptionChange`, `onKeyDown`, `getOptionLabel`, `getOptionLabel`, `getOptionValue`, `onInputBlur`, `onInputFocus`, `onInputChange`, `onSearchChange`, `getIsOptionDisabled`, `getFilterOptionString`, `themeConfig`
 
 | Property | Type | Default | Description
 :---|:---|:---|:---
@@ -176,6 +176,7 @@ All properties are technically optional (with a few having default values). Very
 |`getFilterOptionString`| (option: any) => string | `undefined` | When defined will take each option and generate a string used in the filtering process (by default, will use option.label)
 |`themeConfig`| Partial\<DefaultTheme\> | `undefined` | Object that takes specified property key-value pairs and merges them into the theme object
 |`menuPortalTarget`| Element | `undefined` | Whether the menu should use a portal, and where it should attach
+|`memoOptions`| bool | `false` | Whether to memoize each `Option` component
 
 ## Inspiration
 
@@ -183,4 +184,4 @@ This project was inspired by [`react-select`](https://github.com/JedWatson/react
 
 ## License
 
-MIT licensed. Copyright (c) [Matt Areddia](https://github.com/based-ghost) 2021.
+MIT licensed. Copyright (c) [Matt Areddia](https://github.com/based-ghost) 2022.

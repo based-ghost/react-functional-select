@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "target": "esnext",
+    "target": "ES2018",
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
@@ -15,5 +15,8 @@
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

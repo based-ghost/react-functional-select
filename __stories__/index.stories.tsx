@@ -4,7 +4,7 @@ import type { SelectedOption } from '../src/types';
 import { toast, ToastContainer } from 'react-toastify';
 import type { CityOption, Option, PackageOption } from './types';
 import type { MultiParams, MenuOption, SelectRef, Theme } from '../src';
-import { useMemo, useRef, useState, useEffect, useCallback, Fragment } from 'react';
+import React, { useMemo, useRef, useState, useEffect, useCallback, Fragment } from 'react';
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,
@@ -308,7 +308,7 @@ export const Styling = () => {
   useEffect(() => {
     if (selectedOption) {
       const { value } = selectedOption;
-      setThemeConfig(ThemeConfigMap[value]);
+      setThemeConfig(ThemeConfigMap[value as string | number]);
     }
   }, [selectedOption]);
 
@@ -889,7 +889,7 @@ export const Portaling = () => {
   const onMenuClose = useCallback(() => setMenuOpen(false), []);
 
   useEffect(() => {
-    const portalEl = document.getElementById(menuPortalElId);
+    const portalEl = document.getElementById(menuPortalElId) as HTMLElement;
     setMenuPortalTarget(portalEl);
   }, [menuPortalElId]);
 

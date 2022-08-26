@@ -39,7 +39,7 @@ export interface FocusedOption extends SelectedOption {
 }
 
 export type ItemData = {
-  memoizeOptions: boolean;
+  memoOptions: boolean;
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
   renderOptionLabel: (data: OptionData) => ReactNode;

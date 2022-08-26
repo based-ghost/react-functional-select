@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { MEDIA_QUERY_IS_MOBILE } from '../styled';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -20,7 +20,7 @@ type CodeMarkupProps = Readonly<{
 
 const CodeMarkupContainer = styled.div`
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 5px;
   margin: 1rem 1.5rem;
   background: #282c34;
 
@@ -35,7 +35,7 @@ const Header = styled.div`
   padding: 0 .9rem;
   font-weight: 700;
   line-height: 2.95;
-  letter-spacing: 0.075em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   background-color: #20232a;
 `;

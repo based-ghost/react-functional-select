@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { ThemeTestHOC } from './helpers';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

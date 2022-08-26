@@ -1,3 +1,4 @@
+import React from 'react';
 import type { CSSProperties } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -31,7 +32,7 @@ const renderOption = (props: OptionProps) => {
 const createOptionProps = (
   index = 0,
   focusedOptionIndex = 0,
-  memoizeOptions = false
+  memoOptions = false
 ) => {
   const onClickSelectOptionSpy = jest.fn();
   const renderOptionLabelSpy = RENDER_OPTION_LABEL_MOCK;
@@ -40,7 +41,7 @@ const createOptionProps = (
     index,
     style: OPTION_STYLE,
     data: {
-      memoizeOptions,
+      memoOptions,
       focusedOptionIndex,
       menuOptions: MENU_OPTIONS,
       selectOption: onClickSelectOptionSpy,

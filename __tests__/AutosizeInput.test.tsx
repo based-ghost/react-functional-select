@@ -1,3 +1,4 @@
+import React from 'react';
 import { ThemeTestHOC } from './helpers';
 import userEvent from '@testing-library/user-event';
 import { render, fireEvent } from '@testing-library/react';

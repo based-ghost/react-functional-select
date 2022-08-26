@@ -45,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   code {
-    font-size: 95%;
+    font-size: 93%;
     color: #353535;
     line-height: 1.7;
     border-radius: 4px;

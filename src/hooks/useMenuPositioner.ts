@@ -55,12 +55,7 @@ const useMenuPositioner = (
       };
 
       shouldScrollRef.current
-        ? scrollMenuIntoViewOnOpen(
-            menuRef.current,
-            menuScrollDuration,
-            scrollMenuIntoView,
-            handleOnMenuOpen
-          )
+        ? scrollMenuIntoViewOnOpen(menuRef.current, menuScrollDuration, scrollMenuIntoView, handleOnMenuOpen)
         : handleOnMenuOpen();
     } else {
       onMenuCloseRef();

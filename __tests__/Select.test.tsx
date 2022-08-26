@@ -1,3 +1,4 @@
+import React from 'react';
 import { Select, type SelectProps } from '../src';
 import userEvent from '@testing-library/user-event';
 import { render, fireEvent } from '@testing-library/react';

@@ -1,9 +1,6 @@
 module.exports = (api) => {
-  const isTestEnv = api.env('test');
-
-  const targets = !isTestEnv
-    ? '> 0.25%, not dead, not ie 11'
-    : { node: 'current' };
+  const isNotTestEnv = !api.env('test');
+  const targets = isNotTestEnv ? '> 0.25%, last 2 versions, not IE 11, not dead' : {node: 'current'};
 
   const presets = [
     ['@babel/preset-env', {targets, loose: true}],
@@ -12,7 +9,7 @@ module.exports = (api) => {
   ];
 
   const plugins = [
-    !isTestEnv && '@babel/plugin-transform-runtime',
+    // isNotTestEnv && '@babel/plugin-transform-runtime',
     ['@babel/plugin-proposal-optional-chaining', {loose: true}],
     ['@babel/plugin-proposal-nullish-coalescing-operator', {loose: true}],
     [
@@ -21,8 +18,8 @@ module.exports = (api) => {
         ssr: true,
         pure: true,
         fileName: false,
-        minify: !isTestEnv,
-        displayName: !isTestEnv,
+        minify: isNotTestEnv,
+        displayName: isNotTestEnv,
         transpileTemplateLiterals: true,
       },
     ],

@@ -1,3 +1,4 @@
+import React from 'react';
 import { ThemeTestHOC } from './helpers';
 import { render } from '@testing-library/react';
 import LoadingDots from '../src/components/IndicatorIcons/LoadingDots';

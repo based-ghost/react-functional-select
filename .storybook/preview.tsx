@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { GlobalStyle } from './global-style';
 
 // import react-toastify CSS files (overrides in react-toastify-override.ts)

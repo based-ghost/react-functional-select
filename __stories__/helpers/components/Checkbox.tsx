@@ -1,6 +1,6 @@
 import { hexToRgba } from '../utils';
-import type { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
+import React, { type FunctionComponent } from 'react';
 
 type CheckboxProps = Readonly<{
   label?: string;
@@ -74,7 +74,7 @@ const CheckIcon = styled.i`
   box-sizing: border-box;
   border-radius: 0.0625rem;
   background-color: transparent;
-  border-color: rgba(0, 0, 0, 0.54);
+  border-color: rgba(0, 0, 0, 0.5);
   transition: border-color 0.34s ease;
 
   :after,

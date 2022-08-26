@@ -1,3 +1,4 @@
+import React from 'react';
 import { render } from '@testing-library/react';
 import type { SelectedOption } from '../src/types';
 import Value, { type ValueProps } from '../src/components/Value';

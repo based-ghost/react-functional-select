@@ -15,15 +15,6 @@ import React, {
   type FocusEventHandler
 } from 'react';
 import {
-  isBoolean,
-  isFunction,
-  mergeThemes,
-  suppressEvent,
-  normalizeValue,
-  IS_TOUCH_DEVICE,
-  isArrayWithLength
-} from './utils';
-import {
   FilterMatchEnum,
   OptionIndexEnum,
   MenuPositionEnum,
@@ -39,17 +30,11 @@ import {
   MENU_MAX_HEIGHT_DEFAULT,
   CONTROL_CONTAINER_TESTID
 } from './constants';
-import {
-  useDebounce,
-  useCallbackRef,
-  useMenuOptions,
-  useMountEffect,
-  useUpdateEffect,
-  useMenuPositioner
-} from './hooks';
-import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
-import styled, { css, ThemeProvider, type DefaultTheme } from 'styled-components';
 import type { FixedSizeList } from 'react-window';
+import styled, { css, ThemeProvider, type DefaultTheme } from 'styled-components';
+import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
+import { useDebounce, useCallbackRef, useMenuOptions, useMountEffect, useUpdateEffect, useMenuPositioner } from './hooks';
+import { isBoolean, isFunction, mergeThemes, suppressEvent, normalizeValue, IS_TOUCH_DEVICE, isArrayWithLength } from './utils';
 import type {
   OptionData,
   PartialDeep,
@@ -106,6 +91,7 @@ export type SelectProps = Readonly<{
   placeholder?: string;
   menuItemSize?: number;
   isClearable?: boolean;
+  memoOptions?: boolean;
   lazyLoadMenu?: boolean;
   options?: OptionData[];
   isSearchable?: boolean;
@@ -114,7 +100,6 @@ export type SelectProps = Readonly<{
   ariaLabelledBy?: string;
   clearIcon?: IconRenderer;
   caretIcon?: IconRenderer;
-  memoizeOptions?: boolean;
   openMenuOnClick?: boolean;
   openMenuOnFocus?: boolean;
   menuPortalTarget?: Element;
@@ -254,8 +239,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
     getIsOptionDisabled,
     getFilterOptionString,
     isSearchable = true,
+    memoOptions = false,
     lazyLoadMenu = false,
-    memoizeOptions = false,
     openMenuOnClick = true,
     filterIgnoreCase = true,
     tabSelectsOption = true,
@@ -276,7 +261,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   // Instance prop refs (primitive/function type)
   const menuOpenRef = useRef<boolean>(false);
   const prevMenuOptionsLength = useRef<number>();
-  const onChangeEventValue = useRef<boolean>(false);
+  const onChangeEvtValue = useRef<boolean>(false);
   const onSearchChangeIsFunc = useRef<boolean>(isFunction(onSearchChange));
   const onOptionChangeIsFunc = useRef<boolean>(isFunction(onOptionChange));
 
@@ -466,13 +451,13 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   /**
    * If 'onSearchChange' function is defined, run as callback when the stateful debouncedInputValue
-   * updates check if onChangeEventValue ref is set true, which indicates the inputValue change was triggered by input change event
+   * updates check if onChangeEvtValue ref is set true, which indicates the inputValue change was triggered by input change event
    */
   useEffect(() => {
     const { current: isFunc } = onSearchChangeIsFunc;
 
-    if (isFunc && onChangeEventValue.current) {
-      onChangeEventValue.current = false;
+    if (isFunc && onChangeEvtValue.current) {
+      onChangeEvtValue.current = false;
       onSearchChangeRef(debouncedInputValue);
     }
   }, [onSearchChangeRef, debouncedInputValue]);
@@ -577,12 +562,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const handleOnKeyDown = (e: KeyboardEvent<HTMLElement>): void => {
     if (isDisabled) return;
 
-    const {
-      key,
-      keyCode,
-      shiftKey,
-      defaultPrevented
-    } = e;
+    const { key, shiftKey, defaultPrevented } = e;
 
     if (onKeyDown) {
       onKeyDown(e, inputValue, focusedOption);
@@ -590,12 +570,12 @@ const Select = forwardRef<SelectRef, SelectProps>((
     }
 
     switch (key) {
-      case 'ArrowDown':
+      case 'ArrowDown': {
+        menuOpen ? focusOptionOnArrowKey(OptionIndexEnum.DOWN) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
+        break;
+      }
       case 'ArrowUp': {
-        menuOpen
-          ? focusOptionOnArrowKey(key === 'ArrowDown' ? OptionIndexEnum.DOWN : OptionIndexEnum.UP)
-          : openMenuAndFocusOption(key === 'ArrowDown' ? OptionIndexEnum.FIRST : OptionIndexEnum.LAST);
-
+        menuOpen ? focusOptionOnArrowKey(OptionIndexEnum.UP) : openMenuAndFocusOption(OptionIndexEnum.LAST);
         break;
       }
       case 'ArrowLeft':
@@ -620,9 +600,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
         break;
       }
-      // Check e.keyCode !== 229 (Input Method Editor)
       case 'Enter': {
-        if (menuOpen && keyCode !== 229) selectOptionFromFocused();
+        if (menuOpen) {
+          selectOptionFromFocused();
+        }
         break;
       }
       case 'Escape': {
@@ -708,7 +689,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [onInputFocus]);
 
   const handleOnInputChange = useCallback((e: FormEvent<HTMLInputElement>): void => {
-    onChangeEventValue.current = true;
+    onChangeEvtValue.current = true;
     onInputChange?.(e.currentTarget.value);
     setInputValue(e.currentTarget.value);
     setMenuOpen(true);
@@ -716,9 +697,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
     handleOnMouseDownEvent(e);
-    menuOpenRef.current
-      ? setMenuOpen(false)
-      : openMenuAndFocusOption(OptionIndexEnum.FIRST);
+    menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
   }, [openMenuAndFocusOption]);
 
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
@@ -797,11 +776,11 @@ const Select = forwardRef<SelectRef, SelectProps>((
             itemSize={menuItemSize}
             loadingMsg={loadingMsg}
             menuOptions={menuOptions}
+            memoOptions={memoOptions}
             fixedSizeListRef={listRef}
             noOptionsMsg={noOptionsMsg}
             selectOption={selectOption}
             direction={menuItemDirection}
-            memoizeOptions={memoizeOptions}
             itemKeySelector={itemKeySelector}
             overscanCount={menuOverscanCount}
             menuPortalTarget={menuPortalTarget}

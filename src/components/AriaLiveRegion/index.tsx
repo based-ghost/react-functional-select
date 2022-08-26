@@ -43,7 +43,7 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
     return null;
   }
 
-  // Message contents for "aria-context" <span>
+  // Message contents for "aria-context" SPAN
   const menuMsg = menuOpen
     ? 'Use Up and Down arrow keys to choose options, press Enter or Tab to select the currently focused option, press Escape to close the menu.'
     : `${ariaLabel} is focused${isSearchable ? ', type to filter options' : ''}, press Down arrow key to open the menu.`;
@@ -52,12 +52,11 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
   const focusedMsg = (value && !isDisabled) ? `Option ${label} is focused, ${index + 1} of ${optionCount}.` : '';
   const optionsMsg = `${optionCount} option(s) available${inputValue ? (' for search ' + inputValue) : ''}.`;
 
-  // Message contents for "aria-selection" <span>
-  const labels = selectedOption.length ? selectedOption.map((x) => x.label).join(' ') : 'N/A';
-
-  // Formatted messages for both <span>'s
-  const selectionMsg = `Selected option: ${labels}`;
   const ariaContextMsg = `${focusedMsg} ${optionsMsg} ${menuMsg}`.trimStart();
+
+  // Message contents for "aria-selection" SPAN
+  const labels = selectedOption.length ? selectedOption.map((x) => x.label).join(' ') : 'N/A';
+  const selectionMsg = `Selected option: ${labels}`;
 
   return (
     <A11yText

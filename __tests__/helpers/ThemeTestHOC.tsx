@@ -1,3 +1,4 @@
+import React from 'react';
 import { DEFAULT_THEME } from '../../src/utils';
 import { ThemeProvider } from 'styled-components';
 

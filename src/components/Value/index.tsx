@@ -1,4 +1,4 @@
-import React, { memo, Fragment, type ReactNode } from 'react';
+import React, { Fragment, type ReactNode, type FunctionComponent } from 'react';
 import MultiValue from './MultiValue';
 import { isArrayWithLength } from '../../utils';
 import styled, { css } from 'styled-components';
@@ -32,13 +32,13 @@ const SingleValue = styled.div`
   max-width: calc(100% - 0.5rem);
 `;
 
-const Placeholder = styled.div<{ isFirstRender: boolean }>`
+const Placeholder = styled.div<{ initRender: boolean }>`
   ${SINGLE_VALUE_BASE_STYLE}
   color: ${({ theme }) => theme.color.placeholder};
-  ${({ theme, isFirstRender }) => !isFirstRender && css`animation: ${theme.placeholder.animation};`}
+  ${({ theme, initRender }) => !initRender && css`animation: ${theme.placeholder.animation};`}
 `;
 
-const Value = memo<ValueProps>(({
+const Value: FunctionComponent<ValueProps> = ({
   isMulti,
   inputValue,
   placeholder,
@@ -49,7 +49,7 @@ const Value = memo<ValueProps>(({
   removeSelectedOption
 }) => {
   // Do not apply Placeholder animation on initial render/mount of component
-  const isFirstRender = useFirstRenderState();
+  const initRender = useFirstRenderState();
   const noSelectedOptions = !isArrayWithLength(selectedOption);
 
   if (inputValue && (!isMulti || (isMulti && (noSelectedOptions || renderMultiOptions)))) {
@@ -58,7 +58,7 @@ const Value = memo<ValueProps>(({
 
   if (noSelectedOptions) {
     return (
-      <Placeholder isFirstRender={isFirstRender}>
+      <Placeholder initRender={initRender}>
         {placeholder}
       </Placeholder>
     );
@@ -88,8 +88,6 @@ const Value = memo<ValueProps>(({
           ))}
     </Fragment>
   );
-});
-
-Value.displayName = 'Value';
+};
 
 export default Value;

@@ -48,14 +48,11 @@ const useMenuOptions = (
     const isOptionFilterMatch = (option: MenuOption): boolean => {
       if (!normalizedSearch) return true;
 
-      const normalizedOptionLabel = trimAndFormatFilterStr(
-        getFilterOptionStringRef(option),
-        filterIgnoreCase,
-        filterIgnoreAccents
-      );
+      const filterVal = getFilterOptionStringRef(option);
+      const normalizedOptionLabel = trimAndFormatFilterStr(filterVal, filterIgnoreCase, filterIgnoreAccents);
 
       return isFilterMatchAny
-        ? normalizedOptionLabel.indexOf(normalizedSearch) > -1
+        ? normalizedOptionLabel.includes(normalizedSearch)
         : normalizedOptionLabel.substr(0, normalizedSearch.length) === normalizedSearch;
     };
 

@@ -102,10 +102,6 @@ export const ListWrapper = styled.div`
     max-width: 100% !important;
 
     ul {
-      li {
-        font-style: italic;
-      }
-
       li + li {
         margin-top: 0.55em !important;
       }
@@ -135,12 +131,12 @@ export const Li = styled.li`
 
 export const TextHeader = styled.span`
   color: #353535;
-  font-size: 95%;
+  font-size: 93%;
   line-height: 1.7;
   border-radius: 4px;
   padding: .15em .5em;
   word-break: break-word;
-  background-color: #f2f2f2;
+  background-color: #f3f3f3;
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
 `;
 
@@ -215,7 +211,7 @@ export const Label = styled.label`
   user-select: none;
   display: inline-block;
   vertical-align: middle;
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(0, 0, 0, 0.45);
   margin: 0.5rem auto 0.25rem 0;
 
   ${MEDIA_QUERY_IS_MOBILE} {

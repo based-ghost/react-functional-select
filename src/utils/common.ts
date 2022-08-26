@@ -2,6 +2,7 @@ import type { SyntheticEvent } from 'react';
 import type { SelectedOption, OptionValueCallback, OptionLabelCallback } from '../types';
 import { OPTION_CLS, EMPTY_ARRAY, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants';
 
+const STYLED_ANI_KEY = 'animation';
 const DIACRITICS_REG_EXP = /[\u0300-\u036f]/g;
 
 /**
@@ -10,10 +11,9 @@ const DIACRITICS_REG_EXP = /[\u0300-\u036f]/g;
  * Strips all diacritics from a string.
  * May not be supported by all legacy browsers (IE11 >=).
  */
-const stripDiacritics = (val: string): string => {
-  return val.normalize('NFD').replace(DIACRITICS_REG_EXP, '');
-};
+const stripDiacritics = (val: string): string => val.normalize('NFD').replace(DIACRITICS_REG_EXP, '');
 
+// Simple helper functions
 export const isBoolean = (val: unknown): val is Boolean => typeof val === 'boolean';
 export const isFunction = (val: unknown): val is Function => typeof val === 'function';
 export const isArrayWithLength = (val: unknown): boolean => Array.isArray(val) && !!val.length;
@@ -54,9 +54,12 @@ export const buildOptionClsName = (
 ): string => {
   let className = OPTION_CLS;
 
-  if (isDisabled) className += ' ' + OPTION_DISABLED_CLS;
-  if (isSelected) className += ' ' + OPTION_SELECTED_CLS;
-  if (isFocused) className += ' ' + OPTION_FOCUSED_CLS;
+  if (isDisabled)
+    className += ` ${OPTION_DISABLED_CLS}`;
+  if (isSelected)
+    className += ` ${OPTION_SELECTED_CLS}`;
+  if (isFocused)
+    className += ` ${OPTION_FOCUSED_CLS}`;
 
   return className;
 };
@@ -98,7 +101,7 @@ export const mergeDeep = <T>(target: any, source: any): T => {
     const sourceProp = source[key];
 
     output[key] =
-      (key !== 'animation' && isPlainObject(sourceProp))
+      (key !== STYLED_ANI_KEY && isPlainObject(sourceProp))
         ? target[key]
           ? mergeDeep(target[key], sourceProp)
           : sourceProp

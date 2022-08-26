@@ -1,3 +1,4 @@
+import React from 'react';
 import { render } from '@testing-library/react';
 import { getSelectedOptionMulti, ThemeTestHOC } from './helpers';
 import type { FocusedOption, SelectedOption } from '../src/types';

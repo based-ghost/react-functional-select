@@ -13,7 +13,7 @@ export type MenuListProps = Readonly<{
   isLoading?: boolean;
   overscanCount?: number;
   width: string | number;
-  memoizeOptions: boolean;
+  memoOptions: boolean;
   direction?: 'ltr' | 'rtl';
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
@@ -41,10 +41,10 @@ const MenuList: FunctionComponent<MenuListProps> = ({
   isLoading,
   loadingMsg,
   menuOptions,
+  memoOptions,
   selectOption,
   noOptionsMsg,
   overscanCount,
-  memoizeOptions,
   itemKeySelector,
   fixedSizeListRef,
   renderOptionLabel,
@@ -52,11 +52,11 @@ const MenuList: FunctionComponent<MenuListProps> = ({
 }) => {
   const itemData = useMemo<ItemData>(() => ({
     menuOptions,
-    memoizeOptions,
+    memoOptions,
     selectOption,
     renderOptionLabel,
     focusedOptionIndex
-  }), [menuOptions, memoizeOptions, focusedOptionIndex, selectOption, renderOptionLabel]);
+  }), [menuOptions, memoOptions, focusedOptionIndex, selectOption, renderOptionLabel]);
 
   if (isLoading) {
     return <NoOptionsMsg>{loadingMsg}</NoOptionsMsg>;

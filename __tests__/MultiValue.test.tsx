@@ -1,3 +1,4 @@
+import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CLEAR_ICON_MV_TESTID } from '../src/constants';
