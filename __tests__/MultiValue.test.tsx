@@ -56,7 +56,7 @@ test('"renderOptionLabel" callback should be executed and should render the sele
 test('clear indicator has functioning "click" user events', async () => {
   const { props, removeSelectedOptionSpy } = createMultiValueProps();
   const { user, getAllByTestId } = renderMultiValue(props);
-  const firstClearIconEl = getAllByTestId(CLEAR_ICON_MV_TESTID)[0];
+  const firstClearIconEl = getAllByTestId(CLEAR_ICON_MV_TESTID!)[0];
 
   await user.click(firstClearIconEl);
 

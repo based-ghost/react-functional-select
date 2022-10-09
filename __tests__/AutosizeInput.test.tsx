@@ -49,7 +49,7 @@ const createAutosizeInputProps = () => {
 test('input element has a static className (enables styling via classic CSS)', async () => {
   const { props } = createAutosizeInputProps();
   const { getByTestId } = renderAutosizeInput(props);
-  expect(getByTestId(AUTOSIZE_INPUT_TESTID)).toHaveClass(AUTOSIZE_INPUT_CLS);
+  expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveClass(AUTOSIZE_INPUT_CLS);
 });
 
 test('input has functional, optional ARIA attributes', async () => {
@@ -65,7 +65,7 @@ test('input has functional, optional ARIA attributes', async () => {
   const verifyAriaAttrs = ['aria-label', 'aria-labelledby', 'aria-autocomplete'];
 
   verifyAriaAttrs.forEach((attr) => {
-    expect(getByTestId(AUTOSIZE_INPUT_TESTID)).toHaveAttribute(attr);
+    expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute(attr);
   });
 });
 
@@ -80,7 +80,7 @@ test('when "id" has a non-empty string value, input element should get an "id" a
 
   const { getByTestId } = renderAutosizeInput(mergedProps);
 
-  expect(getByTestId(AUTOSIZE_INPUT_TESTID)).toHaveAttribute('id', inputId);
+  expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute('id', inputId);
 });
 
 test('when "readOnly" = true, the onChange event handler should not be attached to input and the "readonly" attribute is added', async () => {
@@ -92,7 +92,7 @@ test('when "readOnly" = true, the onChange event handler should not be attached 
   };
 
   const { user, getByTestId } = renderAutosizeInput(mergedProps);
-  const inputElement = getByTestId(AUTOSIZE_INPUT_TESTID);
+  const inputElement = getByTestId(AUTOSIZE_INPUT_TESTID!);
 
   await user.type(inputElement, 'no change');
 
@@ -103,7 +103,7 @@ test('when "readOnly" = true, the onChange event handler should not be attached 
 test('"blur" and "focus" events with callback handlers are attached to the input element', async () => {
   const { props, onBlurSpy, onFocusSpy } = createAutosizeInputProps();
   const { getByTestId } = renderAutosizeInput(props);
-  const inputElement = getByTestId(AUTOSIZE_INPUT_TESTID);
+  const inputElement = getByTestId(AUTOSIZE_INPUT_TESTID!);
 
   fireEvent.blur(inputElement);
   fireEvent.focus(inputElement);

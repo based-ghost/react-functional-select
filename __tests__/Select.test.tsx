@@ -27,9 +27,9 @@ const renderSelect = (props?: SelectProps) => ({
 
 test('container elements have static className value (enables styling via classic CSS)', async () => {
   const { getByTestId } = renderSelect();
-  expect(getByTestId(SELECT_CONTAINER_TESTID)).toHaveClass(SELECT_CONTAINER_CLS);
-  expect(getByTestId(CONTROL_CONTAINER_TESTID)).toHaveClass(CONTROL_CONTAINER_CLS);
-  expect(getByTestId(MENU_CONTAINER_TESTID)).toHaveClass(MENU_CONTAINER_CLS);
+  expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveClass(SELECT_CONTAINER_CLS);
+  expect(getByTestId(CONTROL_CONTAINER_TESTID!)).toHaveClass(CONTROL_CONTAINER_CLS);
+  expect(getByTestId(MENU_CONTAINER_TESTID!)).toHaveClass(MENU_CONTAINER_CLS);
 });
 
 test('id attributes are added to DOM if defined ("selectId" and "inputId" props)', async () => {
@@ -38,8 +38,8 @@ test('id attributes are added to DOM if defined ("selectId" and "inputId" props)
   const props = { inputId, selectId };
   const { getByTestId } = renderSelect(props);
 
-  expect(getByTestId(SELECT_CONTAINER_TESTID)).toHaveAttribute('id', selectId);
-  expect(getByTestId(AUTOSIZE_INPUT_TESTID)).toHaveAttribute('id', inputId);
+  expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveAttribute('id', selectId);
+  expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute('id', inputId);
 });
 
 // NOTE: element.not.toBeVisible() relies on access to CSS style sheets to check 'display: none;' - CSS-in-JS breaks this
@@ -61,7 +61,7 @@ test('"onInputFocus" callback should be fired when input is focused (if a define
   const props = { onInputFocus: onFocusSpy };
   const { getByTestId } = renderSelect(props);
 
-  fireEvent.focus(getByTestId(AUTOSIZE_INPUT_TESTID));
+  fireEvent.focus(getByTestId(AUTOSIZE_INPUT_TESTID!));
   expect(onFocusSpy).toBeCalled();
 });
 
@@ -79,7 +79,7 @@ test('"onInputBlur" callback should be fired on blur (if a defined function)', a
   const props = { onInputBlur: onBlurSpy };
   const { getByTestId } = renderSelect(props);
 
-  fireEvent.blur(getByTestId(AUTOSIZE_INPUT_TESTID));
+  fireEvent.blur(getByTestId(AUTOSIZE_INPUT_TESTID!));
   expect(onBlurSpy).toBeCalled();
 });
 
@@ -110,7 +110,7 @@ test('toggling the menu to open/close fires corresponding callbacks "onMenuOpen"
   };
 
   const { user, getByTestId } = renderSelect(props);
-  const controlWrapperEl = getByTestId(CONTROL_CONTAINER_TESTID);
+  const controlWrapperEl = getByTestId(CONTROL_CONTAINER_TESTID!);
 
   await user.click(controlWrapperEl);
   await user.click(controlWrapperEl);
@@ -121,5 +121,5 @@ test('toggling the menu to open/close fires corresponding callbacks "onMenuOpen"
 
 test('When "lazyLoadMenu" property = true, then menu components are only rendered in DOM when "menuOpen" state = true', async () => {
   const { queryByTestId } = renderSelect({ lazyLoadMenu: true });
-  expect(queryByTestId(MENU_CONTAINER_TESTID)).toBeNull();
+  expect(queryByTestId(MENU_CONTAINER_TESTID!)).toBeNull();
 });

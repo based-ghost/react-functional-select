@@ -82,7 +82,7 @@ test('option with "isDisabled" = FALSE should have a functioning onClick handler
   const firstEnabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !option.isDisabled);
   const { props, onClickSelectOptionSpy } = createOptionProps(firstEnabledMenuOptionIndex);
   const { user, container } = renderOption(props);
-  const optionParentEl = container.querySelector('div');
+  const optionParentEl = container.querySelector('div') as HTMLDivElement;
 
   await user.click(optionParentEl);
 
@@ -93,7 +93,7 @@ test(`option with "isDisabled" = TRUE should not have an onClick handler attache
   const firstDisabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !!option.isDisabled);
   const { props, onClickSelectOptionSpy } = createOptionProps(firstDisabledMenuOptionIndex);
   const { user, container } = renderOption(props);
-  const optionParentEl = container.querySelector('div');
+  const optionParentEl = container.querySelector('div') as HTMLDivElement;
 
   await user.click(optionParentEl);
 

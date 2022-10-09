@@ -56,14 +56,14 @@ const customIconFn = (props: Partial<IndicatorIconsProps>): ReactNode => {
 test('clear icon has a static className (enables styling via classic CSS)', async () => {
   const { props } = createIndicatorIconsProps();
   const { getByTestId } = renderIndicatorIcons(props);
-  const firstChildOfClearIconElement = getByTestId(CLEAR_ICON_TESTID).firstChild;
+  const firstChildOfClearIconElement = getByTestId(CLEAR_ICON_TESTID!).firstChild;
   expect(firstChildOfClearIconElement).toHaveClass(CLEAR_ICON_CLS);
 });
 
 test('clear indicator has functioning "click" user interactions', async () => {
   const { props, onClearMouseDownSpy } = createIndicatorIconsProps();
   const { user, getByTestId } = renderIndicatorIcons(props);
-  const clearIndicatorEl = getByTestId(CLEAR_ICON_TESTID);
+  const clearIndicatorEl = getByTestId(CLEAR_ICON_TESTID!);
 
   await user.click(clearIndicatorEl);
 
@@ -73,7 +73,7 @@ test('clear indicator has functioning "click" user interactions', async () => {
 test('caret indicator has functioning "click" user interactions', async () => {
   const { props, onCaretMouseDownSpy } = createIndicatorIconsProps();
   const { user, getByTestId } = renderIndicatorIcons(props);
-  const caretIndicatorEl = getByTestId(CARET_ICON_TESTID);
+  const caretIndicatorEl = getByTestId(CARET_ICON_TESTID!);
 
   await user.click(caretIndicatorEl);
 
@@ -84,7 +84,7 @@ test('clear icon is not rendered and loading animation is rendered when "isLoadi
   const { props } = createIndicatorIconsProps();
   const mergedProps = { ...props, isLoading: true };
   const { queryByTestId } = renderIndicatorIcons(mergedProps);
-  expect(queryByTestId(CLEAR_ICON_TESTID)).toBeNull();
+  expect(queryByTestId(CLEAR_ICON_TESTID!)).toBeNull();
 });
 
 test('loading can render as a custom node (instead of default LoadingDots.tsx component)', async () => {

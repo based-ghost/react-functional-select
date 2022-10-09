@@ -49,7 +49,7 @@ const GlobalStyle = createGlobalStyle`
     color: #353535;
     line-height: 1.7;
     border-radius: 4px;
-    padding: .15em .475em;
+    padding: .175em .475em;
     word-break: break-word;
     background-color: rgba(187, 239, 253, 0.29);
     font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;

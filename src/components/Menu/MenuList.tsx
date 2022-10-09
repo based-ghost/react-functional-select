@@ -20,7 +20,7 @@ export type MenuListProps = Readonly<{
   noOptionsMsg: string | null;
   itemKeySelector?: string | number;
   renderOptionLabel: RenderLabelCallback;
-  fixedSizeListRef: MutableRefObject<FixedSizeList | null>;
+  fixedSizeListRef: MutableRefObject<FixedSizeList | null> | undefined;
   selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 }>;
 

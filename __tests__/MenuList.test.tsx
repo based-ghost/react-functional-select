@@ -36,8 +36,8 @@ const createMenuListProps = (menuOptions: MenuOption[] = []): MenuListProps => {
     renderOptionLabel,
     focusedOptionIndex,
     memoOptions: false,
-    fixedSizeListRef: null,
     itemKeySelector: undefined,
+    fixedSizeListRef: undefined,
     height: MENU_MAX_HEIGHT_DEFAULT,
     loadingMsg: LOADING_MSG_DEFAULT,
     itemSize: MENU_ITEM_SIZE_DEFAULT,
@@ -76,13 +76,13 @@ test('The "itemKeySelector" property is used in "react-window" function property
 test('The "No Options" message element is NOT rendered when "menuOptions" length > 0', async () => {
   const props = createMenuListProps(MENU_OPTIONS);
   const { queryByText } = renderMenuList(props);
-  expect(queryByText(props.noOptionsMsg)).toBeNull();
+  expect(queryByText(props.noOptionsMsg!)).toBeNull();
 });
 
 test('The "No Options" message element is rendered when "menuOptions" length = 0', async () => {
   const props = createMenuListProps();
   const { getByText } = renderMenuList(props);
-  expect(getByText(props.noOptionsMsg)).toBeInTheDocument();
+  expect(getByText(props.noOptionsMsg!)).toBeInTheDocument();
 });
 
 test('The "Loading" message element is NOT rendered when "isLoading" != true', async () => {

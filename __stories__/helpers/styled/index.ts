@@ -134,7 +134,7 @@ export const TextHeader = styled.span`
   font-size: 93%;
   line-height: 1.7;
   border-radius: 4px;
-  padding: .15em .5em;
+  padding: .175em .5em;
   word-break: break-word;
   background-color: #f3f3f3;
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
