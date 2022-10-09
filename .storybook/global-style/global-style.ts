@@ -46,12 +46,12 @@ const GlobalStyle = createGlobalStyle`
 
   code {
     font-size: 90%;
-    color: #353535;
+    color: #476582;
     line-height: 1.7;
     border-radius: 4px;
     padding: .175em .475em;
     word-break: break-word;
-    background-color: rgba(187, 239, 253, 0.29);
+    background-color: #f1f1f1;
     font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   }
 
