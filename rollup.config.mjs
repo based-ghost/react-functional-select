@@ -1,5 +1,10 @@
+// For Node versions 17.5+ import assertion can be used
+// import pkg from './package.json' assert { type: 'json' };
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const pkg = require('./package.json');
+
 import path from 'path';
-import pkg from './package.json';
 import babel from '@rollup/plugin-babel';
 import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
@@ -22,7 +27,8 @@ const external = (id) => id.includes('@babel/runtime') || (!id.startsWith('.') &
  */
 const replacePlugin = replace({
   preventAssignment: true,
-  'process.env.NODE_ENV': JSON.stringify('production')
+  __ENVIRONMENT__: 'production',
+  // 'process.env.NODE_ENV': JSON.stringify('production')
 });
 
 // Remove data-testid attribute (since undefined in non-test environments)
@@ -39,7 +45,7 @@ const removeTestIdPlugin = replace({
 const babelPlugin = (useESModules) => {
   const targets = useESModules
     ? { esmodules: true }
-    : '> 0.25%, last 2 versions, not dead, not ie 11';
+    : '> 0.25%, last 2 versions, not dead';
 
   return babel({
     babelrc: false,
@@ -100,7 +106,8 @@ export default [
     input,
     output: {
       file: pkg.module,
-      format: 'esm',
+      format: 'es',
+      // exports: 'named',
     },
     plugins: commonPlugins(true),
   },
