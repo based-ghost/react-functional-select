@@ -1,15 +1,13 @@
-// For Node versions 17.5+ import assertion can be used
-// import pkg from './package.json' assert { type: 'json' };
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-const pkg = require('./package.json');
-
 import path from 'path';
 import babel from '@rollup/plugin-babel';
 import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import typescript from '@rollup/plugin-typescript';
+import {createRequire} from 'node:module';
+
+const require = createRequire(import.meta.url);
+const pkg = require('./package.json');
 
 const globals = {
   'react': 'React',
@@ -27,8 +25,7 @@ const external = (id) => id.includes('@babel/runtime') || (!id.startsWith('.') &
  */
 const replacePlugin = replace({
   preventAssignment: true,
-  __ENVIRONMENT__: 'production',
-  // 'process.env.NODE_ENV': JSON.stringify('production')
+  'process.env.NODE_ENV': JSON.stringify('production'),
 });
 
 // Remove data-testid attribute (since undefined in non-test environments)
@@ -106,8 +103,7 @@ export default [
     input,
     output: {
       file: pkg.module,
-      format: 'es',
-      // exports: 'named',
+      format: 'esm',
     },
     plugins: commonPlugins(true),
   },

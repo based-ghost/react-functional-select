@@ -7,7 +7,7 @@
   "umd": "dist/index.umd.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist/**/*.js"
+    "dist"
   ],
   "sideEffects": false,
   "license": "MIT",
@@ -109,7 +109,7 @@
   },
   "scripts": {
     "clean-build": "npm-run-all clean build",
-    "build": "tsc --outDir dist --declarationDir dist --declaration true && rollup -c",
+    "build": "tsc --outDir dist --declarationDir dist --declaration true --emitDeclarationOnly true && rollup -c",
     "build-watch": "rollup -c -w",
     "clean": "rimraf dist",
     "typecheck": "tsc -p --noEmit",
