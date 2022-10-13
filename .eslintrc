@@ -1,8 +1,14 @@
 {
   "extends": [
-    "eslint-config-poetez/typescript-react",
-    "react-app",
-    "plugin:prettier/recommended"
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier",
+    "react-hooks",
+    "@typescript-eslint"
   ],
   "env": {
     "browser": true,
@@ -11,12 +17,24 @@
     "jest": true
   },
   "rules": {
+    "react/prop-types": 0,
     "semi": "off",
     "sort-keys": "off",
     "global-require": "off",
     "spaced-comment": "off",
     "capitalized-comments": "off",
-    "padding-line-between-statements": "off"
+    "padding-line-between-statements": "off",
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-inferrable-types": 0,
+    "@typescript-eslint/no-non-null-assertion": 0
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "jsx": true
+    }
   },
   "settings": {
     "react": {

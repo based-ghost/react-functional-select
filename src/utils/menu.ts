@@ -1,4 +1,4 @@
-import type { CallbackFunction } from '../types';
+import type { CallbackFn } from '../types';
 
 const OVERFLOW_REG_EXP = /(auto|scroll)/;
 
@@ -72,7 +72,7 @@ function smoothScrollTo(
   el: Element,
   to: number,
   duration: number = 300,
-  callback?: CallbackFunction
+  callback?: CallbackFn
 ): void {
   let currentTime = 0;
   const start = getScrollTop(el);

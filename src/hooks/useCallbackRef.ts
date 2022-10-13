@@ -1,4 +1,4 @@
-import type { CallbackFunction } from '../types';
+import type { CallbackFn } from '../types';
 import { useEffect, useRef, useCallback } from 'react';
 
 /**
@@ -7,7 +7,7 @@ import { useEffect, useRef, useCallback } from 'react';
  *
  * @param callback The callback to write to a ref object
  */
-const useCallbackRef = <T extends CallbackFunction>(
+const useCallbackRef = <T extends CallbackFn>(
   callback: T | undefined
 ): T => {
   const callbackRef = useRef(callback);

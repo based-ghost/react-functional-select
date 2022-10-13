@@ -41,7 +41,7 @@ import type {
   IconRenderer,
   FocusedOption,
   SelectedOption,
-  CallbackFunction,
+  CallbackFn,
   MouseOrTouchEvent,
   AriaLiveAttribute,
   OptionLabelCallback,
@@ -116,8 +116,8 @@ export type SelectProps = Readonly<{
   ariaLive?: AriaLiveAttribute;
   hideSelectedOptions?: boolean;
   filterIgnoreAccents?: boolean;
-  onMenuOpen?: CallbackFunction;
-  onMenuClose?: CallbackFunction;
+  onMenuOpen?: CallbackFn;
+  onMenuClose?: CallbackFn;
   backspaceClearsValue?: boolean;
   menuPosition?: MenuPositionEnum;
   filterMatchFrom?: FilterMatchEnum;
@@ -125,17 +125,17 @@ export type SelectProps = Readonly<{
   itemKeySelector?: string | number;
   getOptionLabel?: OptionLabelCallback;
   getOptionValue?: OptionValueCallback;
-  onInputChange?: (value?: string) => any;
   initialValue?: OptionData | OptionData[];
-  onSearchChange?: (value?: string) => any;
-  onOptionChange?: (data: OptionData) => any;
+  onInputChange?: (value?: string) => unknown;
+  onSearchChange?: (value?: string) => unknown;
+  onOptionChange?: (data: OptionData) => unknown;
   onInputBlur?: FocusEventHandler<HTMLInputElement>;
   onInputFocus?: FocusEventHandler<HTMLInputElement>;
   renderOptionLabel?: (data: OptionData) => ReactNode;
   getIsOptionDisabled?: (data: OptionData) => boolean;
   getFilterOptionString?: (option: MenuOption) => string;
   renderMultiOptions?: (params: MultiParams) => ReactNode;
-  onKeyDown?: (e: KeyboardEvent<Element>, input?: string, focusedOption?: FocusedOption) => any;
+  onKeyDown?: (e: KeyboardEvent<Element>, input?: string, focusedOption?: FocusedOption) => unknown;
 }>;
 
 interface ControlWrapperProps extends Pick<SelectProps, 'isInvalid' | 'isDisabled'> {

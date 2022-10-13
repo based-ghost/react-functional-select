@@ -4,10 +4,9 @@ import { MEDIA_QUERY_IS_MOBILE } from '../styled';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 
 // Register light build of react-syntax-highlighter and register only what is needed
+const dark = require('react-syntax-highlighter/dist/esm/styles/prism/dark').default;
 const markup = require('react-syntax-highlighter/dist/esm/languages/prism/markup').default;
 const javascript = require('react-syntax-highlighter/dist/esm/languages/prism/javascript').default;
-const dark = require('react-syntax-highlighter/dist/esm/styles/prism/dark').default;
-
 SyntaxHighlighter.registerLanguage('markup', markup);
 SyntaxHighlighter.registerLanguage('javascript', javascript);
 
@@ -113,5 +112,7 @@ const CodeMarkup = memo<CodeMarkupProps>(({
     </PreContainer>
   </CodeMarkupContainer>
 ));
+
+CodeMarkup.displayName = 'CodeMarkup';
 
 export default CodeMarkup;

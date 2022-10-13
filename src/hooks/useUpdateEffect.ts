@@ -12,7 +12,6 @@ const useUpdateEffect: typeof useEffect = (effect, deps): void => {
     if (!isFirstRender) {
       return effect();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };
 

@@ -80,7 +80,7 @@ const Menu: FunctionComponent<MenuProps> = ({
   ...menuListProps
 }) => {
   const { menuOptions, noOptionsMsg } = menuListProps;
-  const hideNoOptionsMsg = menuOpen && !Boolean(noOptionsMsg) && !isArrayWithLength(menuOptions);
+  const hideNoOptionsMsg = menuOpen && !noOptionsMsg && !isArrayWithLength(menuOptions);
 
   const menuNode = (
     <MenuWrapper

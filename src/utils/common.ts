@@ -1,5 +1,5 @@
 import type { SyntheticEvent } from 'react';
-import type { SelectedOption, OptionValueCallback, OptionLabelCallback } from '../types';
+import type { SelectedOption, OptionValueCallback, OptionLabelCallback, CallbackFn } from '../types';
 import { OPTION_CLS, EMPTY_ARRAY, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants';
 
 const STYLED_ANI_KEY = 'animation';
@@ -14,8 +14,8 @@ const DIACRITICS_REG_EXP = /[\u0300-\u036f]/g;
 const stripDiacritics = (val: string): string => val.normalize('NFD').replace(DIACRITICS_REG_EXP, '');
 
 // Simple helper functions
-export const isBoolean = (val: unknown): val is Boolean => typeof val === 'boolean';
-export const isFunction = (val: unknown): val is Function => typeof val === 'function';
+export const isBoolean = (val: unknown): val is boolean => typeof val === 'boolean';
+export const isFunction = (val: unknown): val is CallbackFn => typeof val === 'function';
 export const isArrayWithLength = (val: unknown): boolean => Array.isArray(val) && !!val.length;
 export const isPlainObject = (val: unknown): boolean => val !== null && typeof val === 'object' && !Array.isArray(val);
 
@@ -68,7 +68,7 @@ export const buildOptionClsName = (
  * Parses an object or an array of objects into output of SelectedOption[].
  */
 export const normalizeValue = (
-  value: any,
+  value: unknown,
   getOptionValue: OptionValueCallback,
   getOptionLabel: OptionLabelCallback
 ): SelectedOption[] => {
@@ -82,7 +82,7 @@ export const normalizeValue = (
     return initValues;
   }
 
-  return initValues.map((data: any) => ({
+  return initValues.map((data: unknown) => ({
     data,
     value: getOptionValue(data),
     label: getOptionLabel(data)

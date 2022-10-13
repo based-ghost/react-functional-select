@@ -1,8 +1,8 @@
-import type { MenuOption } from '../Select';
+import type { MenuOption } from './Select';
 import type { ReactNode, MouseEvent, TouchEvent, EventHandler } from 'react';
 
 export type OptionData = any;
-export type CallbackFunction = (...args: any[]) => any;
+export type CallbackFn = (...args: any[]) => any;
 export type AriaLiveAttribute = 'off' | 'polite' | 'assertive';
 
 export type CustomRendererCallback = (...args: any[]) => ReactNode;

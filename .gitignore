@@ -2,8 +2,8 @@
 
 # Editor directories and files
 .idea
-.vs/
-.vscode/
+.vs
+.vscode
 .cache
 
 # dependencies

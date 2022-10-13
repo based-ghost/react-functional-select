@@ -4,7 +4,7 @@ import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import typescript from '@rollup/plugin-typescript';
-import {createRequire} from 'node:module';
+import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const pkg = require('./package.json');
