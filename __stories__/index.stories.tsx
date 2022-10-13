@@ -642,7 +642,7 @@ export const Filtering = () => {
             ignores accents when matching strings. Default value is <em>false</em>.
           </Li>
           <Li>
-            <TextHeader>filterMatchFrom?: &apos; any&apos; | &apos;start&apos;</TextHeader> -
+            <TextHeader>filterMatchFrom?: &apos;any&apos; | &apos;start&apos;</TextHeader> -
             Position in source string to perform match. Default value is <em>&apos;any&apos;</em>.
           </Li>
           <Li>
@@ -730,7 +730,7 @@ export const Virtualization = () => {
         of nodes), list virtualization can also assist with:
         <List>
           <Li>
-            <strong>Efficient memory allocation</strong>.&apos; Windowing&apos; naturally
+            <strong>Efficient memory allocation</strong>. &apos;Windowing&apos; naturally
             lends itself to the dynamic generation of attributes/values as each
             object comes into your renderer&apos;s scope (as opposed to allocating
             this data upfront for each object in your list). This way you can
@@ -842,7 +842,7 @@ export const Advanced = () => {
             <TextHeader>getIsOptionDisabled(option: any) {'=>'} boolean</TextHeader> - Callback
             function with a return type of <code>Boolean</code>. When it evaluates to a value of
             true, that option iteration will be rendered <em>disabled</em>. As an alternative, you
-            can also pass a property of <code>isDisabled</code> with each option. Use of these two
+            can also pass a property of <code>isDisabled</code> with each option. Use one of these two
             options - they cannot both be specified.
           </Li>
           <Li>
@@ -898,7 +898,7 @@ export const Portaling = () => {
       <Title>Portaling</Title>
       <Hr />
       <Paragraph>
-        React-Functional-Select exposes a <code>menuPortalTarget</code> prop, that
+        react-functional-select exposes a <code>menuPortalTarget</code> prop, that
         allows you to portal the menu component to a dom node of your choosing. Styling
         should be simple enough via normal theme overriding on the menu object and style
         application to the wrapping portal element.
