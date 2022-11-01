@@ -42,25 +42,21 @@ const useMenuOptions = (
   const hideSelectedOptionsOrDefault = isBoolean(hideSelectedOptions) ? hideSelectedOptions : isMulti;
 
   useEffect(() => {
-    const selectedHash = selectedOption.length ? new Set(selectedOption.map((x) => x.value)) : null;
-    const normalizedSearch = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
+    const selectedValues = selectedOption.map((x) => x.value);
+    const matchVal = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
 
     const isOptionFilterMatch = (option: MenuOption): boolean => {
-      if (!normalizedSearch) return true;
-
+      if (!matchVal) return true;
       const filterVal = getFilterOptionStringRef(option);
-      const normalizedOptionLabel = trimAndFormatFilterStr(filterVal, filterIgnoreCase, filterIgnoreAccents);
-
-      return isFilterMatchAny
-        ? normalizedOptionLabel.includes(normalizedSearch)
-        : normalizedOptionLabel.substr(0, normalizedSearch.length) === normalizedSearch;
+      const filterValNrml = trimAndFormatFilterStr(filterVal, filterIgnoreCase, filterIgnoreAccents);
+      return isFilterMatchAny ? filterValNrml.includes(matchVal) : filterValNrml.startsWith(matchVal);
     };
 
     const parseMenuOption = (data: OptionData): MenuOption | undefined => {
       const value = getOptionValue(data);
       const label = getOptionLabel(data);
       const isDisabled = getIsOptionDisabledRef(data);
-      const isSelected = selectedHash?.has(value) ?? false;
+      const isSelected = selectedValues.includes(value);
       const menuOption: MenuOption = { data, value, label, isDisabled, isSelected };
 
       if (!isOptionFilterMatch(menuOption) || (hideSelectedOptionsOrDefault && isSelected)) {

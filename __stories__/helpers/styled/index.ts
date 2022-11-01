@@ -131,10 +131,10 @@ export const Li = styled.li`
 
 export const TextHeader = styled.span`
   color: #476582;
-  font-size: 95%;
+  font-size: 94%;
   line-height: 1.7;
   border-radius: 4px;
-  padding: .175em .5em;
+  padding: .175em .475em;
   word-break: break-word;
   background-color: #f1f1f1;
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;

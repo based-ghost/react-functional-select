@@ -455,7 +455,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
    */
   useEffect(() => {
     const { current: isFunc } = onSearchChangeIsFunc;
-
     if (isFunc && onChangeEvtValue.current) {
       onChangeEvtValue.current = false;
       onSearchChangeRef(debouncedInputValue);
@@ -563,7 +562,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
     if (isDisabled) return;
 
     const { key, shiftKey, defaultPrevented } = e;
-
     if (onKeyDown) {
       onKeyDown(e, inputValue, focusedOption);
       if (defaultPrevented) return;

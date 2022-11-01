@@ -79,9 +79,8 @@ const AutosizeInput = memo(
     const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
 
     useUpdateEffect(() => {
-      const { current: el } = sizerRef;
-      if (el) {
-        setInputWidth(el.scrollWidth + INPUT_MIN_WIDTH_PX);
+      if (sizerRef.current) {
+        setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
       }
     }, [inputValue]);
 

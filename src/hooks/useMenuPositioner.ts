@@ -39,8 +39,10 @@ const useMenuPositioner = (
   });
 
   useEffect(() => {
-    const { TOP, AUTO } = MenuPositionEnum;
-    const isTopPos = menuPosition === TOP || (menuPosition === AUTO && !menuFitsBelowControl(menuRef.current));
+    const isTopPos =
+      menuPosition === MenuPositionEnum.TOP ||
+      (menuPosition === MenuPositionEnum.AUTO && !menuFitsBelowControl(menuRef.current));
+
     setIsMenuTopPosition(isTopPos);
   }, [menuRef, menuPosition]);
 
@@ -55,7 +57,12 @@ const useMenuPositioner = (
       };
 
       shouldScrollRef.current
-        ? scrollMenuIntoViewOnOpen(menuRef.current, menuScrollDuration, scrollMenuIntoView, handleOnMenuOpen)
+        ? scrollMenuIntoViewOnOpen(
+            menuRef.current,
+            menuScrollDuration,
+            scrollMenuIntoView,
+            handleOnMenuOpen
+          )
         : handleOnMenuOpen();
     } else {
       onMenuCloseRef();

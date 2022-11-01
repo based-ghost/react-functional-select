@@ -40,7 +40,6 @@ export const trimAndFormatFilterStr = (
   if (filterIgnoreCase) {
     trimVal = trimVal.toLowerCase();
   }
-
   return !filterIgnoreAccents ? trimVal : stripDiacritics(trimVal);
 };
 
