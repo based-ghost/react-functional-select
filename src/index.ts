@@ -1,8 +1,2 @@
-export {
-  type Theme,
-  type SelectRef,
-  type MenuOption,
-  type MultiParams,
-  type SelectProps,
-  default as Select
-} from './Select';
+export { default as Select } from './Select';
+export type { Theme, SelectRef, MenuOption, MultiParams } from './types';

@@ -1,4 +1,4 @@
-import type { Theme } from '../Select';
+import type { Theme } from '../types';
 import { mergeDeep, isPlainObject } from './common';
 import type { DefaultTheme } from 'styled-components';
 import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from '../constants';
@@ -70,9 +70,6 @@ export const DEFAULT_THEME: DefaultTheme = {
     margin: '0.25rem 0',
     color: 'hsl(0, 0%, 60%)',
     padding: '0.375rem 0.75rem'
-  },
-  placeholder: {
-    animation: FADE_IN_ANIMATION_CSS
   },
   multiValue: {
     margin: '1px 2px',

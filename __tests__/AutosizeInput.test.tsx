@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { type ComponentProps } from 'react';
 import { ThemeTestHOC } from './helpers';
 import userEvent from '@testing-library/user-event';
 import { render, fireEvent } from '@testing-library/react';
+import AutosizeInput from '../src/components/AutosizeInput';
 import { AUTOSIZE_INPUT_CLS, AUTOSIZE_INPUT_TESTID } from '../src/constants';
-import AutosizeInput, { type AutosizeInputProps } from '../src/components/AutosizeInput';
+
+type AutosizeInputProps = ComponentProps<typeof AutosizeInput>;
 
 // ============================================
 // Helper functions for AutosizeInput component

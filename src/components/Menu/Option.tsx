@@ -3,18 +3,14 @@ import { areEqual } from 'react-window';
 import type { ItemData } from '../../types';
 import { buildOptionClsName } from '../../utils';
 
-export type OptionProps = Readonly<{
+type OptionProps = Readonly<{
   index: number;
   data: ItemData;
   style: CSSProperties;
 }>;
 
-// Custom comparison function for React.memo().
-// Extends functionality provided from "areEqual" with added bailout feature based on value of "memoOptions"
-const propsAreEqual = (
-  prevProps: OptionProps,
-  nextProps: OptionProps
-): boolean => {
+// Extends react-window "areEqual" adding early bailout based on "memoOptions" flag
+const _areEqual = (prevProps: OptionProps, nextProps: OptionProps): boolean => {
   const { memoOptions } = nextProps.data;
   return memoOptions && areEqual(prevProps, nextProps);
 };
@@ -29,20 +25,24 @@ const Option = memo<OptionProps>(({
     focusedOptionIndex
   }
 }) => {
-  const { data, value, label, isDisabled, isSelected } = menuOptions[index];
-  const className = buildOptionClsName(isDisabled, isSelected, (index === focusedOptionIndex));
-  const onClick = !isDisabled ? () => selectOption({ data, value, label }, isSelected) : undefined;
+  const opt = menuOptions[index];
+
+  const className = buildOptionClsName(
+    opt.isDisabled,
+    opt.isSelected,
+    index === focusedOptionIndex
+  );
 
   return (
     <div
       style={style}
-      onClick={onClick}
       className={className}
+      onClick={() => selectOption(opt)}
     >
-      {renderOptionLabel(data)}
+      {renderOptionLabel(opt.data)}
     </div>
   );
-}, propsAreEqual);
+}, _areEqual);
 
 Option.displayName = 'Option';
 

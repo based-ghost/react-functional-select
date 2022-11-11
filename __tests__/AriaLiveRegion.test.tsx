@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { type ComponentProps } from 'react';
 import { render } from '@testing-library/react';
+import AriaLiveRegion from '../src/components/AriaLiveRegion';
 import { getSelectedOptionMulti, ThemeTestHOC } from './helpers';
 import type { FocusedOption, SelectedOption } from '../src/types';
 import { ARIA_LIVE_CONTEXT_ID, ARIA_LIVE_SELECTION_ID } from '../src/constants';
-import AriaLiveRegion, { type AriaLiveRegionProps } from '../src/components/AriaLiveRegion';
+
+type AriaLiveRegionProps = ComponentProps<typeof AriaLiveRegion>;
 
 // ============================================
 // Helper functions for AriaLiveRegion component
@@ -52,7 +54,6 @@ test('"ariaLive" prop can be passed as one of the accepted aria-live values and 
   const ariaLive: AriaLiveRegionProps['ariaLive'] = 'assertive';
   const props = createAriaLiveRegionProps();
   const mergedProps = { ...props, ariaLive };
-
   const { container } = renderAriaLiveRegion(mergedProps);
   const a11yTextRootSpanEl = container.firstChild;
 

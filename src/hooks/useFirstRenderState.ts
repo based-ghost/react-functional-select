@@ -4,14 +4,14 @@ import { useRef } from 'react';
  * Returns "true" if component is just mounted (first render), else "false".
  */
 const useFirstRenderState = (): boolean => {
-  const isFirstRenderRef = useRef(true);
+  const isFirst = useRef(true);
 
-  if (isFirstRenderRef.current) {
-    isFirstRenderRef.current = false;
+  if (isFirst.current) {
+    isFirst.current = false;
     return true;
   }
 
-  return isFirstRenderRef.current;
+  return isFirst.current;
 };
 
 export default useFirstRenderState;

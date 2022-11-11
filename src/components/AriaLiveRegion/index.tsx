@@ -3,7 +3,7 @@ import React, { type FunctionComponent } from 'react';
 import { ARIA_LIVE_SELECTION_ID, ARIA_LIVE_CONTEXT_ID } from '../../constants';
 import type { FocusedOption, SelectedOption, AriaLiveAttribute } from '../../types';
 
-export type AriaLiveRegionProps = Readonly<{
+type AriaLiveRegionProps = Readonly<{
   menuOpen: boolean;
   isFocused: boolean;
   ariaLabel?: string;
@@ -51,7 +51,6 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
   const { index, value, label, isDisabled } = focusedOption;
   const focusedMsg = (value && !isDisabled) ? `Option ${label} is focused, ${index + 1} of ${optionCount}.` : '';
   const optionsMsg = `${optionCount} option(s) available${inputValue ? (' for search ' + inputValue) : ''}.`;
-
   const ariaContextMsg = `${focusedMsg} ${optionsMsg} ${menuMsg}`.trimStart();
 
   // Message contents for "aria-selection" SPAN

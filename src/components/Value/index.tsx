@@ -2,11 +2,9 @@ import React, { Fragment, type ReactNode, type FunctionComponent } from 'react';
 import MultiValue from './MultiValue';
 import { isArrayWithLength } from '../../utils';
 import styled, { css } from 'styled-components';
-import { useFirstRenderState } from '../../hooks';
-import type { MultiParams } from '../../Select';
-import type { SelectedOption, RenderLabelCallback } from '../../types';
+import type { MultiParams, SelectedOption, RenderLabelCallback } from '../../types';
 
-export type ValueProps = Readonly<{
+type ValueProps = Readonly<{
   isMulti?: boolean;
   inputValue: string;
   placeholder: string;
@@ -32,10 +30,9 @@ const SingleValue = styled.div`
   max-width: calc(100% - 0.5rem);
 `;
 
-const Placeholder = styled.div<{ initRender: boolean }>`
+const Placeholder = styled.div`
   ${SINGLE_VALUE_BASE_STYLE}
   color: ${({ theme }) => theme.color.placeholder};
-  ${({ theme, initRender }) => !initRender && css`animation: ${theme.placeholder.animation};`}
 `;
 
 const Value: FunctionComponent<ValueProps> = ({
@@ -48,28 +45,17 @@ const Value: FunctionComponent<ValueProps> = ({
   renderMultiOptions,
   removeSelectedOption
 }) => {
-  // Do not apply Placeholder animation on initial render/mount of component
-  const initRender = useFirstRenderState();
-  const noSelectedOptions = !isArrayWithLength(selectedOption);
-
-  if (inputValue && (!isMulti || (isMulti && (noSelectedOptions || renderMultiOptions)))) {
+  const noSelectedOpts = !isArrayWithLength(selectedOption);
+  if (inputValue && (!isMulti || (isMulti && (noSelectedOpts || renderMultiOptions)))) {
     return null;
   }
 
-  if (noSelectedOptions) {
-    return (
-      <Placeholder initRender={initRender}>
-        {placeholder}
-      </Placeholder>
-    );
+  if (noSelectedOpts) {
+    return <Placeholder>{placeholder}</Placeholder>;
   }
 
   if (!isMulti) {
-    return (
-      <SingleValue>
-        {renderOptionLabel(selectedOption[0].data)}
-      </SingleValue>
-    );
+    return <SingleValue>{renderOptionLabel(selectedOption[0].data)}</SingleValue>;
   }
 
   return (

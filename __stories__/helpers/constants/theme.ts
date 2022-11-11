@@ -21,9 +21,6 @@ const THEME_ANIMATIONS: Theme = {
       animation: FADE_IN_KEYFRAMES_STR
     }
   },
-  placeholder: {
-    animation: FADE_IN_KEYFRAMES_STR
-  },
 };
 
 export const ThemeEnum = {

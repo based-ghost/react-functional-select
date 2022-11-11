@@ -65,7 +65,6 @@ test('option parent element renders dynamic style attribute correctly', async ()
   const { container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
   const optionCssProps = stringifyCSSProperties(OPTION_STYLE);
-
   expect(optionParentEl).toHaveAttribute('style', optionCssProps);
 });
 
@@ -73,23 +72,11 @@ test('"renderOptionLabel" callback should be executed and the result rendered to
   const { props, renderOptionLabelSpy } = createOptionProps();
   const { label } = props.data.menuOptions[props.index];
   const { getByText } = renderOption(props);
-
   expect(renderOptionLabelSpy).toHaveBeenCalled();
   expect(getByText(String(label))).toBeInTheDocument();
 });
 
-test('option with "isDisabled" = FALSE should have a functioning onClick handler attached', async () => {
-  const firstEnabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !option.isDisabled);
-  const { props, onClickSelectOptionSpy } = createOptionProps(firstEnabledMenuOptionIndex);
-  const { user, container } = renderOption(props);
-  const optionParentEl = container.querySelector('div') as HTMLDivElement;
-
-  await user.click(optionParentEl);
-
-  expect(onClickSelectOptionSpy).toBeCalled();
-});
-
-test(`option with "isDisabled" = TRUE should not have an onClick handler attached and should have class - ${OPTION_DISABLED_CLS} - added to its classList`, async () => {
+test(`option with "isDisabled" = TRUE should have an onClick handler and the ${OPTION_DISABLED_CLS} class added to its classList`, async () => {
   const firstDisabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !!option.isDisabled);
   const { props, onClickSelectOptionSpy } = createOptionProps(firstDisabledMenuOptionIndex);
   const { user, container } = renderOption(props);
@@ -97,6 +84,6 @@ test(`option with "isDisabled" = TRUE should not have an onClick handler attache
 
   await user.click(optionParentEl);
 
-  expect(onClickSelectOptionSpy).not.toBeCalled();
+  expect(onClickSelectOptionSpy).toBeCalled();
   expect(optionParentEl).toHaveClass(OPTION_DISABLED_CLS);
 });

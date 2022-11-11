@@ -1,17 +1,15 @@
 import type { CallbackFn } from '../types';
 
-const OVERFLOW_REG_EXP = /(auto|scroll)/;
-
 /**
  * @private
  *
+ * @param t: time (elapsed)
+ * @param b: initial value
  * @param c: amount of change
  * @param d: duration
- * @param s: initial value (start)
- * @param t: time (elapsed)
  */
-function easeOutCubic(c: number, d: number, s: number, t: number): number {
-  return c * ((t = t / d - 1) * t * t + 1) + s;
+function easeOutCubic(t: number, b: number, c: number, d: number): number {
+  return c * ((t = t / d - 1) * t * t + 1) + b;
 }
 
 /**
@@ -31,16 +29,8 @@ function scrollTo(el: Element, top: number): void {
 /**
  * @private
  */
-function isDocumentElement(el: Element | Window): boolean {
+function isDocumentElement(el: Element | typeof window): boolean {
   return el === document.body || el === document.documentElement || el === window;
-}
-
-/**
- * @private
- */
-function isScrollableStyle(style: CSSStyleDeclaration): boolean {
-  const { overflow, overflowX, overflowY } = style;
-  return OVERFLOW_REG_EXP.test(`${overflow}${overflowX}${overflowY}`);
 }
 
 /**
@@ -48,21 +38,24 @@ function isScrollableStyle(style: CSSStyleDeclaration): boolean {
  */
 function getScrollParent(el: Element): Element {
   let style = getComputedStyle(el);
-  const docEl = document.documentElement;
   const isParentAbs = style.position === 'absolute';
+  const overflowRegExp = /(auto|scroll)/;
 
   if (style.position === 'fixed') {
-    return docEl;
+    return document.documentElement;
   }
 
-  for (let parent: Element | null = el; (parent = parent?.parentElement);) {
+  for (let parent: Element | null = el; (parent = parent?.parentElement); ) {
     style = getComputedStyle(parent);
-    if (!(isParentAbs && style.position === 'static') && isScrollableStyle(style)) {
+    if (
+      !(isParentAbs && style.position === 'static') &&
+      overflowRegExp.test(`${style.overflow}${style.overflowX}${style.overflowY}`)
+    ) {
       return parent;
     }
   }
 
-  return docEl;
+  return document.documentElement;
 }
 
 /**
@@ -80,12 +73,9 @@ function smoothScrollTo(
 
   function scrollFn() {
     currentTime += 5;
-    const calcScrollTop = easeOutCubic(change, duration, start, currentTime);
+    const calcScrollTop = easeOutCubic(currentTime, start, change, duration);
     scrollTo(el, calcScrollTop);
-
-    (currentTime < duration)
-      ? requestAnimationFrame(scrollFn)
-      : callback?.();
+    (currentTime < duration) ? requestAnimationFrame(scrollFn) : callback?.();
   }
 
   requestAnimationFrame(scrollFn);
@@ -103,7 +93,6 @@ export const calculateMenuTop = (
   const menuElStyle = menuEl && getComputedStyle(menuEl);
   const marginBottom = menuElStyle ? parseInt(menuElStyle.marginBottom, 10) : 0;
   const marginTop = menuElStyle ? parseInt(menuElStyle.marginTop, 10) : 0;
-
   const controlHeight = controlEl?.getBoundingClientRect().height ?? 0;
   const menuHeightCalc = menuHeight > 0 ? menuHeight : (menuEl?.getBoundingClientRect().height ?? 0);
   const basePx = -Math.abs(menuHeightCalc + controlHeight);

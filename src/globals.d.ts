@@ -80,9 +80,6 @@ declare module 'styled-components' {
       fontSize: string;
       css?: string | FlattenSimpleInterpolation;
     };
-    placeholder: {
-      animation: string | FlattenSimpleInterpolation;
-    },
     multiValue: {
       margin: string;
       borderRadius: string;

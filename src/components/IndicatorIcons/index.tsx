@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 import { CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../../constants';
 import type { IconRenderer, CustomRendererCallback, MouseOrTouchEventHandler } from '../../types';
 
-export type IndicatorIconsProps = Readonly<{
+type IndicatorIconsProps = Readonly<{
   menuOpen: boolean;
   showClear: boolean;
   isLoading?: boolean;

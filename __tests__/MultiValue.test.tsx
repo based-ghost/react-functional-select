@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { type ComponentProps } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CLEAR_ICON_MV_TESTID } from '../src/constants';
-import MultiValue, { type MultiValueProps } from '../src/components/Value/MultiValue';
+import MultiValue from '../src/components/Value/MultiValue';
 import { RENDER_OPTION_LABEL_MOCK, getOptionSingle, ThemeTestHOC, type Option } from './helpers';
+
+type MultiValueProps = ComponentProps<typeof MultiValue>;
 
 // ============================================
 // Helper functions for MultiValue component
@@ -48,7 +50,6 @@ test('"renderOptionLabel" callback should be executed and should render the sele
   const { props, renderOptionLabelSpy } = createMultiValueProps();
   const { getByText } = renderMultiValue(props);
   const { label } = props.data;
-
   expect(renderOptionLabelSpy).toBeCalled();
   expect(getByText(label)).toBeInTheDocument();
 });

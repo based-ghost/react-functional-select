@@ -36,8 +36,11 @@ import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './co
 import { useDebounce, useCallbackRef, useMenuOptions, useMountEffect, useUpdateEffect, useMenuPositioner } from './hooks';
 import { isBoolean, isFunction, mergeThemes, suppressEvent, normalizeValue, IS_TOUCH_DEVICE, isArrayWithLength } from './utils';
 import type {
+  Theme,
+  SelectRef,
   OptionData,
-  PartialDeep,
+  MenuOption,
+  MultiParams,
   IconRenderer,
   FocusedOption,
   SelectedOption,
@@ -49,32 +52,7 @@ import type {
   RenderLabelCallback
 } from './types';
 
-export type Theme = PartialDeep<DefaultTheme>;
-
-export type MultiParams = Readonly<{
-  selected: SelectedOption[];
-  renderOptionLabel: (data: OptionData) => ReactNode;
-}>;
-
-export type MenuOption = Readonly<{
-  label: string | number;
-  value: string | number;
-  data: OptionData;
-  isDisabled: boolean;
-  isSelected: boolean;
-}>;
-
-export type SelectRef = Readonly<{
-  empty: boolean;
-  menuOpen: boolean;
-  blur: () => void;
-  focus: () => void;
-  clearValue: () => void;
-  toggleMenu: (state?: boolean) => void;
-  setValue: (option?: OptionData) => void;
-}>;
-
-export type SelectProps = Readonly<{
+type SelectProps = Readonly<{
   async?: boolean;
   inputId?: string;
   selectId?: string;
@@ -368,11 +346,14 @@ const Select = forwardRef<SelectRef, SelectProps>((
     setSelectedOption((prev) => prev.filter((x) => x.value !== value));
   }, []);
 
-  const selectOption = useCallback((option: SelectedOption, isSelected?: boolean): void => {
-    if (isSelected) {
+  const selectOption = useCallback((option: MenuOption): void => {
+    if (option.isDisabled) return;
+
+    if (option.isSelected) {
       isMulti && removeSelectedOption(option.value);
     } else {
-      setSelectedOption((prev) => !isMulti ? [option] : [...prev, option]);
+      const { isSelected, isDisabled, ...selectedOpt } = option;
+      setSelectedOption((prev) => !isMulti ? [selectedOpt] : [...prev, selectedOpt]);
     }
 
     if (blurInputOnSelectOrDefault) {
@@ -424,14 +405,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
   });
 
   /**
-   * Write value of 'menuOpen' to ref object.
-   * Prevent extraneous state update calls/rerenders.
-   */
-  useEffect(() => {
-    menuOpenRef.current = menuOpen;
-  }, [menuOpen]);
-
-  /**
    * Execute every render - these ref boolean flags are used to determine if functions
    * ..are defined inside of a callback wrapper returned from 'useCallbackRef' custom hook
    */
@@ -439,6 +412,14 @@ const Select = forwardRef<SelectRef, SelectProps>((
     onSearchChangeIsFunc.current = isFunction(onSearchChange);
     onOptionChangeIsFunc.current = isFunction(onOptionChange);
   });
+
+  /**
+   * Write value of 'menuOpen' to ref object.
+   * Prevent extraneous state update calls/rerenders.
+   */
+  useEffect(() => {
+    menuOpenRef.current = menuOpen;
+  }, [menuOpen]);
 
   /**
    * If control recieves focus & openMenuOnFocus = true, open menu
@@ -454,8 +435,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
    * updates check if onChangeEvtValue ref is set true, which indicates the inputValue change was triggered by input change event
    */
   useEffect(() => {
-    const { current: isFunc } = onSearchChangeIsFunc;
-    if (isFunc && onChangeEvtValue.current) {
+    if (onSearchChangeIsFunc.current && onChangeEvtValue.current) {
       onChangeEvtValue.current = false;
       onSearchChangeRef(debouncedInputValue);
     }
@@ -466,16 +446,14 @@ const Select = forwardRef<SelectRef, SelectProps>((
    * Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
    */
   useUpdateEffect(() => {
-    const { current: isFunc } = onOptionChangeIsFunc;
-
-    if (isFunc) {
-      const normalizedOptionValue = isMulti
+    if (onOptionChangeIsFunc.current) {
+      const normalSelectedOpts = isMulti
         ? selectedOption.map((x) => x.data)
         : isArrayWithLength(selectedOption)
           ? selectedOption[0].data
           : null;
 
-      onOptionChangeRef(normalizedOptionValue);
+      onOptionChangeRef(normalSelectedOpts);
     }
   }, [onOptionChangeRef, isMulti, selectedOption]);
 
@@ -500,16 +478,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [async, options, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
-    const {
-      data,
-      value,
-      label,
-      isSelected,
-      isDisabled: disabled
-    } = focusedOption;
-
-    if (data && !disabled) {
-      selectOption({ data, value, label }, isSelected);
+    const { index, ...menuOpt } = focusedOption;
+    if (menuOpt.data) {
+      selectOption(menuOpt as MenuOption);
     }
   };
 
@@ -537,10 +508,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
       ? selectedOption[nextFocusedIdx].value!
       : null;
 
-    if (focusedOption.data)
-      setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    if (nextFocusedVal !== focusedMultiValue)
-      setFocusedMultiValue(nextFocusedVal);
+    if (focusedOption.data) setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    if (nextFocusedVal !== focusedMultiValue) setFocusedMultiValue(nextFocusedVal);
   };
 
   const focusOptionOnArrowKey = (direction: OptionIndexEnum): void => {
@@ -612,7 +581,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
         break;
       }
       case 'Tab': {
-        if (!menuOpen || !tabSelectsOption || !focusedOption.data || shiftKey) {
+        if (shiftKey || !menuOpen || !tabSelectsOption || !focusedOption.data) {
           return;
         }
         selectOptionFromFocused();
@@ -624,7 +593,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
         if (focusedMultiValue) {
           const clearFocusedIndex = selectedOption.findIndex((x) => x.value === focusedMultiValue);
-
           const nexFocusedMultiValue =
             (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
               ? selectedOption[clearFocusedIndex + 1].value!
@@ -688,8 +656,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   const handleOnInputChange = useCallback((e: FormEvent<HTMLInputElement>): void => {
     onChangeEvtValue.current = true;
-    onInputChange?.(e.currentTarget.value);
-    setInputValue(e.currentTarget.value);
+    const curVal = e.currentTarget.value;
+    onInputChange?.(curVal);
+    setInputValue(curVal);
     setMenuOpen(true);
   }, [onInputChange]);
 

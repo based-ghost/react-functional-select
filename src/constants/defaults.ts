@@ -21,5 +21,5 @@ export const FunctionDefaults = {
   OPTION_LABEL: (({ label }) => label) as OptionLabelCallback,
   OPTION_VALUE: (({ value }) => value) as OptionValueCallback,
   OPTION_IS_DISABLED: (({ isDisabled }) => !!isDisabled) as OptionDisabledCallback,
-  OPTION_FILTER: (({ label }) => typeof label === 'string' ? label : `${label}`) as OptionFilterCallback
+  OPTION_FILTER: (({ label }) => typeof label === 'string' ? label : '' + label) as OptionFilterCallback
 };

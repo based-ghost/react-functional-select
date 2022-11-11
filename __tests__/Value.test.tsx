@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { type ComponentProps } from 'react';
+import Value from '../src/components/Value';
 import { render } from '@testing-library/react';
 import type { SelectedOption } from '../src/types';
-import Value, { type ValueProps } from '../src/components/Value';
 import { PLACEHOLDER_DEFAULT, EMPTY_ARRAY } from '../src/constants';
 import { RENDER_OPTION_LABEL_MOCK, RENDER_MULTI_OPTIONS_MOCK, getSelectedOptionSingle, ThemeTestHOC } from './helpers';
+
+type ValueProps = ComponentProps<typeof Value>;
 
 // ============================================
 // Helper functions for Value component

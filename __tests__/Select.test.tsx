@@ -1,5 +1,5 @@
-import React from 'react';
-import { Select, type SelectProps } from '../src';
+import { Select } from '../src';
+import React, { type ComponentProps } from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, fireEvent } from '@testing-library/react';
 import {
@@ -11,6 +11,8 @@ import {
   SELECT_CONTAINER_TESTID,
   CONTROL_CONTAINER_TESTID
 } from '../src/constants';
+
+type SelectProps = ComponentProps<typeof Select>;
 
 // ============================================
 // Helper functions for Select component

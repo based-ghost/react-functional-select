@@ -1,27 +1,26 @@
 import React, { useMemo, Fragment, type MutableRefObject, type FunctionComponent } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
-import type { MenuOption } from '../../Select';
 import { isArrayWithLength } from '../../utils';
 import { FixedSizeList, type ListItemKeySelector } from 'react-window';
-import type { ItemData, RenderLabelCallback, SelectedOption } from '../../types';
+import type { MenuOption, ItemData, RenderLabelCallback } from '../../types';
 
 export type MenuListProps = Readonly<{
   height: number;
   itemSize: number;
   loadingMsg: string;
   isLoading?: boolean;
+  memoOptions: boolean;
   overscanCount?: number;
   width: string | number;
-  memoOptions: boolean;
   direction?: 'ltr' | 'rtl';
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
   noOptionsMsg: string | null;
   itemKeySelector?: string | number;
   renderOptionLabel: RenderLabelCallback;
+  selectOption: (option: MenuOption) => void;
   fixedSizeListRef: MutableRefObject<FixedSizeList | null> | undefined;
-  selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 }>;
 
 const NoOptionsMsg = styled.div`
@@ -63,7 +62,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({
   }
 
   const itemKey: ListItemKeySelector | undefined = itemKeySelector
-    ? (idx, data) => data.menuOptions[idx][itemKeySelector]
+    ? (index, data) => data.menuOptions[index][itemKeySelector]
     : undefined;
 
   return (

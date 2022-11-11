@@ -1,4 +1,4 @@
-import type { MenuOption } from './Select';
+import type { DefaultTheme } from 'styled-components';
 import type { ReactNode, MouseEvent, TouchEvent, EventHandler } from 'react';
 
 export type OptionData = any;
@@ -42,6 +42,31 @@ export type ItemData = {
   memoOptions: boolean;
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
+  selectOption: (option: MenuOption) => void;
   renderOptionLabel: (data: OptionData) => ReactNode;
-  selectOption: (option: SelectedOption, isSelected?: boolean) => void;
 };
+
+export type MultiParams = Readonly<{
+  selected: SelectedOption[];
+  renderOptionLabel: (data: OptionData) => ReactNode;
+}>;
+
+export type MenuOption = Readonly<{
+  label: string | number;
+  value: string | number;
+  data: OptionData;
+  isDisabled: boolean;
+  isSelected: boolean;
+}>;
+
+export type SelectRef = Readonly<{
+  empty: boolean;
+  menuOpen: boolean;
+  blur: () => void;
+  focus: () => void;
+  clearValue: () => void;
+  toggleMenu: (state?: boolean) => void;
+  setValue: (option?: OptionData) => void;
+}>;
+
+export type Theme = PartialDeep<DefaultTheme>;

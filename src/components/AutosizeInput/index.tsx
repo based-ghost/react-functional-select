@@ -1,9 +1,18 @@
-import React, { memo, useRef, useState, Fragment, forwardRef, type Ref, type FormEventHandler, type FocusEventHandler } from 'react';
 import { useUpdateEffect } from '../../hooks';
 import styled, { css } from 'styled-components';
 import { AUTOSIZE_INPUT_ATTRS } from '../../constants';
+import React, {
+  memo,
+  useRef,
+  useState,
+  Fragment,
+  forwardRef,
+  type Ref,
+  type FormEventHandler,
+  type FocusEventHandler,
+} from 'react';
 
-export type AutosizeInputProps = Readonly<{
+type AutosizeInputProps = Readonly<{
   id?: string;
   readOnly: boolean;
   ariaLabel?: string;

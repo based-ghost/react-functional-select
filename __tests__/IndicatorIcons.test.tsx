@@ -1,9 +1,11 @@
-import React, { ReactNode } from 'react';
+import React, { type ReactNode, type ComponentProps } from 'react';
 import { ThemeTestHOC } from './helpers';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import IndicatorIcons from '../src/components/IndicatorIcons';
 import { CLEAR_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../src/constants';
-import IndicatorIcons, { type IndicatorIconsProps } from '../src/components/IndicatorIcons';
+
+type IndicatorIconsProps = ComponentProps<typeof IndicatorIcons>;
 
 // ============================================
 // Helper functions for IndicatorIcons component
@@ -107,7 +109,6 @@ test('clear icon can render as a ReactNode', async () => {
   const clearIconText = 'clear-icon-node';
   const clearIcon = <span>{clearIconText}</span>;
   const { props } = createIndicatorIconsProps();
-
   const mergedProps = { ...props, clearIcon };
   const { getByText } = renderIndicatorIcons(mergedProps);
 
@@ -130,7 +131,6 @@ test('caret icon can render as a ReactNode', async () => {
   const caretIconText = 'caret-icon-node';
   const caretIcon = <span>{caretIconText}</span>;
   const { props } = createIndicatorIconsProps();
-
   const mergedProps = { ...props, caretIcon };
   const { getByText } = renderIndicatorIcons(mergedProps);
 

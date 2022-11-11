@@ -8,14 +8,15 @@ import {
   AUTOSIZE_INPUT_CLS,
   MENU_CONTAINER_CLS,
   SELECT_CONTAINER_CLS,
-  CONTROL_CONTAINER_CLS
+  CONTROL_CONTAINER_CLS,
+  PLACEHOLDER_DEFAULT
 } from '../../../src/constants';
 
 export const CLASS_NAME_HTML =
   `<div class="${SELECT_CONTAINER_CLS}">
   <div class="${CONTROL_CONTAINER_CLS}">
     <div>
-      <div>Select option...</div>
+      <div>${PLACEHOLDER_DEFAULT}</div>
       <input
         value=""
         type="text"

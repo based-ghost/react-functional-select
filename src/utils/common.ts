@@ -98,7 +98,6 @@ export const mergeDeep = <T>(target: any, source: any): T => {
 
   Object.keys(source).forEach((key) => {
     const sourceProp = source[key];
-
     output[key] =
       (key !== STYLED_ANI_KEY && isPlainObject(sourceProp))
         ? target[key]

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { type ComponentProps } from 'react';
 import { ThemeTestHOC } from './helpers';
 import type { MenuOption } from '../src';
 import { render } from '@testing-library/react';
+import MenuList from '../src/components/Menu/MenuList';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK } from './helpers/utils';
-import MenuList, { type MenuListProps } from '../src/components/Menu/MenuList';
 import {
   MENU_ITEM_SIZE_DEFAULT,
   MENU_MAX_HEIGHT_DEFAULT,
@@ -11,6 +11,8 @@ import {
   NO_OPTIONS_MSG_DEFAULT,
   FOCUSED_OPTION_DEFAULT
 } from '../src/constants';
+
+type MenuListProps = ComponentProps<typeof MenuList>;
 
 // ============================================
 // Helper functions for Menu component

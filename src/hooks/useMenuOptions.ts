@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import type { MenuOption } from '../Select';
 import useCallbackRef from './useCallbackRef';
 import { isBoolean, trimAndFormatFilterStr } from '../utils';
 import { EMPTY_ARRAY, FilterMatchEnum, FunctionDefaults } from '../constants';
 import type {
+  MenuOption,
   OptionData,
   SelectedOption,
   OptionValueCallback,
@@ -32,7 +32,6 @@ const useMenuOptions = (
   hideSelectedOptions?: boolean
 ): MenuOption[] => {
   const [menuOptions, setMenuOptions] = useState<MenuOption[]>(EMPTY_ARRAY);
-
   const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || FunctionDefaults.OPTION_FILTER);
   const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || FunctionDefaults.OPTION_IS_DISABLED);
 
@@ -48,8 +47,8 @@ const useMenuOptions = (
     const isOptionFilterMatch = (option: MenuOption): boolean => {
       if (!matchVal) return true;
       const filterVal = getFilterOptionStringRef(option);
-      const filterValNrml = trimAndFormatFilterStr(filterVal, filterIgnoreCase, filterIgnoreAccents);
-      return isFilterMatchAny ? filterValNrml.includes(matchVal) : filterValNrml.startsWith(matchVal);
+      const normalFilterVal = trimAndFormatFilterStr(filterVal, filterIgnoreCase, filterIgnoreAccents);
+      return isFilterMatchAny ? normalFilterVal.includes(matchVal) : normalFilterVal.startsWith(matchVal);
     };
 
     const parseMenuOption = (data: OptionData): MenuOption | undefined => {

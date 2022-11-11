@@ -13,7 +13,7 @@ import {
   MENU_CONTAINER_TESTID
 } from '../../constants';
 
-export interface MenuProps extends MenuListProps {
+interface MenuProps extends MenuListProps {
   menuTop?: string;
   menuOpen: boolean;
   menuPortalTarget?: Element;

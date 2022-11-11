@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../../constants';
 import type { RenderLabelCallback, SelectedOption } from '../../types';
 
-export type MultiValueProps = SelectedOption & Readonly<{
+type MultiValueProps = SelectedOption & Readonly<{
   isFocused: boolean;
   renderOptionLabel: RenderLabelCallback;
   removeSelectedOption: (value?: string | number) => void;
@@ -60,16 +60,16 @@ const MultiValue = memo<MultiValueProps>(({
   renderOptionLabel,
   removeSelectedOption
 }) => {
-  const labelContent = renderOptionLabel(data);
-  const onClearEvent = () => removeSelectedOption(value);
+  const labelNode = renderOptionLabel(data);
+  const onClear = () => removeSelectedOption(value);
 
   return (
     <MultiValueWrapper>
-      <Label>{labelContent}</Label>
+      <Label>{labelNode}</Label>
       <Clear
+        onClick={onClear}
+        onTouchEnd={onClear}
         isFocused={isFocused}
-        onClick={onClearEvent}
-        onTouchEnd={onClearEvent}
         onMouseDown={suppressEvent}
         data-testid={CLEAR_ICON_MV_TESTID}
       >
