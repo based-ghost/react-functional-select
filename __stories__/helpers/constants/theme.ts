@@ -1,6 +1,7 @@
 import type { Theme } from '../../../src';
 import { createThemeOptions } from '../utils';
-import { mergeThemes } from '../../../src/utils';
+import { mergeDeep } from '../../../src/utils';
+import { DEFAULT_THEME } from '../../../src/constants';
 
 // Normalize animation props as be default they are type of styled-component's "FlattenSimpleInterpolation"
 const FADE_IN_KEYFRAMES_STR = 'FADE_IN_KEYFRAMES 0.25s ease-in-out';
@@ -71,7 +72,7 @@ export const ThemeConfigMap: Theme = {
 };
 
 export const THEME_OPTIONS = createThemeOptions(ThemeEnum);
-export const THEME_DEFAULTS = mergeThemes(THEME_ANIMATIONS);
+export const THEME_DEFAULTS = mergeDeep(DEFAULT_THEME, THEME_ANIMATIONS);
 
 export const THEME_CONFIG: Theme = {
   menu: {

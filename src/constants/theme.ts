@@ -1,7 +1,5 @@
-import type { Theme } from '../types';
-import { mergeDeep, isPlainObject } from './common';
 import type { DefaultTheme } from 'styled-components';
-import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from '../constants';
+import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from './styled';
 
 /**
  * A contextual styled-components DefaultTheme object with default key-value pairs for CSS props.
@@ -91,14 +89,4 @@ export const DEFAULT_THEME: DefaultTheme = {
       transition: 'color 0.2s ease-out'
     }
   }
-};
-
-/**
- * If theme param is a valid object, attempt to merge with static DEFAULT_THEME.
- * A new object of DefaultTheme type is returned, with properties overriden as defined in theme param.
- */
-export const mergeThemes = (theme?: Theme): DefaultTheme => {
-  return isPlainObject(theme)
-    ? mergeDeep(DEFAULT_THEME, theme)
-    : DEFAULT_THEME;
 };

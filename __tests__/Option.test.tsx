@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { type ComponentProps } from 'react';
 import type { CSSProperties } from 'react';
 import { render } from '@testing-library/react';
+import Option from '../src/components/Menu/Option';
 import userEvent from '@testing-library/user-event';
 import { OPTION_DISABLED_CLS } from '../src/constants';
-import Option, { type OptionProps } from '../src/components/Menu/Option';
 import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK, stringifyCSSProperties, ThemeTestHOC } from './helpers';
+
+type OptionProps = ComponentProps<typeof Option>;
 
 // ============================================
 // Helper functions & test data for Option.tsx component

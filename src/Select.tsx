@@ -20,6 +20,7 @@ import {
   MenuPositionEnum,
   FunctionDefaults,
   EMPTY_ARRAY,
+  DEFAULT_THEME,
   SELECT_WRAPPER_ATTRS,
   PLACEHOLDER_DEFAULT,
   LOADING_MSG_DEFAULT,
@@ -34,7 +35,7 @@ import type { FixedSizeList } from 'react-window';
 import styled, { css, ThemeProvider, type DefaultTheme } from 'styled-components';
 import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
 import { useDebounce, useCallbackRef, useMenuOptions, useMountEffect, useUpdateEffect, useMenuPositioner } from './hooks';
-import { isBoolean, isFunction, mergeThemes, suppressEvent, normalizeValue, IS_TOUCH_DEVICE, isArrayWithLength } from './utils';
+import { isBoolean, isFunction, isPlainObject, mergeDeep, suppressEvent, normalizeValue, IS_TOUCH_DEVICE, isArrayWithLength } from './utils';
 import type {
   Theme,
   SelectRef,
@@ -257,7 +258,11 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
 
   // Memoized DefaultTheme object for styled-components ThemeProvider
-  const theme = useMemo<DefaultTheme>(() => mergeThemes(themeConfig), [themeConfig]);
+  const theme = useMemo<DefaultTheme>(() => {
+    return isPlainObject(themeConfig)
+      ? mergeDeep(DEFAULT_THEME, themeConfig)
+      : DEFAULT_THEME;
+  }, [themeConfig]);
 
   // Memoized callback functions referencing optional function properties on Select.tsx
   const getOptionLabelFn = useMemo<OptionLabelCallback>(() => getOptionLabel || FunctionDefaults.OPTION_LABEL, [getOptionLabel]);
