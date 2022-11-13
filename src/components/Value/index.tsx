@@ -55,7 +55,8 @@ const Value: FunctionComponent<ValueProps> = ({
   }
 
   if (!isMulti) {
-    return <SingleValue>{renderOptionLabel(selectedOption[0].data)}</SingleValue>;
+    const labelNode = renderOptionLabel(selectedOption[0].data);
+    return <SingleValue>{labelNode}</SingleValue>;
   }
 
   return (

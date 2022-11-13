@@ -97,9 +97,7 @@ const CodeMarkup = memo<CodeMarkupProps>(({
   formatFn
 }) => (
   <CodeMarkupContainer>
-    <Header>
-      {header}
-    </Header>
+    <Header>{header}</Header>
     <PreContainer>
       <SyntaxHighlighter
         wrapLines

@@ -47,7 +47,7 @@ const useMenuPositioner = (
 
   useUpdateEffect(() => {
     if (menuOpen) {
-      const handleOnMenuOpen = (availableSpace?: number): void => {
+      const handleOnMenuOpen = (availableSpace?: number) => {
         onMenuOpenRef();
         if (availableSpace) {
           resetMenuHeightRef.current = true;
