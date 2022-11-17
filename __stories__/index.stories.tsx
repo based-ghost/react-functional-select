@@ -707,7 +707,7 @@ export const Virtualization = () => {
   const [options, setOptions] = useState<Option[]>([]);
   const [optionsCount, setOptionsCount] = useState(100);
 
-  const optionCountList = [100, 1000, 5000, 25000, 50000];
+  const optionCountList = [100, 1000, 10000, 25000, 50000, 100000];
 
   useUpdateEffect(() => {
     selectRef.current?.clearValue();
@@ -752,18 +752,22 @@ export const Virtualization = () => {
             memoization (testing {'&'} debugging becomes much easier as well).
           </Li>
         </List>
-        <em>Note: </em>The only time any noticeable performance degradation will
-        be observed is during search input updates when the <code>options</code>{' '}
-        count reaches the high tens of thousands. To work around this, the{' '}
-        <code>inputDelay</code> (number in milliseconds) can be set to debounce
-        the input value. That way, the <code>menuOptions</code> will not be
-        recalculated on every keystroke.
+        <em>Note: </em>Potential performance degradation could be encountered during input
+        value mutations when the <code>options</code> count reaches the high tens of thousands.
+        To work around this, the <code>inputDelay</code> (in milliseconds) can be set to debounce
+        the input value. That way, the <code>menuOptions</code> will not be recalculated on every
+        keystroke. Although this is an extreme edge case, optimizations have been implemented to
+        handle such with ease. As proof, 50k and 100k option counts have been included in this
+        stress-test demo - but again, data sets this large should not be worked with in memory.
+        Instead, prefer to fetch subsets from a remote data store as needed. For example, using
+        the <code>async</code> functionality or custom logic in a parent component that accomplishes
+        something similar.
       </ListWrapper>
       <SubTitle>Demo</SubTitle>
       <Hr />
       <Card>
         <CardHeader>
-          <Label>Options Count</Label>
+          <Label>Number of Options</Label>
           <Buttons>
             {optionCountList.map((count) => (
               <OptionsCountButton
@@ -985,7 +989,7 @@ export const Async = () => {
             <TextHeader>inputDelay?: number</TextHeader> - As mentioned above, this can be
             set to a positive integer in order to debounce updates to the search input value
             following input change events. This property directly maps to the <code>delay</code> in
-            milliconds passed to the <code>setTimeout</code> method.
+            milliseconds passed to the <code>setTimeout</code> method.
           </Li>
           <Li>
             <TextHeader>isLoading?: boolean</TextHeader> - When true, a loading animation will

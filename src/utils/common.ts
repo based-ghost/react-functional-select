@@ -20,7 +20,7 @@ export const isArrayWithLength = (val: unknown): boolean => Array.isArray(val) &
 export const isPlainObject = (val: unknown): boolean => val !== null && typeof val === 'object' && !Array.isArray(val);
 
 /**
- * Call preventDefault() and stopPropagation() on event.
+ * Prevent default behavior and propagation of an event.
  */
 export const suppressEvent = (e: SyntheticEvent<Element>): void => {
   e.preventDefault();

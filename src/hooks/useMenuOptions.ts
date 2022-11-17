@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import useCallbackRef from './useCallbackRef';
 import { isBoolean, trimAndFormatFilterStr } from '../utils';
-import { EMPTY_ARRAY, FilterMatchEnum, FunctionDefaults } from '../constants';
+import { FilterMatchEnum, FUNCTION_DEFAULTS } from '../constants';
 import type {
   MenuOption,
   OptionData,
@@ -14,7 +14,6 @@ import type {
 
 /**
  * Parse options to array of MenuOptions and perform filtering (if applicable).
- * Set menuOptions state (ensure array returned).
  */
 const useMenuOptions = (
   options: OptionData[],
@@ -31,16 +30,14 @@ const useMenuOptions = (
   async: boolean = false,
   hideSelectedOptions?: boolean
 ): MenuOption[] => {
-  const [menuOptions, setMenuOptions] = useState<MenuOption[]>(EMPTY_ARRAY);
-  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || FunctionDefaults.OPTION_FILTER);
-  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || FunctionDefaults.OPTION_IS_DISABLED);
+  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || FUNCTION_DEFAULTS.optionFilter);
+  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || FUNCTION_DEFAULTS.isOptionDisabled);
 
-  // Prevent effect from executing on search input mutations in 'async' mode (also prevents filtering from executing)
-  const searchValue = !async ? debouncedInputValue : '';
+  const searchValue = !async ? debouncedInputValue : ''; // Prevent recomputing/filtering on input mutations in async mode
   const isFilterMatchAny = filterMatchFrom === FilterMatchEnum.ANY;
   const hideSelectedOptionsOrDefault = isBoolean(hideSelectedOptions) ? hideSelectedOptions : isMulti;
 
-  useEffect(() => {
+  const menuOptions = useMemo<MenuOption[]>(() => {
     const selectedValues = selectedOption.map((x) => x.value);
     const matchVal = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
 
@@ -57,24 +54,15 @@ const useMenuOptions = (
       const isDisabled = getIsOptionDisabledRef(data);
       const isSelected = selectedValues.includes(value);
       const menuOption: MenuOption = { data, value, label, isDisabled, isSelected };
-
-      if (!isOptionFilterMatch(menuOption) || (hideSelectedOptionsOrDefault && isSelected)) {
-        return;
-      }
-
-      return menuOption;
+      const filterOut = !isOptionFilterMatch(menuOption) || (hideSelectedOptionsOrDefault && isSelected);
+      return filterOut ? undefined : menuOption;
     };
 
-    const nextMenuOptions = options.reduce(
-      (acc: MenuOption[], option: OptionData) => {
-        const menuOption = parseMenuOption(option);
-        menuOption && acc.push(menuOption);
-        return acc;
-      },
-      []
-    );
-
-    setMenuOptions(nextMenuOptions);
+    return options.reduce((acc: MenuOption[], option: OptionData) => {
+      const menuOption = parseMenuOption(option);
+      menuOption && acc.push(menuOption);
+      return acc;
+    }, []);
   }, [
     options,
     searchValue,

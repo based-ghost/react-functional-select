@@ -1,15 +1,19 @@
-import { useEffect } from 'react';
-import useFirstRenderState from './useFirstRenderState';
+import { useRef, useEffect } from 'react';
 
 /**
  * Run an effect only on updates.
- * Skip the first effect execution that occurrs after initial mount.
+ * Skip the first effect execution that occurrs on initial mount.
+ *
+ * @param effect the effect to execute
+ * @param deps the dependency list
  */
-const useUpdateEffect: typeof useEffect = (effect, deps) => {
-  const isFirstRender = useFirstRenderState();
+const useUpdateEffect: typeof useEffect = (effect, deps): void => {
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    if (!isFirstRender) {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
       return effect();
     }
   }, deps);

@@ -27,7 +27,7 @@ const Option = memo<OptionProps>(({
 }) => {
   const opt = menuOptions[index];
 
-  const className = buildOptionClsName(
+  const _className = buildOptionClsName(
     opt.isDisabled,
     opt.isSelected,
     index === focusedOptionIndex
@@ -36,7 +36,7 @@ const Option = memo<OptionProps>(({
   return (
     <div
       style={style}
-      className={className}
+      className={_className}
       onClick={() => selectOption(opt)}
     >
       {renderOptionLabel(opt.data)}

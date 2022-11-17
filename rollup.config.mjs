@@ -50,14 +50,9 @@ const babelPlugin = (useESModules) => {
     babelHelpers: 'runtime',
     exclude: 'node_modules/**',
     extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
-    presets: [
-      ['@babel/preset-env', {targets, loose: true}],
-      '@babel/preset-react'
-    ],
+    presets: [['@babel/preset-env', {targets, loose: true}], '@babel/preset-react'],
     plugins: [
       ['@babel/plugin-transform-runtime', {useESModules}],
-      ['@babel/plugin-proposal-optional-chaining', {loose: true}],
-      ['@babel/plugin-proposal-nullish-coalescing-operator', {loose: true}],
       [
         'babel-plugin-styled-components',
         {
@@ -66,10 +61,10 @@ const babelPlugin = (useESModules) => {
           minify: true,
           fileName: false,
           displayName: true,
-          transpileTemplateLiterals: true
+          transpileTemplateLiterals: true,
         },
       ],
-    ]
+    ],
   });
 };
 

@@ -19,6 +19,8 @@ type IndicatorIconsProps = Readonly<{
   onCaretMouseDown?: MouseOrTouchEventHandler;
 }>;
 
+type CaretProps = Pick<IndicatorIconsProps, 'menuOpen' | 'isInvalid'>;
+
 const IndicatorIconsWrapper = styled.div`
   display: flex;
   flex-shrink: 0;
@@ -50,7 +52,7 @@ const Separator = styled.div`
   background-color: ${({ theme }) => theme.color.iconSeparator || theme.color.border};
 `;
 
-const Caret = styled.div<Pick<IndicatorIconsProps, 'menuOpen' | 'isInvalid'>>`
+const Caret = styled.div<CaretProps>`
   transition: ${({ theme }) => theme.icon.caret.transition};
   border-top: ${({ theme }) => theme.icon.caret.size} dashed;
   border-left: ${({ theme }) => theme.icon.caret.size} solid transparent;

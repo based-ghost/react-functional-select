@@ -12,6 +12,10 @@ import React, {
   type FocusEventHandler,
 } from 'react';
 
+type InputProps = Readonly<{
+  isInvalid: boolean
+}>;
+
 type AutosizeInputProps = Readonly<{
   id?: string;
   readOnly: boolean;
@@ -25,7 +29,7 @@ type AutosizeInputProps = Readonly<{
   onChange: FormEventHandler<HTMLInputElement>;
 }>;
 
-const INPUT_MIN_WIDTH_PX = 15;
+const INPUT_MIN_WIDTH_PX = 20;
 
 const INPUT_FONT_STYLE = css`
   font-size: inherit;
@@ -45,7 +49,7 @@ const SizerDiv = styled.div`
   ${({ theme }) => theme.input.css}
 `;
 
-const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS)<{ isInvalid: boolean }>`
+const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS)<InputProps>`
   border: 0;
   outline: 0;
   padding: 0;

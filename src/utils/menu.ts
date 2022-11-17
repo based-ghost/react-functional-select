@@ -142,8 +142,8 @@ export const scrollMenuIntoViewOnOpen = (
   const spaceBelow = scrollParent.getBoundingClientRect().height - scrollTop - top;
   const notEnoughSpaceBelow = spaceBelow < height;
 
-  // Sufficient space does not exist to scroll menu fully into view
-  // ...Calculate available space and use that as the the new menuHeight (use scrollSpaceBelow for now).
+  // Sufficient space does not exist to scroll menu fully into view.
+  // Calculate available space and use that as the the new menuHeight (use scrollSpaceBelow for now).
   // OR scrollMenuIntoView = false
   if (notEnoughSpaceBelow || !scrollMenuIntoView) {
     const condensedMenuHeight = notEnoughSpaceBelow ? spaceBelow : undefined;

@@ -10,6 +10,8 @@ type MultiValueProps = SelectedOption & Readonly<{
   removeSelectedOption: (value?: string | number) => void;
 }>;
 
+type ClearProps = Pick<MultiValueProps, 'isFocused'>;
+
 const CLEAR_ICON_FOCUS_STYLE  = css`
   color: ${({ theme }) => theme.multiValue.clear.focusColor};
 `;
@@ -35,7 +37,7 @@ const Label = styled.div`
   border-radius: ${({ theme }) => theme.multiValue.label.borderRadius};
 `;
 
-const Clear = styled.i<Pick<MultiValueProps, 'isFocused'>>`
+const Clear = styled.i<ClearProps>`
   display: flex;
   font-style: inherit;
   ${({ theme: { multiValue: { clear } } }) => css`

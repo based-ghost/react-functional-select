@@ -1,8 +1,9 @@
+import type { CallbackFn } from '../types';
+import useLatestRef from './useLatestRef';
 import useCallbackRef from './useCallbackRef';
 import useUpdateEffect from './useUpdateEffect';
 import { MenuPositionEnum } from '../constants';
-import type { CallbackFn } from '../types';
-import { useEffect, useState, useRef, type RefObject } from 'react';
+import { useMemo, useState, useRef, type RefObject } from 'react';
 import { calculateMenuTop, menuFitsBelowControl, scrollMenuIntoViewOnOpen } from '../utils';
 
 /**
@@ -26,24 +27,17 @@ const useMenuPositioner = (
   menuScrollDuration?: number,
   scrollMenuIntoView?: boolean
 ): [string | undefined, number] => {
-  const resetMenuHeightRef = useRef(false);
-  const shouldScrollRef = useRef(!isMenuPortaled);
+  const [menuHeight, setMenuHeight] = useState<number>(menuHeightDefault);
+
+  const isMenuTopPosition = useMemo<boolean>(() => {
+    return menuPosition === MenuPositionEnum.TOP ||
+      (menuPosition === MenuPositionEnum.AUTO && !menuFitsBelowControl(menuRef.current));
+  }, [menuRef, menuPosition]);
+
   const onMenuOpenRef = useCallbackRef(onMenuOpen);
   const onMenuCloseRef = useCallbackRef(onMenuClose);
-  const [menuHeight, setMenuHeight] = useState<number>(menuHeightDefault);
-  const [isMenuTopPosition, setIsMenuTopPosition] = useState<boolean>(false);
-
-  useEffect(() => {
-    shouldScrollRef.current = !isMenuTopPosition && !isMenuPortaled;
-  });
-
-  useEffect(() => {
-    const isTopPos =
-      menuPosition === MenuPositionEnum.TOP ||
-      (menuPosition === MenuPositionEnum.AUTO && !menuFitsBelowControl(menuRef.current));
-
-    setIsMenuTopPosition(isTopPos);
-  }, [menuRef, menuPosition]);
+  const resetMenuHeightRef = useRef<boolean>(false);
+  const shouldScrollRef = useLatestRef<boolean>(!isMenuTopPosition && !isMenuPortaled);
 
   useUpdateEffect(() => {
     if (menuOpen) {
