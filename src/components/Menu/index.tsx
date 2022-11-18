@@ -16,6 +16,7 @@ import {
 interface MenuProps extends MenuListProps {
   menuTop?: string;
   menuOpen: boolean;
+  lazyLoadMenu: boolean;
   menuPortalTarget?: Element;
   menuRef: MutableRefObject<HTMLDivElement | null>;
   onMenuMouseDown: (e: MouseOrTouchEvent<HTMLDivElement>) => void;
@@ -75,10 +76,15 @@ const Menu: FunctionComponent<MenuProps> = ({
   menuRef,
   menuTop,
   menuOpen,
+  lazyLoadMenu,
   onMenuMouseDown,
   menuPortalTarget,
   ...menuListProps
 }) => {
+  if (lazyLoadMenu && !menuOpen) {
+    return null;
+  }
+
   const { menuOptions, noOptionsMsg } = menuListProps;
   const hideNoOptionsMsg = menuOpen && !noOptionsMsg && !isArrayWithLength(menuOptions);
 

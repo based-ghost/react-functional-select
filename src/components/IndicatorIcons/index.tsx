@@ -16,7 +16,7 @@ type IndicatorIconsProps = Readonly<{
   clearIcon?: IconRenderer;
   caretIcon?: IconRenderer;
   onClearMouseDown: MouseOrTouchEventHandler;
-  onCaretMouseDown?: MouseOrTouchEventHandler;
+  onCaretMouseDown: MouseOrTouchEventHandler;
 }>;
 
 type CaretProps = Pick<IndicatorIconsProps, 'menuOpen' | 'isInvalid'>;

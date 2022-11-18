@@ -16,7 +16,7 @@ export const FOCUSED_OPTION_DEFAULT: FocusedOption = { index: -1 };
 // Default for options and selectedOption props
 export const EMPTY_ARRAY: any[] = [];
 
-export const FUNCTION_DEFAULTS = {
+export const FUNCTIONS = {
   optionLabel: ((x) => x.label) as OptionLabelCallback,
   optionValue: ((x) => x.value) as OptionValueCallback,
   isOptionDisabled: ((x) => !!x.isDisabled) as OptionDisabledCallback,

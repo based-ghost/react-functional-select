@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import useCallbackRef from './useCallbackRef';
+import { FilterMatchEnum, FUNCTIONS } from '../constants';
 import { isBoolean, trimAndFormatFilterStr } from '../utils';
-import { FilterMatchEnum, FUNCTION_DEFAULTS } from '../constants';
 import type {
   MenuOption,
   OptionData,
@@ -30,8 +30,8 @@ const useMenuOptions = (
   async: boolean = false,
   hideSelectedOptions?: boolean
 ): MenuOption[] => {
-  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || FUNCTION_DEFAULTS.optionFilter);
-  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || FUNCTION_DEFAULTS.isOptionDisabled);
+  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || FUNCTIONS.optionFilter);
+  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || FUNCTIONS.isOptionDisabled);
 
   const searchValue = !async ? debouncedInputValue : ''; // Prevent recomputing/filtering on input mutations in async mode
   const isFilterMatchAny = filterMatchFrom === FilterMatchEnum.ANY;
