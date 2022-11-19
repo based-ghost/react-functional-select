@@ -1,9 +1,9 @@
 import React, { type MutableRefObject, type FunctionComponent } from 'react';
-import type { MouseOrTouchEvent } from '../../types';
-import MenuList, { type MenuListProps } from './MenuList';
 import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import { isArrayWithLength } from '../../utils';
+import type { MouseOrTouchEvent } from '../../types';
+import MenuList, { type MenuListProps } from './MenuList';
 import {
   OPTION_CLS,
   OPTION_FOCUSED_CLS,

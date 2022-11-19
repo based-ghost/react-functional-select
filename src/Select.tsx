@@ -56,7 +56,7 @@ import { isBoolean, isFunction, isPlainObject, mergeDeep, suppressEvent, normali
 type SelectProps = Readonly<{
   async?: boolean;
   inputId?: string;
-  pageSize: number;
+  pageSize?: number;
   selectId?: string;
   isMulti?: boolean;
   ariaLabel?: string;
@@ -118,6 +118,10 @@ type SelectProps = Readonly<{
   onKeyDown?: (e: KeyboardEvent<Element>, input?: string, focusedOption?: FocusedOption) => unknown;
 }>;
 
+type ValueWrapperProps = Readonly<{
+  flex: boolean;
+}>;
+
 interface ControlWrapperProps extends Pick<SelectProps, 'isInvalid' | 'isDisabled'> {
   isFocused: boolean;
 }
@@ -128,14 +132,14 @@ const SelectWrapper = styled.div.attrs(SELECT_WRAPPER_ATTRS)`
   ${({ theme }) => theme.select.css}
 `;
 
-const ValueWrapper = styled.div`
+const ValueWrapper = styled.div<ValueWrapperProps>`
   flex: 1 1 0%;
-  display: flex;
   flex-wrap: wrap;
   overflow: hidden;
   position: relative;
   align-items: center;
   box-sizing: border-box;
+  display: ${({ flex }) => flex ? 'flex' : 'grid'};
   padding: ${({ theme }) => theme.control.padding};
 `;
 
@@ -270,8 +274,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   // Custom ref objects
   const onSearchChangeRef = useCallbackRef(onSearchChange);
   const onOptionChangeRef = useCallbackRef(onOptionChange);
-  const onSearchChangeIsFunc = useLatestRef<boolean>(isFunction(onSearchChange));
-  const onOptionChangeIsFunc = useLatestRef<boolean>(isFunction(onOptionChange));
+  const onSearchChangeIsFn = useLatestRef<boolean>(isFunction(onSearchChange));
+  const onOptionChangeIsFn = useLatestRef<boolean>(isFunction(onOptionChange));
   const menuOpenRef = useLatestRef<boolean>(menuOpen);
   const onChangeEvtValue = useRef<boolean>(false);
   const prevMenuOptionsLength = useRef<number>();
@@ -321,7 +325,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const blurInput = (): void => inputRef.current?.blur();
   const focusInput = (): void => inputRef.current?.focus();
   const scrollToItemIndex = (idx: number): void => listRef.current?.scrollToItem(idx);
+
   const hasSelectedOptions = isArrayWithLength(selectedOption);
+  const showClear = !!isClearable && !isDisabled && hasSelectedOptions;
+  const inputReadOnly = isDisabled || !isSearchable || !!focusedMultiValue;
 
   const openMenuAndFocusOption = useCallback((position: OptionIndexEnum): void => {
     if (!isArrayWithLength(menuOptions)) {
@@ -424,7 +431,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
    * updates check if onChangeEvtValue ref is set true, which indicates the inputValue change was triggered by input change event
    */
   useEffect(() => {
-    if (onSearchChangeIsFunc.current && onChangeEvtValue.current) {
+    if (onSearchChangeIsFn.current && onChangeEvtValue.current) {
       onChangeEvtValue.current = false;
       onSearchChangeRef(debouncedInputValue);
     }
@@ -435,7 +442,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
    * Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
    */
   useUpdateEffect(() => {
-    if (onOptionChangeIsFunc.current) {
+    if (onOptionChangeIsFn.current) {
       const normalSelectedOpts = isMulti
         ? selectedOption.map((x) => x.data)
         : isArrayWithLength(selectedOption)
@@ -649,24 +656,24 @@ const Select = forwardRef<SelectRef, SelectProps>((
     if (isNotInput) e.preventDefault();
   };
 
-  const handleOnInputBlur = useCallback((e: FocusEvent<HTMLInputElement>): void => {
+  const handleOnInputBlur = (e: FocusEvent<HTMLInputElement>): void => {
     onInputBlur?.(e);
     setIsFocused(false);
     setMenuOpen(false);
     setInputValue('');
-  }, [onInputBlur]);
+  };
 
-  const handleOnInputFocus = useCallback((e: FocusEvent<HTMLInputElement>): void => {
+  const handleOnInputFocus = (e: FocusEvent<HTMLInputElement>): void => {
     onInputFocus?.(e);
     setIsFocused(true);
-  }, [onInputFocus]);
+  };
 
-  const handleOnInputChange = useCallback((e: FormEvent<HTMLInputElement>): void => {
+  const handleOnInputChange = (e: FormEvent<HTMLInputElement>): void => {
     onChangeEvtValue.current = true;
     onInputChange?.(e.currentTarget.value);
     setInputValue(e.currentTarget.value);
     setMenuOpen(true);
-  }, [onInputChange]);
+  };
 
   const handleOnMouseDown = (e: SyntheticEvent<Element>): void => {
     suppressEvent(e);
@@ -684,9 +691,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
       menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
     }
   }, [isDisabled, openMenuOnClick, openMenuAndFocusOption]);
-
-  const showClear = !!isClearable && !isDisabled && hasSelectedOptions;
-  const inputReadOnly = isDisabled || !isSearchable || !!focusedMultiValue;
 
   return (
     <ThemeProvider theme={theme}>
@@ -706,7 +710,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
           onMouseDown={handleOnControlMouseDown}
           data-testid={CONTROL_CONTAINER_TESTID}
         >
-          <ValueWrapper>
+          <ValueWrapper flex={!!isMulti && hasSelectedOptions}>
             <Value
               isMulti={isMulti}
               inputValue={inputValue}

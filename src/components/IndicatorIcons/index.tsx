@@ -46,7 +46,7 @@ const IndicatorIcon = styled.div`
 
 const Separator = styled.div`
   width: 1px;
-  margin: 0.5rem 0;
+  margin: 8px 0;
   align-self: stretch;
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.color.iconSeparator || theme.color.border};

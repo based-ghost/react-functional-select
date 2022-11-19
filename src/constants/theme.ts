@@ -24,7 +24,7 @@ export const DEFAULT_THEME: DefaultTheme = {
   icon: {
     color: '#ccc',
     hoverColor: '#A6A6A6',
-    padding: '0 0.9375rem',
+    padding: '0 14px',
     clear: {
       width: '14px',
       height: '16px',
@@ -41,8 +41,8 @@ export const DEFAULT_THEME: DefaultTheme = {
     borderWidth: '1px',
     borderStyle: 'solid',
     borderRadius: '3px',
+    padding: '2px 8px',
     boxShadow: '0 0 0 0.2rem',
-    padding: '0.375rem 0.75rem',
     boxShadowColor: 'rgba(0, 123, 255, 0.25)',
     focusedBorderColor: 'rgba(0, 123, 255, 0.75)',
     transition: 'box-shadow 0.2s ease-out, border-color 0.2s ease-out'

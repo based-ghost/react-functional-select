@@ -16,18 +16,17 @@ type ValueProps = Readonly<{
 }>;
 
 const SINGLE_VALUE_BASE_STYLE = css`
-  top: 50%;
+  margin: 0 2px;
   overflow: hidden;
-  position: absolute;
   white-space: nowrap;
   box-sizing: border-box;
   text-overflow: ellipsis;
-  transform: translateY(-50%);
+  grid-area: 1 / 1 / 2 / 3;
 `;
 
 const SingleValue = styled.div`
   ${SINGLE_VALUE_BASE_STYLE}
-  max-width: calc(100% - 0.5rem);
+  max-width: 100%;
 `;
 
 const Placeholder = styled.div`

@@ -350,8 +350,8 @@ const SPIN_KEYFRAMES = keyframes`
 const SPIN_ANIMATION_CSS = css`animation: ${SPIN_KEYFRAMES} infinite 8s linear;`;
 
 export const ReactSvg = styled.svg<{ isDisabled?: boolean }>`
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   color: #1ea7fd;
   fill: currentColor;
   display: inline-block;
@@ -375,8 +375,6 @@ export const OptionContainer = styled.div`
 
 export const OptionName = styled.span`
   color: #515151;
-  font-size: 1em;
   font-weight: 600;
   margin-left: 1px;
-  margin-bottom: 1.5px;
 `;

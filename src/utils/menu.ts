@@ -103,12 +103,9 @@ export const calculateMenuTop = (
 
 export const menuFitsBelowControl = (el: HTMLElement | null): boolean => {
   if (!el) return true;
-
   const scrollParent = getScrollParent(el);
   const { top, height } = el.getBoundingClientRect();
-  const { height: scrollParentHeight } = scrollParent.getBoundingClientRect();
-  const spaceBelow = scrollParentHeight - getScrollTop(scrollParent) - top;
-
+  const spaceBelow = scrollParent.getBoundingClientRect().height - getScrollTop(scrollParent) - top;
   return spaceBelow >= height;
 };
 
@@ -152,8 +149,7 @@ export const scrollMenuIntoViewOnOpen = (
   }
 
   // Do scroll and upon scroll animation completion, execute the callback if defined
-  const marginBottomStyle = getComputedStyle(menuEl).marginBottom;
-  const marginBottom = parseInt(marginBottomStyle, 10);
+  const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom, 10);
   const scrollDown = bottom - viewInner + scrollTop + marginBottom;
 
   smoothScrollTo(scrollParent, scrollDown, menuScrollDuration, handleOnMenuOpen);

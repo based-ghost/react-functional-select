@@ -1,19 +1,9 @@
-import { useUpdateEffect } from '../../hooks';
 import styled, { css } from 'styled-components';
 import { AUTOSIZE_INPUT_ATTRS } from '../../constants';
-import React, {
-  memo,
-  useRef,
-  useState,
-  Fragment,
-  forwardRef,
-  type Ref,
-  type FormEventHandler,
-  type FocusEventHandler,
-} from 'react';
+import React, { forwardRef, type Ref, type FormEventHandler, type FocusEventHandler } from 'react';
 
 type InputProps = Readonly<{
-  isInvalid: boolean
+  isInvalid: boolean;
 }>;
 
 type AutosizeInputProps = Readonly<{
@@ -29,35 +19,37 @@ type AutosizeInputProps = Readonly<{
   onChange: FormEventHandler<HTMLInputElement>;
 }>;
 
-const INPUT_MIN_WIDTH_PX = 20;
-
-const INPUT_FONT_STYLE = css`
-  font-size: inherit;
-  font-weight: inherit;
-  font-family: inherit;
-`;
-
-const SizerDiv = styled.div`
-  top: 0;
-  left: 0;
-  height: 0;
-  overflow: scroll;
-  white-space: pre;
-  position: absolute;
-  visibility: hidden;
-  ${INPUT_FONT_STYLE}
-  ${({ theme }) => theme.input.css}
-`;
-
-const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS)<InputProps>`
+const INPUT_BASE_STYLE = css`
   border: 0;
+  margin: 0;
   outline: 0;
   padding: 0;
-  cursor: text;
+  font: inherit;
+  min-width: 2px;
+  grid-area: 1 / 2 / auto / auto;
+`;
+
+const InputWrapper = styled.div`
+  margin: 2px;
+  flex: 1 1 auto;
+  display: inline-grid;
+  box-sizing: border-box;
+  grid-area: 1 / 1 / 2 / 3;
+  grid-template-columns: 0px min-content;
+
+  :after {
+    white-space: pre;
+    visibility: hidden;
+    content: attr(data-value) " ";
+    ${INPUT_BASE_STYLE}
+  }
+`;
+
+const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS) <InputProps>`
+  width: 100%;
   background: 0;
   color: inherit;
-  box-sizing: content-box;
-  ${INPUT_FONT_STYLE}
+  ${INPUT_BASE_STYLE}
 
   :read-only {
     opacity: 0;
@@ -71,8 +63,8 @@ const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS)<InputProps>`
   ${({ theme }) => theme.input.css}
 `;
 
-const AutosizeInput = memo(
-  forwardRef<HTMLInputElement, AutosizeInputProps>((
+const AutosizeInput = forwardRef<HTMLInputElement, AutosizeInputProps>(
+  (
     {
       id,
       onBlur,
@@ -88,17 +80,9 @@ const AutosizeInput = memo(
     ref: Ref<HTMLInputElement>
   ) => {
     const isInvalid = !!required && !hasSelectedOptions;
-    const sizerRef = useRef<HTMLDivElement | null>(null);
-    const [inputWidth, setInputWidth] = useState<number>(INPUT_MIN_WIDTH_PX);
-
-    useUpdateEffect(() => {
-      if (sizerRef.current) {
-        setInputWidth(sizerRef.current.scrollWidth + INPUT_MIN_WIDTH_PX);
-      }
-    }, [inputValue]);
 
     return (
-      <Fragment>
+      <InputWrapper data-value={inputValue}>
         <Input
           id={id}
           ref={ref}
@@ -109,16 +93,12 @@ const AutosizeInput = memo(
           readOnly={readOnly}
           required={isInvalid}
           aria-label={ariaLabel}
-          style={{ width: inputWidth }}
           aria-labelledby={ariaLabelledBy}
           onChange={!readOnly ? onChange : undefined}
         />
-        <SizerDiv ref={sizerRef}>
-          {inputValue}
-        </SizerDiv>
-      </Fragment>
+      </InputWrapper>
     );
-  })
+  }
 );
 
 AutosizeInput.displayName = 'AutosizeInput';
