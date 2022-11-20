@@ -325,10 +325,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const blurInput = (): void => inputRef.current?.blur();
   const focusInput = (): void => inputRef.current?.focus();
   const scrollToItemIndex = (idx: number): void => listRef.current?.scrollToItem(idx);
-
   const hasSelectedOptions = isArrayWithLength(selectedOption);
-  const showClear = !!isClearable && !isDisabled && hasSelectedOptions;
-  const inputReadOnly = isDisabled || !isSearchable || !!focusedMultiValue;
 
   const openMenuAndFocusOption = useCallback((position: OptionIndexEnum): void => {
     if (!isArrayWithLength(menuOptions)) {
@@ -656,16 +653,16 @@ const Select = forwardRef<SelectRef, SelectProps>((
     if (isNotInput) e.preventDefault();
   };
 
+  const handleOnInputFocus = (e: FocusEvent<HTMLInputElement>): void => {
+    onInputFocus?.(e);
+    setIsFocused(true);
+  };
+
   const handleOnInputBlur = (e: FocusEvent<HTMLInputElement>): void => {
     onInputBlur?.(e);
     setIsFocused(false);
     setMenuOpen(false);
     setInputValue('');
-  };
-
-  const handleOnInputFocus = (e: FocusEvent<HTMLInputElement>): void => {
-    onInputFocus?.(e);
-    setIsFocused(true);
   };
 
   const handleOnInputChange = (e: FormEvent<HTMLInputElement>): void => {
@@ -691,6 +688,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
       menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
     }
   }, [isDisabled, openMenuOnClick, openMenuAndFocusOption]);
+
+  const showClear = !!isClearable && !isDisabled && hasSelectedOptions;
+  const inputReadOnly = isDisabled || !isSearchable || !!focusedMultiValue;
 
   return (
     <ThemeProvider theme={theme}>

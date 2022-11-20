@@ -1,18 +1,17 @@
 import type { DefaultTheme } from 'styled-components';
 import { BOUNCE_ANIMATION_CSS, FADE_IN_ANIMATION_CSS } from './styled';
 
-/**
- * A contextual styled-components DefaultTheme object with default key-value pairs for CSS props.
- */
+const color = {
+  border: '#ced4da',
+  danger: '#dc3545',
+  primary: '#007bff',
+  disabled: '#e9ecef',
+  placeholder: '#6E7276',
+  dangerLight: 'rgba(220, 53, 69, 0.25)'
+};
+
 export const DEFAULT_THEME: DefaultTheme = {
-  color: {
-    border: '#ced4da',
-    danger: '#dc3545',
-    primary: '#007bff',
-    disabled: '#e9ecef',
-    placeholder: '#6E7276',
-    dangerLight: 'rgba(220, 53, 69, 0.25)'
-  },
+  color,
   input: {},
   select: {},
   loader: {
@@ -58,8 +57,8 @@ export const DEFAULT_THEME: DefaultTheme = {
     option: {
       textAlign: 'left',
       selectedColor: '#fff',
-      selectedBgColor: '#007bff',
       padding: '0.375rem 0.75rem',
+      selectedBgColor: color.primary,
       focusedBgColor: 'rgba(0, 123, 255, 0.15)'
     }
   },
@@ -85,7 +84,7 @@ export const DEFAULT_THEME: DefaultTheme = {
       color: '#a6a6a6',
       fontSize: '0.65em',
       alignSelf: 'center',
-      focusColor: '#808080',
+      focusColor: color.danger,
       transition: 'color 0.2s ease-out'
     }
   }

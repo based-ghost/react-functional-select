@@ -75,7 +75,7 @@ const MultiValue = memo<MultiValueProps>(({
         onMouseDown={suppressEvent}
         data-testid={CLEAR_ICON_MV_TESTID}
       >
-        ✖
+        &#10006;
       </Clear>
     </MultiValueWrapper>
   );

@@ -2,7 +2,6 @@ import type { SyntheticEvent } from 'react';
 import type { SelectedOption, OptionValueCallback, OptionLabelCallback, CallbackFn } from '../types';
 import { OPTION_CLS, EMPTY_ARRAY, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTION_DISABLED_CLS } from '../constants';
 
-const STYLED_ANI_KEY = 'animation';
 const DIACRITICS_REG_EXP = /[\u0300-\u036f]/g;
 
 /**
@@ -99,7 +98,7 @@ export const mergeDeep = <T>(target: any, source: any): T => {
   Object.keys(source).forEach((key) => {
     const sourceProp = source[key];
     output[key] =
-      (key !== STYLED_ANI_KEY && isPlainObject(sourceProp))
+      (key !== 'animation' && isPlainObject(sourceProp))
         ? target[key]
           ? mergeDeep(target[key], sourceProp)
           : sourceProp

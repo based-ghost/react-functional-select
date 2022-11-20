@@ -61,7 +61,7 @@ type SingleSelectDemoProps = Readonly<{
   isDisabled: boolean;
 }>;
 
-const _cityOptions: Option[] = [
+const CITY_OPTIONS: Option[] = [
   { id: 1, city: 'Austin', state: 'TX' },
   { id: 2, city: 'Denver', state: 'CO' },
   { id: 3, city: 'Chicago', state: 'IL' },
@@ -92,7 +92,7 @@ const SingleSelectDemo: FunctionComponent<SingleSelectDemoProps> = ({ isDisabled
             <Select
               isClearable
               isInvalid={isInvalid}
-              options={_cityOptions}
+              options={CITY_OPTIONS}
               isDisabled={isDisabled}
               onOptionChange={onOptionChange}
               getOptionValue={getOptionValue}
@@ -126,6 +126,7 @@ All properties are technically optional (with a few having default values). Very
 |`isLoading`| bool | `false` | Is the select in a state of loading - shows loading dots animation
 |`isInvalid`| bool | `false` | Is the current value invalid - control recieves invalid styling
 |`inputDelay`| number | `undefined` | The debounce delay in for the input search (milliseconds)
+|`pageSize`| number | `5` | Number of options to jump in menu when page{up|down} keys are used
 |`isDisabled`| bool | `false` | Is the select control disabled - recieves disabled styling
 |`required`| bool | `false` | Is the select control required - applied to the `input` element. When `true`, the optionally specified CSS from the `themeConfig.input.cssRequired` field will be applied to the `input` element.
 |`placeholder`| string | `Select option..` | Placeholder text for the select value

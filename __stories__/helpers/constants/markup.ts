@@ -17,11 +17,13 @@ export const CLASS_NAME_HTML =
   <div class="${CONTROL_CONTAINER_CLS}">
     <div>
       <div>${PLACEHOLDER_DEFAULT}</div>
-      <input
-        value=""
-        type="text"
-        class="${AUTOSIZE_INPUT_CLS}"
-      />
+      <div>
+        <input
+          value=""
+          type="text"
+          class="${AUTOSIZE_INPUT_CLS}"
+        />
+      </div>
     </div>
     <div>
       <div>

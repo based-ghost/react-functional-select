@@ -1,7 +1,7 @@
 import React, { Fragment, type ReactNode, type FunctionComponent } from 'react';
 import MultiValue from './MultiValue';
+import styled from 'styled-components';
 import { isArrayWithLength } from '../../utils';
-import styled, { css } from 'styled-components';
 import type { MultiParams, SelectedOption, RenderLabelCallback } from '../../types';
 
 type ValueProps = Readonly<{
@@ -15,8 +15,9 @@ type ValueProps = Readonly<{
   renderMultiOptions?: (params: MultiParams) => ReactNode;
 }>;
 
-const SINGLE_VALUE_BASE_STYLE = css`
+const SingleValue = styled.div`
   margin: 0 2px;
+  max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
   box-sizing: border-box;
@@ -24,13 +25,7 @@ const SINGLE_VALUE_BASE_STYLE = css`
   grid-area: 1 / 1 / 2 / 3;
 `;
 
-const SingleValue = styled.div`
-  ${SINGLE_VALUE_BASE_STYLE}
-  max-width: 100%;
-`;
-
-const Placeholder = styled.div`
-  ${SINGLE_VALUE_BASE_STYLE}
+const Placeholder = styled(SingleValue)`
   color: ${({ theme }) => theme.color.placeholder};
 `;
 

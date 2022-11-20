@@ -32,13 +32,12 @@ const useMenuOptions = (
 ): MenuOption[] => {
   const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || FUNCTIONS.optionFilter);
   const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || FUNCTIONS.isOptionDisabled);
-
-  const searchValue = !async ? debouncedInputValue : ''; // Prevent recomputing/filtering on input mutations in async mode
-  const isFilterMatchAny = filterMatchFrom === FilterMatchEnum.ANY;
   const hideSelectedOptionsOrDefault = isBoolean(hideSelectedOptions) ? hideSelectedOptions : isMulti;
+  const searchValue = !async ? debouncedInputValue : ''; // Prevent recomputing/filtering on input mutations in async mode
 
   const menuOptions = useMemo<MenuOption[]>(() => {
     const selectedValues = selectedOption.map((x) => x.value);
+    const isFilterMatchAny = filterMatchFrom === FilterMatchEnum.ANY;
     const matchVal = trimAndFormatFilterStr(searchValue, filterIgnoreCase, filterIgnoreAccents);
 
     const isOptionFilterMatch = (option: MenuOption): boolean => {
@@ -54,8 +53,9 @@ const useMenuOptions = (
       const isDisabled = getIsOptionDisabledRef(data);
       const isSelected = selectedValues.includes(value);
       const menuOption: MenuOption = { data, value, label, isDisabled, isSelected };
-      const filterOut = !isOptionFilterMatch(menuOption) || (hideSelectedOptionsOrDefault && isSelected);
-      return filterOut ? undefined : menuOption;
+      return (!isOptionFilterMatch(menuOption) || (hideSelectedOptionsOrDefault && isSelected))
+        ? undefined
+        : menuOption;
     };
 
     return options.reduce((acc: MenuOption[], option: OptionData) => {
@@ -69,7 +69,7 @@ const useMenuOptions = (
     getOptionValue,
     getOptionLabel,
     selectedOption,
-    isFilterMatchAny,
+    filterMatchFrom,
     filterIgnoreCase,
     filterIgnoreAccents,
     getIsOptionDisabledRef,

@@ -26,5 +26,4 @@ const ClearSvgIcon: FunctionComponent = () => (
   </ClearSvg>
 );
 
-
 export default ClearSvgIcon;

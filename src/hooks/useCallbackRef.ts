@@ -7,16 +7,19 @@ import { useEffect, useRef, useCallback } from 'react';
  *
  * @param callback the callback to write to a ref object
  */
-const useCallbackRef = <T extends CallbackFn>(
-  callback: T | undefined
-): T => {
+const useCallbackRef = <T extends CallbackFn>(callback: T | undefined): T => {
   const callbackRef = useRef(callback);
 
   useEffect(() => {
     callbackRef.current = callback;
-  });
+  }, [callback]);
 
-  return useCallback(((...args) => callbackRef.current?.(...args)) as T, []);
+  return useCallback(
+    ((...args) => {
+      return callbackRef.current?.(...args);
+    }) as T,
+    []
+  );
 };
 
 export default useCallbackRef;

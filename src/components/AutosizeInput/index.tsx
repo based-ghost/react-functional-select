@@ -63,43 +63,41 @@ const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS) <InputProps>`
   ${({ theme }) => theme.input.css}
 `;
 
-const AutosizeInput = forwardRef<HTMLInputElement, AutosizeInputProps>(
-  (
-    {
-      id,
-      onBlur,
-      onFocus,
-      readOnly,
-      required,
-      onChange,
-      ariaLabel,
-      inputValue,
-      ariaLabelledBy,
-      hasSelectedOptions
-    },
-    ref: Ref<HTMLInputElement>
-  ) => {
-    const isInvalid = !!required && !hasSelectedOptions;
+const AutosizeInput = forwardRef<HTMLInputElement, AutosizeInputProps>((
+  {
+    id,
+    onBlur,
+    onFocus,
+    readOnly,
+    required,
+    onChange,
+    ariaLabel,
+    inputValue,
+    ariaLabelledBy,
+    hasSelectedOptions
+  },
+  ref: Ref<HTMLInputElement>
+) => {
+  const isInvalid = !!required && !hasSelectedOptions;
 
-    return (
-      <InputWrapper data-value={inputValue}>
-        <Input
-          id={id}
-          ref={ref}
-          isInvalid
-          onBlur={onBlur}
-          onFocus={onFocus}
-          value={inputValue}
-          readOnly={readOnly}
-          required={isInvalid}
-          aria-label={ariaLabel}
-          aria-labelledby={ariaLabelledBy}
-          onChange={!readOnly ? onChange : undefined}
-        />
-      </InputWrapper>
-    );
-  }
-);
+  return (
+    <InputWrapper data-value={inputValue}>
+      <Input
+        id={id}
+        ref={ref}
+        isInvalid
+        onBlur={onBlur}
+        onFocus={onFocus}
+        value={inputValue}
+        readOnly={readOnly}
+        required={isInvalid}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        onChange={!readOnly ? onChange : undefined}
+      />
+    </InputWrapper>
+  );
+});
 
 AutosizeInput.displayName = 'AutosizeInput';
 
