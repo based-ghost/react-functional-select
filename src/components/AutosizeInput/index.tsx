@@ -45,7 +45,7 @@ const InputWrapper = styled.div`
   }
 `;
 
-const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS) <InputProps>`
+const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS)<InputProps>`
   width: 100%;
   background: 0;
   color: inherit;

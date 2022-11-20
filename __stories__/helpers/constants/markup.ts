@@ -23,6 +23,7 @@ export const CLASS_NAME_HTML =
           type="text"
           class="${AUTOSIZE_INPUT_CLS}"
         />
+        ::after
       </div>
     </div>
     <div>

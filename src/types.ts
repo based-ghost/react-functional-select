@@ -60,7 +60,6 @@ export type MenuOption = Readonly<{
 }>;
 
 export type SelectRef = Readonly<{
-  empty: boolean;
   menuOpen: boolean;
   blur: () => void;
   focus: () => void;

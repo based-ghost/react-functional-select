@@ -291,7 +291,7 @@ export const CardBody = styled.div<{ multiComponents?: boolean }>`
     multiComponents &&
     css`
       > div {
-        margin-bottom: 1.5rem;
+        margin-bottom: 3rem;
 
         :first-of-type > label {
           margin-top: 0;
@@ -350,8 +350,8 @@ const SPIN_KEYFRAMES = keyframes`
 const SPIN_ANIMATION_CSS = css`animation: ${SPIN_KEYFRAMES} infinite 8s linear;`;
 
 export const ReactSvg = styled.svg<{ isDisabled?: boolean }>`
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   color: #1ea7fd;
   fill: currentColor;
   display: inline-block;

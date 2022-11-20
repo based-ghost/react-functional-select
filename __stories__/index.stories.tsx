@@ -552,8 +552,8 @@ export const Methods = () => {
       <Title>Methods {'&'} Properties</Title>
       <Hr />
       <ListWrapper>
-        <strong>5</strong> methods and <strong>2</strong> properties are exposed
-        to wrapping components and are accessible via a forwarded <code>ref</code>.
+        <strong>5</strong> methods and <strong>1</strong> property are exposed to
+        wrapping components and are accessible via a forwarded <code>ref</code>.
         <List>
           <Li>
             <TextHeader>blur() {'=>'} void</TextHeader> - blur the control
@@ -575,12 +575,8 @@ export const Methods = () => {
             <TextHeader>setValue(option?: any) {'=>'} void</TextHeader> - set the
             value programatically <em>(option will be validated)</em>
           </Li>
-          <Hr />
           <Li>
-            <TextHeader>empty: boolean</TextHeader> - Whether the select has a value
-          </Li>
-          <Li>
-            <TextHeader>menuOpen: boolean</TextHeader> - Whether or not the menu is open
+            <TextHeader>menuOpen: boolean</TextHeader> - Open state of the menu
           </Li>
         </List>
       </ListWrapper>
@@ -703,11 +699,10 @@ export const Filtering = () => {
 };
 
 export const Virtualization = () => {
+  const optionCountList = useMemo<number[]>(() => [100, 1000, 10000, 25000, 50000, 100000], []);
   const selectRef = useRef<SelectRef | null>(null);
   const [options, setOptions] = useState<Option[]>([]);
-  const [optionsCount, setOptionsCount] = useState(100);
-
-  const optionCountList = [100, 1000, 10000, 25000, 50000, 100000];
+  const [optionsCount, setOptionsCount] = useState(optionCountList[0]);
 
   useUpdateEffect(() => {
     selectRef.current?.clearValue();
@@ -767,7 +762,7 @@ export const Virtualization = () => {
       <Hr />
       <Card>
         <CardHeader>
-          <Label>Number of Options</Label>
+          <Label>Options Count</Label>
           <Buttons>
             {optionCountList.map((count) => (
               <OptionsCountButton

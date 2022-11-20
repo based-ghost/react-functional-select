@@ -14,7 +14,7 @@ const CHECK_BORDER_COLOR = hexToRgba(CHECK_COLOR, 0.83);
 
 const Label = styled.span`
   user-select: none;
-  margin-left: 1.45rem;
+  margin-left: 1.4rem;
 `;
 
 const Input = styled.input`

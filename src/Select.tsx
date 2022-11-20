@@ -380,7 +380,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
   useImperativeHandle(
     ref,
     () => ({
-      empty: !hasSelectedOptions,
       menuOpen: menuOpenRef.current,
       blur: blurInput,
       focus: focusInput,
@@ -401,7 +400,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
         }
       }
     }),
-    [hasSelectedOptions, getOptionValueFn, getOptionLabelFn, openMenuAndFocusOption]
+    [getOptionValueFn, getOptionLabelFn, openMenuAndFocusOption]
   );
 
   /**
@@ -411,16 +410,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
   useMountEffect(() => {
     autoFocus && focusInput();
   });
-
-  /**
-   * useEffect
-   * If control recieves focus & openMenuOnFocus = true, open menu
-   */
-  useEffect(() => {
-    if (isFocused && openMenuOnFocus) {
-      openMenuAndFocusOption(OptionIndexEnum.FIRST);
-    }
-  }, [isFocused, openMenuOnFocus, openMenuAndFocusOption]);
 
   /**
    * useEffect
@@ -653,16 +642,19 @@ const Select = forwardRef<SelectRef, SelectProps>((
     if (isNotInput) e.preventDefault();
   };
 
-  const handleOnInputFocus = (e: FocusEvent<HTMLInputElement>): void => {
-    onInputFocus?.(e);
-    setIsFocused(true);
-  };
-
   const handleOnInputBlur = (e: FocusEvent<HTMLInputElement>): void => {
     onInputBlur?.(e);
     setIsFocused(false);
     setMenuOpen(false);
     setInputValue('');
+  };
+
+  const handleOnInputFocus = (e: FocusEvent<HTMLInputElement>): void => {
+    onInputFocus?.(e);
+    setIsFocused(true);
+    if (openMenuOnFocus) {
+      openMenuAndFocusOption(OptionIndexEnum.FIRST);
+    }
   };
 
   const handleOnInputChange = (e: FormEvent<HTMLInputElement>): void => {
@@ -683,10 +675,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, []);
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
-    if (!isDisabled && !openMenuOnClick) {
-      handleOnMouseDown(e);
-      menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
-    }
+    if (isDisabled || openMenuOnClick) return;
+    handleOnMouseDown(e);
+    menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
   }, [isDisabled, openMenuOnClick, openMenuAndFocusOption]);
 
   const showClear = !!isClearable && !isDisabled && hasSelectedOptions;
