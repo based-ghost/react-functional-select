@@ -6,9 +6,9 @@ import { useRef, type MutableRefObject } from "react"
  * @param value the value to persist
  */
 const useLatestRef = <T>(value: T): MutableRefObject<T> => {
-  const ref = useRef<T>();
+  const ref = useRef<T>(value);
   ref.current = value;
-  return ref as MutableRefObject<T>;
+  return ref;
 };
 
 export default useLatestRef;

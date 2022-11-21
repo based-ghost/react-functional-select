@@ -531,13 +531,12 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const handleOnKeyDown = (e: KeyboardEvent<HTMLElement>): void => {
     if (isDisabled) return;
 
-    const { key, shiftKey, defaultPrevented } = e;
-    if (onKeyDown) {
-      onKeyDown(e, inputValue, focusedOption);
-      if (defaultPrevented) return;
+    if (isFunction(onKeyDown)) {
+      onKeyDown(e.key, inputValue, focusedOption);
+      if (e.defaultPrevented) return;
     }
 
-    switch (key) {
+    switch (e.key) {
       case 'ArrowDown': {
         menuOpen ? focusOptionOnArrowKey(OptionIndexEnum.DOWN) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
         break;
@@ -549,7 +548,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
       case 'ArrowLeft':
       case 'ArrowRight': {
         if (!isMulti || inputValue || renderMultiOptions) return;
-        focusValueOnArrowKey(key);
+        focusValueOnArrowKey(e.key);
         break;
       }
       case 'PageUp': {
@@ -589,7 +588,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
         break;
       }
       case 'Tab': {
-        if (shiftKey || !menuOpen || !tabSelectsOption || !focusedOption.data) return;
+        if (e.shiftKey || !menuOpen || !tabSelectsOption || !focusedOption.data) {
+          return;
+        }
         selectOptionFromFocused();
         break;
       }

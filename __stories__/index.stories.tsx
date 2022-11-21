@@ -292,11 +292,6 @@ export const Styling = () => {
   const [themeConfig, setThemeConfig] = useState<Theme | undefined>(undefined);
   const [selectedOption, setSelectedOption] = useCallbackState<SelectedOption | null>(null);
 
-  const selectWrapperStyle = { marginTop: '1rem' };
-  const noteStyle = { fontSize: 'inherit', fontWeight: 700 };
-  const noteCodeStyle = { fontWeight: 500 };
-  const menuItemSize = selectedOption?.value === ThemeEnum.LARGE_TEXT ? 44 : 35;
-
   const memoizedMarkupNode = useMemo(() => (
     <CodeMarkup
       language='markup'
@@ -308,9 +303,14 @@ export const Styling = () => {
   useEffect(() => {
     if (selectedOption) {
       const { value } = selectedOption;
-      setThemeConfig(ThemeConfigMap[value as string | number]);
+      setThemeConfig(ThemeConfigMap[value!]);
     }
   }, [selectedOption]);
+
+  const noteCodeStyle = { fontWeight: 500 };
+  const selectWrapperStyle = { marginTop: '1rem' };
+  const noteStyle = { fontSize: 'inherit', fontWeight: 700 };
+  const menuItemSize = selectedOption?.value === ThemeEnum.LARGE_TEXT ? 44 : 35;
 
   return (
     <Container>
@@ -590,7 +590,7 @@ export const Methods = () => {
             <Button onClick={blurSelect}>Blur</Button>
             <Button onClick={toggleMenuOpen}>Open Menu</Button>
             <Button onClick={clearValue}>Clear Value</Button>
-            <Button onClick={updateSelectedOption}>Set Value (1st Option)</Button>
+            <Button onClick={updateSelectedOption}>Set Value</Button>
           </Buttons>
         </CardHeader>
         <CardBody>
@@ -699,10 +699,10 @@ export const Filtering = () => {
 };
 
 export const Virtualization = () => {
-  const optionCountList = useMemo<number[]>(() => [100, 1000, 10000, 25000, 50000, 100000], []);
-  const selectRef = useRef<SelectRef | null>(null);
-  const [options, setOptions] = useState<Option[]>([]);
+  const optionCountList = useMemo(() => [100, 1000, 10000, 25000, 50000, 100000], []);
   const [optionsCount, setOptionsCount] = useState(optionCountList[0]);
+  const [options, setOptions] = useState<Option[]>([]);
+  const selectRef = useRef<SelectRef | null>(null);
 
   useUpdateEffect(() => {
     selectRef.current?.clearValue();
@@ -789,19 +789,19 @@ export const Virtualization = () => {
 
 export const Advanced = () => {
   const getOptionValue = useCallback(({ id }: PackageOption): number => id, []);
-  const getIsOptionDisabled = useCallback((opt: PackageOption): boolean => opt.name === PACKAGE_OPTIONS[3].name, []);
+  const getIsOptionDisabled = useCallback(({ name }: PackageOption): boolean => name === PACKAGE_OPTIONS[3].name, []);
 
   const renderOptionLabel = useCallback(
-    (opt: PackageOption) => (
+    (option: PackageOption) => (
       <OptionContainer>
         <ReactSvg
           {...REACT_SVG_PROPS}
-          isDisabled={getIsOptionDisabled(opt)}
+          isDisabled={getIsOptionDisabled(option)}
         >
           <path {...REACT_SVG_PATH_PROPS} />
           <circle {...REACT_SVG_CIRCLE_PROPS} />
         </ReactSvg>
-        <OptionName>{opt.name}</OptionName>
+        <OptionName>{option.name}</OptionName>
       </OptionContainer>
     ),
     [getIsOptionDisabled]
@@ -878,19 +878,18 @@ export const Advanced = () => {
 };
 
 export const Portaling = () => {
-  const menuPortalElId = 'menu-portal-test';
+  const portalId = 'menu-portal-test';
   const options = useMemo<Option[]>(() => createSelectOptions(3), []);
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuPortalTarget, setMenuPortalTarget] = useState<Element | undefined>(undefined);
-
+  const [menuPortalTarget, setMenuPortalTarget] = useState<Element | undefined>();
   const onMenuOpen = useCallback(() => setMenuOpen(true), []);
   const onMenuClose = useCallback(() => setMenuOpen(false), []);
 
   useEffect(() => {
-    const portalEl = document.getElementById(menuPortalElId) as HTMLElement;
+    const portalEl = document.getElementById(portalId) as HTMLElement;
     setMenuPortalTarget(portalEl);
-  }, [menuPortalElId]);
+  }, [portalId]);
 
   return (
     <Container>
@@ -908,10 +907,10 @@ export const Portaling = () => {
         <CardHeader>
           <Label>Menu component portaled to an element below this text.</Label>
           <MenuPortalElement
+            id={portalId}
             menuOpen={menuOpen}
-            id={menuPortalElId}
           >
-            <span>Portal {'<'}div /{'>'}</span>
+            <span>portal {'<'}div /{'>'}</span>
           </MenuPortalElement>
         </CardHeader>
         <CardBody>
@@ -935,15 +934,13 @@ export const Async = () => {
   const selectRef = useRef<SelectRef | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5, 'Initial'));
-
   const onInputChange = useCallback(() => setIsLoading(true), []);
 
   const onSearchChange = useCallback(
     async (value: string = 'Initial') => {
       try {
         await mockHttpRequest();
-        const count = getRandomInt(1, 5);
-        const nextOptions = createAsyncOptions(count, `Search text: ${value}`);
+        const nextOptions = createAsyncOptions(getRandomInt(1, 5), `Search text: ${value}`);
         selectRef.current?.clearValue();
         setOptions(nextOptions);
         setIsLoading(false);

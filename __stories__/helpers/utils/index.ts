@@ -1,5 +1,13 @@
 import type { Option } from '../../types';
 
+export const numberWithCommas = (value: number): string => {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+export const getRandomInt = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 export const stringifyJavaScriptObj = (data: any = {}): string => {
   return JSON.stringify(data, null, 2).replace(/"(\w+)"\s*:/g, '$1:');
 };
@@ -22,24 +30,18 @@ export const createSelectOptions = (optionCount: number): Option[] => {
   return results;
 };
 
-export const createAsyncOptions = (
-  optionCount: number,
-  lblSuffix: string
-): Option[] => {
-  const options = createSelectOptions(optionCount);
-
-  return options.map(({ value, label }: Option) => ({
-    value,
-    label: `${label} - ${lblSuffix}`
+export const createThemeOptions = (ThemeEnum: any): Option[] => {
+  return Object.keys(ThemeEnum).map((key) => ({
+    value: ThemeEnum[key],
+    label: ThemeEnum[key]
   }));
 };
 
-export const createThemeOptions = (ThemeEnum: any): Option[] => {
-  const keys = Object.keys(ThemeEnum);
-
-  return keys.map((key) => ({
-    value: ThemeEnum[key],
-    label: ThemeEnum[key]
+export const createAsyncOptions = (optionCount: number, lblSuffix: string): Option[] => {
+  const options = createSelectOptions(optionCount);
+  return options.map(({ value, label }: Option) => ({
+    value,
+    label: `${label} - ${lblSuffix}`
   }));
 };
 
@@ -55,6 +57,3 @@ export const hexToRgba = (hex: string, alpha: number = 1): string => {
 
   return `rgba(${rgbaParts.join(',')})`;
 };
-
-export const numberWithCommas = (value: number): string => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-export const getRandomInt = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min;

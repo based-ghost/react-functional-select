@@ -10,7 +10,8 @@ type OptionsCountButtonProps = Readonly<{
 }>;
 
 const StyledButton = styled(Button)<{ isActive?: boolean }>`
-  width: 6.25rem;
+  width: 6rem;
+  min-width: 6rem !important;
   transition: none;
 
   ${({ isActive }) =>

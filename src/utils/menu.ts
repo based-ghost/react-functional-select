@@ -38,12 +38,13 @@ function isDocumentElement(el: HTMLElement | typeof window): boolean {
  */
 function getScrollParent(el: HTMLElement): HTMLElement {
   let style = getComputedStyle(el);
-  const isParentAbs = style.position === 'absolute';
-  const overflowRegExp = /(auto|scroll)/;
 
   if (style.position === 'fixed') {
     return document.documentElement;
   }
+
+  const overflowRegExp = /(auto|scroll)/;
+  const isParentAbs = style.position === 'absolute';
 
   for (let parent: HTMLElement | null = el; (parent = parent?.parentElement);) {
     style = getComputedStyle(parent);
@@ -96,9 +97,7 @@ export const calculateMenuTop = (
   const controlHeight = controlEl?.getBoundingClientRect().height ?? 0;
   const menuHeightCalc = menuHeight > 0 ? menuHeight : (menuEl?.getBoundingClientRect().height ?? 0);
   const basePx = -Math.abs(menuHeightCalc + controlHeight);
-  const adjustPx = marginBottom + marginTop;
-
-  return `calc(${basePx}px + ${adjustPx}px)`;
+  return `calc(${basePx}px + ${marginBottom + marginTop}px)`;
 };
 
 export const menuFitsBelowControl = (el: HTMLElement | null): boolean => {

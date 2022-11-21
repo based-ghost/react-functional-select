@@ -58,8 +58,8 @@ const useMenuOptions = (
         : menuOption;
     };
 
-    return options.reduce((acc: MenuOption[], option: OptionData) => {
-      const menuOption = parseMenuOption(option);
+    return options.reduce((acc: MenuOption[], data: OptionData) => {
+      const menuOption = parseMenuOption(data);
       menuOption && acc.push(menuOption);
       return acc;
     }, []);
