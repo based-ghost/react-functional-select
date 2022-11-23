@@ -46,10 +46,8 @@ $ yarn add react-window styled-components react-functional-select
 
 ```jsx
 import { Select } from 'react-functional-select';
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardHeader, CardBody, Container, SelectContainer } from '../shared/components';
-
-import type { FunctionComponent } from 'react';
 
 type Option = Readonly<{
   id: number;
@@ -57,7 +55,7 @@ type Option = Readonly<{
   state: string;
 }>;
 
-type SingleSelectDemoProps = Readonly<{
+type SingleSelectProps = Readonly<{
   isDisabled: boolean;
 }>;
 
@@ -69,7 +67,7 @@ const CITY_OPTIONS: Option[] = [
   { id: 5, city: 'Houston', state: 'TX' }
 ];
 
-const SingleSelectDemo: FunctionComponent<SingleSelectDemoProps> = ({ isDisabled }) => {
+const SingleSelect: React.FC<SingleSelectProps> = ({ isDisabled }) => {
   const [isInvalid, setIsInvalid] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
@@ -105,7 +103,7 @@ const SingleSelectDemo: FunctionComponent<SingleSelectDemoProps> = ({ isDisabled
   );
 };
 
-export default SingleSelectDemo;
+export default SingleSelect;
 ```
 
 ## Properties

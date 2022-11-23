@@ -27,8 +27,6 @@ const useMenuPositioner = (
   menuScrollDuration?: number,
   scrollMenuIntoView?: boolean
 ): [string | undefined, number] => {
-  const [menuHeight, setMenuHeight] = useState<number>(menuHeightDefault);
-
   const isMenuTopPosition = useMemo<boolean>(() => {
     return menuPosition === MenuPositionEnum.TOP ||
       (menuPosition === MenuPositionEnum.AUTO && !menuFitsBelowControl(menuRef.current));
@@ -37,6 +35,7 @@ const useMenuPositioner = (
   const onMenuOpenRef = useCallbackRef(onMenuOpen);
   const onMenuCloseRef = useCallbackRef(onMenuClose);
   const resetMenuHeightRef = useRef<boolean>(false);
+  const [menuHeight, setMenuHeight] = useState<number>(menuHeightDefault);
   const shouldScrollRef = useLatestRef<boolean>(!isMenuTopPosition && !isMenuPortaled);
 
   useUpdateEffect(() => {

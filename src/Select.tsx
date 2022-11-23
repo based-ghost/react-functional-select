@@ -22,6 +22,7 @@ import {
   EMPTY_ARRAY,
   DEFAULT_THEME,
   SELECT_WRAPPER_ATTRS,
+  PAGE_SIZE_DEFAULT,
   PLACEHOLDER_DEFAULT,
   LOADING_MSG_DEFAULT,
   CONTROL_CONTAINER_CLS,
@@ -222,7 +223,6 @@ const Select = forwardRef<SelectRef, SelectProps>((
     hideSelectedOptions,
     getIsOptionDisabled,
     getFilterOptionString,
-    pageSize = 5,
     isSearchable = true,
     memoOptions = false,
     lazyLoadMenu = false,
@@ -235,6 +235,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     filterMatchFrom = FilterMatchEnum.ANY,
     menuPosition = MenuPositionEnum.BOTTOM,
     options = EMPTY_ARRAY,
+    pageSize = PAGE_SIZE_DEFAULT,
     loadingMsg = LOADING_MSG_DEFAULT,
     placeholder = PLACEHOLDER_DEFAULT,
     noOptionsMsg = NO_OPTIONS_MSG_DEFAULT,
@@ -333,12 +334,12 @@ const Select = forwardRef<SelectRef, SelectProps>((
       return;
     }
 
-    const selectedIndex = !isMulti
+    const selectedIdx = !isMulti
       ? menuOptions.findIndex((x) => x.isSelected)
       : -1;
 
-    const index = selectedIndex > -1
-      ? selectedIndex
+    const index = selectedIdx > -1
+      ? selectedIdx
       : position === OptionIndexEnum.FIRST
         ? 0
         : menuOptions.length - 1;
@@ -388,11 +389,12 @@ const Select = forwardRef<SelectRef, SelectProps>((
         setFocusedOption(FOCUSED_OPTION_DEFAULT);
       },
       setValue: (option?: OptionData) => {
-        const normalizedOpts = normalizeValue(option, getOptionValueFn, getOptionLabelFn);
-        setSelectedOption(normalizedOpts);
+        setSelectedOption(
+          normalizeValue(option, getOptionValueFn, getOptionLabelFn)
+        );
       },
       toggleMenu: (state?: boolean) => {
-        if (state === true || (state === undefined && !menuOpenRef.current)) {
+        if (state || (state === undefined && !menuOpenRef.current)) {
           focusInput();
           openMenuAndFocusOption(OptionIndexEnum.FIRST);
         } else {
@@ -474,24 +476,24 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const focusValueOnArrowKey = (key: string): void => {
     if (!hasSelectedOptions) return;
 
-    let nextFocusedIdx = -1;
+    let focusedIdx = -1;
     const lastValueIdx = selectedOption.length - 1;
     const curFocusedIdx = focusedMultiValue ? selectedOption.findIndex((x) => x.value === focusedMultiValue) : -1;
 
     if (key === 'ArrowRight') {
-      nextFocusedIdx = (curFocusedIdx > -1 && curFocusedIdx < lastValueIdx)
+      focusedIdx = (curFocusedIdx > -1 && curFocusedIdx < lastValueIdx)
         ? curFocusedIdx + 1
         : -1;
     } else {
-      nextFocusedIdx = curFocusedIdx !== 0
+      focusedIdx = curFocusedIdx !== 0
         ? curFocusedIdx === -1
           ? lastValueIdx
           : curFocusedIdx - 1
         : 0;
     }
 
-    const nextFocusedVal = nextFocusedIdx >= 0
-      ? selectedOption[nextFocusedIdx].value!
+    const nextFocusedVal = focusedIdx >= 0
+      ? selectedOption[focusedIdx].value!
       : null;
 
     if (focusedOption.data) setFocusedOption(FOCUSED_OPTION_DEFAULT);
@@ -512,13 +514,13 @@ const Select = forwardRef<SelectRef, SelectProps>((
         break;
       }
       case OptionIndexEnum.PAGEUP: {
-        const pageIndex = focusedOption.index - pageSize;
-        index = (pageIndex < 0) ? 0 : pageIndex;
+        const pageIdx = focusedOption.index - pageSize;
+        index = (pageIdx < 0) ? 0 : pageIdx;
         break;
       }
       case OptionIndexEnum.PAGEDOWN: {
-        const pageIndex = focusedOption.index + pageSize;
-        index = (pageIndex > menuOptions.length - 1) ? menuOptions.length - 1 : pageIndex;
+        const pageIdx = focusedOption.index + pageSize;
+        index = (pageIdx > menuOptions.length - 1) ? menuOptions.length - 1 : pageIdx;
         break;
       }
     }
@@ -599,14 +601,13 @@ const Select = forwardRef<SelectRef, SelectProps>((
         if (inputValue) return;
 
         if (focusedMultiValue) {
-          const clearFocusedIndex = selectedOption.findIndex((x) => x.value === focusedMultiValue);
-          const nexFocusedMultiValue =
-            (clearFocusedIndex > -1 && (clearFocusedIndex < (selectedOption.length - 1)))
-              ? selectedOption[clearFocusedIndex + 1].value!
-              : null;
+          const focusedIdx = selectedOption.findIndex((x) => x.value === focusedMultiValue);
+          const nextFocusedMultiValue = (focusedIdx > -1 && (focusedIdx < (selectedOption.length - 1)))
+            ? selectedOption[focusedIdx + 1].value!
+            : null;
 
           removeSelectedOption(focusedMultiValue);
-          setFocusedMultiValue(nexFocusedMultiValue);
+          setFocusedMultiValue(nextFocusedMultiValue);
         } else {
           if (!backspaceClearsValue) return;
           if (!hasSelectedOptions) break;
@@ -681,6 +682,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
   }, [isDisabled, openMenuOnClick, openMenuAndFocusOption]);
 
+  const flexValueWrapper = !!isMulti && hasSelectedOptions;
   const showClear = !!isClearable && !isDisabled && hasSelectedOptions;
   const inputReadOnly = isDisabled || !isSearchable || !!focusedMultiValue;
 
@@ -702,7 +704,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
           onMouseDown={handleOnControlMouseDown}
           data-testid={CONTROL_CONTAINER_TESTID}
         >
-          <ValueWrapper flex={!!isMulti && hasSelectedOptions}>
+          <ValueWrapper flex={flexValueWrapper}>
             <Value
               isMulti={isMulti}
               inputValue={inputValue}
