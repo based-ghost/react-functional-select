@@ -5,21 +5,19 @@ import { OPTION_CLS, EMPTY_ARRAY, OPTION_FOCUSED_CLS, OPTION_SELECTED_CLS, OPTIO
 const DIACRITICS_REG_EXP = /[\u0300-\u036f]/g;
 
 /**
- * @private
- *
  * Strips all diacritics from a string.
- * May not be supported by all legacy browsers (IE11 >=).
  */
-const stripDiacritics = (val: string): string => val.normalize('NFD').replace(DIACRITICS_REG_EXP, '');
+const stripDiacritics = (val: string): string => {
+  return val.normalize('NFD').replace(DIACRITICS_REG_EXP, '');
+};
 
-// Simple helper functions
 export const isBoolean = (val: unknown): val is boolean => typeof val === 'boolean';
 export const isFunction = (val: unknown): val is CallbackFn => typeof val === 'function';
 export const isArrayWithLength = (val: unknown): boolean => Array.isArray(val) && !!val.length;
 export const isPlainObject = (val: unknown): boolean => val !== null && typeof val === 'object' && !Array.isArray(val);
 
 /**
- * Prevent default behavior and propagation of an event.
+ * Prevent default behavior and propagation of an event
  */
 export const suppressEvent = (e: SyntheticEvent<Element>): void => {
   e.preventDefault();
@@ -28,7 +26,7 @@ export const suppressEvent = (e: SyntheticEvent<Element>): void => {
 
 /**
  * Apply regex to string, and if the value is NOT case sensitive,
- * call .toLowerCase() and return result.
+ * call .toLowerCase() and return result
  */
 export const trimAndFormatFilterStr = (
   value: string,
@@ -43,7 +41,7 @@ export const trimAndFormatFilterStr = (
 };
 
 /**
- * Builds the className property in Option.tsx component.
+ * Builds the className property in Option.tsx component
  */
 export const buildOptionClsName = (
   isDisabled: boolean,
@@ -63,7 +61,7 @@ export const buildOptionClsName = (
 };
 
 /**
- * Parses an object or an array of objects into output of SelectedOption[].
+ * Parses an object or an array of objects into output of SelectedOption[]
  */
 export const normalizeValue = (
   value: unknown,
@@ -88,9 +86,9 @@ export const normalizeValue = (
 };
 
 /**
- * Immutable implementation of mergeDeep for two objects. Will return the merged result.
+ * Immutable implementation of mergeDeep for two objects. Will return the merged result
  * In first condition of if/else block - check that property is no 'animation',
- * since we never want to merge that complex styled-component object.
+ * since we never want to merge that complex styled-component object
  */
 export const mergeDeep = <T>(target: any, source: any): T => {
   const output = { ...target };

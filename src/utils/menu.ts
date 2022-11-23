@@ -1,42 +1,33 @@
 import type { CallbackFn } from '../types';
 
 /**
- * @private
- *
  * @param t: time (elapsed)
  * @param b: initial value
  * @param c: amount of change
  * @param d: duration
  */
-function easeOutCubic(t: number, b: number, c: number, d: number): number {
+const easeOutCubic = (
+  t: number,
+  b: number,
+  c: number,
+  d: number
+): number => {
   return c * ((t = t / d - 1) * t * t + 1) + b;
-}
+};
 
-/**
- * @private
- */
-function getScrollTop(el: HTMLElement): number {
+const getScrollTop = (el: HTMLElement): number => {
   return isDocumentElement(el) ? window.pageYOffset : el.scrollTop;
-}
+};
 
-/**
- * @private
- */
-function scrollTo(el: HTMLElement, top: number): void {
+const scrollTo = (el: HTMLElement, top: number): void => {
   isDocumentElement(el) ? window.scrollTo(0, top) : (el.scrollTop = top);
-}
+};
 
-/**
- * @private
- */
-function isDocumentElement(el: HTMLElement | typeof window): boolean {
+const isDocumentElement = (el: HTMLElement | typeof window): boolean => {
   return el === document.body || el === document.documentElement || el === window;
-}
+};
 
-/**
- * @private
- */
-function getScrollParent(el: HTMLElement): HTMLElement {
+const getScrollParent = (el: HTMLElement): HTMLElement => {
   let style = getComputedStyle(el);
 
   if (style.position === 'fixed') {
@@ -57,34 +48,31 @@ function getScrollParent(el: HTMLElement): HTMLElement {
   }
 
   return document.documentElement;
-}
+};
 
-/**
- * @private
- */
-function smoothScrollTo(
+const smoothScrollTo = (
   el: HTMLElement,
   to: number,
   duration: number = 300,
   callback?: CallbackFn
-): void {
+): void => {
   let currentTime = 0;
   const start = getScrollTop(el);
   const change = to - start;
 
-  function scrollFn() {
+  const scrollFn = () => {
     currentTime += 5;
     const calcScrollTop = easeOutCubic(currentTime, start, change, duration);
     scrollTo(el, calcScrollTop);
     (currentTime < duration) ? requestAnimationFrame(scrollFn) : callback?.();
-  }
+  };
 
   requestAnimationFrame(scrollFn);
-}
+};
 
 /**
- * Calculates the top property value for the MenuWrapper <div />.
- * This property is only generated when the position of the menu is above the control.
+ * Calculates the top property value for the MenuWrapper element
+ * This property is only generated when the position of the menu is above the control
  */
 export const calculateMenuTop = (
   menuHeight: number,
@@ -110,7 +98,7 @@ export const menuFitsBelowControl = (el: HTMLElement | null): boolean => {
 
 /**
  * Calculate space around the control and menu to determine if an animated
- * scroll can performed to show the menu in full view. Also, execute a callback if defined.
+ * scroll can performed to show the menu in full view. Also, execute a callback if defined
  */
 export const scrollMenuIntoViewOnOpen = (
   menuEl: HTMLElement | null,
@@ -138,8 +126,8 @@ export const scrollMenuIntoViewOnOpen = (
   const spaceBelow = scrollParent.getBoundingClientRect().height - scrollTop - top;
   const notEnoughSpaceBelow = spaceBelow < height;
 
-  // Sufficient space does not exist to scroll menu fully into view.
-  // Calculate available space and use that as the the new menuHeight (use scrollSpaceBelow for now).
+  // Sufficient space does not exist to scroll menu fully into view
+  // Calculate available space and use that as the the new menuHeight (use scrollSpaceBelow for now)
   // OR scrollMenuIntoView = false
   if (notEnoughSpaceBelow || !scrollMenuIntoView) {
     const condensedMenuHeight = notEnoughSpaceBelow ? spaceBelow : undefined;

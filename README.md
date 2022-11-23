@@ -46,17 +46,15 @@ $ yarn add react-window styled-components react-functional-select
 
 ```jsx
 import { Select } from 'react-functional-select';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, type ComponentProps } from 'react';
 import { Card, CardHeader, CardBody, Container, SelectContainer } from '../shared/components';
+
+type SelectProps = ComponentProps<typeof Select>;
 
 type Option = Readonly<{
   id: number;
   city: string;
   state: string;
-}>;
-
-type SingleSelectProps = Readonly<{
-  isDisabled: boolean;
 }>;
 
 const CITY_OPTIONS: Option[] = [
@@ -67,16 +65,18 @@ const CITY_OPTIONS: Option[] = [
   { id: 5, city: 'Houston', state: 'TX' }
 ];
 
-const SingleSelect: React.FC<SingleSelectProps> = ({ isDisabled }) => {
+const SingleSelect: React.FC<SelectProps> = ({ isDisabled }) => {
   const [isInvalid, setIsInvalid] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
-  const getOptionValue = useCallback((option: Option): number => option.id, []);
-  const onOptionChange = useCallback((option: Option | null): void => setSelectedOption(option), []);
-  const getOptionLabel = useCallback((option: Option): string => `${option.city}, ${option.state}`, []);
+  const getOptionValue = useCallback((opt: Option): number => opt.id, []);
+  const onOptionChange = useCallback((opt: Option | null): void => setSelectedOption(opt), []);
+  const getOptionLabel = useCallback((opt: Option): string => `${opt.city}, ${opt.state}`, []);
 
   useEffect(() => {
-    isDisabled && setIsInvalid(false);
+    if (isDisabled) {
+      setIsInvalid(false);
+    }
   }, [isDisabled]);
 
   return (

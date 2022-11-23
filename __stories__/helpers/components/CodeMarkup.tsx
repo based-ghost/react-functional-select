@@ -7,6 +7,7 @@ import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 const dark = require('react-syntax-highlighter/dist/esm/styles/prism/dark').default;
 const markup = require('react-syntax-highlighter/dist/esm/languages/prism/markup').default;
 const javascript = require('react-syntax-highlighter/dist/esm/languages/prism/javascript').default;
+
 SyntaxHighlighter.registerLanguage('markup', markup);
 SyntaxHighlighter.registerLanguage('javascript', javascript);
 

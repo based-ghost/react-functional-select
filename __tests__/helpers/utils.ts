@@ -22,9 +22,7 @@ export const getOptionSingle = (index: number = 0): Option => ({ ...OPTIONS[inde
 export const getSelectedOptionSingle = (): SelectedOption[] => {
   const data = getOptionSingle();
   const { value, label } = data;
-  const option: SelectedOption = { data, value, label };
-
-  return [option];
+  return [{ data, value, label }];
 };
 
 // ============================================
@@ -60,9 +58,15 @@ export const MENU_OPTIONS: MenuOption[] = [MENU_OPTION_SELECTED, MENU_OPTION_DIS
 // ============================================
 
 export const stringifyCSSProperties = (obj: CSSProperties = {}): string => {
-  const cssProps = Object.keys(obj).map((key) => `${key}: ${obj[key]};`);
-  return cssProps.join(' ');
+  return Object.keys(obj)
+    .map((key) => `${key}: ${obj[key]};`)
+    .join(' ');
 };
 
 export const RENDER_OPTION_LABEL_MOCK = jest.fn(({ label }: OptionData): ReactNode => label);
-export const RENDER_MULTI_OPTIONS_MOCK = jest.fn(({ selected, renderOptionLabel }: MultiParams): ReactNode => selected.map((option) => renderOptionLabel(option.data)).join(', '));
+
+export const RENDER_MULTI_OPTIONS_MOCK = jest.fn(
+  ({selected, renderOptionLabel}: MultiParams): ReactNode => {
+    return selected.map((option) => renderOptionLabel(option.data)).join(', ');
+  }
+);
