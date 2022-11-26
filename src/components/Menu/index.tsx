@@ -52,7 +52,6 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
     white-space: nowrap;
     text-overflow: ellipsis;
     -webkit-tap-highlight-color: transparent;
-    will-change: top;
 	  padding: ${({ theme }) => theme.menu.option.padding};
 	  text-align: ${({ theme }) => theme.menu.option.textAlign};
 

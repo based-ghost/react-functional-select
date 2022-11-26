@@ -7,9 +7,7 @@ let _isTouchDevice: boolean | undefined;
  * Global, lazy evaluation.
  */
 export const isTouchDevice = (): boolean => {
-  if (isBoolean(_isTouchDevice)) {
-    return _isTouchDevice;
-  }
+  if (isBoolean(_isTouchDevice)) return _isTouchDevice;
 
   return (_isTouchDevice = (() => {
     try {

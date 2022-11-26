@@ -34,9 +34,7 @@ export const trimAndFormatFilterStr = (
   filterIgnoreAccents: boolean
 ): string => {
   let trimVal = value.trim();
-  if (filterIgnoreCase) {
-    trimVal = trimVal.toLowerCase();
-  }
+  if (filterIgnoreCase) trimVal = trimVal.toLowerCase();
   return !filterIgnoreAccents ? trimVal : stripDiacritics(trimVal);
 };
 
@@ -48,16 +46,16 @@ export const buildOptionClsName = (
   isSelected: boolean,
   isFocused: boolean
 ): string => {
-  let className = OPTION_CLS;
+  let cx = OPTION_CLS;
 
   if (isDisabled)
-    className += ` ${OPTION_DISABLED_CLS}`;
+    cx += ' ' + OPTION_DISABLED_CLS;
   if (isSelected)
-    className += ` ${OPTION_SELECTED_CLS}`;
+    cx += ' ' + OPTION_SELECTED_CLS;
   if (isFocused)
-    className += ` ${OPTION_FOCUSED_CLS}`;
+    cx += ' ' + OPTION_FOCUSED_CLS;
 
-  return className;
+  return cx;
 };
 
 /**
@@ -68,17 +66,17 @@ export const normalizeValue = (
   getOptionValue: OptionValueCallback,
   getOptionLabel: OptionLabelCallback
 ): SelectedOption[] => {
-  const initValues = Array.isArray(value)
+  const initVals = Array.isArray(value)
     ? value
     : isPlainObject(value)
       ? [value]
       : EMPTY_ARRAY;
 
-  if (!isArrayWithLength(initValues)) {
-    return initValues;
+  if (!isArrayWithLength(initVals)) {
+    return initVals;
   }
 
-  return initValues.map((data: unknown) => ({
+  return initVals.map((data) => ({
     data,
     value: getOptionValue(data),
     label: getOptionLabel(data)

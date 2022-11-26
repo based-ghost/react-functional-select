@@ -273,8 +273,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const debouncedInputValue = useDebounce<string>(inputValue, inputDelay);
 
   // Custom ref objects
-  const onSearchChangeRef = useCallbackRef(onSearchChange);
-  const onOptionChangeRef = useCallbackRef(onOptionChange);
+  const onSearchChangeFn = useCallbackRef(onSearchChange);
+  const onOptionChangeFn = useCallbackRef(onOptionChange);
   const onSearchChangeIsFn = useLatestRef<boolean>(isFunction(onSearchChange));
   const onOptionChangeIsFn = useLatestRef<boolean>(isFunction(onOptionChange));
   const menuOpenRef = useLatestRef<boolean>(menuOpen);
@@ -421,9 +421,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
   useEffect(() => {
     if (onSearchChangeIsFn.current && onChangeEvtValue.current) {
       onChangeEvtValue.current = false;
-      onSearchChangeRef(debouncedInputValue);
+      onSearchChangeFn(debouncedInputValue);
     }
-  }, [onSearchChangeRef, debouncedInputValue]);
+  }, [onSearchChangeFn, debouncedInputValue]);
 
   /**
    * useUpdateEffect
@@ -437,9 +437,9 @@ const Select = forwardRef<SelectRef, SelectProps>((
           ? selectedOption[0].data
           : null;
 
-      onOptionChangeRef(normalSelectedOpts);
+      onOptionChangeFn(normalSelectedOpts);
     }
-  }, [onOptionChangeRef, isMulti, selectedOption]);
+  }, [onOptionChangeFn, isMulti, selectedOption]);
 
   /**
    * useUpdateEffect
@@ -677,9 +677,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, []);
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
-    if (isDisabled || openMenuOnClick) return;
-    handleOnMouseDown(e);
-    menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
+    if (!isDisabled && !openMenuOnClick) {
+      handleOnMouseDown(e);
+      menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
+    }
   }, [isDisabled, openMenuOnClick, openMenuAndFocusOption]);
 
   const flexValueWrapper = !!isMulti && hasSelectedOptions;

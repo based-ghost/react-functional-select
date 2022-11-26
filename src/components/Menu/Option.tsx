@@ -9,8 +9,11 @@ type OptionProps = Readonly<{
   style: CSSProperties;
 }>;
 
-// Extends react-window "areEqual" adding early bailout based on "memoOptions" flag
-const _areEqual = (prevProps: OptionProps, nextProps: OptionProps): boolean => {
+// extends react-window 'areEqual'
+const _areEqual = (
+  prevProps: OptionProps,
+  nextProps: OptionProps
+): boolean => {
   const { memoOptions } = nextProps.data;
   return memoOptions && areEqual(prevProps, nextProps);
 };
@@ -27,7 +30,7 @@ const Option = memo<OptionProps>(({
 }) => {
   const opt = menuOptions[index];
 
-  const _className = buildOptionClsName(
+  const className = buildOptionClsName(
     opt.isDisabled,
     opt.isSelected,
     index === focusedOptionIndex
@@ -36,7 +39,7 @@ const Option = memo<OptionProps>(({
   return (
     <div
       style={style}
-      className={_className}
+      className={className}
       onClick={() => selectOption(opt)}
     >
       {renderOptionLabel(opt.data)}

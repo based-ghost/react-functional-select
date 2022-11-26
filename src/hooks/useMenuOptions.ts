@@ -30,10 +30,10 @@ const useMenuOptions = (
   async: boolean = false,
   hideSelectedOptions?: boolean
 ): MenuOption[] => {
-  const getFilterOptionStringRef = useCallbackRef(getFilterOptionString || FUNCTIONS.optionFilter);
-  const getIsOptionDisabledRef = useCallbackRef(getIsOptionDisabled || FUNCTIONS.isOptionDisabled);
+  const getIsOptionDisabledFn = useCallbackRef(getIsOptionDisabled || FUNCTIONS.isOptionDisabled);
+  const getFilterOptionStringFn = useCallbackRef(getFilterOptionString || FUNCTIONS.optionFilter);
   const hideSelectedOptionsOrDefault = isBoolean(hideSelectedOptions) ? hideSelectedOptions : isMulti;
-  const searchValue = !async ? debouncedInputValue : ''; // Prevent recomputing/filtering on input mutations in async mode
+  const searchValue = !async ? debouncedInputValue : ''; // prevent recomputing on input mutations in async mode
 
   const menuOptions = useMemo<MenuOption[]>(() => {
     const selectedValues = selectedOption.map((x) => x.value);
@@ -42,7 +42,7 @@ const useMenuOptions = (
 
     const isOptionFilterMatch = (option: MenuOption): boolean => {
       if (!matchVal) return true;
-      const filterVal = getFilterOptionStringRef(option);
+      const filterVal = getFilterOptionStringFn(option);
       const normalFilterVal = trimAndFormatFilterStr(filterVal, filterIgnoreCase, filterIgnoreAccents);
       return isFilterMatchAny ? normalFilterVal.includes(matchVal) : normalFilterVal.startsWith(matchVal);
     };
@@ -50,7 +50,7 @@ const useMenuOptions = (
     const parseMenuOption = (data: OptionData): MenuOption | undefined => {
       const value = getOptionValue(data);
       const label = getOptionLabel(data);
-      const isDisabled = getIsOptionDisabledRef(data);
+      const isDisabled = getIsOptionDisabledFn(data);
       const isSelected = selectedValues.includes(value);
       const menuOption: MenuOption = { data, value, label, isDisabled, isSelected };
       return (!isOptionFilterMatch(menuOption) || (hideSelectedOptionsOrDefault && isSelected))
@@ -72,8 +72,8 @@ const useMenuOptions = (
     filterMatchFrom,
     filterIgnoreCase,
     filterIgnoreAccents,
-    getIsOptionDisabledRef,
-    getFilterOptionStringRef,
+    getIsOptionDisabledFn,
+    getFilterOptionStringFn,
     hideSelectedOptionsOrDefault
   ]);
 
