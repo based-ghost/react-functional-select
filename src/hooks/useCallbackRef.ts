@@ -2,24 +2,21 @@ import type { CallbackFn } from '../types';
 import { useEffect, useRef, useCallback } from 'react';
 
 /**
- * Hook that converts a callback to a ref to avoid triggering re-renders when
- * passed as a prop or avoid re-executing effects when passed as a dependency
+ * Creates a stable callback function that has access to the latest
+ * state and can be used within event handlers and effect callbacks.
  *
  * @param callback the callback to write to ref object
  */
 const useCallbackRef = <T extends CallbackFn>(callback?: T): T => {
-  const callbackRef = useRef(callback);
+  const ref = useRef(callback);
 
   useEffect(() => {
-    callbackRef.current = callback;
+    ref.current = callback;
   });
 
-  return useCallback(
-    ((...args) => {
-      return callbackRef.current?.(...args);
-    }) as T,
-    []
-  );
+  return useCallback<CallbackFn>((...args) => {
+    return ref.current?.(...args);
+  }, []) as T;
 };
 
 export default useCallbackRef;

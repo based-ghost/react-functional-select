@@ -51,7 +51,7 @@ import type {
 import type { FixedSizeList } from 'react-window';
 import styled, { css, ThemeProvider, type DefaultTheme } from 'styled-components';
 import { Menu, Value, AriaLiveRegion, AutosizeInput, IndicatorIcons } from './components';
-import { useDebounce, useLatestRef, useCallbackRef, useMenuOptions, useMountEffect, useUpdateEffect, useMenuPositioner } from './hooks';
+import { useDebounce, useLatestRef, useCallbackRef, useMenuOptions, useMountEffect, useUpdateEffect, useMenuPosition } from './hooks';
 import { isBoolean, isFunction, isPlainObject, mergeDeep, suppressEvent, normalizeValue, isTouchDevice, isArrayWithLength } from './utils';
 
 type SelectProps = Readonly<{
@@ -308,7 +308,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   );
 
   // Custom hook abstraction that handles calculating menuHeightCalc (defaults to menuMaxHeight) / handles executing callbacks/logic on menuOpen state change.
-  const [menuStyleTop, menuHeightCalc] = useMenuPositioner(
+  const { menuStyleTop, menuHeightCalc } = useMenuPosition(
     menuRef,
     controlRef,
     menuOpen,
@@ -320,7 +320,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     onMenuOpen,
     onMenuClose,
     menuScrollDuration,
-    scrollMenuIntoView,
+    scrollMenuIntoView
   );
 
   const blurInput = (): void => inputRef.current?.blur();
@@ -402,7 +402,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
         }
       }
     }),
-    [getOptionValueFn, getOptionLabelFn, openMenuAndFocusOption]
+    [menuOpenRef, getOptionValueFn, getOptionLabelFn, openMenuAndFocusOption]
   );
 
   /**
@@ -423,7 +423,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
       onChangeEvtValue.current = false;
       onSearchChangeFn(debouncedInputValue);
     }
-  }, [onSearchChangeFn, debouncedInputValue]);
+  }, [onSearchChangeFn, onSearchChangeIsFn, debouncedInputValue]);
 
   /**
    * useUpdateEffect
@@ -439,7 +439,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
       onOptionChangeFn(normalSelectedOpts);
     }
-  }, [onOptionChangeFn, isMulti, selectedOption]);
+  }, [onOptionChangeFn, onOptionChangeIsFn, isMulti, selectedOption]);
 
   /**
    * useUpdateEffect
@@ -463,7 +463,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     }
 
     prevMenuOptionsLength.current = curLength;
-  }, [async, options, menuOptions]);
+  }, [async, options, menuOpenRef, menuOptions]);
 
   const selectOptionFromFocused = (): void => {
     const { index, ...menuOpt } = focusedOption;

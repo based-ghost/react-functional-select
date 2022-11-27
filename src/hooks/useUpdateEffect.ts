@@ -1,13 +1,12 @@
-import { useRef, useEffect } from 'react';
+import {useRef, useEffect, type EffectCallback, type DependencyList} from 'react';
 
 /**
- * Run an effect only on updates.
- * Skip the first effect execution that occurrs on initial mount.
+ * `React.useEffect` that will not run on the first render.
  *
  * @param effect the effect to execute
  * @param deps the dependency list
  */
-const useUpdateEffect: typeof useEffect = (effect, deps): void => {
+const useUpdateEffect = (effect: EffectCallback, deps?: DependencyList): void => {
   const isFirstRender = useRef(true);
 
   useEffect(() => {
@@ -16,6 +15,7 @@ const useUpdateEffect: typeof useEffect = (effect, deps): void => {
     } else {
       return effect();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };
 
