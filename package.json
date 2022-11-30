@@ -1,6 +1,6 @@
 {
   "name": "react-functional-select",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Micro-sized and micro-optimized select component for React.js",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -120,7 +120,7 @@
     "storybook": "start-storybook -c .storybook -p 9009 --no-manager-cache",
     "build-storybook": "build-storybook -c .storybook -o storybook-static",
     "lint": "eslint \"+(.storybook|__stories__|__tests__|config|src)/**/*.{ts,js}\"",
-    "chromatic": "chromatic --force-rebuild --auto-accept-changes"
+    "chromatic": "chromatic --force-rebuild --auto-accept-changes --exit-zero-on-changes"
   },
   "dependencies": {
     "@babel/runtime": "^7.20.6"
