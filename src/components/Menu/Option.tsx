@@ -1,7 +1,7 @@
 import React, { memo, type CSSProperties } from 'react';
 import { areEqual } from 'react-window';
 import type { ItemData } from '../../types';
-import { buildOptionClsName } from '../../utils';
+import { buildOptionClass } from '../../utils';
 
 type OptionProps = Readonly<{
   index: number;
@@ -30,7 +30,7 @@ const Option = memo<OptionProps>(({
 }) => {
   const opt = menuOptions[index];
 
-  const className = buildOptionClsName(
+  const className = buildOptionClass(
     opt.isDisabled,
     opt.isSelected,
     index === focusedOptionIndex

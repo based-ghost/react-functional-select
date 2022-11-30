@@ -20,12 +20,12 @@ const A11yText = styled.span`
   padding: 0;
   width: 1px;
   height: 1px;
-  margin: -1px;
   z-index: 9999;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  clip: rect(1px, 1px, 1px, 1px);
 `;
 
 const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
@@ -43,19 +43,23 @@ const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
     return null;
   }
 
-  // Message contents for "aria-context" SPAN
+  // message contents for "aria-context"
+  const { index, label, isDisabled, isSelected } = focusedOption;
+
   const menuMsg = menuOpen
-    ? 'Use Up and Down arrow keys to choose options, press Enter or Tab to select the currently focused option, press Escape to close the menu.'
+    ? `Use Up and Down to choose options${isDisabled ? '' : ', press Enter or Tab to select the currently focused option'}, press Escape to close the menu.`
     : `${ariaLabel} is focused${isSearchable ? ', type to filter options' : ''}, press Down arrow key to open the menu.`;
 
-  const { index, value, label, isDisabled } = focusedOption;
-  const focusedMsg = (value && !isDisabled) ? `Option ${label} is focused, ${index + 1} of ${optionCount}.` : '';
+  const focusedMsg = label
+    ? `Option ${label} is ${isSelected ? 'selected' : 'focused'}${isDisabled ? ' disabled' : ''}, ${index + 1} of ${optionCount}.`
+    : '';
+
   const optionsMsg = `${optionCount} option(s) available${inputValue ? (' for search ' + inputValue) : ''}.`;
   const ariaContextMsg = `${focusedMsg} ${optionsMsg} ${menuMsg}`.trimStart();
 
-  // Message contents for "aria-selection" SPAN
-  const labels = selectedOption.length ? selectedOption.map((x) => x.label).join(' ') : 'N/A';
-  const selectionMsg = `Selected option: ${labels}`;
+  // message contents for "aria-selection" SPAN
+  const selectedLbls = selectedOption.length ? selectedOption.map((x) => x.label).join(' ') : 'N/A';
+  const selectionMsg = `Selected option: ${selectedLbls}`;
 
   return (
     <A11yText

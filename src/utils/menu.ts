@@ -139,5 +139,10 @@ export const scrollMenuIntoViewOnOpen = (
   const marginBottom = parseInt(getComputedStyle(menuEl).marginBottom, 10);
   const scrollDown = bottom - viewInner + scrollTop + marginBottom;
 
-  smoothScrollTo(scrollParent, scrollDown, menuScrollDuration, handleOnMenuOpen);
+  smoothScrollTo(
+    scrollParent,
+    scrollDown,
+    menuScrollDuration,
+    handleOnMenuOpen
+  );
 };

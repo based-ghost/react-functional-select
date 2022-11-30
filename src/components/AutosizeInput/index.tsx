@@ -3,15 +3,18 @@ import { AUTOSIZE_INPUT_ATTRS } from '../../constants';
 import React, { forwardRef, type Ref, type FormEventHandler, type FocusEventHandler } from 'react';
 
 type InputProps = Readonly<{
-  isInvalid: boolean;
+  invalid?: boolean;
 }>;
 
 type AutosizeInputProps = Readonly<{
   id?: string;
+  menuId?: string;
+  menuOpen: boolean;
   readOnly: boolean;
   ariaLabel?: string;
   inputValue: string;
   required?: boolean;
+  isInvalid?: boolean;
   ariaLabelledBy?: string;
   hasSelectedOptions: boolean;
   onBlur: FocusEventHandler<HTMLInputElement>;
@@ -52,46 +55,48 @@ const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS)<InputProps>`
   ${INPUT_BASE_STYLE}
 
   :read-only {
-    opacity: 0;
     cursor: default;
   }
 
-  :required {
-    ${({ theme, isInvalid }) => isInvalid && theme.input.cssRequired}
-  }
-
   ${({ theme }) => theme.input.css}
+  ${({ theme, invalid }) => invalid && theme.input.cssRequired}
 `;
 
 const AutosizeInput = forwardRef<HTMLInputElement, AutosizeInputProps>((
   {
     id,
+    menuId,
     onBlur,
     onFocus,
+    onChange,
     readOnly,
     required,
-    onChange,
+    menuOpen,
     ariaLabel,
+    isInvalid,
     inputValue,
     ariaLabelledBy,
     hasSelectedOptions
   },
   ref: Ref<HTMLInputElement>
 ) => {
-  const isInvalid = !!required && !hasSelectedOptions;
+  const invalid = isInvalid || (required && !hasSelectedOptions);
 
   return (
     <InputWrapper data-value={inputValue}>
       <Input
+        invalid
         id={id}
         ref={ref}
-        isInvalid
         onBlur={onBlur}
         onFocus={onFocus}
         value={inputValue}
         readOnly={readOnly}
-        required={isInvalid}
+        aria-owns={menuId}
+        aria-controls={menuId}
         aria-label={ariaLabel}
+        aria-required={invalid}
+        aria-expanded={menuOpen}
         aria-labelledby={ariaLabelledBy}
         onChange={!readOnly ? onChange : undefined}
       />

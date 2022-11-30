@@ -41,19 +41,16 @@ export const trimAndFormatFilterStr = (
 /**
  * Builds the className property in Option.tsx component
  */
-export const buildOptionClsName = (
+export const buildOptionClass = (
   isDisabled: boolean,
   isSelected: boolean,
   isFocused: boolean
 ): string => {
   let cx = OPTION_CLS;
 
-  if (isDisabled)
-    cx += ' ' + OPTION_DISABLED_CLS;
-  if (isSelected)
-    cx += ' ' + OPTION_SELECTED_CLS;
-  if (isFocused)
-    cx += ' ' + OPTION_FOCUSED_CLS;
+  if (isDisabled) cx += ' ' + OPTION_DISABLED_CLS;
+  if (isSelected) cx += ' ' + OPTION_SELECTED_CLS;
+  if (isFocused) cx += ' ' + OPTION_FOCUSED_CLS;
 
   return cx;
 };

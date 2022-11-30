@@ -21,15 +21,16 @@ import {
   FUNCTIONS,
   EMPTY_ARRAY,
   DEFAULT_THEME,
-  SELECT_WRAPPER_ATTRS,
   PAGE_SIZE_DEFAULT,
   PLACEHOLDER_DEFAULT,
   LOADING_MSG_DEFAULT,
+  SELECT_CONTAINER_CLS,
   CONTROL_CONTAINER_CLS,
   FOCUSED_OPTION_DEFAULT,
   NO_OPTIONS_MSG_DEFAULT,
   MENU_ITEM_SIZE_DEFAULT,
   MENU_MAX_HEIGHT_DEFAULT,
+  SELECT_CONTAINER_TESTID,
   CONTROL_CONTAINER_TESTID
 } from './constants';
 import type {
@@ -56,9 +57,10 @@ import { isBoolean, isFunction, isPlainObject, mergeDeep, suppressEvent, normali
 
 type SelectProps = Readonly<{
   async?: boolean;
+  menuId?: string;
   inputId?: string;
-  pageSize?: number;
   selectId?: string;
+  pageSize?: number;
   isMulti?: boolean;
   ariaLabel?: string;
   required?: boolean;
@@ -127,7 +129,7 @@ interface ControlWrapperProps extends Pick<SelectProps, 'isInvalid' | 'isDisable
   isFocused: boolean;
 }
 
-const SelectWrapper = styled.div.attrs(SELECT_WRAPPER_ATTRS)`
+const SelectWrapper = styled.div`
   position: relative;
   box-sizing: border-box;
   ${({ theme }) => theme.select.css}
@@ -180,6 +182,7 @@ const ControlWrapper = styled.div<ControlWrapperProps>`
 const Select = forwardRef<SelectRef, SelectProps>((
   {
     async,
+    menuId,
     isMulti,
     inputId,
     selectId,
@@ -374,7 +377,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [isMulti, closeMenuOnSelect, blurInputOnSelect, removeSelectedOption]);
 
   /**
-   * useImperativeHandle.
+   * `React.useImperativeHandle`
+   *
    * Exposed API methods/properties available on a ref instance of this Select.tsx component.
    * Dependency list passed as the third param to re-create the handle when one of them updates.
    */
@@ -406,15 +410,19 @@ const Select = forwardRef<SelectRef, SelectProps>((
   );
 
   /**
-   * useMountEffect
-   * If autoFocus = true, focus the control following initial mount.
+   * `useMountEffect`
+   *
+   * If 'autoFocus' true, focus the control following initial mount
    */
   useMountEffect(() => {
-    autoFocus && focusInput();
+    if (autoFocus) {
+      focusInput();
+    }
   });
 
   /**
-   * useEffect
+   * `React.useEffect`
+   *
    * If 'onSearchChange' function is defined, run as callback when the stateful debouncedInputValue
    * updates check if onChangeEvtValue ref is set true, which indicates the inputValue change was triggered by input change event
    */
@@ -426,7 +434,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [onSearchChangeFn, onSearchChangeIsFn, debouncedInputValue]);
 
   /**
-   * useUpdateEffect
+   * `useUpdateEffect`
+   *
    * Handle passing 'selectedOption' value(s) to onOptionChange callback function prop (if defined)
    */
   useUpdateEffect(() => {
@@ -442,7 +451,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [onOptionChangeFn, onOptionChangeIsFn, isMulti, selectedOption]);
 
   /**
-   * useUpdateEffect
+   * `useUpdateEffect`
+   *
    * Handle clearing focused option if menuOptions array has 0 length;
    * Handle menuOptions changes - conditionally focus first option and do scroll to first option;
    * Handle reseting scroll pos to first item after the previous search returned zero results (use prevMenuOptionsLen)
@@ -472,7 +482,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
     }
   };
 
-  // Only Multiselect mode supports value focusing (ArrowRight || ArrowLeft)
+  // only Multiselect mode supports value focusing (ArrowRight || ArrowLeft)
   const focusValueOnArrowKey = (key: string): void => {
     if (!hasSelectedOptions) return;
 
@@ -492,7 +502,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
         : 0;
     }
 
-    const nextFocusedVal = focusedIdx >= 0
+    const nextFocusedVal = focusedIdx > -1
       ? selectedOption[focusedIdx].value!
       : null;
 
@@ -533,8 +543,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
   const handleOnKeyDown = (e: KeyboardEvent<HTMLElement>): void => {
     if (isDisabled) return;
 
-    if (isFunction(onKeyDown)) {
-      onKeyDown(e.key, inputValue, focusedOption);
+    if (onKeyDown) {
+      onKeyDown(e, inputValue, focusedOption);
       if (e.defaultPrevented) return;
     }
 
@@ -563,7 +573,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
         focusOptionOnArrowKey(OptionIndexEnum.PAGEDOWN);
         break;
       }
-      // Handle spacebar keydown events
+      // handle spacebar keydown events
       case ' ': {
         if (inputValue) return;
 
@@ -685,15 +695,14 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   const flexValueWrapper = !!isMulti && hasSelectedOptions;
   const showClear = !!isClearable && !isDisabled && hasSelectedOptions;
-  const inputReadOnly = isDisabled || !isSearchable || !!focusedMultiValue;
 
   return (
     <ThemeProvider theme={theme}>
       <SelectWrapper
         id={selectId}
-        aria-controls={inputId}
-        aria-expanded={menuOpen}
         onKeyDown={handleOnKeyDown}
+        className={SELECT_CONTAINER_CLS}
+        data-testid={SELECT_CONTAINER_TESTID}
       >
         <ControlWrapper
           ref={controlRef}
@@ -719,15 +728,18 @@ const Select = forwardRef<SelectRef, SelectProps>((
             <AutosizeInput
               id={inputId}
               ref={inputRef}
+              menuId={menuId}
+              menuOpen={menuOpen}
               required={required}
               ariaLabel={ariaLabel}
+              isInvalid={isInvalid}
               inputValue={inputValue}
-              readOnly={inputReadOnly}
               onBlur={handleOnInputBlur}
               onFocus={handleOnInputFocus}
               onChange={handleOnInputChange}
               ariaLabelledBy={ariaLabelledBy}
               hasSelectedOptions={hasSelectedOptions}
+              readOnly={!isSearchable || !!focusedMultiValue}
             />
           </ValueWrapper>
           <IndicatorIcons
@@ -744,6 +756,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
           />
         </ControlWrapper>
         <Menu
+          id={menuId}
           menuRef={menuRef}
           menuOpen={menuOpen}
           isLoading={isLoading}

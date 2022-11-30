@@ -1,12 +1,12 @@
 {
   "parser": "@typescript-eslint/parser",
   "extends": [
-    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
+    "react",
     "@typescript-eslint",
-    "react-hooks",
     "prettier"
   ],
   "env": {
@@ -39,7 +39,6 @@
   },
   "settings": {
     "react": {
-      "pragma": "React",
       "version": "detect"
     }
   }

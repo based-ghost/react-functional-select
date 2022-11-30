@@ -1,5 +1,5 @@
 import type { TestableElement } from '../types';
-import type { HTMLAttributes, InputHTMLAttributes } from 'react';
+import type { InputHTMLAttributes } from 'react';
 
 // id attributes for AriaLiveRegion.tsx innerHTML content
 export const ARIA_LIVE_CONTEXT_ID = 'aria-context';
@@ -31,24 +31,16 @@ export const SELECT_CONTAINER_TESTID = process.env.NODE_ENV === 'test' ? SELECT_
 export const CONTROL_CONTAINER_TESTID = process.env.NODE_ENV === 'test' ? CONTROL_CONTAINER_CLS : undefined;
 
 /**
- * Static attributes for 'SelectWrapper' div element.
- */
-export const SELECT_WRAPPER_ATTRS: HTMLAttributes<HTMLDivElement> & TestableElement = {
-  role: 'combobox',
-  'aria-haspopup': 'listbox',
-  className: SELECT_CONTAINER_CLS,
-  'data-testid': SELECT_CONTAINER_TESTID
-};
-
-/**
  * Static attributes for 'AutosizeInput' input element.
  */
 export const AUTOSIZE_INPUT_ATTRS: InputHTMLAttributes<HTMLInputElement> & TestableElement = {
   tabIndex: 0,
   type: 'text',
+  role: 'combobox',
   spellCheck: false,
   autoCorrect: 'off',
   autoComplete: 'off',
+  'aria-haspopup': true,
   autoCapitalize: 'none',
   'aria-autocomplete': 'list',
   className: AUTOSIZE_INPUT_CLS,

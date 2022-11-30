@@ -30,6 +30,7 @@ const createAutosizeInputProps = () => {
   const props: AutosizeInputProps = {
     inputValue: '',
     readOnly: false,
+    menuOpen: false,
     onBlur: onBlurSpy,
     onFocus: onFocusSpy,
     onChange: onChangeSpy,

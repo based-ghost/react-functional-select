@@ -114,8 +114,9 @@ All properties are technically optional (with a few having default values). Very
 
 | Property | Type | Default | Description
 :---|:---|:---|:---
-| `inputId`| string | `undefined` | The id of the autosize search input
-|`selectId`| string | `undefined` | The id of the parent div
+| `inputId`| string | `undefined` | The id of the autosize search input control
+|`selectId`| string | `undefined` | The id of the parent select container element
+|`menuId`| string | `undefined` | The id of the menu container element
 |`ariaLabel`| string | `undefined` | Aria label (for assistive tech)
 |`isMulti`| bool | `false` | Does the control allow for multiple selections (defaults to single-value mode)
 |`async`| bool | `false` | Is the component in 'async' mode - when in 'async' mode, updates to the input search value will NOT cause the effect `useMenuOptions` to execute (this effect parses `options` into stateful value `menuOptions`)

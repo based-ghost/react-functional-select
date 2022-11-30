@@ -14,6 +14,7 @@ import {
 } from '../../constants';
 
 interface MenuProps extends MenuListProps {
+  id?: string;
   menuTop?: string;
   menuOpen: boolean;
   lazyLoadMenu: boolean;
@@ -72,6 +73,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
 `;
 
 const Menu: FunctionComponent<MenuProps> = ({
+  id,
   menuRef,
   menuTop,
   menuOpen,
@@ -89,6 +91,7 @@ const Menu: FunctionComponent<MenuProps> = ({
 
   const menuNode = (
     <MenuWrapper
+      id={id}
       ref={menuRef}
       menuTop={menuTop}
       menuOpen={menuOpen}

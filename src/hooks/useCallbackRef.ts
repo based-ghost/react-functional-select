@@ -14,9 +14,7 @@ const useCallbackRef = <T extends CallbackFn>(callback?: T): T => {
     ref.current = callback;
   });
 
-  return useCallback<CallbackFn>((...args) => {
-    return ref.current?.(...args);
-  }, []) as T;
+  return useCallback<CallbackFn>((...args) => ref.current?.(...args), []) as T;
 };
 
 export default useCallbackRef;
