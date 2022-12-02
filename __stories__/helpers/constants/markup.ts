@@ -39,7 +39,7 @@ export const CLASS_NAME_HTML =
           />
         </svg>
       </div>
-      <div />
+      <span />
       <div>
         <div
           aria-hidden="true"

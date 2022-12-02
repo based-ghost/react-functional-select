@@ -18,33 +18,33 @@ export type OptionDisabledCallback = (data: OptionData) => boolean;
 export type MouseOrTouchEvent<T = Element> = MouseEvent<T> | TouchEvent<T>;
 export type MouseOrTouchEventHandler<T = Element> = EventHandler<MouseOrTouchEvent<T>>;
 
-export type TestableElement = {
-  'data-testid'?: string;
-};
-
 export type PartialDeep<T> = {
   [P in keyof T]?: PartialDeep<T[P]>;
 };
 
-export type SelectedOption = {
+export type TestableElement = Readonly<{
+  'data-testid'?: string;
+}>;
+
+export type SelectedOption = Readonly<{
   data?: OptionData;
   value?: string | number;
   label?: string | number;
-};
+}>;
 
 export interface FocusedOption extends SelectedOption {
-  index: number;
-  isDisabled?: boolean;
-  isSelected?: boolean;
+  readonly index: number;
+  readonly isDisabled?: boolean;
+  readonly isSelected?: boolean;
 }
 
-export type ItemData = {
+export type ItemData = Readonly<{
   memoOptions: boolean;
   menuOptions: MenuOption[];
   focusedOptionIndex: number;
   selectOption: (option: MenuOption) => void;
   renderOptionLabel: (data: OptionData) => ReactNode;
-};
+}>;
 
 export type MultiParams = Readonly<{
   selected: SelectedOption[];

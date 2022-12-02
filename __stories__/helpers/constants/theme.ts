@@ -22,14 +22,14 @@ const THEME_ANIMATIONS: Theme = {
       animation: FADE_IN_KEYFRAMES_STR
     }
   },
-};
+} as const;
 
 export const ThemeEnum = {
   DEFAULT: 'Default',
   LARGE_TEXT: 'Large text',
   DARK_COLORS: 'Dark colors',
   ZERO_BORDER_RADIUS: 'No border-radius'
-};
+} as const;
 
 export const ThemeConfigMap: Theme = {
   [ThemeEnum.DEFAULT]: undefined as any,
@@ -69,7 +69,7 @@ export const ThemeConfigMap: Theme = {
       borderRadius: '0'
     }
   }
-};
+} as const;
 
 export const THEME_OPTIONS = createThemeOptions(ThemeEnum);
 export const THEME_DEFAULTS = mergeDeep(DEFAULT_THEME, THEME_ANIMATIONS);
@@ -82,4 +82,4 @@ export const THEME_CONFIG: Theme = {
       selectedBgColor: '#F5F5F5'
     }
   }
-};
+} as const;

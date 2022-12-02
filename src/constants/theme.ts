@@ -8,7 +8,7 @@ const color = {
   disabled: '#e9ecef',
   placeholder: '#6E7276',
   dangerLight: 'rgba(220, 53, 69, 0.25)'
-};
+} as const;
 
 export const DEFAULT_THEME: DefaultTheme = {
   color,
@@ -88,4 +88,4 @@ export const DEFAULT_THEME: DefaultTheme = {
       transition: 'color 0.2s ease-out'
     }
   }
-};
+} as const;

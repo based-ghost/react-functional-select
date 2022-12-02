@@ -82,8 +82,8 @@ export const normalizeValue = (
 
 /**
  * Immutable implementation of mergeDeep for two objects. Will return the merged result
- * In first condition of if/else block - check that property is no 'animation',
- * since we never want to merge that complex styled-component object
+ * In first condition - check that property is no 'animation', since we never want to
+ * merge that complex styled-component object
  */
 export const mergeDeep = <T>(target: any, source: any): T => {
   const output = { ...target };

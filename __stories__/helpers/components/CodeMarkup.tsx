@@ -22,7 +22,7 @@ const CodeMarkupContainer = styled.div`
   overflow: hidden;
   border-radius: 5px;
   margin: 1rem 1.5rem;
-  background: #282c34;
+  background: #292d3e;
 
   ${MEDIA_QUERY_IS_MOBILE} {
     margin: 1rem 0;
@@ -30,14 +30,14 @@ const CodeMarkupContainer = styled.div`
 `;
 
 const Header = styled.div`
-  color: #999;
   font-size: 14px;
   padding: 0 .9rem;
   font-weight: 700;
   line-height: 2.95;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background-color: #20232a;
+  color: rgba(235, 235, 235, 0.45);
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 const PreContainer = styled.div`
@@ -54,38 +54,46 @@ const PreContainer = styled.div`
 
     > code {
       padding: 0;
+      color: #A6ACCD !important;
       font-size: 14px !important;
       font-weight: 400 !important;
       line-height: 20px !important;
-      text-shadow: black 0px -0.1em 0.2em !important;
+      text-shadow: none !important;
 
       .boolean {
-        color: #ff8b50;
+        color: #FF9CAC;
       }
 
-      .number,
+      .number {
+        color: #F78C6C;
+      }
+
       .function {
-        color: #79b6f2;
+        color: #82AAFF;
       }
 
       .tag {
-        color: #fc929e;
+        color: #F07178;
       }
 
       .attr-name {
-        color: #c5a5c5;
+        color: #c792ea;
       }
 
       .string,
       .tag.attr-value {
-        color: #8dc891;
+        color: #C3E88D;
+      }
+
+      .property {
+        color: #F07178;
       }
 
       .operator,
       .token.punctuation,
       .tag.punctuation,
       .tag.attr-value.punctuation {
-        color: #88c6be;
+        color: #89DDFF;
       }
     }
   }

@@ -44,7 +44,7 @@ const IndicatorIcon = styled.div`
   ${({ theme }) => theme.icon.css}
 `;
 
-const Separator = styled.div`
+const Separator = styled.span`
   width: 1px;
   margin: 8px 0;
   align-self: stretch;
@@ -95,7 +95,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
         </IndicatorIcon>
       )}
       {isLoading && (loadingNode || <LoadingDots />)}
-      <Separator role="none" />
+      <Separator />
       <IndicatorIcon
         onTouchEnd={onCaretMouseDown}
         onMouseDown={onCaretMouseDown}

@@ -1,6 +1,6 @@
 <style lang="css">
   #panel-tab-content {
-    background: #282c34 !important;
+    background: #292d3e !important;
   }
 
   #storybook-panel-root .os-content > pre {
@@ -11,7 +11,6 @@
     tab-size: 4;
     hyphens: none;
     text-align: left;
-    text-shadow: black 0px -0.1em 0.2em;
     overflow-wrap: normal;
     font-size: 14px;
     line-height: 20px;
@@ -31,7 +30,7 @@
   #storybook-panel-root .os-content > pre > div > span > a,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.script,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.parameter {
-    color: #fff;
+    color: #A6ACCD;
   }
 
   #storybook-panel-root .os-content > pre > div,
@@ -40,14 +39,28 @@
     font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   }
 
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.comment,
   #storybook-panel-root .os-content > pre > div:last-of-type .comment.linenumber {
-    color: #c4c4c6;
+    color: #676E95;
   }
 
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.comment {
-    color: #b2b2b2;
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.tag {
+    color:#F07178;
   }
 
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.keyword.module,
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.entity,
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.url,
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.operator,
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.variable,
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.script.operator,
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.punctuation,
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.attr-value.punctuation,
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.script.punctuation {
+    color: #89DDFF;
+  }
+
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.arrow.operator,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.keyword,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.selector,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.builtin,
@@ -57,29 +70,7 @@
   #storybook-panel-root .os-content > pre > div:last-of-type .token.atrule,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.attr-name,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.tag.attr-name {
-    color: #c5a5c5;
-  }
-
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.tag {
-    color:#fc929e;
-  }
-
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.entity,
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.url,
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.operator,
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.variable,
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.script.operator {
-    color: #C7C7C7;
-  }
-
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.punctuation,
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.attr-value.punctuation,
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.script.punctuation {
-    color: #88c6be;
-  }
-
-  #storybook-panel-root .os-content > pre > div:last-of-type .token.function {
-    color: #79b6f2;
+    color: #c792ea;
   }
 
   #storybook-panel-root .os-content > pre > div:last-of-type .token.property,
@@ -88,11 +79,11 @@
   #storybook-panel-root .os-content > pre > div:last-of-type .token.number,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.constant,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.symbol {
-    color: #5a9bcf;
+    color: #F78C6C;
   }
 
   #storybook-panel-root .os-content > pre > div:last-of-type .token.boolean {
-    color: #ff8b50;
+    color: #FF9CAC;
   }
 
   #storybook-panel-root .os-content > pre > div:last-of-type .token.class-name,
@@ -101,7 +92,11 @@
   #storybook-panel-root .os-content > pre > div:last-of-type .token.maybe-class-name,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.known-class-name,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.hexdiv {
-    color: #fac863;
+    color: #FFCB6B;
+  }
+
+  #storybook-panel-root .os-content > pre > div:last-of-type .token.function {
+    color: #82AAFF;
   }
 
   #storybook-panel-root .os-content > pre > div:last-of-type .token.string,
@@ -109,6 +104,6 @@
   #storybook-panel-root .os-content > pre > div:last-of-type .token.regex,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.attr-value,
   #storybook-panel-root .os-content > pre > div:last-of-type .token.unit {
-    color: #8dc891;
+    color: #C3E88D;
   }
 </style>

@@ -45,4 +45,4 @@ export const AUTOSIZE_INPUT_ATTRS: InputHTMLAttributes<HTMLInputElement> & Testa
   'aria-autocomplete': 'list',
   className: AUTOSIZE_INPUT_CLS,
   'data-testid': AUTOSIZE_INPUT_TESTID
-};
+} as const;
