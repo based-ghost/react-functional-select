@@ -549,7 +549,7 @@ export const Methods = () => {
 
   return (
     <Container>
-      <Title>Methods {'&'} Properties</Title>
+      <Title>Methods & Properties</Title>
       <Hr />
       <ListWrapper>
         <strong>5</strong> methods and <strong>1</strong> property are exposed to
@@ -699,19 +699,14 @@ export const Filtering = () => {
 };
 
 export const Virtualization = () => {
+  const selectRef = useRef<SelectRef | null>(null);
   const optionCountList = useMemo(() => [100, 1000, 10000, 25000, 50000, 100000], []);
   const [optionsCount, setOptionsCount] = useState(optionCountList[0]);
-  const [options, setOptions] = useState<Option[]>([]);
-  const selectRef = useRef<SelectRef | null>(null);
+  const options = useMemo<Option[]>(() => createSelectOptions(optionsCount), [optionsCount]);
 
   useUpdateEffect(() => {
     selectRef.current?.clearValue();
   }, [options]);
-
-  useEffect(() => {
-    const nextSelectOptions = createSelectOptions(optionsCount);
-    setOptions(nextSelectOptions);
-  }, [optionsCount]);
 
   return (
     <Container>
@@ -744,7 +739,7 @@ export const Virtualization = () => {
             open to performance optimizations - most notably, memoization.
             Simple components that rely on the props passed to it (rather than
             its own managed state) to generate its JSX are likely candidates for
-            memoization (testing {'&'} debugging becomes much easier as well).
+            memoization (testing & debugging becomes much easier as well).
           </Li>
         </List>
         <em>Note: </em>Potential performance degradation could be encountered during input
@@ -882,7 +877,8 @@ export const Portaling = () => {
   const options = useMemo<Option[]>(() => createSelectOptions(3), []);
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuPortalTarget, setMenuPortalTarget] = useState<Element | undefined>();
+  const [menuPortalTarget, setMenuPortalTarget] = useState<HTMLElement | undefined>(undefined);
+
   const onMenuOpen = useCallback(() => setMenuOpen(true), []);
   const onMenuClose = useCallback(() => setMenuOpen(false), []);
 
@@ -910,7 +906,7 @@ export const Portaling = () => {
             id={portalId}
             menuOpen={menuOpen}
           >
-            <span>portal {'<'}div /{'>'}</span>
+            <span>portal node</span>
           </MenuPortalElement>
         </CardHeader>
         <CardBody>

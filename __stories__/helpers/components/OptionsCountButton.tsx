@@ -37,7 +37,7 @@ const OptionsCountButton: FunctionComponent<OptionsCountButtonProps> = ({
   setOptionsCount
 }) => {
   const isActive = count === optionsCount;
-  const onClick = !isActive ? () => setOptionsCount(count) : undefined;
+  const onClick = () => !isActive && setOptionsCount(count);
 
   return (
     <StyledButton
