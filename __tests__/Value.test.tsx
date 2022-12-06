@@ -37,7 +37,7 @@ const createValueProps = () => {
 
   const props: ValueProps = {
     isMulti: false,
-    inputValue: '',
+    hasInput: false,
     focusedMultiValue: null,
     selectedOption: EMPTY_ARRAY,
     renderMultiOptions: undefined,
@@ -63,13 +63,13 @@ test('"placeholder" text displays when no option is selected', async () => {
   expect(getByText(PLACEHOLDER_DEFAULT)).toBeInTheDocument();
 });
 
-test('component renders NULL if "inputValue" is truthy AND ("isMulti" != true OR ("isMulti" = true AND selectedOptions is empty))', async () => {
+test('component renders NULL if "hasInput" is true AND ("isMulti" !== true OR ("isMulti" === true AND "selectedOptions" is empty))', async () => {
   const { props } = createValueProps();
 
   // Render with truthy "inputValue" and "isMulti" = false
   const singleProps = {
     ...props,
-    inputValue: 'test search',
+    hasInput: true,
   };
 
   const { container, rerender } = renderValue(singleProps);

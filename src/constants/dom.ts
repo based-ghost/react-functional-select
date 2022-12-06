@@ -22,16 +22,17 @@ export const CONTROL_CONTAINER_CLS = 'rfs-control-container';
 
 // data-testid attributes used for DOM element querying in unit test cases
 // ...this attribute gets rendered in development and test environments (removed in production)
-export const CLEAR_ICON_TESTID = process.env.NODE_ENV === 'test' ? CLEAR_ICON_CLS : undefined;
-export const CARET_ICON_TESTID = process.env.NODE_ENV === 'test' ? CARET_ICON_CLS : undefined;
-export const AUTOSIZE_INPUT_TESTID = process.env.NODE_ENV === 'test' ? AUTOSIZE_INPUT_CLS : undefined;
-export const MENU_CONTAINER_TESTID = process.env.NODE_ENV === 'test' ? MENU_CONTAINER_CLS : undefined;
-export const CLEAR_ICON_MV_TESTID = process.env.NODE_ENV === 'test' ? `${CLEAR_ICON_CLS}-mv` : undefined;
-export const SELECT_CONTAINER_TESTID = process.env.NODE_ENV === 'test' ? SELECT_CONTAINER_CLS : undefined;
-export const CONTROL_CONTAINER_TESTID = process.env.NODE_ENV === 'test' ? CONTROL_CONTAINER_CLS : undefined;
+const isTest = process.env.NODE_ENV === 'test';
+export const CLEAR_ICON_TESTID = isTest ? CLEAR_ICON_CLS : undefined;
+export const CARET_ICON_TESTID = isTest ? CARET_ICON_CLS : undefined;
+export const AUTOSIZE_INPUT_TESTID = isTest ? AUTOSIZE_INPUT_CLS : undefined;
+export const MENU_CONTAINER_TESTID = isTest ? MENU_CONTAINER_CLS : undefined;
+export const CLEAR_ICON_MV_TESTID = isTest ? `${CLEAR_ICON_CLS}-mv` : undefined;
+export const SELECT_CONTAINER_TESTID = isTest ? SELECT_CONTAINER_CLS : undefined;
+export const CONTROL_CONTAINER_TESTID = isTest ? CONTROL_CONTAINER_CLS : undefined;
 
 /**
- * Static attributes for 'AutosizeInput' input element.
+ * Static attributes for 'AutosizeInput' input element
  */
 export const AUTOSIZE_INPUT_ATTRS: InputHTMLAttributes<HTMLInputElement> & TestableElement = {
   tabIndex: 0,

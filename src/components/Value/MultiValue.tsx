@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { type FunctionComponent } from 'react';
 import { suppressEvent } from '../../utils';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../../constants';
@@ -55,19 +55,20 @@ const Clear = styled.i<ClearProps>`
    ${({ isFocused }) => isFocused && CLEAR_ICON_FOCUS_STYLE}
 `;
 
-const MultiValue = memo<MultiValueProps>(({
+const MultiValue: FunctionComponent<MultiValueProps> = ({
   data,
   value,
   isFocused,
   renderOptionLabel,
   removeSelectedOption
 }) => {
-  const labelNode = renderOptionLabel(data);
   const onClear = () => removeSelectedOption(value);
 
   return (
     <MultiValueWrapper>
-      <Label>{labelNode}</Label>
+      <Label>
+        {renderOptionLabel(data)}
+      </Label>
       <Clear
         onClick={onClear}
         onTouchEnd={onClear}
@@ -79,8 +80,6 @@ const MultiValue = memo<MultiValueProps>(({
       </Clear>
     </MultiValueWrapper>
   );
-});
-
-MultiValue.displayName = 'MultiValue';
+};
 
 export default MultiValue;

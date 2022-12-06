@@ -1,4 +1,4 @@
-import React, { Fragment, type ReactNode, type FunctionComponent } from 'react';
+import React, { memo, Fragment, type ReactNode } from 'react';
 import MultiValue from './MultiValue';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../../utils';
@@ -6,7 +6,7 @@ import type { MultiParams, SelectedOption, RenderLabelCallback } from '../../typ
 
 type ValueProps = Readonly<{
   isMulti?: boolean;
-  inputValue: string;
+  hasInput: boolean;
   placeholder: string;
   selectedOption: SelectedOption[];
   focusedMultiValue: string | number | null;
@@ -29,9 +29,9 @@ const Placeholder = styled(SingleValue)`
   color: ${({ theme }) => theme.color.placeholder};
 `;
 
-const Value: FunctionComponent<ValueProps> = ({
+const Value = memo<ValueProps>(({
   isMulti,
-  inputValue,
+  hasInput,
   placeholder,
   selectedOption,
   focusedMultiValue,
@@ -40,7 +40,7 @@ const Value: FunctionComponent<ValueProps> = ({
   removeSelectedOption
 }) => {
   const noSelectedOpts = !isArrayWithLength(selectedOption);
-  if (inputValue && (!isMulti || (isMulti && (noSelectedOpts || renderMultiOptions)))) {
+  if (hasInput && (!isMulti || (isMulti && (noSelectedOpts || renderMultiOptions)))) {
     return null;
   }
 
@@ -49,8 +49,8 @@ const Value: FunctionComponent<ValueProps> = ({
   }
 
   if (!isMulti) {
-    const labelNode = renderOptionLabel(selectedOption[0].data);
-    return <SingleValue>{labelNode}</SingleValue>;
+    const label = renderOptionLabel(selectedOption[0].data);
+    return <SingleValue>{label}</SingleValue>;
   }
 
   return (
@@ -69,6 +69,8 @@ const Value: FunctionComponent<ValueProps> = ({
           ))}
     </Fragment>
   );
-};
+});
+
+Value.displayName = 'Value';
 
 export default Value;

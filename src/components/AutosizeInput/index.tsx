@@ -2,10 +2,6 @@ import styled, { css } from 'styled-components';
 import { AUTOSIZE_INPUT_ATTRS } from '../../constants';
 import React, { forwardRef, type Ref, type FormEventHandler, type FocusEventHandler } from 'react';
 
-type InputProps = Readonly<{
-  invalid?: boolean;
-}>;
-
 type AutosizeInputProps = Readonly<{
   id?: string;
   menuId?: string;
@@ -21,6 +17,8 @@ type AutosizeInputProps = Readonly<{
   onFocus: FocusEventHandler<HTMLInputElement>;
   onChange: FormEventHandler<HTMLInputElement>;
 }>;
+
+type InputProps = Pick<AutosizeInputProps, 'isInvalid'>;
 
 const INPUT_BASE_STYLE = css`
   border: 0;
@@ -59,7 +57,7 @@ const Input = styled.input.attrs(AUTOSIZE_INPUT_ATTRS)<InputProps>`
   }
 
   ${({ theme }) => theme.input.css}
-  ${({ theme, invalid }) => invalid && theme.input.cssRequired}
+  ${({ theme, isInvalid }) => isInvalid && theme.input.cssRequired}
 `;
 
 const AutosizeInput = forwardRef<HTMLInputElement, AutosizeInputProps>((
@@ -75,34 +73,29 @@ const AutosizeInput = forwardRef<HTMLInputElement, AutosizeInputProps>((
     ariaLabel,
     isInvalid,
     inputValue,
-    ariaLabelledBy,
-    hasSelectedOptions
+    ariaLabelledBy
   },
   ref: Ref<HTMLInputElement>
-) => {
-  const invalid = isInvalid || (required && !hasSelectedOptions);
-
-  return (
-    <InputWrapper data-value={inputValue}>
-      <Input
-        invalid
-        id={id}
-        ref={ref}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        value={inputValue}
-        readOnly={readOnly}
-        aria-owns={menuId}
-        aria-controls={menuId}
-        aria-label={ariaLabel}
-        aria-required={invalid}
-        aria-expanded={menuOpen}
-        aria-labelledby={ariaLabelledBy}
-        onChange={!readOnly ? onChange : undefined}
-      />
-    </InputWrapper>
-  );
-});
+) => (
+  <InputWrapper data-value={inputValue}>
+    <Input
+      id={id}
+      ref={ref}
+      onBlur={onBlur}
+      onFocus={onFocus}
+      value={inputValue}
+      aria-owns={menuId}
+      readOnly={readOnly}
+      isInvalid={isInvalid}
+      aria-controls={menuId}
+      aria-label={ariaLabel}
+      aria-expanded={menuOpen}
+      aria-required={required}
+      aria-labelledby={ariaLabelledBy}
+      onChange={!readOnly ? onChange : undefined}
+    />
+  </InputWrapper>
+));
 
 AutosizeInput.displayName = 'AutosizeInput';
 

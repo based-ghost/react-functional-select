@@ -676,22 +676,24 @@ const Select = forwardRef<SelectRef, SelectProps>((
     setMenuOpen(true);
   };
 
-  const handleOnMouseDown = (e: SyntheticEvent<Element>): void => {
+  // React Hooks linter rules require that this function be memoized in
+  // ...order to be referenced in deps array of callback functions below
+  const handleOnMouseDown = useCallback((e: SyntheticEvent<HTMLElement>): void => {
     suppressEvent(e);
     focusInput();
-  };
+  }, []);
 
   const handleOnClearMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
     handleOnMouseDown(e);
     setSelectedOption(EMPTY_ARRAY);
-  }, []);
+  }, [handleOnMouseDown]);
 
   const handleOnCaretMouseDown = useCallback((e: MouseOrTouchEvent<HTMLElement>): void => {
     if (!isDisabled && !openMenuOnClick) {
       handleOnMouseDown(e);
       menuOpenRef.current ? setMenuOpen(false) : openMenuAndFocusOption(OptionIndexEnum.FIRST);
     }
-  }, [isDisabled, openMenuOnClick, openMenuAndFocusOption]);
+  }, [isDisabled, menuOpenRef, openMenuOnClick, handleOnMouseDown, openMenuAndFocusOption]);
 
   const flexValueWrapper = !!isMulti && hasSelectedOptions;
   const showClear = !!isClearable && !isDisabled && hasSelectedOptions;
@@ -717,7 +719,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
           <ValueWrapper flex={flexValueWrapper}>
             <Value
               isMulti={isMulti}
-              inputValue={inputValue}
+              hasInput={!!inputValue}
               placeholder={placeholder}
               selectedOption={selectedOption}
               focusedMultiValue={focusedMultiValue}

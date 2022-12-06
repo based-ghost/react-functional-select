@@ -1,20 +1,5 @@
 import type { CallbackFn } from '../types';
 
-/**
- * @param t: time (elapsed)
- * @param b: initial value
- * @param c: amount of change
- * @param d: duration
- */
-const easeOutCubic = (
-  t: number,
-  b: number,
-  c: number,
-  d: number
-): number => {
-  return c * ((t = t / d - 1) * t * t + 1) + b;
-};
-
 const getScrollTop = (el: HTMLElement): number => {
   return isDocumentElement(el) ? window.pageYOffset : el.scrollTop;
 };
@@ -59,10 +44,11 @@ const smoothScrollTo = (
   let currentTime = 0;
   const start = getScrollTop(el);
   const change = to - start;
+  const easeOutCubic = (t: number): number => change * ((t = t / duration - 1) * t * t + 1) + start;
 
   const scrollFn = () => {
     currentTime += 5;
-    const calcScrollTop = easeOutCubic(currentTime, start, change, duration);
+    const calcScrollTop = easeOutCubic(currentTime);
     scrollTo(el, calcScrollTop);
     (currentTime < duration) ? requestAnimationFrame(scrollFn) : callback?.();
   };

@@ -64,18 +64,15 @@ const PreContainer = styled.div`
         color: #FF9CAC;
       }
 
-      .number {
-        color: #F78C6C;
-      }
-
       .function {
-        color: #82AAFF;
+        color: #85ADFF;
       }
 
       .tag {
         color: #F07178;
       }
 
+      .number,
       .attr-name {
         color: #c792ea;
       }

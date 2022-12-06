@@ -19,7 +19,7 @@ export const isPlainObject = (val: unknown): boolean => val !== null && typeof v
 /**
  * Prevent default behavior and propagation of an event
  */
-export const suppressEvent = (e: SyntheticEvent<Element>): void => {
+export const suppressEvent = (e: SyntheticEvent): void => {
   e.preventDefault();
   e.stopPropagation();
 };
@@ -95,7 +95,7 @@ export const mergeDeep = <T>(target: any, source: any): T => {
         ? target[key]
           ? mergeDeep(target[key], sourceProp)
           : sourceProp
-        : sourceProp ?? '';
+        : sourceProp;
   });
 
   return output;
