@@ -47,7 +47,7 @@ const customIconFn = (props: Partial<IndicatorIconsProps>): ReactNode => {
 // Test cases
 // ============================================
 
-test('clear icon has a static className (enables styling via classic CSS)', async () => {
+test('clear icon has a static className (enables styling via classic CSS)', () => {
   const { getByTestId } = renderIndicatorIcons(BASE_PROPS);
   const firstChildOfClearIconElement = getByTestId(CLEAR_ICON_TESTID!).firstChild;
   expect(firstChildOfClearIconElement).toHaveClass(CLEAR_ICON_CLS);
@@ -67,13 +67,13 @@ test('caret indicator has functioning "click" user interactions', async () => {
   expect(onCaretMouseDownSpy).toBeCalled();
 });
 
-test('clear icon is not rendered and loading animation is rendered when "isLoading" = true', async () => {
+test('clear icon is not rendered and loading animation is rendered when "isLoading" = true', () => {
   const props = { ...BASE_PROPS, isLoading: true };
   const { queryByTestId } = renderIndicatorIcons(props);
   expect(queryByTestId(CLEAR_ICON_TESTID!)).toBeNull();
 });
 
-test('loading can render as a custom node (instead of default LoadingDots.tsx component)', async () => {
+test('loading can render as a custom node (instead of default LoadingDots.tsx component)', () => {
   const loadingNodeText = 'loading-node';
   const loadingNode = <span>{loadingNodeText}</span>;
 
@@ -87,7 +87,7 @@ test('loading can render as a custom node (instead of default LoadingDots.tsx co
   expect(getByText(loadingNodeText)).toBeInTheDocument();
 });
 
-test('clear icon can render as a ReactNode', async () => {
+test('clear icon can render as a ReactNode', () => {
   const clearIconText = 'clear-icon-node';
   const clearIcon = <span>{clearIconText}</span>;
   const props = { ...BASE_PROPS, clearIcon };
@@ -95,7 +95,7 @@ test('clear icon can render as a ReactNode', async () => {
   expect(getByText(clearIconText)).toBeInTheDocument();
 });
 
-test('clear icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', async () => {
+test('clear icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', () => {
   const props = {
     ...BASE_PROPS,
     menuOpen: true,
@@ -110,7 +110,7 @@ test('clear icon can render as a callback function with return type of ReactNode
   expect(getByTestId(forwardedStateId)).toBeInTheDocument();
 });
 
-test('caret icon can render as a ReactNode', async () => {
+test('caret icon can render as a ReactNode', () => {
   const caretIconText = 'caret-icon-node';
   const caretIcon = <span>{caretIconText}</span>;
   const props = { ...BASE_PROPS, caretIcon };
@@ -118,7 +118,7 @@ test('caret icon can render as a ReactNode', async () => {
   expect(getByText(caretIconText)).toBeInTheDocument();
 });
 
-test('caret icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', async () => {
+test('caret icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', () => {
   const props = { ...BASE_PROPS, menuOpen: true, caretIcon: customIconFn };
   const { getByTestId } = renderIndicatorIcons(props);
 

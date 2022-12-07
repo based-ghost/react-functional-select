@@ -62,7 +62,7 @@ const createOptionProps = (
 // Test cases
 // ============================================
 
-test('option parent element renders dynamic style attribute correctly', async () => {
+test('option parent element renders dynamic style attribute correctly', () => {
   const { props } = createOptionProps();
   const { container } = renderOption(props);
   const optionParentEl = container.querySelector('div');
@@ -70,7 +70,7 @@ test('option parent element renders dynamic style attribute correctly', async ()
   expect(optionParentEl).toHaveAttribute('style', optionCssProps);
 });
 
-test('"renderOptionLabel" callback should be executed and the result rendered to DOM', async () => {
+test('"renderOptionLabel" callback should be executed and the result rendered to DOM', () => {
   const { props, renderOptionLabelSpy } = createOptionProps();
   const { label } = props.data.menuOptions[props.index];
   const { getByText } = renderOption(props);
@@ -79,13 +79,11 @@ test('"renderOptionLabel" callback should be executed and the result rendered to
 });
 
 test(`option with "isDisabled" = TRUE should have an onClick handler and the ${OPTION_DISABLED_CLS} class added to its classList`, async () => {
-  const firstDisabledMenuOptionIndex = MENU_OPTIONS.findIndex((option) => !!option.isDisabled);
-  const { props, onClickSelectOptionSpy } = createOptionProps(firstDisabledMenuOptionIndex);
+  const firstDisabledIdx = MENU_OPTIONS.findIndex((x) => x.isDisabled);
+  const { props, onClickSelectOptionSpy } = createOptionProps(firstDisabledIdx);
   const { user, container } = renderOption(props);
   const optionParentEl = container.querySelector('div') as HTMLDivElement;
-
   await user.click(optionParentEl);
-
   expect(onClickSelectOptionSpy).toBeCalled();
   expect(optionParentEl).toHaveClass(OPTION_DISABLED_CLS);
 });

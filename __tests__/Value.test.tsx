@@ -21,7 +21,7 @@ const renderValue = (props: ValueProps) => {
 
 const rerenderValue = (
   props: ValueProps,
-  rerender: (...args: any[]) => void
+  rerender: (...args: any[]) => any
 ): void => {
   rerender(
     <ThemeTestHOC>
@@ -49,12 +49,12 @@ const BASE_PROPS: ValueProps = {
 // Test cases
 // ============================================
 
-test('"placeholder" text displays when no option is selected', async () => {
+test('"placeholder" text displays when no option is selected', () => {
   const { getByText } = renderValue(BASE_PROPS);
   expect(getByText(PLACEHOLDER_DEFAULT)).toBeInTheDocument();
 });
 
-test('component renders NULL if "hasInput" is true AND ("isMulti" !== true OR ("isMulti" === true AND "selectedOptions" is empty))', async () => {
+test('component renders NULL if "hasInput" is true AND ("isMulti" !== true OR ("isMulti" === true AND "selectedOptions" is empty))', () => {
   // Render with truthy "inputValue" and "isMulti" = false
   const singleProps = { ...BASE_PROPS, hasInput: true };
   const { container, rerender } = renderValue(singleProps);
@@ -66,7 +66,7 @@ test('component renders NULL if "hasInput" is true AND ("isMulti" !== true OR ("
   expect(container.hasChildNodes()).toBeFalsy();
 });
 
-test('"renderOptionLabel" callback should be executed when an option is selected and should render the selected option label text', async () => {
+test('"renderOptionLabel" callback should be executed when an option is selected and should render the selected option label text', () => {
   const selectedOption = getSelectedOptionSingle();
   const props = { ...BASE_PROPS, selectedOption };
   const { getByText } = renderValue(props);
@@ -78,7 +78,7 @@ test('"renderOptionLabel" callback should be executed when an option is selected
   });
 });
 
-test('"renderMultiOptions" callback should be executed when "isMulti" = true and "renderMultiOptions" is a function and at least one option is selected', async () => {
+test('"renderMultiOptions" callback should be executed when "isMulti" = true and "renderMultiOptions" is a function and at least one option is selected', () => {
   const props = {
     ...BASE_PROPS,
     isMulti: true,

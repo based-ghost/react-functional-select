@@ -45,7 +45,7 @@ const BASE_PROPS: MenuListProps = {
 // Test cases
 // ============================================
 
-test('MenuList component mounts and renders successfully when "menuOptions" array has items', async () => {
+test('MenuList component mounts and renders successfully when "menuOptions" array has items', () => {
   const { getByText } = renderMenuList(BASE_PROPS);
 
   // Assert react-window + Option.tsx renders each menuOption correctly
@@ -54,7 +54,7 @@ test('MenuList component mounts and renders successfully when "menuOptions" arra
   });
 });
 
-test('The "itemKeySelector" property is used in "react-window" function property "itemKey" to select unqiue key based on property value rather than using default index for each option', async () => {
+test('The "itemKeySelector" property is used in "react-window" function property "itemKey" to select unqiue key based on property value rather than using default index for each option', () => {
   const props = { ...BASE_PROPS, itemKeySelector: 'value' };
   const { getByText } = renderMenuList(props);
 
@@ -64,23 +64,23 @@ test('The "itemKeySelector" property is used in "react-window" function property
   });
 });
 
-test('The "No Options" message element is NOT rendered when "menuOptions" length > 0', async () => {
+test('The "No Options" message element is NOT rendered when "menuOptions" length > 0', () => {
   const { queryByText } = renderMenuList(BASE_PROPS);
   expect(queryByText(BASE_PROPS.noOptionsMsg!)).toBeNull();
 });
 
-test('The "No Options" message element is rendered when "menuOptions" length === 0', async () => {
+test('The "No Options" message element is rendered when "menuOptions" length === 0', () => {
   const props = { ...BASE_PROPS, menuOptions: [] };
   const { getByText } = renderMenuList(props);
   expect(getByText(props.noOptionsMsg!)).toBeInTheDocument();
 });
 
-test('The "Loading" message element is NOT rendered when "isLoading" !== true', async () => {
+test('The "Loading" message element is NOT rendered when "isLoading" !== true', () => {
   const { queryByText } = renderMenuList(BASE_PROPS);
   expect(queryByText(BASE_PROPS.loadingMsg)).toBeNull();
 });
 
-test('The "Loading" message element is rendered when "isLoading" === true', async () => {
+test('The "Loading" message element is rendered when "isLoading" === true', () => {
   const props = { ...BASE_PROPS, isLoading: true };
   const { getByText } = renderMenuList(props);
   expect(getByText(props.loadingMsg)).toBeInTheDocument();

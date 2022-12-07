@@ -40,12 +40,12 @@ const BASE_PROPS: AutosizeInputProps = {
 // Test cases
 // ============================================
 
-test('input element has a static className (enables styling via classic CSS)', async () => {
+test('input element has a static className (enables styling via classic CSS)', () => {
   const { getByTestId } = renderAutosizeInput(BASE_PROPS);
   expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveClass(AUTOSIZE_INPUT_CLS);
 });
 
-test('input has functional, optional ARIA attributes', async () => {
+test('input has functional, optional ARIA attributes', () => {
   const props = {
     ...BASE_PROPS,
     ariaLabel: 'test-label',
@@ -60,7 +60,7 @@ test('input has functional, optional ARIA attributes', async () => {
   });
 });
 
-test('when "id" has a non-empty string value, input element should get an "id" attribute reflecting that value', async () => {
+test('when "id" has a non-empty string value, input element should get an "id" attribute reflecting that value', () => {
   const inputId = 'test-input-id';
   const props = { ...BASE_PROPS, id: inputId };
   const { getByTestId } = renderAutosizeInput(props);
@@ -76,7 +76,7 @@ test('when "readOnly" = true, the onChange event handler should not be attached 
   expect(inputElement).toHaveAttribute('readonly');
 });
 
-test('"blur" and "focus" events with callback handlers are attached to the input element', async () => {
+test('"blur" and "focus" events with callback handlers are attached to the input element', () => {
   const { getByTestId } = renderAutosizeInput(BASE_PROPS);
   const inputElement = getByTestId(AUTOSIZE_INPUT_TESTID!);
   fireEvent.blur(inputElement);

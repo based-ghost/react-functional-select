@@ -19,7 +19,7 @@ const renderAriaLiveRegion = () => {
 // Test cases
 // ============================================
 
-test('LoadingDots component mounts and renders without error', async () => {
+test('LoadingDots component mounts and renders without error', () => {
   const { container } = renderAriaLiveRegion();
   expect(container.hasChildNodes()).toBeTruthy();
 });

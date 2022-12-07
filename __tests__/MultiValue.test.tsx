@@ -25,12 +25,12 @@ const renderMultiValue = (props: MultiValueProps) => {
 const removeSelectedOptionSpy = jest.fn();
 const renderOptionLabelSpy = renderOptionLabelMock;
 
-const DATA: Option = getOptionSingle();
+const data: Option = getOptionSingle();
 
 const BASE_PROPS: MultiValueProps = {
-  data: DATA,
+  data,
   isFocused: false,
-  value: DATA.value,
+  value: data.value,
   renderOptionLabel: renderOptionLabelSpy,
   removeSelectedOption: removeSelectedOptionSpy
 } as const;
@@ -39,7 +39,7 @@ const BASE_PROPS: MultiValueProps = {
 // Test cases
 // ============================================
 
-test('"renderOptionLabel" callback should be executed and should render the selected option label text', async () => {
+test('"renderOptionLabel" callback should be executed and should render the selected option label text', () => {
   const { getByText } = renderMultiValue(BASE_PROPS);
   expect(renderOptionLabelSpy).toBeCalled();
   expect(getByText(BASE_PROPS.data.label)).toBeInTheDocument();

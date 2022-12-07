@@ -27,14 +27,14 @@ const renderSelect = (props?: SelectProps) => ({
 // Test cases
 // ============================================
 
-test('container elements have static className value (enables styling via classic CSS)', async () => {
+test('container elements have static className value (enables styling via classic CSS)', () => {
   const { getByTestId } = renderSelect();
   expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveClass(SELECT_CONTAINER_CLS);
   expect(getByTestId(CONTROL_CONTAINER_TESTID!)).toHaveClass(CONTROL_CONTAINER_CLS);
   expect(getByTestId(MENU_CONTAINER_TESTID!)).toHaveClass(MENU_CONTAINER_CLS);
 });
 
-test('id attributes are added to DOM if defined ("menuId", "selectId", "inputId" props)', async () => {
+test('id attributes are added to DOM if defined ("menuId", "selectId", "inputId" props)', () => {
   const props = {
     menuId: 'test-menu-id',
     inputId: 'test-input-id',
@@ -46,7 +46,7 @@ test('id attributes are added to DOM if defined ("menuId", "selectId", "inputId"
   expect(getByTestId(SELECT_CONTAINER_TESTID!)).toHaveAttribute('id', props.selectId);
 });
 
-test('"onInputFocus" callback should be fired when input is focused (if a defined function)', async () => {
+test('"onInputFocus" callback should be fired when input is focused (if a defined function)', () => {
   const onFocusSpy = jest.fn();
   const props = { onInputFocus: onFocusSpy };
   const { getByTestId } = renderSelect(props);
@@ -54,7 +54,7 @@ test('"onInputFocus" callback should be fired when input is focused (if a define
   expect(onFocusSpy).toBeCalled();
 });
 
-test('"onInputBlur" callback should be fired on blur (if a defined function)', async () => {
+test('"onInputBlur" callback should be fired on blur (if a defined function)', () => {
   const onBlurSpy = jest.fn();
   const props = { onInputBlur: onBlurSpy };
   const { getByTestId } = renderSelect(props);
@@ -79,7 +79,8 @@ test('toggling the menu to open/close fires corresponding callbacks "onMenuOpen"
   expect(onMenuCloseSpy).toBeCalled();
 });
 
-test('When "lazyLoadMenu" property = true, then menu components are only rendered in DOM when "menuOpen" state = true', async () => {
-  const { queryByTestId } = renderSelect({ lazyLoadMenu: true });
+test('When "lazyLoadMenu" property = true, then menu components are only rendered in DOM when "menuOpen" state = true', () => {
+  const props = { lazyLoadMenu: true };
+  const { queryByTestId } = renderSelect(props);
   expect(queryByTestId(MENU_CONTAINER_TESTID!)).toBeNull();
 });
