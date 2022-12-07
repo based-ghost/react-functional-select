@@ -4,21 +4,13 @@ import { render } from '@testing-library/react';
 import Option from '../src/components/Menu/Option';
 import userEvent from '@testing-library/user-event';
 import { OPTION_DISABLED_CLS } from '../src/constants';
-import { MENU_OPTIONS, RENDER_OPTION_LABEL_MOCK, stringifyCSSProperties, ThemeTestHOC } from './helpers';
+import { renderOptionLabelMock, stringifyCSSProperties, ThemeTestHOC, MENU_OPTIONS } from './helpers';
 
 type OptionProps = ComponentProps<typeof Option>;
 
 // ============================================
 // Helper functions & test data for Option.tsx component
 // ============================================
-
-const OPTION_STYLE: CSSProperties = {
-  top: '0px',
-  left: '0px',
-  width: '100%',
-  height: '35px',
-  position: 'absolute'
-};
 
 const renderOption = (props: OptionProps) => {
   return {
@@ -31,14 +23,22 @@ const renderOption = (props: OptionProps) => {
   };
 };
 
+const OPTION_STYLE: CSSProperties = {
+  top: '0px',
+  left: '0px',
+  width: '100%',
+  height: '35px',
+  position: 'absolute'
+} as const;
+
+const onClickSelectOptionSpy = jest.fn();
+const renderOptionLabelSpy = renderOptionLabelMock;
+
 const createOptionProps = (
   index = 0,
   focusedOptionIndex = 0,
   memoOptions = false
 ) => {
-  const onClickSelectOptionSpy = jest.fn();
-  const renderOptionLabelSpy = RENDER_OPTION_LABEL_MOCK;
-
   const props: OptionProps = {
     index,
     style: OPTION_STYLE,

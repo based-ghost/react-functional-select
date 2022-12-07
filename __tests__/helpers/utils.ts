@@ -38,7 +38,7 @@ export const MENU_OPTION_SELECTED: MenuOption = {
     value: 1,
     label: 'Option 1'
   }
-};
+} as const;
 
 export const MENU_OPTION_DISABLED: MenuOption = {
   isDisabled: true,
@@ -49,7 +49,7 @@ export const MENU_OPTION_DISABLED: MenuOption = {
     value: 2,
     label: 'Option 2'
   }
-};
+} as const;
 
 export const MENU_OPTIONS: MenuOption[] = [MENU_OPTION_SELECTED, MENU_OPTION_DISABLED];
 
@@ -63,10 +63,10 @@ export const stringifyCSSProperties = (obj: CSSProperties = {}): string => {
     .join(' ');
 };
 
-export const RENDER_OPTION_LABEL_MOCK = jest.fn(({ label }: OptionData): ReactNode => label);
-
-export const RENDER_MULTI_OPTIONS_MOCK = jest.fn(
+export const renderMultiOptionsMock = jest.fn(
   ({selected, renderOptionLabel}: MultiParams): ReactNode => {
     return selected.map((option) => renderOptionLabel(option.data)).join(', ');
   }
 );
+
+export const renderOptionLabelMock = jest.fn(({ label }: OptionData): ReactNode => label);

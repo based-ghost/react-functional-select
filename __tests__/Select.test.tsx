@@ -73,10 +73,8 @@ test('toggling the menu to open/close fires corresponding callbacks "onMenuOpen"
 
   const { user, getByTestId } = renderSelect(props);
   const controlWrapperEl = getByTestId(CONTROL_CONTAINER_TESTID!);
-
   await user.click(controlWrapperEl);
   await user.click(controlWrapperEl);
-
   expect(onMenuOpenSpy).toBeCalled();
   expect(onMenuCloseSpy).toBeCalled();
 });
@@ -85,20 +83,3 @@ test('When "lazyLoadMenu" property = true, then menu components are only rendere
   const { queryByTestId } = renderSelect({ lazyLoadMenu: true });
   expect(queryByTestId(MENU_CONTAINER_TESTID!)).toBeNull();
 });
-
-// NOTE: element.not.toBeVisible() relies on access to CSS style sheets to check 'display: none;' - CSS-in-JS breaks this
-/* test('when "isDisabled" = true, the DOM elements render as expected to prevent user interaction', async () => {
-  const onFocusSpy = jest.fn();
-  const props = {
-    isDisabled: true,
-    onInputFocus: onFocusSpy,
-  };
-
-  const { getByTestId } = renderSelect(props);
-
-  // mouseDown event should exit function when disabled (should not open the menu/focus input - which it normally would)
-  // onFocus callback should not run with mouseDown on control
-  fireEvent.mouseDown(getByTestId(CONTROL_CONTAINER_TESTID!));
-  expect(getByTestId(MENU_CONTAINER_TESTID!)).not.toBeVisible();
-  expect(onFocusSpy).not.toBeCalled();
-}); */

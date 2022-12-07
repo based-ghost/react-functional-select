@@ -56,6 +56,5 @@ test('"ariaLive" prop can be passed as one of the accepted aria-live values and 
   const mergedProps = { ...props, ariaLive };
   const { container } = renderAriaLiveRegion(mergedProps);
   const a11yTextRootSpanEl = container.firstChild;
-
   expect(a11yTextRootSpanEl).toHaveAttribute('aria-live', ariaLive);
 });

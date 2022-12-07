@@ -22,23 +22,15 @@ const renderIndicatorIcons = (props: IndicatorIconsProps) => {
   };
 };
 
-const createIndicatorIconsProps = () => {
-  const onClearMouseDownSpy = jest.fn();
-  const onCaretMouseDownSpy = jest.fn();
+const onClearMouseDownSpy = jest.fn();
+const onCaretMouseDownSpy = jest.fn();
 
-  const props: IndicatorIconsProps = {
-    menuOpen: false,
-    showClear: true,
-    onClearMouseDown: onClearMouseDownSpy,
-    onCaretMouseDown: onCaretMouseDownSpy
-  };
-
-  return {
-    props,
-    onClearMouseDownSpy,
-    onCaretMouseDownSpy
-  };
-};
+const BASE_PROPS: IndicatorIconsProps = {
+  menuOpen: false,
+  showClear: true,
+  onClearMouseDown: onClearMouseDownSpy,
+  onCaretMouseDown: onCaretMouseDownSpy
+} as const;
 
 const customIconFn = (props: Partial<IndicatorIconsProps>): ReactNode => {
   const { menuOpen, isLoading, isInvalid, isDisabled } = props;
@@ -56,95 +48,82 @@ const customIconFn = (props: Partial<IndicatorIconsProps>): ReactNode => {
 // ============================================
 
 test('clear icon has a static className (enables styling via classic CSS)', async () => {
-  const { props } = createIndicatorIconsProps();
-  const { getByTestId } = renderIndicatorIcons(props);
+  const { getByTestId } = renderIndicatorIcons(BASE_PROPS);
   const firstChildOfClearIconElement = getByTestId(CLEAR_ICON_TESTID!).firstChild;
   expect(firstChildOfClearIconElement).toHaveClass(CLEAR_ICON_CLS);
 });
 
 test('clear indicator has functioning "click" user interactions', async () => {
-  const { props, onClearMouseDownSpy } = createIndicatorIconsProps();
-  const { user, getByTestId } = renderIndicatorIcons(props);
+  const { user, getByTestId } = renderIndicatorIcons(BASE_PROPS);
   const clearIndicatorEl = getByTestId(CLEAR_ICON_TESTID!);
-
   await user.click(clearIndicatorEl);
-
   expect(onClearMouseDownSpy).toBeCalled();
 });
 
 test('caret indicator has functioning "click" user interactions', async () => {
-  const { props, onCaretMouseDownSpy } = createIndicatorIconsProps();
-  const { user, getByTestId } = renderIndicatorIcons(props);
+  const { user, getByTestId } = renderIndicatorIcons(BASE_PROPS);
   const caretIndicatorEl = getByTestId(CARET_ICON_TESTID!);
-
   await user.click(caretIndicatorEl);
-
   expect(onCaretMouseDownSpy).toBeCalled();
 });
 
 test('clear icon is not rendered and loading animation is rendered when "isLoading" = true', async () => {
-  const { props } = createIndicatorIconsProps();
-  const mergedProps = { ...props, isLoading: true };
-  const { queryByTestId } = renderIndicatorIcons(mergedProps);
+  const props = { ...BASE_PROPS, isLoading: true };
+  const { queryByTestId } = renderIndicatorIcons(props);
   expect(queryByTestId(CLEAR_ICON_TESTID!)).toBeNull();
 });
 
 test('loading can render as a custom node (instead of default LoadingDots.tsx component)', async () => {
   const loadingNodeText = 'loading-node';
   const loadingNode = <span>{loadingNodeText}</span>;
-  const { props } = createIndicatorIconsProps();
 
-  const mergedProps = {
-    ...props,
+  const props = {
+    ...BASE_PROPS,
     loadingNode,
     isLoading: true,
   };
 
-  const { getByText } = renderIndicatorIcons(mergedProps);
-
+  const { getByText } = renderIndicatorIcons(props);
   expect(getByText(loadingNodeText)).toBeInTheDocument();
 });
 
 test('clear icon can render as a ReactNode', async () => {
   const clearIconText = 'clear-icon-node';
   const clearIcon = <span>{clearIconText}</span>;
-  const { props } = createIndicatorIconsProps();
-  const mergedProps = { ...props, clearIcon };
-  const { getByText } = renderIndicatorIcons(mergedProps);
-
+  const props = { ...BASE_PROPS, clearIcon };
+  const { getByText } = renderIndicatorIcons(props);
   expect(getByText(clearIconText)).toBeInTheDocument();
 });
 
 test('clear icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', async () => {
-  const { props } = createIndicatorIconsProps();
-  const mergedProps = { ...props, menuOpen: true, clearIcon: customIconFn };
-  const { getByTestId } = renderIndicatorIcons(mergedProps);
+  const props = {
+    ...BASE_PROPS,
+    menuOpen: true,
+    clearIcon: customIconFn
+  };
+
+  const { getByTestId } = renderIndicatorIcons(props);
 
   // Build test-id from forwarded state javascript object payload
-  const { menuOpen, isLoading, isInvalid, isDisabled } = mergedProps;
+  const { menuOpen, isLoading, isInvalid, isDisabled } = props;
   const forwardedStateId = `${menuOpen}-${isLoading}-${isInvalid}-${isDisabled}`
-
   expect(getByTestId(forwardedStateId)).toBeInTheDocument();
 });
 
 test('caret icon can render as a ReactNode', async () => {
   const caretIconText = 'caret-icon-node';
   const caretIcon = <span>{caretIconText}</span>;
-  const { props } = createIndicatorIconsProps();
-  const mergedProps = { ...props, caretIcon };
-  const { getByText } = renderIndicatorIcons(mergedProps);
-
+  const props = { ...BASE_PROPS, caretIcon };
+  const { getByText } = renderIndicatorIcons(props);
   expect(getByText(caretIconText)).toBeInTheDocument();
 });
 
 test('caret icon can render as a callback function with return type of ReactNode - callback accepts forwarded state props from wrapping component.', async () => {
-  const { props } = createIndicatorIconsProps();
-  const mergedProps = { ...props, menuOpen: true, caretIcon: customIconFn };
-  const { getByTestId } = renderIndicatorIcons(mergedProps);
+  const props = { ...BASE_PROPS, menuOpen: true, caretIcon: customIconFn };
+  const { getByTestId } = renderIndicatorIcons(props);
 
   // Build test-id from forwarded state javascript object payload
-  const { menuOpen, isLoading, isInvalid, isDisabled } = mergedProps;
+  const { menuOpen, isLoading, isInvalid, isDisabled } = props;
   const forwardedStateId = `${menuOpen}-${isLoading}-${isInvalid}-${isDisabled}`
-
   expect(getByTestId(forwardedStateId)).toBeInTheDocument();
 });
