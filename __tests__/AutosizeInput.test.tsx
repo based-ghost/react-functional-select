@@ -53,9 +53,9 @@ test('input has functional, optional ARIA attributes', async () => {
   };
 
   const { getByTestId } = renderAutosizeInput(props);
-  const verifyAriaAttrs = ['aria-label', 'aria-labelledby', 'aria-autocomplete'];
+  const ariaAttrs = ['aria-label', 'aria-labelledby', 'aria-autocomplete'];
 
-  verifyAriaAttrs.forEach((attr: string) => {
+  ariaAttrs.forEach((attr: string) => {
     expect(getByTestId(AUTOSIZE_INPUT_TESTID!)).toHaveAttribute(attr);
   });
 });

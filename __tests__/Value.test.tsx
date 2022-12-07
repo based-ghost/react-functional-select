@@ -70,10 +70,10 @@ test('"renderOptionLabel" callback should be executed when an option is selected
   const selectedOption = getSelectedOptionSingle();
   const props = { ...BASE_PROPS, selectedOption };
   const { getByText } = renderValue(props);
+
   expect(renderOptionLabelSpy).toHaveBeenCalledTimes(1);
 
-  selectedOption.forEach((option: SelectedOption) => {
-    const { label } = option;
+  selectedOption.forEach(({ label }: SelectedOption) => {
     expect(getByText(String(label))).toBeInTheDocument();
   });
 });
