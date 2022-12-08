@@ -1,13 +1,10 @@
 import path from 'path';
 import babel from '@rollup/plugin-babel';
+import terser from '@rollup/plugin-terser';
 import replace from '@rollup/plugin-replace';
-import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import typescript from '@rollup/plugin-typescript';
-import { createRequire } from 'node:module';
-
-const require = createRequire(import.meta.url);
-const pkg = require('./package.json');
+import pkg from './package.json' assert { type: 'json' };
 
 const globals = {
   'react': 'React',
