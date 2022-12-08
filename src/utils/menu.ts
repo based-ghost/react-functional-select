@@ -38,7 +38,7 @@ const getScrollParent = (el: HTMLElement): HTMLElement => {
 const smoothScrollTo = (
   el: HTMLElement,
   to: number,
-  duration: number = 300,
+  duration: number = 250,
   callback?: CallbackFn
 ): void => {
   let currentTime = 0;

@@ -1,5 +1,5 @@
+import React from 'react';
 import styled from 'styled-components';
-import React, { type FunctionComponent } from 'react';
 import { ARIA_LIVE_SELECTION_ID, ARIA_LIVE_CONTEXT_ID } from '../../constants';
 import type { FocusedOption, SelectedOption, AriaLiveAttribute } from '../../types';
 
@@ -28,7 +28,7 @@ const A11yText = styled.span`
   clip: rect(1px, 1px, 1px, 1px);
 `;
 
-const AriaLiveRegion: FunctionComponent<AriaLiveRegionProps> = ({
+const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
   menuOpen,
   isFocused,
   inputValue,

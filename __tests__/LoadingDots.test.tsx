@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeTestHOC } from './helpers';
+import { ThemeWrapper } from './helpers';
 import { render } from '@testing-library/react';
 import LoadingDots from '../src/components/IndicatorIcons/LoadingDots';
 
@@ -9,9 +9,9 @@ import LoadingDots from '../src/components/IndicatorIcons/LoadingDots';
 
 const renderAriaLiveRegion = () => {
   return render(
-    <ThemeTestHOC>
+    <ThemeWrapper>
       <LoadingDots />
-    </ThemeTestHOC>
+    </ThemeWrapper>
   );
 };
 

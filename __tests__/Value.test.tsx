@@ -1,9 +1,9 @@
 import React, { type ComponentProps } from 'react';
 import Value from '../src/components/Value';
 import { render } from '@testing-library/react';
-import type { SelectedOption } from '../src/types';
+import type { CallbackFn, SelectedOption } from '../src/types';
 import { PLACEHOLDER_DEFAULT, EMPTY_ARRAY } from '../src/constants';
-import { renderOptionLabelMock, renderMultiOptionsMock, getSelectedOptionSingle, ThemeTestHOC } from './helpers';
+import { renderOptionLabelMock, renderMultiOptionsMock, getSelectedOptionSingle, ThemeWrapper } from './helpers';
 
 type ValueProps = ComponentProps<typeof Value>;
 
@@ -13,20 +13,17 @@ type ValueProps = ComponentProps<typeof Value>;
 
 const renderValue = (props: ValueProps) => {
   return render(
-    <ThemeTestHOC>
+    <ThemeWrapper>
       <Value {...props} />
-    </ThemeTestHOC>
+    </ThemeWrapper>
   );
 };
 
-const rerenderValue = (
-  props: ValueProps,
-  rerender: (...args: any[]) => any
-): void => {
+const rerenderValue = (props: ValueProps, rerender: CallbackFn): void => {
   rerender(
-    <ThemeTestHOC>
+    <ThemeWrapper>
       <Value {...props} />
-    </ThemeTestHOC>
+    </ThemeWrapper>
   );
 };
 

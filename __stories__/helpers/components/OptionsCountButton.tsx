@@ -1,7 +1,7 @@
+import React from 'react';
 import { Button } from '../styled';
 import { numberWithCommas } from '../utils';
 import styled, { css } from 'styled-components';
-import React, { type FunctionComponent } from 'react';
 
 type OptionsCountButtonProps = Readonly<{
   count: number;
@@ -11,8 +11,8 @@ type OptionsCountButtonProps = Readonly<{
 
 const StyledButton = styled(Button)<{ isActive?: boolean }>`
   width: 6rem;
-  min-width: 6rem !important;
   transition: none;
+  min-width: 6rem !important;
 
   ${({ isActive }) =>
     isActive
@@ -31,7 +31,7 @@ const StyledButton = styled(Button)<{ isActive?: boolean }>`
   }
 `;
 
-const OptionsCountButton: FunctionComponent<OptionsCountButtonProps> = ({
+const OptionsCountButton: React.FC<OptionsCountButtonProps> = ({
   count,
   optionsCount,
   setOptionsCount

@@ -1,5 +1,5 @@
 import React, { type ComponentProps } from 'react';
-import { ThemeTestHOC } from './helpers';
+import { ThemeWrapper } from './helpers';
 import type { MenuOption } from '../src';
 import { render } from '@testing-library/react';
 import MenuList from '../src/components/Menu/MenuList';
@@ -20,9 +20,9 @@ type MenuListProps = ComponentProps<typeof MenuList>;
 
 const renderMenuList = (props: MenuListProps) => {
   return render(
-    <ThemeTestHOC>
+    <ThemeWrapper>
       <MenuList {...props} />
-    </ThemeTestHOC>
+    </ThemeWrapper>
   );
 };
 

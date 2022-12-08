@@ -71,7 +71,7 @@ export const Columns = styled.div`
   }
 `;
 
-export const Column = styled.div<{ widthPercent?: number }>`
+export const Column = styled.div<{widthPercent?: number}>`
   flex-grow: 1;
   flex-basis: 0;
   flex-shrink: 1;
@@ -83,9 +83,9 @@ export const Column = styled.div<{ widthPercent?: number }>`
     width: 100% !important;
   }
 
-  ${({ widthPercent }) =>
-    widthPercent
-    && css`
+  ${({widthPercent}) =>
+    widthPercent &&
+    css`
       flex: none;
       width: ${widthPercent}%;
     `}

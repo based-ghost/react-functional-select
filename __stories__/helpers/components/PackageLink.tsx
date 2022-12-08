@@ -1,5 +1,5 @@
+import React from 'react';
 import styled from 'styled-components';
-import React, { type FunctionComponent } from 'react';
 
 type PackageLinkProps = Readonly<{
   name: string;
@@ -18,10 +18,7 @@ const Link = styled.a`
   }
 `;
 
-const PackageLink: FunctionComponent<PackageLinkProps> = ({
-  name,
-  href
-}) => (
+const PackageLink: React.FC<PackageLinkProps> = ({ name, href }) => (
   <Link
     href={href}
     target='_blank'

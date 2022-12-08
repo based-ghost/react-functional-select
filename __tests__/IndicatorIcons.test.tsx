@@ -1,5 +1,5 @@
 import React, { type ReactNode, type ComponentProps } from 'react';
-import { ThemeTestHOC } from './helpers';
+import { ThemeWrapper } from './helpers';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import IndicatorIcons from '../src/components/IndicatorIcons';
@@ -15,9 +15,9 @@ const renderIndicatorIcons = (props: IndicatorIconsProps) => {
   return {
     user: userEvent.setup(),
     ...render(
-      <ThemeTestHOC>
+      <ThemeWrapper>
         <IndicatorIcons {...props} />
-      </ThemeTestHOC>
+      </ThemeWrapper>
     )
   };
 };

@@ -1,4 +1,4 @@
-import React, { type FunctionComponent } from 'react';
+import React from 'react';
 import { suppressEvent } from '../../utils';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_MV_TESTID } from '../../constants';
@@ -55,7 +55,7 @@ const Clear = styled.i<ClearProps>`
    ${({ isFocused }) => isFocused && CLEAR_ICON_FOCUS_STYLE}
 `;
 
-const MultiValue: FunctionComponent<MultiValueProps> = ({
+const MultiValue: React.FC<MultiValueProps> = ({
   data,
   value,
   isFocused,

@@ -13,4 +13,4 @@ export const TOAST_CONTAINER_PROPS: ToastContainerProps = {
   draggable: false,
   newestOnTop: true,
   position: 'top-right'
-};
+} as const;

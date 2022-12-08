@@ -1,7 +1,6 @@
-import React, { type MutableRefObject, type FunctionComponent } from 'react';
+import React, { type MutableRefObject } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
-import { isArrayWithLength } from '../../utils';
 import type { MouseOrTouchEvent } from '../../types';
 import MenuList, { type MenuListProps } from './MenuList';
 import {
@@ -14,17 +13,17 @@ import {
 } from '../../constants';
 
 interface MenuProps extends MenuListProps {
-  id?: string;
-  menuTop?: string;
-  menuOpen: boolean;
-  lazyLoadMenu: boolean;
-  menuPortalTarget?: Element;
-  menuRef: MutableRefObject<HTMLDivElement | null>;
-  onMenuMouseDown: (e: MouseOrTouchEvent<HTMLDivElement>) => void;
+  readonly id?: string;
+  readonly menuTop?: string;
+  readonly menuOpen: boolean;
+  readonly lazyLoadMenu: boolean;
+  readonly menuPortalTarget?: Element;
+  readonly menuRef: MutableRefObject<HTMLDivElement | null>;
+  readonly onMenuMouseDown: (e: MouseOrTouchEvent<HTMLDivElement>) => void;
 }
 
 interface MenuWrapperProps extends Pick<MenuProps, 'menuOpen' | 'menuTop'> {
-  hideNoOptionsMsg: boolean;
+  readonly hideNoOptionsMsg: boolean;
 }
 
 const MenuWrapper = styled.div<MenuWrapperProps>`
@@ -72,7 +71,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   }
 `;
 
-const Menu: FunctionComponent<MenuProps> = ({
+const Menu: React.FC<MenuProps> = ({
   id,
   menuRef,
   menuTop,
@@ -87,7 +86,7 @@ const Menu: FunctionComponent<MenuProps> = ({
   }
 
   const { menuOptions, noOptionsMsg } = menuListProps;
-  const hideNoOptionsMsg = menuOpen && !noOptionsMsg && !isArrayWithLength(menuOptions);
+  const hideNoOptionsMsg = menuOpen && !noOptionsMsg && !menuOptions.length;
 
   const menuNode = (
     <MenuWrapper

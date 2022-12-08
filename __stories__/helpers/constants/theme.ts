@@ -31,6 +31,16 @@ export const ThemeEnum = {
   ZERO_BORDER_RADIUS: 'No border-radius'
 } as const;
 
+export const THEME_CONFIG: Theme = {
+  menu: {
+    option: {
+      selectedColor: '#515151',
+      focusedBgColor: '#F5F5F5',
+      selectedBgColor: '#F5F5F5'
+    }
+  }
+} as const;
+
 export const ThemeConfigMap: Theme = {
   [ThemeEnum.DEFAULT]: undefined as any,
   [ThemeEnum.DARK_COLORS]: {
@@ -73,13 +83,3 @@ export const ThemeConfigMap: Theme = {
 
 export const THEME_OPTIONS = createThemeOptions(ThemeEnum);
 export const THEME_DEFAULTS = mergeDeep(DEFAULT_THEME, THEME_ANIMATIONS);
-
-export const THEME_CONFIG: Theme = {
-  menu: {
-    option: {
-      selectedColor: '#515151',
-      focusedBgColor: '#F5F5F5',
-      selectedBgColor: '#F5F5F5'
-    }
-  }
-} as const;

@@ -30,10 +30,10 @@ export const createSelectOptions = (optionCount: number): Option[] => {
   return results;
 };
 
-export const createThemeOptions = (ThemeEnum: any): Option[] => {
-  return Object.keys(ThemeEnum).map((key) => ({
-    value: ThemeEnum[key],
-    label: ThemeEnum[key]
+export const createThemeOptions = (themeEnum: any): Option[] => {
+  return Object.keys(themeEnum).map((key) => ({
+    value: themeEnum[key],
+    label: themeEnum[key]
   }));
 };
 

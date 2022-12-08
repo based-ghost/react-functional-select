@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import Option from '../src/components/Menu/Option';
 import userEvent from '@testing-library/user-event';
 import { OPTION_DISABLED_CLS } from '../src/constants';
-import { renderOptionLabelMock, stringifyCSSProperties, ThemeTestHOC, MENU_OPTIONS } from './helpers';
+import { renderOptionLabelMock, stringifyCSSProperties, ThemeWrapper, MENU_OPTIONS } from './helpers';
 
 type OptionProps = ComponentProps<typeof Option>;
 
@@ -16,9 +16,9 @@ const renderOption = (props: OptionProps) => {
   return {
     user: userEvent.setup(),
     ...render(
-      <ThemeTestHOC>
+      <ThemeWrapper>
         <Option {...props} />
-      </ThemeTestHOC>
+      </ThemeWrapper>
     )
   };
 };

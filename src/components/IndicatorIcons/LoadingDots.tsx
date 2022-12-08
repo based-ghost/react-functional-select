@@ -1,4 +1,4 @@
-import React, { type FunctionComponent } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { LOADING_DOTS_CLS } from '../../constants';
 
@@ -29,7 +29,7 @@ const StyledLoadingDots = styled.div`
   }
 `;
 
-const LoadingDots: FunctionComponent = () => (
+const LoadingDots: React.FC = () => (
   <StyledLoadingDots
     aria-hidden
     className={LOADING_DOTS_CLS}

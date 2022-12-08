@@ -1,10 +1,10 @@
 import React, { memo, type ReactNode } from 'react';
+import ClearIcon from './ClearIcon';
 import LoadingDots from './LoadingDots';
 import { isFunction } from '../../utils';
-import ClearSvgIcon from './ClearSvgIcon';
 import styled, { css } from 'styled-components';
+import type { IconRenderer, MouseOrTouchEventHandler } from '../../types';
 import { CARET_ICON_CLS, CLEAR_ICON_TESTID, CARET_ICON_TESTID } from '../../constants';
-import type { IconRenderer, CustomRendererCallback, MouseOrTouchEventHandler } from '../../types';
 
 type IndicatorIconsProps = Readonly<{
   menuOpen: boolean;
@@ -79,7 +79,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
 }) => {
   const iconRendererFn = (renderer: IconRenderer): ReactNode => {
     return isFunction(renderer)
-      ? (renderer as CustomRendererCallback)({ menuOpen, isLoading, isInvalid, isDisabled })
+      ? renderer({ menuOpen, isLoading, isInvalid, isDisabled })
       : renderer;
   };
 
@@ -91,7 +91,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
           onMouseDown={onClearMouseDown}
           data-testid={CLEAR_ICON_TESTID}
         >
-          {iconRendererFn(clearIcon) || <ClearSvgIcon />}
+          {iconRendererFn(clearIcon) || <ClearIcon />}
         </IndicatorIcon>
       )}
       {isLoading && (loadingNode || <LoadingDots />)}

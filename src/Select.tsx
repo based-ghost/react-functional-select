@@ -126,7 +126,7 @@ type ValueWrapperProps = Readonly<{
 }>;
 
 interface ControlWrapperProps extends Pick<SelectProps, 'isInvalid' | 'isDisabled'> {
-  isFocused: boolean;
+  readonly isFocused: boolean;
 }
 
 const SelectWrapper = styled.div`
@@ -506,8 +506,10 @@ const Select = forwardRef<SelectRef, SelectProps>((
       ? selectedOption[focusedIdx].value!
       : null;
 
-    if (focusedOption.data) setFocusedOption(FOCUSED_OPTION_DEFAULT);
-    if (nextFocusedVal !== focusedMultiValue) setFocusedMultiValue(nextFocusedVal);
+    if (focusedOption.data)
+      setFocusedOption(FOCUSED_OPTION_DEFAULT);
+    if (nextFocusedVal !== focusedMultiValue)
+      setFocusedMultiValue(nextFocusedVal);
   };
 
   const focusOptionOnArrowKey = (direction: OptionIndexEnum): void => {

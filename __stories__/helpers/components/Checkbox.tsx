@@ -1,6 +1,6 @@
+import React from 'react';
 import { hexToRgba } from '../utils';
 import styled, { css } from 'styled-components';
-import React, { type FunctionComponent } from 'react';
 
 type CheckboxProps = Readonly<{
   label?: string;
@@ -104,7 +104,7 @@ const CheckIcon = styled.i`
   }
 `;
 
-const Checkbox: FunctionComponent<CheckboxProps> = ({
+const Checkbox: React.FC<CheckboxProps> = ({
   label,
   onCheck,
   checked,

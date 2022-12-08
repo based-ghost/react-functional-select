@@ -1,4 +1,4 @@
-import React, { useMemo, Fragment, type MutableRefObject, type FunctionComponent } from 'react';
+import React, { useMemo, Fragment, type MutableRefObject } from 'react';
 import Option from './Option';
 import styled from 'styled-components';
 import { isArrayWithLength } from '../../utils';
@@ -32,7 +32,7 @@ const NoOptionsMsg = styled.div`
   ${({ theme }) => theme.noOptions.css}
 `;
 
-const MenuList: FunctionComponent<MenuListProps> = ({
+const MenuList: React.FC<MenuListProps> = ({
   width,
   height,
   itemSize,

@@ -1,7 +1,6 @@
 import React, { memo, Fragment, type ReactNode } from 'react';
 import MultiValue from './MultiValue';
 import styled from 'styled-components';
-import { isArrayWithLength } from '../../utils';
 import type { MultiParams, SelectedOption, RenderLabelCallback } from '../../types';
 
 type ValueProps = Readonly<{
@@ -39,12 +38,11 @@ const Value = memo<ValueProps>(({
   renderMultiOptions,
   removeSelectedOption
 }) => {
-  const noSelectedOpts = !isArrayWithLength(selectedOption);
-  if (hasInput && (!isMulti || (isMulti && (noSelectedOpts || renderMultiOptions)))) {
+  if (hasInput && (!isMulti || (isMulti && (!selectedOption.length || renderMultiOptions)))) {
     return null;
   }
 
-  if (noSelectedOpts) {
+  if (!selectedOption.length) {
     return <Placeholder>{placeholder}</Placeholder>;
   }
 

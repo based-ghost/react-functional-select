@@ -65,7 +65,7 @@ export const stringifyCSSProperties = (obj: CSSProperties = {}): string => {
 
 export const renderMultiOptionsMock = jest.fn(
   ({selected, renderOptionLabel}: MultiParams): ReactNode => {
-    return selected.map((option) => renderOptionLabel(option.data)).join(', ');
+    return selected.map((x) => renderOptionLabel(x.data)).join(', ');
   }
 );
 

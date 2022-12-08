@@ -1,2 +1,2 @@
 export * from './utils';
-export { default as ThemeTestHOC } from './ThemeTestHOC';
+export { default as ThemeWrapper } from './ThemeWrapper';

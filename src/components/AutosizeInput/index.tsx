@@ -36,7 +36,7 @@ const InputWrapper = styled.div`
   display: inline-grid;
   box-sizing: border-box;
   grid-area: 1 / 1 / 2 / 3;
-  grid-template-columns: 0px min-content;
+  grid-template-columns: 0 min-content;
 
   :after {
     white-space: pre;

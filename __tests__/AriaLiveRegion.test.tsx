@@ -1,9 +1,9 @@
 import React, { type ComponentProps } from 'react';
 import { render } from '@testing-library/react';
 import AriaLiveRegion from '../src/components/AriaLiveRegion';
-import { getSelectedOptionMulti, ThemeTestHOC } from './helpers';
-import type { AriaLiveAttribute, FocusedOption, SelectedOption } from '../src/types';
+import { getSelectedOptionMulti, ThemeWrapper } from './helpers';
 import { ARIA_LIVE_CONTEXT_ID, ARIA_LIVE_SELECTION_ID } from '../src/constants';
+import type { AriaLiveAttribute, FocusedOption, SelectedOption } from '../src/types';
 
 type AriaLiveRegionProps = ComponentProps<typeof AriaLiveRegion>;
 
@@ -13,9 +13,9 @@ type AriaLiveRegionProps = ComponentProps<typeof AriaLiveRegion>;
 
 const renderAriaLiveRegion = (props: AriaLiveRegionProps) => {
   return render(
-    <ThemeTestHOC>
+    <ThemeWrapper>
       <AriaLiveRegion {...props} />
-    </ThemeTestHOC>
+    </ThemeWrapper>
   );
 };
 

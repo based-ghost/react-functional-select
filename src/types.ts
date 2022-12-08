@@ -5,12 +5,10 @@ export type OptionData = any;
 export type CallbackFn = (...args: any[]) => any;
 export type AriaLiveAttribute = 'off' | 'polite' | 'assertive';
 
-export type CustomRendererCallback = (...args: any[]) => ReactNode;
-export type IconRenderer = ReactNode | CustomRendererCallback;
+export type IconRenderer = ReactNode | ((...args: any[]) => ReactNode);
 
 export type OptionValueCallback = (data: OptionData) => string | number;
 export type OptionLabelCallback = OptionValueCallback;
-
 export type RenderLabelCallback = (data: OptionData) => ReactNode;
 export type OptionFilterCallback = (option: MenuOption) => string;
 export type OptionDisabledCallback = (data: OptionData) => boolean;

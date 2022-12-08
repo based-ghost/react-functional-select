@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CLEAR_ICON_MV_TESTID } from '../src/constants';
 import MultiValue from '../src/components/Value/MultiValue';
-import { renderOptionLabelMock, getOptionSingle, ThemeTestHOC, type Option } from './helpers';
+import { renderOptionLabelMock, getOptionSingle, ThemeWrapper, type Option } from './helpers';
 
 type MultiValueProps = ComponentProps<typeof MultiValue>;
 
@@ -15,9 +15,9 @@ const renderMultiValue = (props: MultiValueProps) => {
   return {
     user: userEvent.setup(),
     ...render(
-      <ThemeTestHOC>
+      <ThemeWrapper>
         <MultiValue {...props} />
-      </ThemeTestHOC>
+      </ThemeWrapper>
     )
   };
 };

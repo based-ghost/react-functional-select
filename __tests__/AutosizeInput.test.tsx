@@ -1,5 +1,5 @@
 import React, { type ComponentProps } from 'react';
-import { ThemeTestHOC } from './helpers';
+import { ThemeWrapper } from './helpers';
 import userEvent from '@testing-library/user-event';
 import { render, fireEvent } from '@testing-library/react';
 import AutosizeInput from '../src/components/AutosizeInput';
@@ -15,9 +15,9 @@ const renderAutosizeInput = (props: AutosizeInputProps) => {
   return {
     user: userEvent.setup(),
     ...render(
-      <ThemeTestHOC>
+      <ThemeWrapper>
         <AutosizeInput {...props} />
-      </ThemeTestHOC>
+      </ThemeWrapper>
     )
   };
 };

@@ -1,4 +1,4 @@
-import React, { type FunctionComponent } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { CLEAR_ICON_CLS } from '../../constants';
 
@@ -12,7 +12,7 @@ const ClearSvg = styled.svg`
   `}
 `;
 
-const ClearSvgIcon: FunctionComponent = () => (
+const ClearIcon: React.FC = () => (
   <ClearSvg
     aria-hidden
     focusable="false"
@@ -26,4 +26,4 @@ const ClearSvgIcon: FunctionComponent = () => (
   </ClearSvg>
 );
 
-export default ClearSvgIcon;
+export default ClearIcon;
