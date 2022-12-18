@@ -6,7 +6,7 @@ const color = {
   danger: '#dc3545',
   primary: '#007bff',
   disabled: '#e9ecef',
-  placeholder: '#6E7276',
+  placeholder: '#6e7276',
   dangerLight: 'rgba(220, 53, 69, 0.25)'
 } as const;
 
@@ -22,7 +22,7 @@ export const DEFAULT_THEME: DefaultTheme = {
   },
   icon: {
     color: '#ccc',
-    hoverColor: '#A6A6A6',
+    hoverColor: '#a6a6a6',
     padding: '0 14px',
     clear: {
       width: '14px',

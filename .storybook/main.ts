@@ -1,19 +1,14 @@
 import type { StorybookConfig } from '@storybook/react/types';
 
 const config: StorybookConfig = {
-  stories: ['../__stories__/**/*.stories.@(js|tsx|mdx)'],
-  addons: ['@storybook/addon-storysource'],
   framework: '@storybook/react',
+  addons: ['@storybook/addon-storysource'],
+  stories: ['../__stories__/**/*.stories.@(js|tsx|mdx)'],
   core: {
+    builder: 'webpack5',
     disableTelemetry: true,
-    enableCrashReports: false,
-    builder: {
-      name: 'webpack5',
-      options: {
-        lazyCompilation: false // applies to dev mode only
-      }
-    }
+    enableCrashReports: false
   }
 };
 
-module.exports = config;
+export default config;

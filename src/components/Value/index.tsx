@@ -47,8 +47,11 @@ const Value = memo<ValueProps>(({
   }
 
   if (!isMulti) {
-    const label = renderOptionLabel(selectedOption[0].data);
-    return <SingleValue>{label}</SingleValue>;
+    return (
+      <SingleValue>
+        {renderOptionLabel(selectedOption[0].data)}
+      </SingleValue>
+    );
   }
 
   return (

@@ -27,6 +27,14 @@ const IndicatorIconsWrapper = styled.div`
   align-items: center;
   align-self: stretch;
   box-sizing: border-box;
+
+  > span {
+    width: 1px;
+    margin: 8px 0;
+    align-self: stretch;
+    box-sizing: border-box;
+    background-color: ${({ theme }) => theme.color.iconSeparator || theme.color.border};
+  }
 `;
 
 const IndicatorIcon = styled.div`
@@ -42,14 +50,6 @@ const IndicatorIcon = styled.div`
   }
 
   ${({ theme }) => theme.icon.css}
-`;
-
-const Separator = styled.span`
-  width: 1px;
-  margin: 8px 0;
-  align-self: stretch;
-  box-sizing: border-box;
-  background-color: ${({ theme }) => theme.color.iconSeparator || theme.color.border};
 `;
 
 const Caret = styled.div<CaretProps>`
@@ -77,7 +77,7 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
   onCaretMouseDown,
   onClearMouseDown
 }) => {
-  const iconRendererFn = (renderer: IconRenderer): ReactNode => {
+  const iconRenderer = (renderer: IconRenderer): ReactNode => {
     return isFunction(renderer)
       ? renderer({ menuOpen, isLoading, isInvalid, isDisabled })
       : renderer;
@@ -91,17 +91,17 @@ const IndicatorIcons = memo<IndicatorIconsProps>(({
           onMouseDown={onClearMouseDown}
           data-testid={CLEAR_ICON_TESTID}
         >
-          {iconRendererFn(clearIcon) || <ClearIcon />}
+          {iconRenderer(clearIcon) || <ClearIcon />}
         </IndicatorIcon>
       )}
       {isLoading && (loadingNode || <LoadingDots />)}
-      <Separator />
+      <span />
       <IndicatorIcon
         onTouchEnd={onCaretMouseDown}
         onMouseDown={onCaretMouseDown}
         data-testid={CARET_ICON_TESTID}
       >
-        {iconRendererFn(caretIcon) || (
+        {iconRenderer(caretIcon) || (
           <Caret
             aria-hidden
             menuOpen={menuOpen}

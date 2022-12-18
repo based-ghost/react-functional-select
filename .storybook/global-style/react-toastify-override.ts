@@ -52,12 +52,14 @@ export default css`
 
   .Toastify__toast-container {
     .Toastify__toast {
-      background: #282c34;
+      background: #292d3e;
+
       &-body {
-        color: #fff;
+        color: #C3C9E6;
       }
-      &-icon {
-        fill: #1ea7fd;
+
+      &-icon > svg {
+        fill: #85ADFF;
       }
     }
 
@@ -66,7 +68,7 @@ export default css`
     }
 
     .Toastify__progress-bar {
-      background-color: #1ea7fd;
+      background-color: #85ADFF;
     }
   }
 `;

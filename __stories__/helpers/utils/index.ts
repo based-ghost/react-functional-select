@@ -16,18 +16,18 @@ export const mockHttpRequest = async (delay: number = 500): Promise<void> => {
   await new Promise(resolve => setTimeout(resolve, delay));
 };
 
-export const createSelectOptions = (optionCount: number): Option[] => {
-  const results: Option[] = [];
+export const createOptions = (count: number): Option[] => {
+  const options: Option[] = [];
 
-  for (let i = 0; i < optionCount; i += 1) {
+  for (let i = 0; i < count; i++) {
     const value = i + 1;
-    results.push({
+    options.push({
       value,
-      label: 'Option ' + value
+      label: `Option ${value}`
     });
   }
 
-  return results;
+  return options;
 };
 
 export const createThemeOptions = (themeEnum: any): Option[] => {
@@ -37,23 +37,23 @@ export const createThemeOptions = (themeEnum: any): Option[] => {
   }));
 };
 
-export const createAsyncOptions = (optionCount: number, lblSuffix: string): Option[] => {
-  const options = createSelectOptions(optionCount);
+export const createAsyncOptions = (count: number, lblSuffix: string = ''): Option[] => {
+  const options = createOptions(count);
   return options.map(({ value, label }: Option) => ({
     value,
-    label: `${label} - ${lblSuffix}`
+    label: `${label}${lblSuffix ? (' - ' + lblSuffix) : ''}`
   }));
 };
 
 export const hexToRgba = (hex: string, alpha: number = 1): string => {
   const hexReplacer: string = hex.replace(
     /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
-    (_m, r, g, b): string => `#${r}${r}${g}${g}${b}${b}`
+    (_m, r, g, b) => `#${r}${r}${g}${g}${b}${b}`
   );
 
   const alphaValid: number = Math.min(1, Math.max(0, alpha));
   const rgbParts: number[] = hexReplacer.substring(1).match(/.{2}/g)!.map((x) => parseInt(x, 16));
-  const rgbaParts: number[] = [...rgbParts, alphaValid];
+  const rgbaParts = [...rgbParts, alphaValid].join(',');
 
-  return `rgba(${rgbaParts.join(',')})`;
+  return `rgba(${rgbaParts})`;
 };

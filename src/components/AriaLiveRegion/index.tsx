@@ -67,8 +67,12 @@ const AriaLiveRegion: React.FC<AriaLiveRegionProps> = ({
       aria-live={ariaLive}
       aria-relevant="additions text"
     >
-      <span id={ARIA_LIVE_SELECTION_ID}>{selectionMsg}</span>
-      <span id={ARIA_LIVE_CONTEXT_ID}>{ariaContextMsg}</span>
+      <span id={ARIA_LIVE_SELECTION_ID}>
+        {selectionMsg}
+      </span>
+      <span id={ARIA_LIVE_CONTEXT_ID}>
+        {ariaContextMsg}
+      </span>
     </A11yText>
   );
 };

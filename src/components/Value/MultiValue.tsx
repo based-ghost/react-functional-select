@@ -62,7 +62,7 @@ const MultiValue: React.FC<MultiValueProps> = ({
   renderOptionLabel,
   removeSelectedOption
 }) => {
-  const onClear = () => removeSelectedOption(value);
+  const handleOnClear = () => removeSelectedOption(value);
 
   return (
     <MultiValueWrapper>
@@ -70,9 +70,9 @@ const MultiValue: React.FC<MultiValueProps> = ({
         {renderOptionLabel(data)}
       </Label>
       <Clear
-        onClick={onClear}
-        onTouchEnd={onClear}
         isFocused={isFocused}
+        onClick={handleOnClear}
+        onTouchEnd={handleOnClear}
         onMouseDown={suppressEvent}
         data-testid={CLEAR_ICON_MV_TESTID}
       >

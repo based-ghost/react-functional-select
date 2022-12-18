@@ -23,7 +23,6 @@ const CodeMarkupContainer = styled.div`
   border-radius: 5px;
   margin: 1rem 1.5rem;
   background: #292d3e;
-
   ${MEDIA_QUERY_IS_MOBILE} {
     margin: 1rem 0;
   }
@@ -54,7 +53,7 @@ const PreContainer = styled.div`
 
     > code {
       padding: 0;
-      color: #A6ACCD !important;
+      color: #A9AFD0 !important;
       font-size: 14px !important;
       font-weight: 400 !important;
       line-height: 20px !important;
@@ -68,7 +67,8 @@ const PreContainer = styled.div`
         color: #85ADFF;
       }
 
-      .tag {
+      .tag,
+      .property {
         color: #F07178;
       }
 
@@ -80,10 +80,6 @@ const PreContainer = styled.div`
       .string,
       .tag.attr-value {
         color: #C3E88D;
-      }
-
-      .property {
-        color: #F07178;
       }
 
       .operator,

@@ -17,6 +17,7 @@ import {
   MENU_CONTAINER_CLS,
   SELECT_CONTAINER_CLS,
   CONTROL_CONTAINER_CLS,
+  LOADING_MSG_DEFAULT
 } from '../src/constants';
 import {
   Button,
@@ -55,7 +56,7 @@ import {
   getRandomInt,
   useCallbackState,
   createAsyncOptions,
-  createSelectOptions,
+  createOptions,
   stringifyJavaScriptObj,
   THEME_DEFAULTS,
   THEME_OPTIONS,
@@ -173,14 +174,14 @@ export const MultiSelect = () => {
   const getOptionValue = useCallback(({ id }: CityOption): number => id, []);
   const getOptionLabel = useCallback(({ city, state }: CityOption): string => `${city}, ${state}`, []);
 
-  // Example "renderMultiOptions" property that can be used to further customize labeling for multi-option scenarios
+  // example "renderMultiOptions" property that can be used to further customize labeling for multi-option scenarios
   const renderMultiOptions = useCallback(
     ({ selected, renderOptionLabel }: MultiParams) => (
       <Fragment>
         {selected.length && renderOptionLabel(selected[0].data)}
         {selected.length > 1 && (
           <OtherSpan>
-            {`(+${selected.length - 1} ${selected.length === 2 ? 'other' : 'others'})`}
+            {`(+${selected.length - 1} other${selected.length > 2 ? 's' : ''})`}
           </OtherSpan>
         )}
       </Fragment>
@@ -415,7 +416,7 @@ export const Styling = () => {
 };
 
 export const Events = () => {
-  const options = useMemo<Option[]>(() => createSelectOptions(5), []);
+  const options = useMemo<Option[]>(() => createOptions(5), []);
 
   const [addOnKeyDown, setAddOnKeyDown] = useCallbackState(false);
   const [addOnMenuOpen, setAddOnMenuOpen] = useCallbackState(true);
@@ -539,7 +540,7 @@ export const Events = () => {
 
 export const Methods = () => {
   const selectRef = useRef<SelectRef | null>(null);
-  const options = useMemo<Option[]>(() => createSelectOptions(5), []);
+  const options = useMemo<Option[]>(() => createOptions(5), []);
 
   const blurSelect = () => selectRef.current?.blur();
   const focusSelect = () => selectRef.current?.focus();
@@ -702,7 +703,7 @@ export const Virtualization = () => {
   const selectRef = useRef<SelectRef | null>(null);
   const optionCountList = useMemo(() => [100, 1000, 10000, 25000, 50000, 100000], []);
   const [optionsCount, setOptionsCount] = useState(optionCountList[0]);
-  const options = useMemo<Option[]>(() => createSelectOptions(optionsCount), [optionsCount]);
+  const options = useMemo<Option[]>(() => createOptions(optionsCount), [optionsCount]);
 
   useUpdateEffect(() => {
     selectRef.current?.clearValue();
@@ -874,11 +875,10 @@ export const Advanced = () => {
 
 export const Portaling = () => {
   const portalId = 'menu-portal-test';
-  const options = useMemo<Option[]>(() => createSelectOptions(3), []);
+  const options = useMemo<Option[]>(() => createOptions(3), []);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuPortalTarget, setMenuPortalTarget] = useState<HTMLElement | undefined>(undefined);
-
   const onMenuOpen = useCallback(() => setMenuOpen(true), []);
   const onMenuClose = useCallback(() => setMenuOpen(false), []);
 
@@ -929,14 +929,14 @@ export const Async = () => {
   const delay = 500;
   const selectRef = useRef<SelectRef | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5, 'Initial'));
+  const [options, setOptions] = useState<Option[]>(() => createAsyncOptions(5));
   const onInputChange = useCallback(() => setIsLoading(true), []);
 
   const onSearchChange = useCallback(
-    async (value: string = 'Initial') => {
+    async (value: string = '') => {
       try {
         await mockHttpRequest();
-        const nextOptions = createAsyncOptions(getRandomInt(1, 5), `Search text: ${value}`);
+        const nextOptions = createAsyncOptions(getRandomInt(1, 5), value && `'${value}'`);
         selectRef.current?.clearValue();
         setOptions(nextOptions);
         setIsLoading(false);
@@ -983,7 +983,7 @@ export const Async = () => {
             <TextHeader>isLoading?: boolean</TextHeader> - When true, a loading animation will
             appear in the far-right of the control and take the place of the clear icon (if shown).
             Additionally, it will hide options in the menu and instead, display a loading message.
-            The loading message text defaults to 'Loading..', but can be overriden via
+            The loading message text defaults to '{LOADING_MSG_DEFAULT}', but can be overriden via
             the <code>loadingMsg</code> property.
           </Li>
         </List>
