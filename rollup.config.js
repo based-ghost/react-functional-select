@@ -15,7 +15,7 @@ const globals = {
 
 const input = './src/index.ts';
 const name = 'ReactFunctionalSelect';
-const external = (id) => id.includes('@babel/runtime') || (!id.startsWith('.') && !path.isAbsolute(id));
+const external = (id) => !id.startsWith('\0') && !id.startsWith('.') && !path.isAbsolute(id);
 
 /**
  * Replace Plugin config
@@ -37,9 +37,7 @@ const removeTestIdPlugin = replace({
  * Babel Plugin config (prevents use of root babel.config.js with babelrc and configFile as false)
  */
 const babelPlugin = (useESModules) => {
-  const targets = useESModules
-    ? { esmodules: true }
-    : '> 0.25%, last 2 versions, not dead';
+  const targets = useESModules ? { esmodules: true } : undefined;
 
   return babel({
     babelrc: false,

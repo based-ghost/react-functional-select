@@ -41,11 +41,6 @@
   "engines": {
     "node": ">= 14"
   },
-  "browserslist": [
-    "> 0.25%",
-    "last 2 versions",
-    "not dead"
-  ],
   "devDependencies": {
     "@babel/cli": "^7.19.3",
     "@babel/core": "^7.20.5",

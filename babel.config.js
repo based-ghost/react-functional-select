@@ -1,6 +1,6 @@
 module.exports = (api) => {
-  const isNotTestEnv = !api.env('test');
-  const targets = isNotTestEnv ? '> 0.25%, last 2 versions, not dead' : {node: 'current'};
+  const isTest = api.env('test');
+  const targets = isTest ? { node: 'current' } : undefined;
 
   const presets = [
     ['@babel/preset-env', {targets, loose: true}],
@@ -15,8 +15,8 @@ module.exports = (api) => {
         ssr: true,
         pure: true,
         fileName: false,
-        minify: isNotTestEnv,
-        displayName: isNotTestEnv,
+        minify: !isTest,
+        displayName: !isTest,
         transpileTemplateLiterals: true,
       },
     ],

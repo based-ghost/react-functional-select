@@ -354,7 +354,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
   }, [isMulti, menuOptions]);
 
   const removeSelectedOption = useCallback((value?: string | number): void => {
-    setSelectedOption((prev) => prev.filter((x) => x.value !== value));
+    setSelectedOption((so) => so.filter((x) => x.value !== value));
   }, []);
 
   const selectOption = useCallback((option: MenuOption): void => {
@@ -364,7 +364,7 @@ const Select = forwardRef<SelectRef, SelectProps>((
       isMulti && removeSelectedOption(option.value);
     } else {
       const { isSelected, isDisabled, ...selectedOpt } = option;
-      setSelectedOption((prev) => !isMulti ? [selectedOpt] : [...prev, selectedOpt]);
+      setSelectedOption((so) => !isMulti ? [selectedOpt] : [...so, selectedOpt]);
     }
 
     const blurOrDefault = isBoolean(blurInputOnSelect) ? blurInputOnSelect : isTouchDevice();
