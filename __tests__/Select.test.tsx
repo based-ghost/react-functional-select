@@ -84,3 +84,23 @@ test('When "lazyLoadMenu" property = true, then menu components are only rendere
   const { queryByTestId } = renderSelect(props);
   expect(queryByTestId(MENU_CONTAINER_TESTID!)).toBeNull();
 });
+
+test('disabling an open select prevents menu option selection', async () => {
+  const props = {
+    lazyLoadMenu: true,
+    options: [{ label: 'Apple', value: 'apple' }],
+    onOptionChange: jest.fn(),
+  };
+  const { user, getByTestId, getByText, queryByText, rerender } = renderSelect(props);
+
+  await user.click(getByTestId(CONTROL_CONTAINER_TESTID!));
+  expect(getByText('Apple')).toBeVisible();
+
+  rerender(<Select {...props} isDisabled />);
+  expect(queryByText('Apple')).not.toBeInTheDocument();
+  expect(props.onOptionChange).not.toHaveBeenCalled();
+
+  rerender(<Select {...props} />);
+  await user.click(getByText('Apple'));
+  expect(props.onOptionChange).toHaveBeenCalledWith({ label: 'Apple', value: 'apple' });
+});

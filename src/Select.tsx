@@ -255,7 +255,8 @@ const Select = forwardRef<SelectRef, SelectProps>((
 
   // Local state values
   const [inputValue, setInputValue] = useState<string>('');
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [requestedMenuOpen, setMenuOpen] = useState<boolean>(false);
+  const menuOpen = !isDisabled && requestedMenuOpen;
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [focusedMultiValue, setFocusedMultiValue] = useState<string | number | null>(null);
   const [focusedOption, setFocusedOption] = useState<FocusedOption>(FOCUSED_OPTION_DEFAULT);
